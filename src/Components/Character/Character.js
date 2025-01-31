@@ -12,7 +12,9 @@ const Character = () => {
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [characterView, setCharacterView] = useState('moves');
-    const [, characterName] = CHARACTERS.find(options => options[0] === selectedCharacter);
+    const { name: characterName } = CHARACTERS
+        .find(character => character.id === selectedCharacter);
+    
 
     const toggleCharacterSelectModal = () => {
         setShowCharacterSelectModal(!showCharacterSelectModal)

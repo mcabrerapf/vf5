@@ -4,7 +4,10 @@ import ModalHeader from '../ModalHeader';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 
-const MoveTypSelectModal = ({ moveKeys }) => {
+const MoveTypSelectModal = ({
+    selectedMoveType,
+    moveKeys
+}) => {
     const { closeModal } = useModalContext();
 
     const handleClose = () => {
@@ -31,6 +34,7 @@ const MoveTypSelectModal = ({ moveKeys }) => {
                     return (
                         <Button
                             key={moveKey}
+                            modifier={moveKey === selectedMoveType ? 'active' : ''}
                             value={moveKey}
                             text={moveKey}
                             onClick={handleCharacterClick}

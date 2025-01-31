@@ -17,12 +17,12 @@ const CharacterList = () => {
                 {CHARACTERS.map(character => {
                     return (
                         <li
-                            key={character[0]}
+                            key={character.id}
                             className='character-list__list__character'>
                             <Button
-                                value={character[0]}
+                                value={character.id}
                                 onClick={onClick}
-                                text={character[1]}
+                                text={character.name}
                             />
                         </li>
                     )

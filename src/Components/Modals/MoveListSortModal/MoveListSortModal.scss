@@ -1,0 +1,28 @@
+.move-list-sort-modal {
+    
+    &__content {
+        display: flex;
+        flex-direction: column;
+        // flex-wrap: wrap;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 30rem;
+        max-height: 45rem;
+        gap: 1rem;
+        padding: 0.5rem;
+
+        .button {
+            width: 8rem;
+        }
+
+        &__options {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 28rem;
+            justify-content: center;
+        }
+    }
+    
+}
