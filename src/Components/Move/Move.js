@@ -22,6 +22,7 @@ const Move = ({
         // sober,
         // total
     } = move;
+    const showDmg = damage !== '-';
     const showExe = exe !== '-';
     const showOnBlock = guard_stats !== '-';
     const showOnHit = normal_hit_stats !== '-';
@@ -32,9 +33,11 @@ const Move = ({
             <div className='move__name'>{name} ({level})</div>
             {!hideType && <div className='move__type'>{commandType}</div>}
             <div className='move__frame-data'>
-                <span>
-                <strong>dmg:</strong>  {damage}
-                </span>
+                {showDmg &&
+                    <span>
+                        <strong>dmg:</strong>  {damage}
+                    </span>
+                }
                 {showExe &&
                     <span>
                         <strong>startup:</strong> {exe}

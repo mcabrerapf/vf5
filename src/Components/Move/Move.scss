@@ -1,7 +1,12 @@
 .move {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
     gap: 0.5rem;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    
     &__name {
         font-size: 1.5rem;
         font-weight: 600;
