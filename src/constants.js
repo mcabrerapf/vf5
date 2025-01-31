@@ -68,16 +68,55 @@ const MOVE_LEVEL_MATCH = {
     '-': 'no-category'
 }
 
+const NOTATION_TO_ICON = {
+    '[9]': 'upRight',
+    '[8]': 'up',
+    '[8_]': 'up',
+    '[7]': 'upLeft',
+    '[6]': 'right',
+    '[6_]': 'right',
+    '[5]': null,
+    '[4]': 'left',
+    '[4_]': 'left',
+    '[3]': 'downRight',
+    '[2]': 'down',
+    '[2_]': 'down',
+    '[1]': 'downLeft'
+}
+
+const NOTATION_CHARACTERS = [
+    '[9]',
+    '[8]',
+    '[8_]',
+    '[7]',
+    '[6]',
+    '[6_]',
+    '[5]',
+    '[4]',
+    '[4_]',
+    '[3]',
+    '[2]',
+    '[2_]',
+    '[1]',
+    '[P]',
+    '[K]',
+    '[G]',
+    '[+]',
+];
+
 const LOCAL_KEYS = {
     SELECTED_CHARACTER: 'vf5_selected-character',
     SELECTED_MOVE_TYPE: 'vf5_selected-move-type',
     SELECTED_MOVELIST_SORT: 'vf5_selected-movelist-sort',
-    SELECTED_MOVELIST_FILTERS: 'vf5_selected-movelist-filters'
+    SELECTED_MOVELIST_FILTERS: 'vf5_selected-movelist-filters',
+    CHARACTER_COMBOS: 'vf5_character_combos_'
 }
 
 export {
     B_URL,
     CHARACTERS,
     LOCAL_KEYS,
-    MOVE_LEVEL_MATCH
+    MOVE_LEVEL_MATCH,
+    NOTATION_CHARACTERS,
+    NOTATION_TO_ICON,
 }

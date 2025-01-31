@@ -1,16 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import './MoveList.scss'
 import { useMainContext } from '../../Contexts/MainContext';
+import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Move from '../Move';
 import Button from '../Button';
-import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Modal from '../Modals/Modal';
 import MoveTypSelectModal from '../Modals/MoveTypSelectModal';
-import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 import MoveListSortModal from '../Modals/MoveListSortModal';
+import MoveListFooter from './MoveListFooter';
+import { CHARACTERS, LOCAL_KEYS, NOTATION_CHARACTERS, NOTATION_TO_ICON } from '../../constants';
 import { SORT_OPTIONS } from '../Modals/MoveListSortModal/constants';
-import { sortMovelist, filterMoveList } from './helpers';
-import MoveListFooter from './MoveListFooter/MoveListFooter';
+import { sortMovelist, filterMovelist } from './helpers';
+import debounce from 'lodash.debounce';
+
 
 const MoveList = () => {
     const { selectedCharacter } = useMainContext()
@@ -35,7 +37,7 @@ const MoveList = () => {
 
             const localSelectedSort = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
             const localFilters = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
-            const parsedLocalFilters = !localFilters? []:localFilters.split(',');
+            const parsedLocalFilters = !localFilters ? [] : localFilters.split(',');
             setSelectedFilters(parsedLocalFilters);
             setSelectedMovelistSort(localSelectedSort);
             setSelectedMoveType(typeToUse);
@@ -54,10 +56,22 @@ const MoveList = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
-            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, newFilters);
+            const filtersForStorage = newFilters.filter(filter => !filter.includes('text/'));
+            console.log(filtersForStorage)
+            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, filtersForStorage);
             setSelectedFilters(newFilters);
         }
+    }
 
+    const handleTextFilterChange = ({ target: { value } }) => {
+        const notationArray = value.toUpperCase().split(' ');
+        const filteredNotation = notationArray.filter(not => NOTATION_CHARACTERS.includes(not));
+        const textFilter = `text/${filteredNotation.join(' ')}`;
+        const updatedFilters = [
+            ...selectedFilters.filter(filter => !filter.includes('text/')),
+            textFilter
+        ];
+        setSelectedFilters(updatedFilters);
     }
 
     const handleTypeSelectModalClose = (type) => {
@@ -90,7 +104,7 @@ const MoveList = () => {
     const isShunDi = selectedCharacter === 'shun';
     const parsedSort = selectedMovelistSort.split('/');
     const [, sortName] = SORT_OPTIONS.find(option => option[0] === parsedSort[0]);
-    const filteredMovelist = filterMoveList(selectedMoveset, selectedFilters);
+    const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const pSelectedMoveType = selectedMoveType.split('-').join(' ');
 
@@ -151,6 +165,7 @@ const MoveList = () => {
             <MoveListFooter
                 selectedFilters={selectedFilters}
                 handleFiltersChange={handleFiltersChange}
+                handleTextFilterChange={handleTextFilterChange}
             />
         </div>
     )

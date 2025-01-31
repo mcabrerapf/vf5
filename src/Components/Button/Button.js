@@ -2,11 +2,12 @@ import React from 'react';
 import './Button.scss'
 
 const Button = ({
-    onClick = () => { },
+    children,
+    modifier,
     text = 'Button',
     value = 'button',
     disabled = false,
-    modifier
+    onClick = () => { },
 }) => {
     const disabledModifier = disabled ? 'disabled' : ''
     const className = ['button', modifier, disabledModifier].filter(Boolean).join(' ');
@@ -23,6 +24,7 @@ const Button = ({
             value={value}
             onClick={handleOnClick}>
             {text}
+            {children}
         </button>
     )
 }

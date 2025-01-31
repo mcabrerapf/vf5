@@ -1,11 +1,11 @@
-.move-notation {
+.move-command {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 0.5rem;
     font-size: 1.2rem;
-    flex-wrap: wrap;
 
-    &__command {
+    &__notation {
         display: flex;
         flex-direction: row;
         box-sizing: border-box;

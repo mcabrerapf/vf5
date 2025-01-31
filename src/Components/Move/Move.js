@@ -1,6 +1,6 @@
 import React from 'react';
 import './Move.scss'
-import MoveNotation from '../MoveNotation';
+import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { MOVE_LEVEL_MATCH } from '../../constants';
 
@@ -30,6 +30,7 @@ const Move = ({
     const showOnBlock = guard_stats !== '-';
     const showOnHit = normal_hit_stats !== '-';
     const showOnCh = counter_hit_stats !== '-';
+    const showAvoid = escape !== '-';
     const parsedLevel = MOVE_LEVEL_MATCH[level];
 
     return (
@@ -46,7 +47,9 @@ const Move = ({
             {showDmg &&
                 <div className='move__damage'>
                     <span><strong>damage:</strong> {damage}</span>
-                    <span><strong>avoid:</strong> {escape}</span>
+                    {showAvoid &&
+                        <span><strong>avoid:</strong> {escape}</span>
+                    }
                     {showSober && sober !== "0" &&
                         <span><strong>sober:</strong> {sober}</span>
                     }
@@ -74,7 +77,7 @@ const Move = ({
                     </span>
                 }
             </div>
-            <MoveNotation
+            <MoveCommand
                 command={command}
             />
             <div className='move__notes'>

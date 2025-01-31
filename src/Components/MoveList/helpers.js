@@ -14,17 +14,24 @@ const sortMovelist = (list, sort) => {
         });
 }
 
-const filterMoveList = (list, filters) => {
-    if(!filters.length) return list;
+const filterMovelist = (list, filters) => {
+    if (!filters.length) return list;
 
-    return list.filter(move=> {
+    const textFilter = filters.filter(filter => filter.includes('text/'))[0];
+    const parsedTextFilter = textFilter ? textFilter.split('/')[1].split(' ').join('') : '';
+    const levelFilters = filters.filter(filter => filter.includes('level/'));
+
+    return list.filter(move => {
         const parsedType = `level/${MOVE_LEVEL_MATCH[move.level]}`
-        const isValid = filters.includes(parsedType);
-        return isValid;
+        const isValid = levelFilters.length ? levelFilters.includes(parsedType) : true;
+        const stringCommand = move.command.join('')
+        const hasCommandMatch = stringCommand.includes(parsedTextFilter);
+        
+        return isValid && hasCommandMatch;
     })
 }
 
 export {
     sortMovelist,
-    filterMoveList
+    filterMovelist
 }

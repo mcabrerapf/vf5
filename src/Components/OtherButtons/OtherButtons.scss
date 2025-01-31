@@ -1,0 +1,23 @@
+.other-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    &__grouping {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+
+        .notation {
+            width: 3rem;
+            height: 3rem;
+            border: 1px solid white;
+            border-radius: 2rem;
+            padding: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

@@ -1,0 +1,27 @@
+.combo-builder-modal {
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        &__notation {
+            width: 25rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            min-height: 3rem;
+            border: 1px solid white;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        &__controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            gap: 1.5rem;
+        }
+    }
+}

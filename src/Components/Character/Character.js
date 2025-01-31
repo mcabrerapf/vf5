@@ -7,6 +7,7 @@ import Button from '../Button';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
 import { CHARACTERS } from '../../constants';
+import Combos from '../Combos';
 
 
 const Character = () => {
@@ -51,14 +52,13 @@ const Character = () => {
                 />
                 <Button
                     modifier={characterView === 'combos' ? 'active' : ''}
-                    disabled
                     value='combos'
                     text='Combos'
                     onClick={handleViewChange}
                 />
             </div>
             {characterView === 'moves' && <MoveList />}
-            {/* {characterView === 1 && <MoveList />} */}
+            {characterView === 'combos' && <Combos />}
         </div>
     )
 }

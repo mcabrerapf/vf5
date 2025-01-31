@@ -7,7 +7,7 @@ const Icon = ({
     color = "white",
     width = '15px',
     height = '15px',
-    strokeWidth = 2
+    strokeWidth = 2,
 }) => {
     const iconProps = ICONS[icon];
 
