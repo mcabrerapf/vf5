@@ -1,6 +1,4 @@
 .character {
-    // display: flex;
-    flex-direction: column;
     height: 100%;
     width: 100%;
 
@@ -12,6 +10,8 @@
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
+        background-color: white;
+        color: black;
         gap: 1rem;
         height: 5rem;
         width: 100%;
@@ -20,8 +20,10 @@
         .button {
             height: 4rem;
             width: 100%;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 600;
+            background-color: white;
+            color: black;
         }
     }
 

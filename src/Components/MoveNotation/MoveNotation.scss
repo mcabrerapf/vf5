@@ -8,35 +8,44 @@
     &__command {
         display: flex;
         flex-direction: row;
+        box-sizing: border-box;
+        
 
         &.P {
             display: flex;
             justify-content: center;
             background-color: blue;
-            width: 15px;
-            height: 15px;
-            border-radius: 15px;
-            font-weight: 600;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 1px solid;
+            
         }
 
         &.K {
             display: flex;
             justify-content: center;
             background-color: red;
-            width: 15px;
-            height: 15px;
-            border-radius: 15px;
-            font-weight: 600;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 1px solid;
         }
 
         &.G {
             display: flex;
             justify-content: center;
             background-color: green;
-            width: 15px;
-            height: 15px;
-            border-radius: 15px;
-            font-weight: 600;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 1px solid;
         }
 
         &.and {

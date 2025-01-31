@@ -1,6 +1,7 @@
 import React from 'react';
 import './Move.scss'
 import MoveNotation from '../MoveNotation';
+import { MOVE_LEVEL_MATCH } from './constants';
 
 const Move = ({
     move,
@@ -28,10 +29,18 @@ const Move = ({
     const showOnBlock = guard_stats !== '-';
     const showOnHit = normal_hit_stats !== '-';
     const showOnCh = counter_hit_stats !== '-';
-
+    const parsedLevel = MOVE_LEVEL_MATCH[level];
+    console.log(level)
     return (
         <div className='move'>
-            <div className='move__name'>{name} ({level})</div>
+            <div className='move__main'>
+                <span className='move__main__name'>{name} </span>
+                {parsedLevel &&
+                    <span className={`move__main__level ${parsedLevel}`}>
+                        {parsedLevel}
+                    </span>
+                }
+            </div>
             {!hideType && <div className='move__type'>{commandType}</div>}
             {showDmg &&
                 <div className='move__damage'>

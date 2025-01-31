@@ -36,13 +36,14 @@ const MoveTypSelectModal = ({
                 />
                 {moveKeys.map(moveKey => {
                     if (moveKey === 'allMoves') return null;
-
+                    const pSelectedMoveType = moveKey.split('-').join(' ');
+                    
                     return (
                         <Button
                             key={moveKey}
                             modifier={moveKey === selectedMoveType ? 'active' : ''}
                             value={moveKey}
-                            text={moveKey}
+                            text={pSelectedMoveType}
                             onClick={handleCharacterClick}
                         />
                     )

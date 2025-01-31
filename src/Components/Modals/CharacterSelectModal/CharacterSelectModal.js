@@ -30,16 +30,13 @@ const CharacterSelectModal = () => {
             </ModalHeader>
             <div className='character-select-modal__content'>
                 {CHARACTERS.map(character => {
-                    const characterFirstName = character.name.length > 8 ?
-                        character.name.split(' ')[0]
-                        : character.name;
-
+      
                     return (
                         <Button
                             key={character.id}
                             modifier={character.id === selectedCharacter ? 'active' : ''}
                             value={character.id}
-                            text={characterFirstName}
+                            text={character.name}
                             onClick={handleCharacterClick}
                         />
                     )

@@ -74,6 +74,7 @@ const MoveList = () => {
     const parsedSort = selectedMovelistSort.split('/');
     const [, sortName] = SORT_OPTIONS.find(option => option[0] === parsedSort[0]);
     const sortedList = sortMovelist(selectedMoveset, selectedMovelistSort);
+    const pSelectedMoveType = selectedMoveType.split('-').join(' ');
 
     return (
         <div className='move-list'>
@@ -99,7 +100,7 @@ const MoveList = () => {
             <div className='move-list__header'>
                 <Button
                     modifier={'active'}
-                    text={selectedMoveType === 'allMoves' ? 'All Moves' : selectedMoveType}
+                    text={selectedMoveType === 'allMoves' ? 'All Moves' : pSelectedMoveType}
                     onClick={toggleCharacterSelectModal}
                 />
                 <Button
