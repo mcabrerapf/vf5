@@ -32,12 +32,12 @@ const Move = ({
         <div className='move'>
             <div className='move__name'>{name} ({level})</div>
             {!hideType && <div className='move__type'>{commandType}</div>}
+            {showDmg &&
+                <div className='move__damage'>
+                    <strong>damage:</strong> {damage}
+                </div>
+            }
             <div className='move__frame-data'>
-                {showDmg &&
-                    <span>
-                        <strong>dmg:</strong>  {damage}
-                    </span>
-                }
                 {showExe &&
                     <span>
                         <strong>startup:</strong> {exe}
