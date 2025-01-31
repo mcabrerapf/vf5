@@ -6,7 +6,10 @@ import { B_URL, CHARACTERS } from '../../constants';
 function MainContextWrapper({
   children,
 }) {
-  const [contextData, setContextData] = useState({});
+  const [contextData, setContextData] = useState({
+    characters: {}, 
+    selectedCharacter: CHARACTERS[0][0]
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(false);
 
@@ -23,12 +26,12 @@ function MainContextWrapper({
                 characters[CHARACTERS[i][0]] = json;
               })
           })
-          setContextData({ characters, selectedCharacter: null })
+          setContextData({ characters, selectedCharacter: CHARACTERS[0][0] })
           setIsLoading(false)
         })
         .catch(error => {
           console.error('One of the promises failed:', error);
-          setContextData({ characters: {}, selectedCharacter: null });
+          setContextData({ characters: {}, selectedCharacter: CHARACTERS[0][0] });
           setIsLoading(false);
           setErrorMessage(error);
         });

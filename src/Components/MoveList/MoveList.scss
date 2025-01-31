@@ -23,7 +23,9 @@
     &__list-container {
         display: flex;
         flex-direction: row;
-        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 1rem;
+        height: 100%;
         height: calc(100% - 10rem);
 
         &__list {
@@ -31,11 +33,13 @@
             flex-direction: column;
             box-sizing: border-box;
             list-style: none;
-            margin: 1rem 0 0 0;
-            padding: 0 1rem 0 1rem;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 5rem;
             height: 100%;
             width: 100%;
             gap: 1.5rem;
+            overflow-y: auto;
 
             &__item {
                 width: 100%;

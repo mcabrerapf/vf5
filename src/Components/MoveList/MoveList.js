@@ -1,30 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MoveList.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import Move from '../Move';
 import Button from '../Button';
+import { ModalContextWrapper } from '../../Contexts/ModalContext';
+import Modal from '../Modals/Modal';
+import MoveTypSelectModal from '../Modals/MoveTypSelectModal';
 
 const MoveList = () => {
-    const [selectedMoveType, setSelectedMoveType] = useState('Normal')
+    const [selectedMoveType, setSelectedMoveType] = useState('allMoves');
+    const [showMoveTypeSelectModal, setShowMoveTypeSelectModal] = useState(false);
     const { characters, selectedCharacter } = useMainContext();
-    const selectedMoveset = characters[selectedCharacter][selectedMoveType];
-    const moveKeys = Object.keys(characters[selectedCharacter])
+    
+    useEffect(
+        () => {
+            setSelectedMoveType('allMoves');
+        },
+        [selectedCharacter]
+    );
 
-    const handleMoveTypeClick = (e) => {
-        const { value } = e.target;
-        setSelectedMoveType(value)
+    const handleModalClose = (type) => {
+        if (type) setSelectedMoveType(type);
+        toggleCharacterSelectModal();
     }
+
+    const toggleCharacterSelectModal = () => {
+        setShowMoveTypeSelectModal(!showMoveTypeSelectModal);
+    }
+
+    const moveKeys = Object.keys(characters[selectedCharacter])
+    const selectedCharacterMoveset = characters[selectedCharacter];
+
+    if (!selectedCharacterMoveset[selectedMoveType]) return null;
+
+    const selectedMoveset = selectedCharacterMoveset[selectedMoveType];
 
     return (
         <div className='move-list'>
+            <ModalContextWrapper
+                showModal={showMoveTypeSelectModal}
+                closeModal={handleModalClose}
+            >
+                <Modal>
+                    <MoveTypSelectModal moveKeys={moveKeys} />
+                </Modal>
+            </ModalContextWrapper>
             <div className='move-list__header'>
-                {moveKeys.map(moveKey =>
-                    <Button
-                        modifier={selectedMoveType === moveKey ? 'active' : null}
-                        text={moveKey === 'allMoves' ? 'All Moves' : moveKey}
-                        value={moveKey}
-                        onClick={handleMoveTypeClick}
-                    />)}
+                <Button
+                    modifier={'active'}
+                    text={selectedMoveType === 'allMoves' ? 'All Moves' : selectedMoveType}
+                    value={selectedMoveType}
+                    onClick={toggleCharacterSelectModal}
+                />
             </div>
             <div className='move-list__list-container'>
                 <ul className='move-list__list-container__list'>

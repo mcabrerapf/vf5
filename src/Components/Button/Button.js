@@ -13,6 +13,7 @@ const Button = ({
         e.preventDefault();
         onClick(e);
     }
+    
     return (
         <button
             className={className}

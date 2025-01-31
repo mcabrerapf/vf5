@@ -1,31 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Character.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import MoveList from '../MoveList';
 import Button from '../Button';
+import Modal from '../Modals/Modal';
+import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import { CHARACTERS } from '../../constants';
+import CharacterSelectModal from '../Modals/CharacterSelectModal';
 
 const Character = () => {
-    const { setSelectedCharacter, selectedCharacter } = useMainContext();
+    const { selectedCharacter } = useMainContext();
+    const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
+    const [characterView, setCharacterView] = useState('moves');
     const [, characterName] = CHARACTERS.find(options => options[0] === selectedCharacter);
 
-    const onClick = (e) => {
-        e.preventDefault();
-        setSelectedCharacter();
+    const toggleCharacterSelectModal = () => {
+        setShowCharacterSelectModal(!showCharacterSelectModal)
+    }
+
+    const handleViewChange = (e) => {
+        setCharacterView(e.target.value);
     }
 
     return (
         <div className='character'>
+            <ModalContextWrapper
+                showModal={showCharacterSelectModal}
+                closeModal={toggleCharacterSelectModal}
+            >
+                <Modal>
+                    <CharacterSelectModal />
+                </Modal>
+            </ModalContextWrapper>
             <header className='character__header'>
                 <Button
-                    onClick={onClick}
-                    text={'<'}
+                    modifier={'no-border'}
+                    onClick={toggleCharacterSelectModal}
+                    text={characterName}
                 />
-                <div className='character__header__name'>
-                    {characterName}
-                </div>
             </header>
-            <MoveList />
+            <div className='character__sub-header'>
+                <Button
+                    modifier={characterView === 'moves' ? 'active' : ''}
+                    value='moves'
+                    text='Moves'
+                    onClick={handleViewChange}
+                />
+                <Button
+                    modifier={characterView === 'combos' ? 'active' : ''}
+                    value='combos'
+                    text='Combos'
+                    onClick={handleViewChange}
+                />
+            </div>
+            {characterView === 'moves' && <MoveList />}
+            {/* {characterView === 1 && <MoveList />} */}
         </div>
     )
 }
