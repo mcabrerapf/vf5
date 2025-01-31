@@ -1,0 +1,41 @@
+.move-notation {
+    &__command {
+        &.P {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background-color: blue;
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        &.K {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background-color: red;
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        &.G {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background-color: green;
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        &.and{
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+    }
+}
