@@ -19,9 +19,14 @@ const CHARACTERS = [
     ['taka', 'Taka Arashi'],
     ['vanessa', 'Vanessa Lewis'],
     ['wolf', 'Wolf Hawkfield'],
-]
+];
+const LOCAL_KEYS = {
+    SELECTED_CHARACTER: 'vf5_selected-character',
+    SELECTED_MOVE_TYPE: 'vf5_selected-move-type'
+}
 
 export {
     B_URL,
-    CHARACTERS
+    CHARACTERS,
+    LOCAL_KEYS
 }

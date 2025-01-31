@@ -16,6 +16,9 @@
         font-size: 1.2rem;
     }
     &__damage {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
         font-size: 1.2rem;
     }
 

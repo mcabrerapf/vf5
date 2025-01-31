@@ -4,10 +4,12 @@ import MoveNotation from '../MoveNotation';
 
 const Move = ({
     move,
+    showSober = false,
     hideType = false
 }) => {
     const {
         // active,
+        // total,
         command,
         commandType,
         counter_hit_stats,
@@ -19,8 +21,7 @@ const Move = ({
         name,
         normal_hit_stats,
         notes,
-        // sober,
-        // total
+        sober,
     } = move;
     const showDmg = damage !== '-';
     const showExe = exe !== '-';
@@ -34,7 +35,11 @@ const Move = ({
             {!hideType && <div className='move__type'>{commandType}</div>}
             {showDmg &&
                 <div className='move__damage'>
-                    <strong>damage:</strong> {damage}
+                    <span><strong>damage:</strong> {damage}</span>
+                    <span><strong>avoid:</strong> {escape}</span>
+                    {showSober && sober !== "0" &&
+                        <span><strong>sober:</strong> {sober}</span>
+                    }
                 </div>
             }
             <div className='move__frame-data'>
@@ -60,14 +65,16 @@ const Move = ({
                 }
             </div>
             <div className='move__command'>
-                {command.map(notation =>
-                    <MoveNotation command={notation} />
+                {command.map((notation, i) =>
+                    <MoveNotation
+                        key={`${notation}-${i}`}
+                        command={notation}
+                    />
                 )}
             </div>
             <div className='move__notes'>
                 {notes}
             </div>
-
         </div>
     )
 }
