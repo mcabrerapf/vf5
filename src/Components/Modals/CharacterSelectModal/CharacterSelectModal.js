@@ -8,7 +8,7 @@ import { useMainContext } from '../../../Contexts/MainContext';
 
 const CharacterSelectModal = () => {
     const { closeModal } = useModalContext();
-    const { setSelectedCharacter } = useMainContext();
+    const { setSelectedCharacter, selectedCharacter } = useMainContext();
 
     const handleClose = () => {
         closeModal();
@@ -37,6 +37,7 @@ const CharacterSelectModal = () => {
                     return (
                         <Button
                             key={character.id}
+                            modifier={character.id === selectedCharacter ? 'active' : ''}
                             value={character.id}
                             text={characterFirstName}
                             onClick={handleCharacterClick}

@@ -1563,9 +1563,7 @@
                 "name": "Mouko Kouhazan",
                 "notes": "",
                 "command": [
-                    "From Teirou",
-                    "[K]",
-                    "anpo",
+                    "From Teirou Kanpo",
                     "[P]"
                 ],
                 "damage": "20",
@@ -1584,9 +1582,7 @@
                 "name": "Hyousatai",
                 "notes": "",
                 "command": [
-                    "From Teirou",
-                    "[K]",
-                    "anpo",
+                    "From Teirou Kanpo",
                     "[K]"
                 ],
                 "damage": "21",

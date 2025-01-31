@@ -28,6 +28,12 @@ const MoveTypSelectModal = ({
                 />
             </ModalHeader>
             <div className='move-type-select-modal__content'>
+                <Button
+                    modifier={'allMoves' === selectedMoveType ? 'active' : ''}
+                    value={'allMoves'}
+                    text={'All Moves'}
+                    onClick={handleCharacterClick}
+                />
                 {moveKeys.map(moveKey => {
                     if (moveKey === 'allMoves') return null;
 

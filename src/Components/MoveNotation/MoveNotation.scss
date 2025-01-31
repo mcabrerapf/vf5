@@ -1,9 +1,17 @@
 .move-notation {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    flex-wrap: wrap;
+
     &__command {
+        display: flex;
+        flex-direction: row;
+
         &.P {
             display: flex;
             justify-content: center;
-            align-content: center;
             background-color: blue;
             width: 15px;
             height: 15px;
@@ -14,7 +22,6 @@
         &.K {
             display: flex;
             justify-content: center;
-            align-content: center;
             background-color: red;
             width: 15px;
             height: 15px;
@@ -25,7 +32,6 @@
         &.G {
             display: flex;
             justify-content: center;
-            align-content: center;
             background-color: green;
             width: 15px;
             height: 15px;
@@ -33,7 +39,12 @@
             font-weight: 600;
         }
 
-        &.and{
+        &.and {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        &.combi {
             font-size: 1.2rem;
             font-weight: 700;
         }

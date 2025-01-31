@@ -65,12 +65,9 @@ const Move = ({
                 }
             </div>
             <div className='move__command'>
-                {command.map((notation, i) =>
-                    <MoveNotation
-                        key={`${notation}-${i}`}
-                        command={notation}
-                    />
-                )}
+                <MoveNotation
+                    command={command}
+                />
             </div>
             <div className='move__notes'>
                 {notes}

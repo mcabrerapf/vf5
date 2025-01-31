@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     overflow-y: auto;
+    scrollbar-color: var(--white-color) var(--white-color);
 
     &__list {
         display: flex;

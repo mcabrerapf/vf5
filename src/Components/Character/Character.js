@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './Character.scss'
 import { useMainContext } from '../../Contexts/MainContext';
+import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import MoveList from '../MoveList';
 import Button from '../Button';
 import Modal from '../Modals/Modal';
-import { ModalContextWrapper } from '../../Contexts/ModalContext'
-import { CHARACTERS } from '../../constants';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
+import { CHARACTERS } from '../../constants';
+
 
 const Character = () => {
     const { selectedCharacter } = useMainContext();
