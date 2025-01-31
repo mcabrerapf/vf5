@@ -9,13 +9,15 @@ import MoveTypSelectModal from '../Modals/MoveTypSelectModal';
 import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 import MoveListSortModal from '../Modals/MoveListSortModal';
 import { SORT_OPTIONS } from '../Modals/MoveListSortModal/constants';
-import { sortMovelist } from './helpers';
+import { sortMovelist, filterMoveList } from './helpers';
+import MoveListFooter from './MoveListFooter/MoveListFooter';
 
 const MoveList = () => {
     const { selectedCharacter } = useMainContext()
     const listRef = useRef(null);;
     const [selectedMoveType, setSelectedMoveType] = useState(null);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState('/asc');
+    const [selectedFilters, setSelectedFilters] = useState([]);
     const [showMoveTypeSelectModal, setShowMoveTypeSelectModal] = useState(false);
     const [showSortModal, setShowSortModal] = useState(false);
 
@@ -30,18 +32,33 @@ const MoveList = () => {
             const isValidMoveType = !!moveKeys.find(moveKey => moveKey === localSelectedMoveType);
             if (!isValidMoveType) localStorage.setItem(LOCAL_KEYS.SELECTED_MOVE_TYPE, 'allMoves');
             const typeToUse = isValidMoveType ? localSelectedMoveType : 'allMoves';
+
+            const localSelectedSort = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
+            const localFilters = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
+            const parsedLocalFilters = !localFilters? []:localFilters.split(',');
+            setSelectedFilters(parsedLocalFilters);
+            setSelectedMovelistSort(localSelectedSort);
             setSelectedMoveType(typeToUse);
         },
-        [selectedCharacter, moveKeys]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
     );
 
-    useEffect(() => {
-        // TODO: fix scroll
-        // listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        // listRef.current.scrollTop = 0
-    },
-        [selectedMovelistSort]
-    )
+    // useEffect(() => {
+    //     TODO: fix scroll
+    //     listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    //     listRef.current.scrollTop = 0
+    // },
+    //     [selectedMovelistSort]
+    // )
+
+    const handleFiltersChange = (newFilters) => {
+        if (newFilters) {
+            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, newFilters);
+            setSelectedFilters(newFilters);
+        }
+
+    }
 
     const handleTypeSelectModalClose = (type) => {
         if (type) {
@@ -73,7 +90,8 @@ const MoveList = () => {
     const isShunDi = selectedCharacter === 'shun';
     const parsedSort = selectedMovelistSort.split('/');
     const [, sortName] = SORT_OPTIONS.find(option => option[0] === parsedSort[0]);
-    const sortedList = sortMovelist(selectedMoveset, selectedMovelistSort);
+    const filteredMovelist = filterMoveList(selectedMoveset, selectedFilters);
+    const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const pSelectedMoveType = selectedMoveType.split('-').join(' ');
 
     return (
@@ -104,6 +122,7 @@ const MoveList = () => {
                     onClick={toggleCharacterSelectModal}
                 />
                 <Button
+                    modifier={"active"}
                     text={`Sort: ${sortName} ${parsedSort[1]}`}
                     onClick={toggleSortModal}
 
@@ -114,7 +133,7 @@ const MoveList = () => {
                     ref={listRef}
                     className='move-list__list-container__list'
                 >
-                    {sortedList.map((move, i) => {
+                    {sortedMovelist.map((move, i) => {
                         return (
                             <li
                                 key={`${move}-${i}`}
@@ -129,6 +148,10 @@ const MoveList = () => {
                     })}
                 </ul>
             </div>
+            <MoveListFooter
+                selectedFilters={selectedFilters}
+                handleFiltersChange={handleFiltersChange}
+            />
         </div>
     )
 }

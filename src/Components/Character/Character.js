@@ -51,6 +51,7 @@ const Character = () => {
                 />
                 <Button
                     modifier={characterView === 'combos' ? 'active' : ''}
+                    disabled
                     value='combos'
                     text='Combos'
                     onClick={handleViewChange}

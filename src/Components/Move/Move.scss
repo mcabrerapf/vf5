@@ -10,108 +10,12 @@
     &__main {
         font-size: 1.5rem;
         font-weight: 600;
+        gap: 0.5rem;
         display: flex;
         flex-direction: row;
-        gap: 0.5rem;
         justify-content: space-between;
+        align-items: center;
 
-        &__level {
-            font-size: 1.2rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.5rem;
-            height: 2rem;
-            box-sizing: border-box;
-
-            &.high {
-                background-color: #ffe907;
-                color: black;
-            }
-
-            &.ex-high {
-                background-color: #c51a05;
-                color: black;
-            }
-
-            &.mid {
-                background-color: #05d602;
-                color: black;
-            }
-
-            &.ex-mid {
-                background-color: #1db0f8;
-                color: black;
-            }
-
-            &.low {
-                background-color: #df5fd9;
-                color: black;
-            }
-
-            &.ex-low {
-                background-color: #904efe;
-                color: black;
-            }
-
-            &.high-throw {
-                background: linear-gradient(to right, #ffe907, white);
-                color: black;
-            }
-
-            &.low-throw {
-                background: linear-gradient(to right, #df5fd9, white);
-                color: black;
-            }
-
-            &.high-catch-throw {
-                background: linear-gradient(to right, #ffe907, #c51a05);
-                color: black;
-            }
-
-            &.low-catch-throw {
-                background: linear-gradient(to right, #df5fd9, #c51a05);
-                color: black;
-            }
-
-            &.attack-throw {
-                background: linear-gradient(to right, #05d602, white);
-                color: black;
-            }
-
-            &.downed-throw {
-                background: linear-gradient(to right, #904efe, white);
-                color: black;
-            }
-
-            &.throw-combo {
-                background: linear-gradient(to right, white, #05d602);
-                color: black;
-            }
-
-            &.downed-attack {
-                background-color: grey;
-                color: black;
-            }
-
-            &.sabaki {
-                background: linear-gradient(to right, white, grey);
-                color: black;
-            }
-
-            &.special {
-                background: linear-gradient(to right, gray, white);
-                color: black;
-            }
-            
-            &.reversal {
-                background: linear-gradient(to top, gray, white);
-                color: black;
-            }
-
-            &.rev-combo{
-                background: linear-gradient(to top, #05d602, gray);
-                color: black;
-            }
-        }
     }
 
     &__type {
@@ -131,8 +35,6 @@
         gap: 1rem;
         font-size: 1.2rem;
     }
-
-    &__command {}
 
     &__notes {
         font-size: 1.2rem;

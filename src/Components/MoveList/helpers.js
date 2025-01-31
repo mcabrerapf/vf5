@@ -1,3 +1,5 @@
+import { MOVE_LEVEL_MATCH } from "../../constants";
+
 const sortMovelist = (list, sort) => {
     const parsedSort = sort.split('/');
     if (parsedSort[0] === '' || !parsedSort[0]) return list;
@@ -12,6 +14,17 @@ const sortMovelist = (list, sort) => {
         });
 }
 
+const filterMoveList = (list, filters) => {
+    if(!filters.length) return list;
+
+    return list.filter(move=> {
+        const parsedType = `level/${MOVE_LEVEL_MATCH[move.level]}`
+        const isValid = filters.includes(parsedType);
+        return isValid;
+    })
+}
+
 export {
-    sortMovelist
+    sortMovelist,
+    filterMoveList
 }

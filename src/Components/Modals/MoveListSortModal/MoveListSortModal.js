@@ -74,7 +74,6 @@ const MoveListSortModal = ({ selectedMovelistSort }) => {
                         onClick={handleSortUpdate}
                     />
                 </div>
-
             </div>
         </div>
     )
