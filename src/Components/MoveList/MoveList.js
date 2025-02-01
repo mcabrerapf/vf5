@@ -3,13 +3,13 @@ import './MoveList.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
-import { CHARACTERS, LOCAL_KEYS, NOTATION_CHARACTERS } from '../../constants';
+import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from './ActiveFiltersList';
 
 const MoveList = () => {
-    const { selectedCharacter } = useMainContext()
-    const listRef = useRef(null);;
+    const listRef = useRef(null);
+    const { selectedCharacter } = useMainContext();
     const [selectedMoveType, setSelectedMoveType] = useState(null);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState('/asc');
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -22,16 +22,13 @@ const MoveList = () => {
     useEffect(
         () => {
             const localSelectedMoveType = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVE_TYPE);
-            const isValidMoveType = !!moveKeys.find(moveKey => moveKey === localSelectedMoveType);
-            if (!isValidMoveType) localStorage.setItem(LOCAL_KEYS.SELECTED_MOVE_TYPE, 'allMoves');
-            const typeToUse = isValidMoveType ? localSelectedMoveType : 'allMoves';
 
             const localSelectedSort = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
             const localFilters = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
             const parsedLocalFilters = !localFilters ? [] : localFilters.split(',');
             setSelectedFilters(parsedLocalFilters);
             setSelectedMovelistSort(localSelectedSort);
-            setSelectedMoveType(typeToUse);
+            setSelectedMoveType(localSelectedMoveType);
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []
@@ -54,7 +51,10 @@ const MoveList = () => {
 
     const selectedCharacterMoveset = selectedCharacterData.movelist;
 
-    if (!selectedCharacterMoveset[selectedMoveType] || !selectedMoveType) return null;
+    if (!selectedCharacterMoveset[selectedMoveType] || !selectedMoveType) {
+        setSelectedMoveType('allMoves');
+        return null;
+    }
 
     const selectedMoveset = selectedCharacterMoveset[selectedMoveType];
     const isShunDi = selectedCharacter === 'shun';

@@ -1,31 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Character.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import MoveList from '../MoveList';
 import Button from '../Button';
+import Combos from '../Combos';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
-import { CHARACTERS } from '../../constants';
-import Combos from '../Combos';
+import { CHARACTERS, LOCAL_KEYS } from '../../constants';
+
 
 
 const Character = () => {
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
-    const [characterView, setCharacterView] = useState('moves');
-    const { name: characterName } = CHARACTERS
-        .find(character => character.id === selectedCharacter);
-    
+    const [characterView, setCharacterView] = useState();
+
+    useEffect(() => {
+        const localSelectedView = localStorage.getItem(LOCAL_KEYS.SELECTED_CHARACTER_VIEW);
+        setCharacterView(localSelectedView);
+    }, [])
 
     const toggleCharacterSelectModal = () => {
         setShowCharacterSelectModal(!showCharacterSelectModal)
     }
 
-    const handleViewChange = (e) => {
-        setCharacterView(e.target.value);
+    const handleViewChange = ({ target: { value } }) => {
+        localStorage.setItem(LOCAL_KEYS.SELECTED_CHARACTER_VIEW, value);
+        setCharacterView(value);
     }
 
+
+    const { name: characterName } = CHARACTERS
+        .find(character => character.id === selectedCharacter);
+    
     return (
         <div className='character'>
             <ModalContextWrapper

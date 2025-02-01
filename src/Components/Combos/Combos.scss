@@ -23,6 +23,7 @@
             &__combo {
                 display: flex;
                 flex-direction: row;
+                align-items: center;
                 
                 .move-command {
                     box-sizing: border-box;

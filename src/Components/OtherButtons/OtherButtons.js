@@ -35,6 +35,20 @@ const OtherButtons = ({
                     onClick={onClick}
                 />
             </div>
+            <div className='other-buttons__grouping'>
+                <Notation
+                    notation='wall'
+                    onClick={onClick}
+                />
+                <Notation
+                    notation='side'
+                    onClick={onClick}
+                />
+                <Notation
+                    notation='DEL'
+                    onClick={onClick}
+                />
+            </div>
         </div>
     )
 }

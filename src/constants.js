@@ -106,6 +106,7 @@ const NOTATION_CHARACTERS = [
 
 const LOCAL_KEYS = {
     SELECTED_CHARACTER: 'vf5_selected-character',
+    SELECTED_CHARACTER_VIEW: 'vf5_selected-character-view',
     SELECTED_MOVE_TYPE: 'vf5_selected-move-type',
     SELECTED_MOVELIST_SORT: 'vf5_selected-movelist-sort',
     SELECTED_MOVELIST_FILTERS: 'vf5_selected-movelist-filters',

@@ -11,6 +11,7 @@ import ComboBuilderModal from '../Modals/ComboBuilderModal';
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
     const [combos, setCombos] = useState([]);
+    const [selectedComboIndex, setSelectedComboIndex] = useState(null);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const localComboKey = `${LOCAL_KEYS.CHARACTER_COMBOS}${selectedCharacter}`;
 
@@ -22,19 +23,41 @@ const Combos = () => {
         },
         [localComboKey]
     )
+
     const handleCloseModal = (newCombo) => {
         if (newCombo) {
-            const updatedCombos = [...combos.map(combo => combo), newCombo];
-            const stringifiedCombos = JSON.stringify(updatedCombos);
-            localStorage.setItem(localComboKey, stringifiedCombos);
-            setCombos(updatedCombos);
+            if (selectedComboIndex === null) {
+                const updatedCombos = [...combos.map(combo => combo), newCombo];
+                const stringifiedCombos = JSON.stringify(updatedCombos);
+                localStorage.setItem(localComboKey, stringifiedCombos);
+                setCombos(updatedCombos);
+            } else {
+                const updatedCombos = combos.map((combo, index) => {
+                    if (index === selectedComboIndex) return newCombo;
+                    return combo;
+                });
+                const stringifiedCombos = JSON.stringify(updatedCombos);
+                localStorage.setItem(localComboKey, stringifiedCombos);
+                setCombos(updatedCombos);
+            }
         }
-        setShowComboBuilderModal(!showComboBuilderModal);
+        toggleComboBuilderModal();
+    }
+
+    const handleComboClick = (index) => {
+        setSelectedComboIndex(index);
+        toggleComboBuilderModal();
+    }
+
+    const handleNewComboClick = () => {
+        setSelectedComboIndex(null);
+        toggleComboBuilderModal();
     }
 
     const toggleComboBuilderModal = () => {
         setShowComboBuilderModal(!showComboBuilderModal);
     }
+
 
     const handleDeleteCombo = (comboIndex) => {
         const updatedCombos = combos.filter((_, index) => index !== comboIndex);
@@ -43,6 +66,8 @@ const Combos = () => {
         setCombos(updatedCombos);
     }
 
+    const selectedCombo = combos[selectedComboIndex];
+
     return (
         <div className='combos'>
             <ModalContextWrapper
@@ -50,18 +75,23 @@ const Combos = () => {
                 closeModal={handleCloseModal}
             >
                 <Modal>
-                    <ComboBuilderModal />
+                    <ComboBuilderModal selectedCombo={selectedCombo} />
                 </Modal>
             </ModalContextWrapper>
             <div className='combos__list-container'>
-                <ul className='combos__list-container__list'>
+                <ul
+                    className='combos__list-container__list'
+                >
                     {combos.map((combo, i) =>
                         <li
                             key={`${combo.join('')}-${i}`}
                             className='combos__list-container__list__combo'
                         >
-                            <MoveCommand command={combo} />
-                            <Button 
+                            <MoveCommand
+                                command={combo}
+                                onClick={() => handleComboClick(i)}
+                            />
+                            <Button
                                 modifier="no-border"
                                 text="X"
                                 onClick={() => handleDeleteCombo(i)}
@@ -73,7 +103,7 @@ const Combos = () => {
             <footer className='combos__footer'>
                 <Button
                     text={"+"}
-                    onClick={toggleComboBuilderModal}
+                    onClick={handleNewComboClick}
                 />
             </footer>
         </div>

@@ -78,8 +78,28 @@ const MoveListFiltersModal = ({
                         onClick={handleButtonClick}
                     />
                     <div
+                        className={`movelist-filters-modal__content__buttons__grouped-button ${selectedTypeFilters.includes(`command/[P][+][K][+][G]`) ? 'selected' : ''}`}
+                        onClick={() => handleButtonClick('[P][+][K][+][G]')}
+                    >
+                        <Notation
+                            notation='[P]'
+                        />
+                        <Notation
+                            notation='[+]'
+                        />
+                        <Notation
+                            notation='[K]'
+                        />
+                        <Notation
+                            notation='[+]'
+                        />
+                        <Notation
+                            notation='[G]'
+                        />
+                    </div>
+                    <div
                         className={`movelist-filters-modal__content__buttons__grouped-button ${selectedTypeFilters.includes(`command/[P][+][K]`) ? 'selected' : ''}`}
-                        onClick={()=> handleButtonClick('[P][+][K]')}
+                        onClick={() => handleButtonClick('[P][+][K]')}
                     >
                         <Notation
                             notation='[P]'
@@ -93,7 +113,7 @@ const MoveListFiltersModal = ({
                     </div>
                     <div
                         className={`movelist-filters-modal__content__buttons__grouped-button ${selectedTypeFilters.includes(`command/[K][+][G]`) ? 'selected' : ''}`}
-                        onClick={()=> handleButtonClick('[K][+][G]')}
+                        onClick={() => handleButtonClick('[K][+][G]')}
                     >
                         <Notation
                             notation='[K]'
@@ -107,7 +127,7 @@ const MoveListFiltersModal = ({
                     </div>
                     <div
                         className={`movelist-filters-modal__content__buttons__grouped-button ${selectedTypeFilters.includes(`command/[P][+][G]`) ? 'selected' : ''}`}
-                        onClick={()=> handleButtonClick('[P][+][G]')}
+                        onClick={() => handleButtonClick('[P][+][G]')}
                     >
                         <Notation
                             notation='[P]'
@@ -119,31 +139,12 @@ const MoveListFiltersModal = ({
                             notation='[G]'
                         />
                     </div>
-                    <div
-                        className={`movelist-filters-modal__content__buttons__grouped-button ${selectedTypeFilters.includes(`command/[P][+][K][+][G]`) ? 'selected' : ''}`}
-                        onClick={()=> handleButtonClick('[P][+][K][+][G]')}
-                    >
-                        <Notation
-                            notation='[P]'
-                        />
-                        <Notation
-                            notation='[+]'
-                        />
-                        <Notation
-                            notation='[K]'
-                        />
-                        <Notation
-                            notation='[+]'
-                        />
-                        <Notation
-                            notation='[G]'
-                        />
-                    </div>
+
                 </div>
                 <div className='movelist-filters-modal__content__types'>
                     {typeOptions.map(typeOption => {
                         const isSelected = selectedTypeFilters.includes(`level/${typeOption}`);
-                        const modifier = isSelected ? 'selected' : '';
+                        const modifier = isSelected ? 'selected' : 'not-selected';
 
                         return (
                             <MoveTypeBadge

@@ -1,7 +1,7 @@
 .other-buttons {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 1rem;
 
     &__grouping {
         display: flex;
@@ -9,6 +9,10 @@
         justify-content: center;
         gap: 0.5rem;
         width: 100%;
+
+        &.align-right  {
+            justify-content: end;
+        }
 
         .notation {
             width: 3rem;

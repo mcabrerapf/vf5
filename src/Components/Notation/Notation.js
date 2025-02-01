@@ -6,6 +6,7 @@ import Icon from '../Icon';
 const Notation = ({
     notation = '',
     modifier,
+    notationIndex,
     isCombiStart,
     isCombiEnd,
     onClick = () => { }
@@ -16,8 +17,9 @@ const Notation = ({
     const className = ['notation', modifier].filter(Boolean).join(' ')
 
     const handleOnClick = () => {
-        onClick(notation);
+        onClick(notation, notationIndex);
     }
+    
     return (
         <>
             {isCombiStart &&
