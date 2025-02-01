@@ -8,7 +8,9 @@
     padding: 0.5rem;
     gap: 0.5rem;
 
-    &__item {
-
+    &__filter-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
     }
 }

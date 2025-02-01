@@ -2,9 +2,13 @@ import React from 'react';
 import './ActiveFiltersList.scss'
 import MoveTypeBadge from '../../MoveTypeBadge';
 import MoveCommand from '../../MoveCommand';
+import Button from '../../Button';
+import { LOCAL_KEYS } from '../../../constants';
 
 const ActiveFiltersList = ({
     selectedFilters,
+    selectedMovelistSort,
+    setSelectedMovelistSort,
     handleFiltersChange
 }) => {
 
@@ -13,8 +17,20 @@ const ActiveFiltersList = ({
         handleFiltersChange(newFilters);
     }
 
+    const onSortClick = () => {
+        localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT, '/asc');
+        setSelectedMovelistSort('/asc');
+    }
+    
+    const [sortType] = selectedMovelistSort.split('/');
+    
     return (
         <div className='active-filters-list'>
+            {!!sortType &&
+                <Button
+                    text={selectedMovelistSort}
+                    onClick={onSortClick}
+                />}
             {selectedFilters.map(selectedFilter => {
                 const [filterType, parsedFilterName] = selectedFilter.split('/')
 
@@ -33,7 +49,8 @@ const ActiveFiltersList = ({
                                 moveType={parsedFilterName}
                                 value={selectedFilter}
                                 onClick={onFilterClick}
-                            />}
+                            />
+                        }
                     </>
                 )
             }

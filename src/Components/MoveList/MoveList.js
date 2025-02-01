@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './MoveList.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
@@ -66,6 +66,8 @@ const MoveList = () => {
             />
             <ActiveFiltersList
                 selectedFilters={selectedFilters}
+                selectedMovelistSort={selectedMovelistSort}
+                setSelectedMovelistSort={setSelectedMovelistSort}
                 handleFiltersChange={handleFiltersChange}
             />
             <div className='movelist__list-container'>

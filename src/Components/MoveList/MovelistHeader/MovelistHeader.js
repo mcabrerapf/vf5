@@ -53,10 +53,10 @@ const MovelistHeader = ({
         setShowFiltersModal(!showFiltersModal)
     }
 
-    const parsedSort = selectedMovelistSort.split('/');
-    const [, sortName] = SORT_OPTIONS.find(option => option[0] === parsedSort[0]);
     const pSelectedMoveType = selectedMoveType.split('-').join(' ');
-
+    const [sortType] = selectedMovelistSort.split('/');
+    const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
+    const sortButtonModifier = !!sortType ? 'active' : '';
     return (
         <header className='movelist-header'>
             <ModalContextWrapper
@@ -93,16 +93,19 @@ const MovelistHeader = ({
                 text={selectedMoveType === 'allMoves' ? 'All Moves' : pSelectedMoveType}
                 onClick={toggleMoveTypeSelectModal}
             />
-            <Button
-                modifier={"active"}
-                text={'Filters'}
-                onClick={toggleFiltersModal}
-            />
-            <Button
-                modifier={"active"}
-                text={`${sortName}/${parsedSort[1]}`}
-                onClick={toggleSortModal}
-            />
+            <div className='movelist-header__filter-buttons'>
+                <Button
+                    modifier={filtersButtonModifier}
+                    text={'Filters'}
+                    onClick={toggleFiltersModal}
+                />
+                <Button
+                    modifier={sortButtonModifier}
+                    text={"Sort"}
+                    onClick={toggleSortModal}
+                />
+            </div>
+
         </header>
     )
 }
