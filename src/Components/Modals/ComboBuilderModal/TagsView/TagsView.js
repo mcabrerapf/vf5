@@ -4,6 +4,7 @@ import CharacterBadge from '../../../CharacterBadge';
 import { CHARACTERS } from '../../../../constants';
 
 const TagsView = ({
+    characterIds,
     selectedTags,
     setSelectedTags
 }) => {
@@ -33,12 +34,12 @@ const TagsView = ({
     return (
         <div className='tags-view'>
             <div className='tags-view__characters'>
-                {CHARACTERS.map(character =>
+                {characterIds.map(character =>
                     <CharacterBadge
-                        key={character.id}
-                        character={character.id}
-                        value={character.id}
-                        modifier={selectedTags.includes(character.id) ? 'selected' : ''}
+                        key={character}
+                        character={character}
+                        value={character}
+                        modifier={selectedTags.includes(character) ? 'selected' : ''}
                         onClick={handleTagClick}
                     />
                 )}

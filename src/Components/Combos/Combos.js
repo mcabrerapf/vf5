@@ -26,9 +26,7 @@ const Combos = () => {
 
     const handleCloseModal = (newCombo) => {
         if (newCombo) {
-            console.log(newCombo);
             if (!newCombo.id) {
-                console.log('SAVING');
                 const updatedCombos = [
                     ...combos.map(combo => combo),
                     { ...newCombo, id: generateId() }
@@ -37,7 +35,6 @@ const Combos = () => {
                 localStorage.setItem(localComboKey, stringifiedCombos);
                 setCombos(updatedCombos);
             } else {
-                console.log('UPDATING');
                 const updatedCombos = combos.map((combo) => {
                     if (combo.id === newCombo.id) return newCombo;
                     return combo;

@@ -55,6 +55,7 @@ const CommandView = ({
                     notationClick={handleNotationClick}
                 />
                 <Button
+                    modifier="delete-button"
                     text='X'
                     onClick={handleDelete}
                 />

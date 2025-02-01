@@ -7,15 +7,17 @@ import { useModalContext } from '../../../Contexts/ModalContext';
 import CommandView from './CommandView';
 import TagsView from './TagsView';
 import ExtrasView from './ExtrasView';
+import { CHARACTERS } from '../../../constants';
 
 const ComboBuilderModal = ({
     selectedCombo = {}
 }) => {
+    const characterIds = CHARACTERS.map(character => character.id);
     const { command, tags, id } = selectedCombo
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);
-    const [selectedTags, setSelectedTags] = useState(tags || []);
+    const [selectedTags, setSelectedTags] = useState(tags || characterIds);
 
     const handleSaveCombo = () => {
         closeModal({
@@ -32,6 +34,8 @@ const ComboBuilderModal = ({
     const handleViewChage = ({ target: { value } }) => {
         setComboView(value);
     }
+
+    const canSave = !!comboNotation.length && !!selectedTags.length;
 
     return (
         <div className='combo-builder-modal'>
@@ -72,6 +76,7 @@ const ComboBuilderModal = ({
                 }
                 {comboView === 'tags' &&
                     <TagsView
+                        characterIds={characterIds}
                         selectedTags={selectedTags}
                         setSelectedTags={setSelectedTags}
                     />
@@ -84,6 +89,7 @@ const ComboBuilderModal = ({
             <ModalFooter modifier="align-right">
                 <Button
                     text='✓'
+                    disabled={!canSave}
                     onClick={handleSaveCombo}
                 />
             </ModalFooter>

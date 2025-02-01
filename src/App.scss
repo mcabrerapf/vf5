@@ -3,3 +3,14 @@
   width: 100%;
   overflow: hidden;
 }
+
+input,
+textarea,
+button,
+select,
+li,
+div,
+span,
+a {
+  -webkit-tap-highlight-color: transparent;
+}

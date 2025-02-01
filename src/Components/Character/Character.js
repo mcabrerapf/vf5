@@ -61,6 +61,13 @@ const Character = () => {
                     text='Combos'
                     onClick={handleViewChange}
                 />
+                <Button
+                    modifier={characterView === 'notes' ? 'active' : ''}
+                    disabled
+                    value='notes'
+                    text='Notes'
+                    onClick={handleViewChange}
+                />
             </div>
             {characterView === 'moves' && <MoveList />}
             {characterView === 'combos' && <Combos />}
