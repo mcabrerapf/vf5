@@ -3,10 +3,10 @@ import './MoveCommand.scss'
 import { checkIsCombiEnd, checkIsCombiStart } from './helpers';
 import Notation from '../Notation/Notation';
 
-const MoveCommand = ({ command }) => {
+const MoveCommand = ({ command, onClick }) => {
 
     return (
-        <div className='move-command'>
+        <div className='move-command' onClick={onClick}>
             {command.map((notation, i) => {
                 const isCombiStart = checkIsCombiStart(command, i);
                 const isCombiEnd = checkIsCombiEnd(command, i);

@@ -112,6 +112,22 @@ const LOCAL_KEYS = {
     CHARACTER_COMBOS: 'vf5_character_combos_'
 }
 
+const SORT_OPTIONS = [
+    ['', 'Default'],
+    ['name', 'Name'],
+    ['command', 'Command'],
+    ['commandType', 'Category'],
+    ['level', 'Type'],
+    ['damage', 'Damage'],
+    ['exe', 'Startup'],
+    ['normal_hit_stats', 'On hit'],
+    ['counter_hit_stats', 'On ch'],
+    ['guard_stats', 'On block'],
+    ['escape', 'Escape'],
+    ['sober', 'Sober'],
+]
+
+
 export {
     B_URL,
     CHARACTERS,
@@ -119,4 +135,5 @@ export {
     MOVE_LEVEL_MATCH,
     NOTATION_CHARACTERS,
     NOTATION_TO_ICON,
+    SORT_OPTIONS
 }

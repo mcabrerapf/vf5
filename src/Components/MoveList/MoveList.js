@@ -1,18 +1,11 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './MoveList.scss'
 import { useMainContext } from '../../Contexts/MainContext';
-import { ModalContextWrapper } from '../../Contexts/ModalContext';
+import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
-import Button from '../Button';
-import Modal from '../Modals/Modal';
-import MoveTypSelectModal from '../Modals/MoveTypSelectModal';
-import MoveListSortModal from '../Modals/MoveListSortModal';
-import MoveListFooter from './MoveListFooter';
-import { CHARACTERS, LOCAL_KEYS, NOTATION_CHARACTERS, NOTATION_TO_ICON } from '../../constants';
-import { SORT_OPTIONS } from '../Modals/MoveListSortModal/constants';
+import { CHARACTERS, LOCAL_KEYS, NOTATION_CHARACTERS } from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
-import debounce from 'lodash.debounce';
-
+import ActiveFiltersList from './ActiveFiltersList';
 
 const MoveList = () => {
     const { selectedCharacter } = useMainContext()
@@ -20,8 +13,6 @@ const MoveList = () => {
     const [selectedMoveType, setSelectedMoveType] = useState(null);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState('/asc');
     const [selectedFilters, setSelectedFilters] = useState([]);
-    const [showMoveTypeSelectModal, setShowMoveTypeSelectModal] = useState(false);
-    const [showSortModal, setShowSortModal] = useState(false);
 
     const selectedCharacterData = CHARACTERS
         .find(character => character.id === selectedCharacter);
@@ -56,44 +47,9 @@ const MoveList = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
-            const filtersForStorage = newFilters.filter(filter => !filter.includes('text/'));
-            console.log(filtersForStorage)
-            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, filtersForStorage);
+            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, newFilters);
             setSelectedFilters(newFilters);
         }
-    }
-
-    const handleTextFilterChange = ({ target: { value } }) => {
-        const notationArray = value.toUpperCase().split(' ');
-        const filteredNotation = notationArray.filter(not => NOTATION_CHARACTERS.includes(not));
-        const textFilter = `text/${filteredNotation.join(' ')}`;
-        const updatedFilters = [
-            ...selectedFilters.filter(filter => !filter.includes('text/')),
-            textFilter
-        ];
-        setSelectedFilters(updatedFilters);
-    }
-
-    const handleTypeSelectModalClose = (type) => {
-        if (type) {
-            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVE_TYPE, type);
-            setSelectedMoveType(type);
-        }
-        toggleCharacterSelectModal();
-    }
-
-    const handleSortModalClose = (sort) => {
-        localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT, sort);
-        setSelectedMovelistSort(sort);
-        toggleSortModal();
-    }
-
-    const toggleCharacterSelectModal = () => {
-        setShowMoveTypeSelectModal(!showMoveTypeSelectModal);
-    }
-
-    const toggleSortModal = () => {
-        setShowSortModal(!showSortModal);
     }
 
     const selectedCharacterMoveset = selectedCharacterData.movelist;
@@ -102,56 +58,36 @@ const MoveList = () => {
 
     const selectedMoveset = selectedCharacterMoveset[selectedMoveType];
     const isShunDi = selectedCharacter === 'shun';
-    const parsedSort = selectedMovelistSort.split('/');
-    const [, sortName] = SORT_OPTIONS.find(option => option[0] === parsedSort[0]);
+
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
-    const pSelectedMoveType = selectedMoveType.split('-').join(' ');
+
 
     return (
-        <div className='move-list'>
-            <ModalContextWrapper
-                showModal={showMoveTypeSelectModal}
-                closeModal={handleTypeSelectModalClose}
-            >
-                <Modal>
-                    <MoveTypSelectModal
-                        selectedMoveType={selectedMoveType}
-                        moveKeys={moveKeys}
-                    />
-                </Modal>
-            </ModalContextWrapper>
-            <ModalContextWrapper
-                showModal={showSortModal}
-                closeModal={handleSortModalClose}
-            >
-                <Modal>
-                    <MoveListSortModal selectedMovelistSort={selectedMovelistSort} />
-                </Modal>
-            </ModalContextWrapper>
-            <div className='move-list__header'>
-                <Button
-                    modifier={'active'}
-                    text={selectedMoveType === 'allMoves' ? 'All Moves' : pSelectedMoveType}
-                    onClick={toggleCharacterSelectModal}
-                />
-                <Button
-                    modifier={"active"}
-                    text={`Sort: ${sortName} ${parsedSort[1]}`}
-                    onClick={toggleSortModal}
-
-                />
-            </div>
-            <div className='move-list__list-container'>
+        <div className='movelist'>
+            <MovelistHeader
+                moveKeys={moveKeys}
+                selectedFilters={selectedFilters}
+                selectedMoveType={selectedMoveType}
+                selectedMovelistSort={selectedMovelistSort}
+                handleFiltersChange={handleFiltersChange}
+                setSelectedMoveType={setSelectedMoveType}
+                setSelectedMovelistSort={setSelectedMovelistSort}
+            />
+            <ActiveFiltersList
+                selectedFilters={selectedFilters}
+                handleFiltersChange={handleFiltersChange}
+            />
+            <div className='movelist__list-container'>
                 <ul
                     ref={listRef}
-                    className='move-list__list-container__list'
+                    className='movelist__list-container__list'
                 >
                     {sortedMovelist.map((move, i) => {
                         return (
                             <li
                                 key={`${move}-${i}`}
-                                className='move-list__list-container__list__item'
+                                className='movelist__list-container__list__item'
                             >
                                 <Move
                                     showSober={isShunDi}
@@ -162,11 +98,6 @@ const MoveList = () => {
                     })}
                 </ul>
             </div>
-            <MoveListFooter
-                selectedFilters={selectedFilters}
-                handleFiltersChange={handleFiltersChange}
-                handleTextFilterChange={handleTextFilterChange}
-            />
         </div>
     )
 }

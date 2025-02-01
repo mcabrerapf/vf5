@@ -5,6 +5,7 @@ import Icon from '../Icon';
 
 const Notation = ({
     notation = '',
+    modifier,
     isCombiStart,
     isCombiEnd,
     onClick = () => { }
@@ -12,6 +13,7 @@ const Notation = ({
     const iconName = NOTATION_TO_ICON[notation];
     const iconColor = notation.includes('_') ? 'red' : 'white';
     const parsedCommand = notation.replace(/[[\]]/g, "")
+    const className = ['notation', modifier].filter(Boolean).join(' ')
 
     const handleOnClick = () => {
         onClick(notation);
@@ -26,7 +28,7 @@ const Notation = ({
                 </div>
             }
             <div
-                className={`notation ${parsedCommand === '+' ? 'and' : parsedCommand}`}
+                className={`${className} ${parsedCommand === '+' ? 'and' : parsedCommand}`}
                 onClick={handleOnClick}
             >
                 {iconName && <Icon icon={iconName} color={iconColor} />}

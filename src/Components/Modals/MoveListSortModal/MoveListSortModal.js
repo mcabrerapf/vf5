@@ -3,7 +3,7 @@ import './MoveListSortModal.scss'
 import ModalHeader from '../ModalHeader';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { SORT_OPTIONS } from './constants';
+import { SORT_OPTIONS } from '../../../constants';
 
 const MoveListSortModal = ({ selectedMovelistSort }) => {
     const { closeModal } = useModalContext();
@@ -28,7 +28,7 @@ const MoveListSortModal = ({ selectedMovelistSort }) => {
     }
     
     return (
-        <div className='move-list-sort-modal'>
+        <div className='movelist-sort-modal'>
             <ModalHeader modifier={"align-right"}>
                 <Button
                     modifier={"no-border"}
@@ -36,8 +36,8 @@ const MoveListSortModal = ({ selectedMovelistSort }) => {
                     onClick={handleClose}
                 />
             </ModalHeader>
-            <div className='move-list-sort-modal__content'>
-                <div className='move-list-sort-modal__content__options'>
+            <div className='movelist-sort-modal__content'>
+                <div className='movelist-sort-modal__content__options'>
                     {SORT_OPTIONS.map(option => {
 
                         return (
@@ -52,7 +52,7 @@ const MoveListSortModal = ({ selectedMovelistSort }) => {
                         )
                     })}
                 </div>
-                <div className='move-list-sort-modal__content__options'>
+                <div className='movelist-sort-modal__content__options'>
                     <Button
                         modifier={sortDirection === 'asc' ? 'active' : ''}
                         value='asc'
@@ -67,7 +67,7 @@ const MoveListSortModal = ({ selectedMovelistSort }) => {
                     />
 
                 </div>
-                <div className='move-list-sort-modal__content__options'>
+                <div className='movelist-sort-modal__content__options'>
                     <Button
                         text='✓'
                         modifier={'active'}

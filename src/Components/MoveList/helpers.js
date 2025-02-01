@@ -15,18 +15,28 @@ const sortMovelist = (list, sort) => {
 }
 
 const filterMovelist = (list, filters) => {
+
     if (!filters.length) return list;
 
-    const textFilter = filters.filter(filter => filter.includes('text/'))[0];
-    const parsedTextFilter = textFilter ? textFilter.split('/')[1].split(' ').join('') : '';
-    const levelFilters = filters.filter(filter => filter.includes('level/'));
 
+    const commandFilters = filters
+        .filter(filter => filter.includes('command/'))
+        .map(command => command.split('/')[1]);
+    const levelFilters = filters.filter(filter => filter.includes('level/'));
+    
     return list.filter(move => {
         const parsedType = `level/${MOVE_LEVEL_MATCH[move.level]}`
         const isValid = levelFilters.length ? levelFilters.includes(parsedType) : true;
-        const stringCommand = move.command.join('')
-        const hasCommandMatch = stringCommand.includes(parsedTextFilter);
+        let hasCommandMatch = commandFilters.length ? false : true;
+        const stringCommand =move.command.join('')
         
+        commandFilters.forEach(commandFilter=> {
+            if(stringCommand.includes(commandFilter)) {
+                hasCommandMatch = true;
+            }
+        })
+ 
+
         return isValid && hasCommandMatch;
     })
 }

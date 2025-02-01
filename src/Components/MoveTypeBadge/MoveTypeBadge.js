@@ -5,15 +5,16 @@ import Button from '../Button';
 const MoveTypeBadge = ({
     moveType,
     modifier,
+    value,
     onClick = () => { }
 }) => {
-    const className  = ['move-type-badge', modifier, moveType].filter(Boolean).join(' ');
+    const className = ['move-type-badge', modifier, moveType].filter(Boolean).join(' ');
 
     return (
         <Button
             role='button'
             modifier={className}
-            value={moveType}
+            value={value || moveType}
             text={moveType}
             onClick={onClick}
         >
