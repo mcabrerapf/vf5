@@ -1,0 +1,10 @@
+.tags-view {
+    &__characters {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 18rem;
+        height: 15rem;
+    }
+}

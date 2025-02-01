@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MainContextProvider } from './MainContext';
-import { CHARACTERS, LOCAL_KEYS } from '../../constants';
+import { LOCAL_KEYS } from '../../constants';
+import getFromLocal from '../../helpers/getFromLocal';
 
 
 function MainContextWrapper({
@@ -12,11 +13,8 @@ function MainContextWrapper({
 
   useEffect(() => {
     async function init() {
-      const selectedCharacterFromLocal = localStorage.getItem(LOCAL_KEYS.SELECTED_CHARACTER);
-      const isValidCharacter = !!CHARACTERS
-        .find(character => character.id === selectedCharacterFromLocal);
-      if (!isValidCharacter) localStorage.setItem(LOCAL_KEYS.SELECTED_CHARACTER, CHARACTERS[0].id);
-      const selectedChar = isValidCharacter ? selectedCharacterFromLocal : CHARACTERS[0].id;
+      const localSelectedCharacter = getFromLocal(LOCAL_KEYS.SELECTED_CHARACTER)
+      setContextData({ selectedCharacter: localSelectedCharacter })
       // const promises = CHARACTERS.map(character => fetch(`${B_URL}/vf/char/${character[0]}`));
       // const characters = {};
 
@@ -38,7 +36,7 @@ function MainContextWrapper({
       //     setIsLoading(false);
       //     setErrorMessage(error);
       //   });
-      setContextData({ selectedCharacter: selectedChar })
+
 
     }
 

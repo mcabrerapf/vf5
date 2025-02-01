@@ -2,60 +2,35 @@ import React, { useState } from 'react';
 import './ComboBuilderModal.scss'
 import ModalHeader from '../ModalHeader';
 import ModalFooter from '../ModalFooter';
-import DirectionalButtons from '../../DirectionalButtons';
-import MoveCommand from '../../MoveCommand';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import OtherButtons from '../../OtherButtons';
-
+import CommandView from './CommandView';
+import TagsView from './TagsView';
+import ExtrasView from './ExtrasView';
 
 const ComboBuilderModal = ({
-    selectedCombo = []
+    selectedCombo = {}
 }) => {
+    const { command, tags, id } = selectedCombo
     const { closeModal } = useModalContext();
-    const [comboNotation, setComboNotation] = useState(selectedCombo);
-    const [selectedNotationIndex, setSelectedNotationIndex] = useState(null);
-
-    const handleInputButtonClick = (button) => {
-        let updatedCombo = [];
-        if (selectedNotationIndex === null) {
-            if (button === 'DEL') {
-                updatedCombo = [...comboNotation.map(notation => notation)];
-                updatedCombo.pop();
-            } else {
-                updatedCombo = [...comboNotation.map(notation => notation), button];
-            }
-        } else {
-            if (button === 'DEL') {
-                updatedCombo = comboNotation.filter((_, index) => index !== selectedNotationIndex);
-
-            } else {
-                updatedCombo = comboNotation.map((notation, index) => {
-                    if (index === selectedNotationIndex) return button;
-                    return notation;
-                });
-            }
-        }
-
-        setSelectedNotationIndex(null);
-        setComboNotation(updatedCombo);
-    }
+    const [comboView, setComboView] = useState('commands');
+    const [comboNotation, setComboNotation] = useState(command || []);
+    const [selectedTags, setSelectedTags] = useState(tags || []);
 
     const handleSaveCombo = () => {
-        closeModal(comboNotation);
+        closeModal({
+            id: id,
+            command: comboNotation,
+            tags: selectedTags
+        });
     }
 
     const handleCloseModal = () => {
         closeModal();
     }
 
-    const handleNotationClick = (_, index) => {
-        if (index === selectedNotationIndex) {
-            setSelectedNotationIndex(null);
-        } else {
-            setSelectedNotationIndex(index);
-        }
-
+    const handleViewChage = ({ target: { value } }) => {
+        setComboView(value);
     }
 
     return (
@@ -67,19 +42,44 @@ const ComboBuilderModal = ({
                     onClick={handleCloseModal}
                 />
             </ModalHeader>
+            <div className='combo-builder-modal__sub-header'>
+                <Button
+                    modifier={comboView === 'commands' ? 'active' : ''}
+                    value="commands"
+                    text="Commands"
+                    onClick={handleViewChage}
+                />
+                <Button
+                    modifier={comboView === 'tags' ? 'active' : ''}
+                    value="tags"
+                    text="Tags"
+                    onClick={handleViewChage}
+                />
+                <Button
+                    modifier={comboView === 'extras' ? 'active' : ''}
+                    disabled
+                    value="extras"
+                    text="Extras"
+                    onClick={handleViewChage}
+                />
+            </div>
             <div className='combo-builder-modal__content'>
-                <div className='combo-builder-modal__content__notation'>
-                    <MoveCommand
-                        command={comboNotation}
-                        notationModifier={"selected"}
-                        selectedNotationIndex={selectedNotationIndex}
-                        notationClick={handleNotationClick}
+                {comboView === 'commands' &&
+                    <CommandView
+                        comboNotation={comboNotation}
+                        setComboNotation={setComboNotation}
                     />
-                </div>
-                <div className='combo-builder-modal__content__controls'>
-                    <DirectionalButtons onClick={handleInputButtonClick} />
-                    <OtherButtons onClick={handleInputButtonClick} />
-                </div>
+                }
+                {comboView === 'tags' &&
+                    <TagsView
+                        selectedTags={selectedTags}
+                        setSelectedTags={setSelectedTags}
+                    />
+                }
+                {comboView === 'extras' &&
+                    <ExtrasView
+                    />
+                }
             </div>
             <ModalFooter modifier="align-right">
                 <Button

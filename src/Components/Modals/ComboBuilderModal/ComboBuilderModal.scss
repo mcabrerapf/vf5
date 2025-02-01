@@ -1,25 +1,52 @@
 .combo-builder-modal {
+    &__sub-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        .button {
+            width: 9rem;
+        }
+    }
+
     &__content {
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        height: 28rem;
+        width: 29rem;
 
         &__notation {
-            width: 25rem;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            min-height: 3rem;
-            border: 1px solid white;
-            box-sizing: border-box;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            justify-content: space-between;
 
-            .notation {
-                &.selected {
-                    border: 2px solid yellow;
+            .move-command {
+                display: flex;
+                align-items: center;
+                border: 1px solid white;
+                box-sizing: border-box;
+                overflow-y: auto;
+                width: 25rem;
+                height: 8rem;
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+
+                .notation {
+                    border: 2px solid transparent;
+
+                    &.selected {
+                        border: 2px solid yellow;
+                    }
                 }
             }
+
+            .button {
+                height: 3rem;
+            }
+
         }
 
         &__controls {

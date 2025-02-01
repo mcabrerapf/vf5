@@ -6,18 +6,18 @@ import Move from '../Move';
 import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from './ActiveFiltersList';
+import getFromLocal from '../../helpers/getFromLocal';
 
 const MoveList = () => {
     const listRef = useRef(null);
-    const localSelectedMoveType = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVE_TYPE);
-    const localSelectedSort = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
-    const localFilters = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
-    const parsedLocalFilters = !localFilters ? [] : localFilters.split(',');
+    const localSelectedMoveType = getFromLocal(LOCAL_KEYS.SELECTED_MOVE_TYPE);
+    const localSelectedSort = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
+    const localFilters = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
 
     const { selectedCharacter } = useMainContext();
     const [selectedMoveType, setSelectedMoveType] = useState(localSelectedMoveType);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
-    const [selectedFilters, setSelectedFilters] = useState(parsedLocalFilters);
+    const [selectedFilters, setSelectedFilters] = useState(localFilters);
 
     const selectedCharacterData = CHARACTERS
         .find(character => character.id === selectedCharacter);

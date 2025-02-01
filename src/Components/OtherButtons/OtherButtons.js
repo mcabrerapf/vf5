@@ -37,15 +37,15 @@ const OtherButtons = ({
             </div>
             <div className='other-buttons__grouping'>
                 <Notation
-                    notation='wall'
+                    notation='w'
+                    onClick={onClick}
+                />
+                <Notation
+                    notation='w.b'
                     onClick={onClick}
                 />
                 <Notation
                     notation='side'
-                    onClick={onClick}
-                />
-                <Notation
-                    notation='DEL'
                     onClick={onClick}
                 />
             </div>

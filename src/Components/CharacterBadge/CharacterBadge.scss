@@ -1,0 +1,16 @@
+.character-badge {
+    font-size: 1.2rem !important;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 0.5rem !important;
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+    box-sizing: border-box !important;
+    width:auto!important;
+    background-color: black;
+    color: white;
+
+    &.selected {
+        background-color: pink;
+        color: black;
+    }
+}

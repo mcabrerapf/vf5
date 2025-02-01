@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './Combos.scss'
 import { LOCAL_KEYS } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
-import MoveCommand from '../MoveCommand';
 import Button from '../Button';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
+import Combo from '../Combo/Combo';
+import { generateId, getFromLocal } from '../../helpers';
 
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
@@ -17,23 +18,28 @@ const Combos = () => {
 
     useEffect(
         () => {
-            const localCombos = localStorage.getItem(localComboKey);
-            const parsedCombos = JSON.parse(localCombos) || [];
-            setCombos(parsedCombos);
+            const localCombos = getFromLocal(localComboKey)
+            setCombos(localCombos);
         },
         [localComboKey]
     )
 
     const handleCloseModal = (newCombo) => {
         if (newCombo) {
-            if (selectedComboIndex === null) {
-                const updatedCombos = [...combos.map(combo => combo), newCombo];
+            console.log(newCombo);
+            if (!newCombo.id) {
+                console.log('SAVING');
+                const updatedCombos = [
+                    ...combos.map(combo => combo),
+                    { ...newCombo, id: generateId() }
+                ];
                 const stringifiedCombos = JSON.stringify(updatedCombos);
                 localStorage.setItem(localComboKey, stringifiedCombos);
                 setCombos(updatedCombos);
             } else {
-                const updatedCombos = combos.map((combo, index) => {
-                    if (index === selectedComboIndex) return newCombo;
+                console.log('UPDATING');
+                const updatedCombos = combos.map((combo) => {
+                    if (combo.id === newCombo.id) return newCombo;
                     return combo;
                 });
                 const stringifiedCombos = JSON.stringify(updatedCombos);
@@ -84,11 +90,11 @@ const Combos = () => {
                 >
                     {combos.map((combo, i) =>
                         <li
-                            key={`${combo.join('')}-${i}`}
+                            key={combo.id}
                             className='combos__list-container__list__combo'
                         >
-                            <MoveCommand
-                                command={combo}
+                            <Combo
+                                combo={combo}
                                 onClick={() => handleComboClick(i)}
                             />
                             <Button

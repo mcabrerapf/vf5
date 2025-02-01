@@ -18,7 +18,10 @@ const DirectionalButtons = ({
             <div className='directional-buttons__grouping'>
                 <Notation notation="[4_]" color='red' onClick={onClick} />
                 <Notation notation="[4]" onClick={onClick} />
-                <div className='directional-buttons__grouping__center-spot'></div>
+                <div className='directional-buttons__grouping__center-spot'
+                    onClick={() => onClick('.')}
+                >
+                </div>
                 <Notation notation="[6]" onClick={onClick} />
                 <Notation notation="[6_]" onClick={onClick} />
             </div>
