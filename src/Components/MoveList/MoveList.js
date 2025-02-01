@@ -9,30 +9,20 @@ import ActiveFiltersList from './ActiveFiltersList';
 
 const MoveList = () => {
     const listRef = useRef(null);
+    const localSelectedMoveType = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVE_TYPE);
+    const localSelectedSort = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
+    const localFilters = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
+    const parsedLocalFilters = !localFilters ? [] : localFilters.split(',');
+
     const { selectedCharacter } = useMainContext();
-    const [selectedMoveType, setSelectedMoveType] = useState(null);
-    const [selectedMovelistSort, setSelectedMovelistSort] = useState('/asc');
-    const [selectedFilters, setSelectedFilters] = useState([]);
+    const [selectedMoveType, setSelectedMoveType] = useState(localSelectedMoveType);
+    const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
+    const [selectedFilters, setSelectedFilters] = useState(parsedLocalFilters);
 
     const selectedCharacterData = CHARACTERS
         .find(character => character.id === selectedCharacter);
 
     const moveKeys = Object.keys(selectedCharacterData.movelist);
-
-    useEffect(
-        () => {
-            const localSelectedMoveType = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVE_TYPE);
-
-            const localSelectedSort = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
-            const localFilters = localStorage.getItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
-            const parsedLocalFilters = !localFilters ? [] : localFilters.split(',');
-            setSelectedFilters(parsedLocalFilters);
-            setSelectedMovelistSort(localSelectedSort);
-            setSelectedMoveType(localSelectedMoveType);
-        },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        []
-    );
 
     // useEffect(() => {
     //     TODO: fix scroll

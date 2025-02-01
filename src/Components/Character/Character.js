@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Character.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext'
@@ -12,14 +12,10 @@ import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 
 
 const Character = () => {
+    const localSelectedView = localStorage.getItem(LOCAL_KEYS.SELECTED_CHARACTER_VIEW);
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
-    const [characterView, setCharacterView] = useState();
-
-    useEffect(() => {
-        const localSelectedView = localStorage.getItem(LOCAL_KEYS.SELECTED_CHARACTER_VIEW);
-        setCharacterView(localSelectedView);
-    }, [])
+    const [characterView, setCharacterView] = useState(localSelectedView);
 
     const toggleCharacterSelectModal = () => {
         setShowCharacterSelectModal(!showCharacterSelectModal)

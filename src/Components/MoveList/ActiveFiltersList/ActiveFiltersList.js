@@ -1,7 +1,6 @@
 import React from 'react';
 import './ActiveFiltersList.scss'
 import MoveTypeBadge from '../../MoveTypeBadge';
-import Notation from '../../Notation';
 import MoveCommand from '../../MoveCommand';
 
 const ActiveFiltersList = ({
@@ -17,27 +16,25 @@ const ActiveFiltersList = ({
     return (
         <div className='active-filters-list'>
             {selectedFilters.map(selectedFilter => {
-
                 const [filterType, parsedFilterName] = selectedFilter.split('/')
 
                 return (
                     <>
                         {filterType === 'command' &&
                             <MoveCommand
-                                key={parsedFilterName}
+                                key={`${parsedFilterName}-command`}
                                 command={parsedFilterName.match(/\[.*?\]/g)}
                                 onClick={() => onFilterClick({ target: { value: selectedFilter } })}
                             />
                         }
                         {filterType === 'level' &&
                             <MoveTypeBadge
-                                key={parsedFilterName}
+                                key={`${parsedFilterName}-type`}
                                 moveType={parsedFilterName}
                                 value={selectedFilter}
                                 onClick={onFilterClick}
                             />}
                     </>
-
                 )
             }
             )}
