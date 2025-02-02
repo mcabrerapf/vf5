@@ -24,7 +24,6 @@ const ActiveFiltersList = ({
     }
 
     const [sortType] = selectedMovelistSort.split('/');
-    const hasFav = selectedFilters.includes('fav/')
 
     return (
         <div className='active-filters-list'>
@@ -32,13 +31,6 @@ const ActiveFiltersList = ({
                 <Button
                     text={selectedMovelistSort}
                     onClick={onSortClick}
-                />
-            }
-            {hasFav &&
-                <MoveTypeBadge
-                    moveType={'favorite'}
-                    value={'fav/'}
-                    onClick={onFilterClick}
                 />
             }
             {selectedFilters.map(selectedFilter => {

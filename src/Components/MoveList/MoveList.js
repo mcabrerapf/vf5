@@ -106,6 +106,7 @@ const Movelist = () => {
                 selectedMovelistSort={selectedMovelistSort}
                 handleFiltersChange={handleFiltersChange}
                 setSelectedMoveType={setSelectedMoveType}
+                setSelectedFilters={setSelectedFilters}
                 setSelectedMovelistSort={setSelectedMovelistSort}
             />
             <ActiveFiltersList

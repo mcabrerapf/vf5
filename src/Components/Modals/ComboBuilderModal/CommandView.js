@@ -5,8 +5,10 @@ import Button from '../../Button';
 import OtherButtons from '../../OtherButtons';
 
 const CommandView = ({
+    comboDamage,
     comboNotation,
     setComboNotation,
+    setComboDamage,
 }) => {
     const [selectedNotationIndex, setSelectedNotationIndex] = useState(null);
 
@@ -63,39 +65,62 @@ const CommandView = ({
             updatedNotation.push('⊙')
         } else {
             updatedNotation = comboNotation.map(notation => notation);
-            updatedNotation.splice(selectedNotationIndex+1, 0, '⊙');
+            updatedNotation.splice(selectedNotationIndex + 1, 0, '⊙');
         }
         setSelectedNotationIndex(selectedNotationIndex + 1);
         setComboNotation(updatedNotation);
     }
 
+    const handleDamageChange = ({ target: { value } }) => {
+        const parsedDamage = isNaN(value) ? 1 : value;
+        const maxChecked = Number(parsedDamage) > 999 ? 999 : parsedDamage;
+        setComboDamage(maxChecked);
+    }
+
+    const handleDamageBlur = ({ target: { value } }) => {
+        const parsedDamage = isNaN(value) || !value ? 1 : value;
+        setComboDamage(parsedDamage);
+    }
+
     return (
         <>
-            <div className='combo-builder-modal__content__notation'>
-                <MoveCommand
-                    command={comboNotation}
-                    notationModifier={"selected"}
-                    selectedNotationIndex={selectedNotationIndex}
-                    notationClick={handleNotationClick}
-                />
-                <div className='combo-builder-modal__content__notation__buttons'>
-                    <Button
-                        modifier="delete-button"
-                        text='X'
-                        onClick={handleDelete}
+            <div className='combo-builder-modal__content__main'>
+                <div className='combo-builder-modal__content__main__damage'>
+                    <label>Damage</label>
+                    <input
+                        type='number'
+                        value={comboDamage}
+                        onFocus={() => setComboDamage('')}
+                        onChange={handleDamageChange}
+                        onBlur={handleDamageBlur}
                     />
-                    <Button
-                        modifier="delete-button"
-                        disabled={selectedNotationIndex === null}
-                        text='<'
-                        onClick={handleAddBefore}
+                </div>
+                <div className='combo-builder-modal__content__main__notation'>
+                    <MoveCommand
+                        command={comboNotation}
+                        notationModifier={"selected"}
+                        selectedNotationIndex={selectedNotationIndex}
+                        notationClick={handleNotationClick}
                     />
-                    <Button
-                        modifier="delete-button"
-                        disabled={selectedNotationIndex === null}
-                        text='>'
-                        onClick={handleAddAfter}
-                    />
+                    <div className='combo-builder-modal__content__notation__buttons'>
+                        <Button
+                            modifier="delete-button"
+                            text='X'
+                            onClick={handleDelete}
+                        />
+                        <Button
+                            modifier="delete-button"
+                            disabled={selectedNotationIndex === null}
+                            text='<'
+                            onClick={handleAddBefore}
+                        />
+                        <Button
+                            modifier="delete-button"
+                            disabled={selectedNotationIndex === null}
+                            text='>'
+                            onClick={handleAddAfter}
+                        />
+                    </div>
                 </div>
             </div>
             <div className='combo-builder-modal__content__controls'>

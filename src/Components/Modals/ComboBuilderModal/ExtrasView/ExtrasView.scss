@@ -3,24 +3,6 @@
     flex-direction: column;
     gap: 2rem;
 
-    &__damage {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-
-        label  {
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        input {
-            width: 2.5rem;
-            text-align: end;
-        }
-    }
-
     &__note {
         display: flex;
         flex-direction: column;

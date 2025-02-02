@@ -75,8 +75,11 @@ const ComboBuilderModal = ({
             <div className='combo-builder-modal__content'>
                 {comboView === 'commands' &&
                     <CommandView
+                        comboDamage={comboDamage}
                         comboNotation={comboNotation}
                         setComboNotation={setComboNotation}
+                        setComboDamage={setComboDamage}
+
                     />
                 }
                 {comboView === 'tags' &&

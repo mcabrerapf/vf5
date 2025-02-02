@@ -16,11 +16,14 @@ const MovelistHeader = ({
     selectedFilters,
     handleFiltersChange,
     setSelectedMoveType,
+    setSelectedFilters,
     setSelectedMovelistSort,
 }) => {
     const [showMoveTypeSelectModal, setShowMoveTypeSelectModal] = useState(false);
     const [showSortModal, setShowSortModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
+
+    const hasFav = selectedFilters.includes('fav/')
 
     const handleTypeSelectModalClose = (type) => {
         if (type) {
@@ -53,10 +56,22 @@ const MovelistHeader = ({
         setShowFiltersModal(!showFiltersModal)
     }
 
+    const toogleFavorite = () => {
+        let updatedFilters;
+        if (hasFav) {
+            updatedFilters = selectedFilters.filter(filter => !filter.includes('fav/'));
+        } else {
+            updatedFilters = [...selectedFilters.map(filter => filter), 'fav/'];
+        }
+        setSelectedFilters(updatedFilters);
+    }
+
     const pSelectedMoveType = selectedMoveType.split('-').join(' ');
     const [sortType] = selectedMovelistSort.split('/');
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
     const sortButtonModifier = !!sortType ? 'active' : '';
+
+
     return (
         <header className='movelist-header'>
             <ModalContextWrapper
@@ -94,6 +109,11 @@ const MovelistHeader = ({
                 onClick={toggleMoveTypeSelectModal}
             />
             <div className='movelist-header__filter-buttons'>
+                <Button
+                    modifier={hasFav ? 'fav' : ''}
+                    text={"★"}
+                    onClick={toogleFavorite}
+                />
                 <Button
                     modifier={filtersButtonModifier}
                     text={'Filters'}
