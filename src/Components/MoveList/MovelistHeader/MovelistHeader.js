@@ -14,9 +14,9 @@ const MovelistHeader = ({
     selectedMoveType,
     selectedMovelistSort,
     selectedFilters,
+    numerOfMoves,
     handleFiltersChange,
     setSelectedMoveType,
-    setSelectedFilters,
     setSelectedMovelistSort,
 }) => {
     const [showMoveTypeSelectModal, setShowMoveTypeSelectModal] = useState(false);
@@ -72,6 +72,11 @@ const MovelistHeader = ({
     const sortButtonModifier = !!sortType ? 'active' : '';
 
 
+
+    const moveButtonText = selectedMoveType === 'allMoves' ?
+        `All Moves (${numerOfMoves})` :
+        `${pSelectedMoveType} (${numerOfMoves})`;
+
     return (
         <header className='movelist-header'>
             <ModalContextWrapper
@@ -105,7 +110,7 @@ const MovelistHeader = ({
             </ModalContextWrapper>
             <Button
                 modifier={'active'}
-                text={selectedMoveType === 'allMoves' ? 'All Moves' : pSelectedMoveType}
+                text={moveButtonText}
                 onClick={toggleMoveTypeSelectModal}
             />
             <div className='movelist-header__filter-buttons'>

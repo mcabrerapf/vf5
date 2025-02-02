@@ -97,6 +97,7 @@ const Movelist = () => {
         setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, updatedFilters);
         setSelectedFilters(updatedFilters);
     }
+    const numerOfMoves = sortedMovelist.length;
 
     return (
         <div className='movelist'>
@@ -105,6 +106,7 @@ const Movelist = () => {
                 selectedFilters={selectedFilters}
                 selectedMoveType={selectedMoveType}
                 selectedMovelistSort={selectedMovelistSort}
+                numerOfMoves={numerOfMoves}
                 handleFiltersChange={handleFiltersChange}
                 setSelectedMoveType={setSelectedMoveType}
                 setSelectedFilters={setSelectedFilters}

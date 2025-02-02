@@ -6,6 +6,7 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
 import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
+import DeleteModal from '../Modals/DeleteModal';
 import Combo from '../Combo';
 import CombosHeader from './CombosHeader';
 import ActiveFiltersList from './ActiveFiltersList';
@@ -19,6 +20,7 @@ const Combos = () => {
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(
         () => {
@@ -82,16 +84,29 @@ const Combos = () => {
     }
 
 
-    const handleDeleteCombo = (comboId) => {
-        const updatedCombos = combos.filter((combo) => combo.id !== comboId);
+    const handleDeleteCombo = (shouldDelete) => {
+        if (shouldDelete) {
+            const updatedCombos = combos.filter((combo) => combo.id !== selectedCombo.id);
 
-        setLocalStorage(
-            LOCAL_KEYS.CHARACTERS_DATA,
-            updatedCombos,
-            selectedCharacter,
-            STRINGS.COMBOS
-        );
-        setCombos(updatedCombos);
+            setLocalStorage(
+                LOCAL_KEYS.CHARACTERS_DATA,
+                updatedCombos,
+                selectedCharacter,
+                STRINGS.COMBOS
+            );
+            setCombos(updatedCombos);
+        }
+        setSelectedCombo(null);
+        toggleDeleteModal();
+    }
+
+    const handleDeleteClick = (combo) => {
+        setSelectedCombo(combo);
+        toggleDeleteModal()
+    }
+
+    const toggleDeleteModal = () => {
+        setShowDeleteModal(!showDeleteModal);
     }
 
     const handleCharacterClick = ({ target: { value } }) => {
@@ -130,6 +145,14 @@ const Combos = () => {
                     <ComboBuilderModal selectedCombo={selectedCombo} />
                 </Modal>
             </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showDeleteModal}
+                closeModal={handleDeleteCombo}
+            >
+                <Modal>
+                    <DeleteModal />
+                </Modal>
+            </ModalContextWrapper>
             <CombosHeader
                 selectedFilters={selectedFilters}
                 handleFiltersChange={handleFiltersChange}
@@ -156,7 +179,7 @@ const Combos = () => {
                             <Button
                                 modifier="no-border"
                                 text="X"
-                                onClick={() => handleDeleteCombo(combo.id)}
+                                onClick={() => handleDeleteClick(combo)}
                             />
                         </li>
                     )}
