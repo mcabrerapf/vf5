@@ -35,7 +35,6 @@ const setLocalStorage = (key, value, character, characterKey) => {
                 localStorage.setItem(key, stringifiedData);
             }
             break;
-
         default:
             localStorage.setItem(key, value);
     }

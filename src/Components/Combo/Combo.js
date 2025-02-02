@@ -3,10 +3,11 @@ import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import CharacterBadge from '../CharacterBadge';
 import { CHARACTERS } from '../../constants';
+import MoveTypeBadge from '../MoveTypeBadge';
 
 const Combo = ({
     combo = {},
-    onClick = () => { }
+    onClick = () => { },
 }) => {
     const { tags, characterTags, command, damage, note } = combo || {};
     const hasAllCharacters = CHARACTERS.length === characterTags.length;
@@ -41,9 +42,8 @@ const Combo = ({
             </div>
             <div className='combo__tags'>
                 {tags.map(tag =>
-                    <CharacterBadge
-                        modifier={"selected"}
-                        character={tag}
+                    <MoveTypeBadge
+                        moveType={tag}
                     />
                 )}
             </div>

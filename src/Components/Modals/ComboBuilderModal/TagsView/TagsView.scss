@@ -11,14 +11,30 @@
         gap: 0.5rem;
         width: 100%;
         height: 15rem;
+
+        .character-badge { 
+            &.not-selected {
+                color: white!important;
+                background-color: black;
+            }
+        }
+
     }
+
     &__others {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: start;
-        gap: 0.5rem;
         width: 100%;
-        // height: 15rem;
+        height: 25rem;
+        gap: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        .move-type-badge { 
+            &.not-selected {
+                color: white!important;
+                // background-color: black;
+                background: black;
+            }
+        }
     }
 }

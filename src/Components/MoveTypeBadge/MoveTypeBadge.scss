@@ -101,6 +101,21 @@
         color: black;
     }
 
+    &.wall {
+        color: black;
+        background-color: darkgreen;
+    }
+
+    &.side {
+        color: black;
+        background-color: aqua;
+    }
+
+    &.ch {
+        color: black;
+        background-color: orange;
+    }
+
     &.favorite  {
         background-color: gold;
         color: black; 

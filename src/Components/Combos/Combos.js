@@ -6,11 +6,11 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
 import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
-import Combo from '../Combo/Combo';
+import Combo from '../Combo';
+import CombosHeader from './CombosHeader';
+import ActiveFiltersList from './ActiveFiltersList';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
 import { filterCombos, sortCombos } from './helpers';
-import CombosHeader from './CombosHeader';
-import ActiveFiltersList from './ActiveFiltersList/ActiveFiltersList';
 
 const Combos = () => {
     const { selectedCharacter } = useMainContext();

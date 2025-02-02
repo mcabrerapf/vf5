@@ -1,7 +1,7 @@
 import React from 'react';
 import './ActiveFiltersList.scss'
+import CharacterBadge from '../../CharacterBadge';
 import MoveTypeBadge from '../../MoveTypeBadge';
-import MoveCommand from '../../MoveCommand';
 
 const ActiveFiltersList = ({
     selectedFilters,
@@ -21,8 +21,16 @@ const ActiveFiltersList = ({
                 return (
                     <>
                         {filterType === 'character' &&
-                            <MoveTypeBadge
+                            <CharacterBadge
                                 key={`${parsedFilterName}-character`}
+                                character={parsedFilterName}
+                                value={selectedFilter}
+                                onClick={onFilterClick}
+                            />
+                        }
+                        {filterType === 'other' &&
+                            <MoveTypeBadge
+                                key={`${parsedFilterName}-other`}
                                 moveType={parsedFilterName}
                                 value={selectedFilter}
                                 onClick={onFilterClick}

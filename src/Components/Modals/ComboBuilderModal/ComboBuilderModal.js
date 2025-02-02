@@ -42,7 +42,7 @@ const ComboBuilderModal = ({
     }
 
     const canSave = !!comboNotation.length && !!selectedCharacterTags.length;
-
+    console.log(selectedTags)
     return (
         <div className='combo-builder-modal'>
             <ModalHeader modifier="align-right">

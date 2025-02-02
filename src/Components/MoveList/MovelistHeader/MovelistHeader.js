@@ -4,10 +4,10 @@ import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import Modal from '../../Modals/Modal';
 import MoveTypSelectModal from '../../Modals/MoveTypSelectModal';
 import MoveListSortModal from '../../Modals/MoveListSortModal';
+import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
 import { LOCAL_KEYS } from '../../../constants';
-import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
-import setLocalStorage from '../../../helpers/setLocalStorage';
+import { setLocalStorage } from '../../../helpers';
 
 const MovelistHeader = ({
     moveKeys,
@@ -63,7 +63,7 @@ const MovelistHeader = ({
         } else {
             updatedFilters = [...selectedFilters.map(filter => filter), 'fav/'];
         }
-        setSelectedFilters(updatedFilters);
+        handleFiltersChange(updatedFilters);
     }
 
     const pSelectedMoveType = selectedMoveType.split('-').join(' ');

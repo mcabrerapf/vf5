@@ -5,14 +5,12 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import Movelist from '../Movelist';
 import Button from '../Button';
 import Combos from '../Combos';
+import Notes from '../Notes';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
 import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
-import Notes from '../Notes';
-
-
 
 const Character = () => {
     const localSelectedView = getFromLocal(LOCAL_KEYS.SELECTED_CHARACTER_VIEW);

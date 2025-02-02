@@ -6,11 +6,6 @@
     min-height: 2.5rem !important;
     box-sizing: border-box !important;
     width:auto!important;
-    background-color: black;
-    color: white;
-
-    &.selected {
-        background-color: pink;
-        color: black;
-    }
+    background-color: pink;
+    color: black;
 }
