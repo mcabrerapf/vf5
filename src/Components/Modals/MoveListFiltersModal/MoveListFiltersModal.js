@@ -8,8 +8,6 @@ import MoveTypeBadge from '../../MoveTypeBadge';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { MOVE_LEVEL_MATCH } from '../../../constants';
 
-
-
 const MoveListFiltersModal = ({
     selectedFilters,
 }) => {

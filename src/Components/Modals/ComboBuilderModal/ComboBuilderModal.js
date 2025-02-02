@@ -13,17 +13,23 @@ const ComboBuilderModal = ({
     selectedCombo
 }) => {
     const characterIds = CHARACTERS.map(character => character.id);
-    const { command, tags, id } = selectedCombo || {};
+    const { id, command, characterTags, tags, damage, note } = selectedCombo || {};
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);
-    const [selectedTags, setSelectedTags] = useState(tags || characterIds);
+    const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || characterIds);
+    const [selectedTags, setSelectedTags] = useState(tags || []);
+    const [comboDamage, setComboDamage] = useState(damage || 1);
+    const [comboNote, setComboNote] = useState(note || '');
 
     const handleSaveCombo = () => {
         closeModal({
             id: id,
             command: comboNotation,
-            tags: selectedTags
+            characterTags: selectedCharacterTags,
+            tags: selectedTags,
+            damage: comboDamage,
+            note: comboNote,
         });
     }
 
@@ -35,7 +41,7 @@ const ComboBuilderModal = ({
         setComboView(value);
     }
 
-    const canSave = !!comboNotation.length && !!selectedTags.length;
+    const canSave = !!comboNotation.length && !!selectedCharacterTags.length;
 
     return (
         <div className='combo-builder-modal'>
@@ -61,7 +67,6 @@ const ComboBuilderModal = ({
                 />
                 <Button
                     modifier={comboView === 'extras' ? 'active' : ''}
-                    disabled
                     value="extras"
                     text="Extras"
                     onClick={handleViewChage}
@@ -77,12 +82,18 @@ const ComboBuilderModal = ({
                 {comboView === 'tags' &&
                     <TagsView
                         characterIds={characterIds}
+                        selectedCharacterTags={selectedCharacterTags}
                         selectedTags={selectedTags}
                         setSelectedTags={setSelectedTags}
+                        setSelectedCharacterTags={setSelectedCharacterTags}
                     />
                 }
                 {comboView === 'extras' &&
                     <ExtrasView
+                        comboDamage={comboDamage}
+                        comboNote={comboNote}
+                        setComboDamage={setComboDamage}
+                        setComboNote={setComboNote}
                     />
                 }
             </div>

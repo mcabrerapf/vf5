@@ -8,12 +8,23 @@ const Combo = ({
     combo = {},
     onClick = () => { }
 }) => {
-    const hasAllCharacters = CHARACTERS.length === combo.tags.length;
+    const { tags, characterTags, command, damage, note } = combo || {};
+    const hasAllCharacters = CHARACTERS.length === characterTags.length;
+
     return (
         <div className='combo' onClick={onClick}>
-            <MoveCommand
-                command={combo.command}
-            />
+            <div className='combo__main'>
+                <MoveCommand
+                    command={command}
+                />
+                <div className='combo__main__damage'>{damage}</div>
+            </div>
+
+            {note &&
+                <div className='combo__note'>
+                    {note}
+                </div>
+            }
             <div className='combo__tags'>
                 {hasAllCharacters &&
                     <CharacterBadge
@@ -21,14 +32,21 @@ const Combo = ({
                         character={'ALL'}
                     />
                 }
-                {!hasAllCharacters && combo.tags.map(tag =>
+                {!hasAllCharacters && characterTags.map(characterTag =>
+                    <CharacterBadge
+                        modifier={"selected"}
+                        character={characterTag}
+                    />
+                )}
+            </div>
+            <div className='combo__tags'>
+                {tags.map(tag =>
                     <CharacterBadge
                         modifier={"selected"}
                         character={tag}
                     />
                 )}
             </div>
-
         </div>
     )
 }

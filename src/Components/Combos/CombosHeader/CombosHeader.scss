@@ -1,0 +1,16 @@
+.combos-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    box-sizing: border-box;
+    width: 100%;
+    height: 4rem;
+    padding: 0.5rem;
+    gap: 0.5rem;
+
+    &__filter-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+}

@@ -5,9 +5,33 @@ import { CHARACTERS } from '../../../../constants';
 
 const TagsView = ({
     characterIds,
+    selectedCharacterTags,
     selectedTags,
-    setSelectedTags
+    setSelectedTags,
+    setSelectedCharacterTags
 }) => {
+
+    const handleCharacterTagClick = ({ target: { value, className } }) => {
+        let updatedTags;
+
+        if (className.includes('selected')) {
+            updatedTags = selectedCharacterTags.filter(tag => tag !== value);
+        } else {
+            updatedTags = [...selectedCharacterTags.map(tag => tag), value];
+        }
+        setSelectedCharacterTags(updatedTags);
+    }
+
+    const handleAllClick = ({ target: { className } }) => {
+        let updatedTags;
+
+        if (className.includes('selected')) {
+            updatedTags = [];
+        } else {
+            updatedTags = CHARACTERS.map(character => character.id);
+        }
+        setSelectedCharacterTags(updatedTags);
+    }
 
     const handleTagClick = ({ target: { value, className } }) => {
         let updatedTags;
@@ -19,18 +43,7 @@ const TagsView = ({
         }
         setSelectedTags(updatedTags);
     }
-
-    const handleAllClick = ({ target: { className } }) => {
-        let updatedTags;
-
-        if (className.includes('selected')) {
-            updatedTags = [];
-        } else {
-            updatedTags = CHARACTERS.map(character => character.id);
-        }
-        setSelectedTags(updatedTags);
-    }
-
+    
     return (
         <div className='tags-view'>
             <div className='tags-view__characters'>
@@ -39,14 +52,31 @@ const TagsView = ({
                         key={character}
                         character={character}
                         value={character}
-                        modifier={selectedTags.includes(character) ? 'selected' : ''}
-                        onClick={handleTagClick}
+                        modifier={selectedCharacterTags.includes(character) ? 'selected' : ''}
+                        onClick={handleCharacterTagClick}
                     />
                 )}
                 <CharacterBadge
                     character="ALL"
-                    modifier={selectedTags.length === CHARACTERS.length ? 'selected' : ''}
+                    modifier={selectedCharacterTags.length === CHARACTERS.length ? 'selected' : ''}
                     onClick={handleAllClick}
+                />
+            </div>
+            <div className='tags-view__others'>
+                <CharacterBadge
+                    character="side"
+                    modifier={selectedTags.includes('side') ? 'selected' : ''}
+                    onClick={handleTagClick}
+                />
+                <CharacterBadge
+                    character="ch"
+                    modifier={selectedTags.includes('ch') ? 'selected' : ''}
+                    onClick={handleTagClick}
+                />
+                <CharacterBadge
+                    character="wall"
+                    modifier={selectedTags.includes('wall') ? 'selected' : ''}
+                    onClick={handleTagClick}
                 />
             </div>
 

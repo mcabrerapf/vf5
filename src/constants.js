@@ -110,9 +110,19 @@ const LOCAL_KEYS = {
     SELECTED_MOVE_TYPE: 'vf5_selected-move-type',
     SELECTED_MOVELIST_SORT: 'vf5_selected-movelist-sort',
     SELECTED_MOVELIST_FILTERS: 'vf5_selected-movelist-filters',
-    CHARACTER_COMBOS: 'vf5_character_combos_',
-    CHARACTER_FAV_MOVES: 'vf5_character_fav_moves_',
-    CHARACTER_FAV_COMBOS: 'vf5_character_fav_combos_'
+    SELECTED_COMBOS_FILTERS: 'vf5_selected-combos-filters',
+    // 
+    USER_DATA: 'vf5_user-data',
+    // 
+    CHARACTERS_DATA: 'vf5_characters_data',
+    // 
+}
+
+const STRINGS = {
+    MOVELIST: 'movelist',
+    COMBOS: 'combos',
+    NOTES: 'notes',
+    FAV_MOVES: 'fav_moves',
 }
 
 const SORT_OPTIONS = [
@@ -138,5 +148,6 @@ export {
     MOVE_LEVEL_MATCH,
     NOTATION_CHARACTERS,
     NOTATION_TO_ICON,
-    SORT_OPTIONS
+    SORT_OPTIONS,
+    STRINGS
 }

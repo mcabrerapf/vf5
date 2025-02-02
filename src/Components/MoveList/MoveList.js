@@ -3,7 +3,7 @@ import './Movelist.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
-import { CHARACTERS, LOCAL_KEYS } from '../../constants';
+import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from './ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
@@ -15,8 +15,12 @@ const Movelist = () => {
     const localSelectedMoveType = getFromLocal(LOCAL_KEYS.SELECTED_MOVE_TYPE);
     const localSelectedSort = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
     const localFilters = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
-    const localFavoritesKey = `${LOCAL_KEYS.CHARACTER_FAV_MOVES}${selectedCharacter}`;
-    const localFavorites = getFromLocal(localFavoritesKey);
+
+    const localFavorites = getFromLocal(
+        LOCAL_KEYS.CHARACTERS_DATA,
+        selectedCharacter,
+        STRINGS.FAV_MOVES
+    );
 
 
     const [selectedMoveType, setSelectedMoveType] = useState(localSelectedMoveType);
@@ -30,10 +34,14 @@ const Movelist = () => {
     const moveKeys = Object.keys(selectedCharacterData.movelist);
 
     useEffect(() => {
-        const newLocalFavs = getFromLocal(localFavoritesKey);
+        const newLocalFavs = getFromLocal(
+            LOCAL_KEYS.CHARACTERS_DATA,
+            selectedCharacter,
+            STRINGS.FAV_MOVES
+        );
         setFavoriteMoves(newLocalFavs);
     },
-        [localFavoritesKey]
+        [selectedCharacter]
     )
     // useEffect(() => {
     //     TODO: fix scroll
@@ -73,7 +81,12 @@ const Movelist = () => {
             updatedFavorites = [...favoriteMoves.map(move => move), stringCommand];
         }
 
-        setLocalStorage(localFavoritesKey, JSON.stringify(updatedFavorites));
+        setLocalStorage(
+            LOCAL_KEYS.CHARACTERS_DATA,
+            updatedFavorites,
+            selectedCharacter,
+            STRINGS.FAV_MOVES
+        );
         setFavoriteMoves(updatedFavorites);
     }
 
@@ -109,7 +122,7 @@ const Movelist = () => {
                     {sortedMovelist.map((move, i) => {
 
                         const isFavourite = favoriteMoves.includes(move.command.join(''));
-                        
+
                         return (
                             <li
                                 key={`${move}-${i}`}

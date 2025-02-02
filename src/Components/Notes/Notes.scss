@@ -1,4 +1,4 @@
-.combos {
+.notes {
     height: 100%;
 
     &__list-container {
@@ -20,10 +20,22 @@
             overflow-y: auto;
             scrollbar-color: var(--white-color) var(--white-color);
 
-            &__combo {
+            &__note {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+
+                &__content {
+                    display: flex;
+                    flex-wrap: wrap;
+                    box-sizing: border-box;
+                    border: 1px solid white;
+                    cursor: pointer;
+                    padding: 1rem 0.5rem;
+                    border-radius: 0.5rem;
+                    width: 100%;
+                    font-size: 1.5rem;
+                }
 
                 .button {
                     height: 3rem;
@@ -40,5 +52,5 @@
         margin-left: 50%;
         bottom: 1rem;
     }
-    
+
 }

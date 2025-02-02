@@ -7,9 +7,10 @@ import Button from '../Button';
 import Combos from '../Combos';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
-import { CHARACTERS, LOCAL_KEYS } from '../../constants';
+import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
+import Notes from '../Notes';
 
 
 
@@ -31,7 +32,7 @@ const Character = () => {
 
     const { name: characterName } = CHARACTERS
         .find(character => character.id === selectedCharacter);
-
+    
     return (
         <div className='character'>
             <ModalContextWrapper
@@ -51,27 +52,27 @@ const Character = () => {
             </header>
             <div className='character__sub-header'>
                 <Button
-                    modifier={characterView === 'moves' ? 'active' : ''}
-                    value='moves'
+                    modifier={characterView === STRINGS.MOVELIST ? 'active' : ''}
+                    value={STRINGS.MOVELIST}
                     text='Moves'
                     onClick={handleViewChange}
                 />
                 <Button
-                    modifier={characterView === 'combos' ? 'active' : ''}
-                    value='combos'
+                    modifier={characterView === STRINGS.COMBOS ? 'active' : ''}
+                    value={STRINGS.COMBOS}
                     text='Combos'
                     onClick={handleViewChange}
                 />
                 <Button
-                    modifier={characterView === 'notes' ? 'active' : ''}
-                    disabled
-                    value='notes'
+                    modifier={characterView === STRINGS.NOTES ? 'active' : ''}
+                    value={ STRINGS.NOTES}
                     text='Notes'
                     onClick={handleViewChange}
                 />
             </div>
-            {characterView === 'moves' && <Movelist />}
-            {characterView === 'combos' && <Combos />}
+            {characterView === STRINGS.MOVELIST && <Movelist />}
+            {characterView === STRINGS.COMBOS && <Combos />}
+            {characterView === STRINGS.NOTES && <Notes />}
         </div>
     )
 }
