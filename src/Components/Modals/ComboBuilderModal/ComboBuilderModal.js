@@ -10,10 +10,10 @@ import ExtrasView from './ExtrasView';
 import { CHARACTERS } from '../../../constants';
 
 const ComboBuilderModal = ({
-    selectedCombo = {}
+    selectedCombo
 }) => {
     const characterIds = CHARACTERS.map(character => character.id);
-    const { command, tags, id } = selectedCombo
+    const { command, tags, id } = selectedCombo || {};
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);

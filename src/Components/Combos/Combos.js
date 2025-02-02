@@ -14,7 +14,7 @@ import { sortCombos } from './helpers';
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
     const [combos, setCombos] = useState([]);
-    const [selectedComboIndex, setSelectedComboIndex] = useState(null);
+    const [selectedCombo, setSelectedCombo] = useState(null);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const localComboKey = `${LOCAL_KEYS.CHARACTER_COMBOS}${selectedCharacter}`;
 
@@ -49,13 +49,13 @@ const Combos = () => {
         toggleComboBuilderModal();
     }
 
-    const handleComboClick = (index) => {
-        setSelectedComboIndex(index);
+    const handleComboClick = (combo) => {
+        setSelectedCombo(combo);
         toggleComboBuilderModal();
     }
 
     const handleNewComboClick = () => {
-        setSelectedComboIndex(null);
+        setSelectedCombo(null);
         toggleComboBuilderModal();
     }
 
@@ -64,14 +64,13 @@ const Combos = () => {
     }
 
 
-    const handleDeleteCombo = (comboIndex) => {
-        const updatedCombos = combos.filter((_, index) => index !== comboIndex);
+    const handleDeleteCombo = (comboId) => {
+        const updatedCombos = combos.filter((combo) => combo.id !== comboId);
         const stringifiedCombos = JSON.stringify(updatedCombos)
         setLocalStorage(localComboKey, stringifiedCombos);
         setCombos(updatedCombos);
     }
     const sortedCombos = sortCombos(combos);
-    const selectedCombo = sortedCombos[selectedComboIndex];
 
     return (
         <div className='combos'>
@@ -94,12 +93,12 @@ const Combos = () => {
                         >
                             <Combo
                                 combo={combo}
-                                onClick={() => handleComboClick(i)}
+                                onClick={() => handleComboClick(combo)}
                             />
                             <Button
                                 modifier="no-border"
                                 text="X"
-                                onClick={() => handleDeleteCombo(i)}
+                                onClick={() => handleDeleteCombo(combo.id)}
                             />
                         </li>
                     )}
