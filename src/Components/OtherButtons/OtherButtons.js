@@ -41,11 +41,17 @@ const OtherButtons = ({
                     onClick={onClick}
                 />
                 <Notation
-                    notation='w.b'
+                    notation='wb'
                     onClick={onClick}
                 />
                 <Notation
                     notation='side'
+                    onClick={onClick}
+                />
+            </div>
+            <div className='other-buttons__grouping'>
+                <Notation
+                    notation='hit'
                     onClick={onClick}
                 />
             </div>

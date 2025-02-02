@@ -6,15 +6,15 @@
     align-content: center;
     user-select: none;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 700;
 
     &.P {
         display: flex;
         justify-content: center;
         background-color: blue;
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
         border-radius: 1.5rem;
         font-weight: 700;
         border: 1px solid;
@@ -25,8 +25,8 @@
         display: flex;
         justify-content: center;
         background-color: red;
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
         border-radius: 1.5rem;
         font-weight: 700;
         border: 1px solid;
@@ -36,15 +36,15 @@
         display: flex;
         justify-content: center;
         background-color: green;
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
         border-radius: 1.5rem;
         font-weight: 700;
         border: 1px solid;
     }
 
     &.and {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 700;
     }
 
@@ -68,7 +68,17 @@
         font-weight: 700;
     }
     
-    &.wall {
+    &.w {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    &.wb {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    &.hit {
         font-size: 1.2rem;
         font-weight: 700;
     }

@@ -45,6 +45,30 @@ const CommandView = ({
         setComboNotation(updatedCombo);
     }
 
+    const handleAddBefore = () => {
+        let updatedNotation;
+        if (selectedNotationIndex === 0) {
+            updatedNotation = ['⊙', ...comboNotation.map(notation => notation)];
+        } else {
+            updatedNotation = comboNotation.map(notation => notation);
+            updatedNotation.splice(selectedNotationIndex, 0, '⊙');
+        }
+        setComboNotation(updatedNotation);
+    }
+
+    const handleAddAfter = () => {
+        let updatedNotation;
+        if (selectedNotationIndex + 1 === comboNotation.length) {
+            updatedNotation = comboNotation.map(notation => notation);
+            updatedNotation.push('⊙')
+        } else {
+            updatedNotation = comboNotation.map(notation => notation);
+            updatedNotation.splice(selectedNotationIndex+1, 0, '⊙');
+        }
+        setSelectedNotationIndex(selectedNotationIndex + 1);
+        setComboNotation(updatedNotation);
+    }
+
     return (
         <>
             <div className='combo-builder-modal__content__notation'>
@@ -54,11 +78,25 @@ const CommandView = ({
                     selectedNotationIndex={selectedNotationIndex}
                     notationClick={handleNotationClick}
                 />
-                <Button
-                    modifier="delete-button"
-                    text='X'
-                    onClick={handleDelete}
-                />
+                <div className='combo-builder-modal__content__notation__buttons'>
+                    <Button
+                        modifier="delete-button"
+                        text='X'
+                        onClick={handleDelete}
+                    />
+                    <Button
+                        modifier="delete-button"
+                        disabled={selectedNotationIndex === null}
+                        text='<'
+                        onClick={handleAddBefore}
+                    />
+                    <Button
+                        modifier="delete-button"
+                        disabled={selectedNotationIndex === null}
+                        text='>'
+                        onClick={handleAddAfter}
+                    />
+                </div>
             </div>
             <div className='combo-builder-modal__content__controls'>
                 <DirectionalButtons onClick={handleInputButtonClick} />

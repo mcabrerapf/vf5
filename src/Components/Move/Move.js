@@ -6,7 +6,7 @@ import { MOVE_LEVEL_MATCH } from '../../constants';
 
 const Move = ({
     move,
-    modifier="",
+    modifier = "",
     showSober = false,
     hideType = false,
     onMoveNameClick = () => { },
@@ -28,24 +28,19 @@ const Move = ({
         notes,
         sober,
     } = move;
-    const showDmg = damage !== '-';
-    const showExe = exe !== '-';
-    const showOnBlock = guard_stats !== '-';
-    const showOnHit = normal_hit_stats !== '-';
-    const showOnCh = counter_hit_stats !== '-';
-    const showAvoid = escape !== '-';
-    const parsedLevel = MOVE_LEVEL_MATCH[level];
+
 
     const handleNameClick = (e) => {
         e.preventDefault()
         onMoveNameClick(move)
     }
+
     const className = ['move', modifier].filter(Boolean).join(' ');
-    
+    const parsedLevel = MOVE_LEVEL_MATCH[level];
     return (
         <div className={className}>
             <div className='move__main'>
-                <div className='move__main__name'
+                <div className={`move__main__name  ${modifier}`}
                     role='button'
                     onClick={handleNameClick}
                 >
@@ -59,38 +54,24 @@ const Move = ({
                 }
             </div>
             {!hideType && <div className='move__type'>{commandType}</div>}
-            {showDmg &&
-                <div className='move__damage'>
-                    <span><strong>damage:</strong> {damage}</span>
-                    {showAvoid &&
-                        <span><strong>avoid:</strong> {escape}</span>
-                    }
-                    {showSober && sober !== "0" &&
-                        <span><strong>sober:</strong> {sober}</span>
-                    }
-                </div>
-            }
+            <div className='move__damage'>
+                <span><strong>damage:</strong> {damage}</span>
+                <span><strong>avoid:</strong> {escape}</span>
+                <span><strong>sober:</strong> {sober}</span>
+            </div>
             <div className='move__frame-data'>
-                {showExe &&
-                    <span>
-                        <strong>startup:</strong> {exe}
-                    </span>
-                }
-                {showOnHit &&
-                    <span>
-                        <strong>hit:</strong>  {normal_hit_stats}
-                    </span>
-                }
-                {showOnCh &&
-                    <span>
-                        <strong>ch:</strong>  {counter_hit_stats}
-                    </span>
-                }
-                {showOnBlock &&
-                    <span>
-                        <strong>block:</strong>  {guard_stats}
-                    </span>
-                }
+                <span>
+                    <strong>startup:</strong> {exe}
+                </span>
+                <span>
+                    <strong>hit:</strong>  {normal_hit_stats}
+                </span>
+                <span>
+                    <strong>ch:</strong>  {counter_hit_stats}
+                </span>
+                <span>
+                    <strong>block:</strong>  {guard_stats}
+                </span>
             </div>
             <MoveCommand
                 command={command}

@@ -20,7 +20,6 @@
         &__notation {
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
             justify-content: space-between;
 
             .move-command {
@@ -30,7 +29,7 @@
                 box-sizing: border-box;
                 overflow-y: auto;
                 width: 25rem;
-                height: 8rem;
+                height: 9rem;
                 border-radius: 0.5rem;
                 padding: 0.5rem;
 
@@ -43,8 +42,16 @@
                 }
             }
 
-            .button {
-                height: 3rem;
+            &__buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                .button {
+                    min-height: 2.5rem;
+                    min-width: 2.5rem;
+                    height: 2.5rem;
+                    width: 2.5rem;
+                }
             }
 
         }
