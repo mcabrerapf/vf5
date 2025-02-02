@@ -1,0 +1,13 @@
+.info-modal {
+    
+    &__content {
+        width: 15rem;
+        height: 5rem;
+        font-size: 2rem;
+
+        &__header {
+            text-decoration: underline;
+        }
+    }
+    
+}

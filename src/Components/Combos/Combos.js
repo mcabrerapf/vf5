@@ -93,6 +93,27 @@ const Combos = () => {
         );
         setCombos(updatedCombos);
     }
+
+    const handleCharacterClick = ({ target: { value } }) => {
+        if (value === 'ALL') {
+            const updatedFilters = selectedFilters.filter(filter => !filter.includes('character/'));
+            setSelectedFilters(updatedFilters);
+        } else {
+            const parsedValue = `character/${value}`
+            if (selectedFilters.includes(parsedValue)) return;
+            const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
+            setSelectedFilters(updatedFilters);
+        }
+
+    }
+
+    const handleTagClick = ({ target: { value } }) => {
+        const parsedValue = `other/${value}`
+        if (selectedFilters.includes(parsedValue)) return;
+        const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
+        setSelectedFilters(updatedFilters);
+    }
+
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos);
 
@@ -126,6 +147,8 @@ const Combos = () => {
                             <Combo
                                 combo={combo}
                                 onClick={() => handleComboClick(combo)}
+                                onTagClick={handleTagClick}
+                                onCharacterClick={handleCharacterClick}
                             />
                             <Button
                                 modifier="no-border"

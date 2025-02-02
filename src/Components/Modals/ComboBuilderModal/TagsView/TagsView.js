@@ -37,7 +37,7 @@ const TagsView = ({
 
     const handleTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-        console.log({ value, className })
+        
         if (className.includes('not-selected')) {
             updatedTags = [...selectedTags.map(tag => tag), value];
         } else {

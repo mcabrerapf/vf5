@@ -8,14 +8,17 @@ import Combos from '../Combos';
 import Notes from '../Notes';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
+import InfoModal from '../Modals/InfoModal';
 import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
+
 
 const Character = () => {
     const localSelectedView = getFromLocal(LOCAL_KEYS.SELECTED_CHARACTER_VIEW);
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
+    const [showInfoModal, setShowInfoModal] = useState(false);
     const [characterView, setCharacterView] = useState(localSelectedView);
 
     const toggleCharacterSelectModal = () => {
@@ -27,10 +30,14 @@ const Character = () => {
         setCharacterView(value);
     }
 
+    const toggleInfoModal = () => {
+        setShowInfoModal(!showInfoModal)
+    }
+
 
     const { name: characterName } = CHARACTERS
         .find(character => character.id === selectedCharacter);
-    
+
     return (
         <div className='character'>
             <ModalContextWrapper
@@ -41,11 +48,25 @@ const Character = () => {
                     <CharacterSelectModal />
                 </Modal>
             </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showInfoModal}
+                closeModal={toggleInfoModal}
+            >
+                <Modal>
+                    <InfoModal
+                    />
+                </Modal>
+            </ModalContextWrapper>
             <header className='character__header'>
                 <Button
                     modifier={'no-border'}
                     onClick={toggleCharacterSelectModal}
                     text={characterName}
+                />
+                <Button
+                    modifier={'no-border info-button'}
+                    text="ℹ"
+                    onClick={toggleInfoModal}
                 />
             </header>
             <div className='character__sub-header'>
@@ -63,7 +84,7 @@ const Character = () => {
                 />
                 <Button
                     modifier={characterView === STRINGS.NOTES ? 'active' : ''}
-                    value={ STRINGS.NOTES}
+                    value={STRINGS.NOTES}
                     text='Notes'
                     onClick={handleViewChange}
                 />

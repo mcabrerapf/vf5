@@ -2,18 +2,34 @@ import React from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import CharacterBadge from '../CharacterBadge';
-import { CHARACTERS } from '../../constants';
 import MoveTypeBadge from '../MoveTypeBadge';
+import Button from '../Button';
+import { CHARACTERS } from '../../constants';
 
 const Combo = ({
     combo = {},
     onClick = () => { },
+    onCharacterClick = () => { },
+    onTagClick = () => { }
 }) => {
     const { tags, characterTags, command, damage, note } = combo || {};
     const hasAllCharacters = CHARACTERS.length === characterTags.length;
 
+    const handleComboClick = (e) => {
+        onClick(e);
+    }
+
+    const handleTagClick = (e) => {
+        e.stopPropagation();
+        onTagClick(e);
+    }
+
+    const handleCharacterClick = (e)=> {
+        e.stopPropagation();
+        onCharacterClick(e)
+    }
     return (
-        <div className='combo' onClick={onClick}>
+        <div className='combo' onClick={handleComboClick}>
             <div className='combo__main'>
                 <MoveCommand
                     command={command}
@@ -31,12 +47,14 @@ const Combo = ({
                     <CharacterBadge
                         modifier={"selected"}
                         character={'ALL'}
+                        onClick={handleCharacterClick}
                     />
                 }
                 {!hasAllCharacters && characterTags.map(characterTag =>
                     <CharacterBadge
                         modifier={"selected"}
                         character={characterTag}
+                        onClick={handleCharacterClick}
                     />
                 )}
             </div>
@@ -44,6 +62,7 @@ const Combo = ({
                 {tags.map(tag =>
                     <MoveTypeBadge
                         moveType={tag}
+                        onClick={handleTagClick}
                     />
                 )}
             </div>

@@ -17,8 +17,8 @@ const CharacterBadge = ({
             value={value || character}
             text={character}
             onClick={onClick}
-        >
-        </Button>
+        />
+
     )
 }
 
