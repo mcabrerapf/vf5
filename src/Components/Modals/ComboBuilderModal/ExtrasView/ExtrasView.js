@@ -28,6 +28,7 @@ const ExtrasView = ({
                 <label>Damage</label>
                 <input
                     value={comboDamage}
+                    onFocus={() => setComboDamage('')}
                     onChange={handleDamageChange}
                     onBlur={handleDamageBlur}
                 />

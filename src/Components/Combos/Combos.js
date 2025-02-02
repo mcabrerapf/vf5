@@ -33,8 +33,11 @@ const Combos = () => {
     )
 
     const handleFiltersChange = (newFilters) => {
-        setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, newFilters);
-        setSelectedFilters(newFilters);
+        if (newFilters) {
+            setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, newFilters);
+            setSelectedFilters(newFilters);
+        }
+
     }
 
     const handleCloseModal = (newCombo) => {
