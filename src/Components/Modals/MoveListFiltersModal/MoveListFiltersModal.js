@@ -47,7 +47,26 @@ const MoveListFiltersModal = ({
         setSelectedTypeFilters(newTypeFilters);
     }
 
+    const handleFiltersReset = () => {
+        setSelectedTypeFilters([]);
+    }
+
+    const handleFavoriteClick = () => {
+        const parsedValue = `fav/`;
+        let newTypeFilters;
+        if (!!selectedTypeFilters.includes(parsedValue)) {
+            newTypeFilters = selectedTypeFilters.filter(value => value !== parsedValue);
+        } else {
+            newTypeFilters = [...selectedTypeFilters.map(val => val), parsedValue];
+        }
+
+        setSelectedTypeFilters(newTypeFilters);
+    }
+
     const typeOptions = Object.keys(MOVE_LEVEL_MATCH).map(key => MOVE_LEVEL_MATCH[key]);
+
+    const isFavSelected = selectedTypeFilters.includes(`fav/`);
+    const favModifier = isFavSelected ? 'selected' : 'not-selected';
 
     return (
         <div className='movelist-filters-modal'>
@@ -155,10 +174,20 @@ const MoveListFiltersModal = ({
                             />
                         )
                     })}
+                    <MoveTypeBadge
+                        modifier={favModifier}
+                        moveType={'favorite'}
+                        onClick={handleFavoriteClick}
+                    />
                 </div>
 
             </div>
-            <ModalFooter modifier={"align-right"}>
+            <ModalFooter>
+                <Button
+                    text='Reset'
+                    modifier={'active'}
+                    onClick={handleFiltersReset}
+                />
                 <Button
                     text='✓'
                     modifier={'active'}

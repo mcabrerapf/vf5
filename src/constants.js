@@ -110,7 +110,9 @@ const LOCAL_KEYS = {
     SELECTED_MOVE_TYPE: 'vf5_selected-move-type',
     SELECTED_MOVELIST_SORT: 'vf5_selected-movelist-sort',
     SELECTED_MOVELIST_FILTERS: 'vf5_selected-movelist-filters',
-    CHARACTER_COMBOS: 'vf5_character_combos_'
+    CHARACTER_COMBOS: 'vf5_character_combos_',
+    CHARACTER_FAV_MOVES: 'vf5_character_fav_moves_',
+    CHARACTER_FAV_COMBOS: 'vf5_character_fav_combos_'
 }
 
 const SORT_OPTIONS = [

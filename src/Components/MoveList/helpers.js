@@ -14,30 +14,30 @@ const sortMovelist = (list, sort) => {
         });
 }
 
-const filterMovelist = (list, filters) => {
+const filterMovelist = (list, filters, favMoves) => {
 
     if (!filters.length) return list;
-
 
     const commandFilters = filters
         .filter(filter => filter.includes('command/'))
         .map(command => command.split('/')[1]);
     const levelFilters = filters.filter(filter => filter.includes('level/'));
+    const hasFavFilter = filters.includes('fav/');
     
+
     return list.filter(move => {
         const parsedType = `level/${MOVE_LEVEL_MATCH[move.level]}`
         const isValid = levelFilters.length ? levelFilters.includes(parsedType) : true;
         let hasCommandMatch = commandFilters.length ? false : true;
-        const stringCommand =move.command.join('')
-        
-        commandFilters.forEach(commandFilter=> {
-            if(stringCommand.includes(commandFilter)) {
+        const stringCommand = move.command.join('')
+        const hasFavMatch = !hasFavFilter ? true : favMoves.includes(stringCommand);
+        commandFilters.forEach(commandFilter => {
+            if (stringCommand.includes(commandFilter)) {
                 hasCommandMatch = true;
             }
         })
- 
 
-        return isValid && hasCommandMatch;
+        return isValid && hasCommandMatch && hasFavMatch;
     })
 }
 

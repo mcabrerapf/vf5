@@ -21,9 +21,9 @@
                 border: 1px solid transparent !important;
                 align-items: center;
                 justify-content: center;
-
+                
                 &.selected {
-                    border: 1px solid white !important;
+                    border: 1px solid gold !important;
                 }
             }
 
@@ -34,11 +34,12 @@
                 flex-direction: row;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid transparent !important;
+                border-radius: 0.5rem;
+                border: 1px solid white !important;
 
                 &.selected {
-                    border: 1px solid white !important;
-                    border-radius: 0.5rem;
+                    border: 1px solid gold !important;
+                    
                 }
             }
         }
@@ -60,6 +61,15 @@
                     color: white!important;
                 }
             }
+        }
+    }
+
+    .modal-footer {
+        justify-content: space-between;
+        align-items: end;
+        
+        .button {
+            height: 3px;
         }
     }
 }

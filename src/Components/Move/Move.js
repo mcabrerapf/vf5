@@ -6,8 +6,11 @@ import { MOVE_LEVEL_MATCH } from '../../constants';
 
 const Move = ({
     move,
+    modifier="",
     showSober = false,
-    hideType = false
+    hideType = false,
+    onMoveNameClick = () => { },
+    onMoveTypeClick = () => { }
 }) => {
     const {
         // active,
@@ -33,13 +36,25 @@ const Move = ({
     const showAvoid = escape !== '-';
     const parsedLevel = MOVE_LEVEL_MATCH[level];
 
+    const handleNameClick = (e) => {
+        e.preventDefault()
+        onMoveNameClick(move)
+    }
+    const className = ['move', modifier].filter(Boolean).join(' ');
+    
     return (
-        <div className='move'>
+        <div className={className}>
             <div className='move__main'>
-                <span className='move__main__name'>{name} </span>
+                <div className='move__main__name'
+                    role='button'
+                    onClick={handleNameClick}
+                >
+                    {name}
+                </div>
                 {parsedLevel &&
                     <MoveTypeBadge
                         moveType={parsedLevel}
+                        onClick={onMoveTypeClick}
                     />
                 }
             </div>

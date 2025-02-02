@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import './Character.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext'
-import MoveList from '../MoveList';
+import Movelist from '../Movelist';
 import Button from '../Button';
 import Combos from '../Combos';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
 import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
+import setLocalStorage from '../../helpers/setLocalStorage';
 
 
 
@@ -23,7 +24,7 @@ const Character = () => {
     }
 
     const handleViewChange = ({ target: { value } }) => {
-        localStorage.setItem(LOCAL_KEYS.SELECTED_CHARACTER_VIEW, value);
+        setLocalStorage(LOCAL_KEYS.SELECTED_CHARACTER_VIEW, value);
         setCharacterView(value);
     }
 
@@ -69,7 +70,7 @@ const Character = () => {
                     onClick={handleViewChange}
                 />
             </div>
-            {characterView === 'moves' && <MoveList />}
+            {characterView === 'moves' && <Movelist />}
             {characterView === 'combos' && <Combos />}
         </div>
     )

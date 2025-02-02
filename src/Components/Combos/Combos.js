@@ -8,6 +8,8 @@ import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
 import Combo from '../Combo/Combo';
 import { generateId, getFromLocal } from '../../helpers';
+import setLocalStorage from '../../helpers/setLocalStorage';
+import { sortCombos } from './helpers';
 
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
@@ -32,7 +34,7 @@ const Combos = () => {
                     { ...newCombo, id: generateId() }
                 ];
                 const stringifiedCombos = JSON.stringify(updatedCombos);
-                localStorage.setItem(localComboKey, stringifiedCombos);
+                setLocalStorage(localComboKey, stringifiedCombos);
                 setCombos(updatedCombos);
             } else {
                 const updatedCombos = combos.map((combo) => {
@@ -40,7 +42,7 @@ const Combos = () => {
                     return combo;
                 });
                 const stringifiedCombos = JSON.stringify(updatedCombos);
-                localStorage.setItem(localComboKey, stringifiedCombos);
+                setLocalStorage(localComboKey, stringifiedCombos);
                 setCombos(updatedCombos);
             }
         }
@@ -65,11 +67,11 @@ const Combos = () => {
     const handleDeleteCombo = (comboIndex) => {
         const updatedCombos = combos.filter((_, index) => index !== comboIndex);
         const stringifiedCombos = JSON.stringify(updatedCombos)
-        localStorage.setItem(localComboKey, stringifiedCombos);
+        setLocalStorage(localComboKey, stringifiedCombos);
         setCombos(updatedCombos);
     }
-
-    const selectedCombo = combos[selectedComboIndex];
+    const sortedCombos = sortCombos(combos);
+    const selectedCombo = sortedCombos[selectedComboIndex];
 
     return (
         <div className='combos'>
@@ -85,7 +87,7 @@ const Combos = () => {
                 <ul
                     className='combos__list-container__list'
                 >
-                    {combos.map((combo, i) =>
+                    {sortedCombos.map((combo, i) =>
                         <li
                             key={combo.id}
                             className='combos__list-container__list__combo'

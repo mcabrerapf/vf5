@@ -4,6 +4,7 @@ import MoveTypeBadge from '../../MoveTypeBadge';
 import MoveCommand from '../../MoveCommand';
 import Button from '../../Button';
 import { LOCAL_KEYS } from '../../../constants';
+import setLocalStorage from '../../../helpers/setLocalStorage';
 
 const ActiveFiltersList = ({
     selectedFilters,
@@ -18,19 +19,28 @@ const ActiveFiltersList = ({
     }
 
     const onSortClick = () => {
-        localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT, '/asc');
+        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_SORT, '/asc');
         setSelectedMovelistSort('/asc');
     }
-    
+
     const [sortType] = selectedMovelistSort.split('/');
-    
+    const hasFav = selectedFilters.includes('fav/')
+
     return (
         <div className='active-filters-list'>
             {!!sortType &&
                 <Button
                     text={selectedMovelistSort}
                     onClick={onSortClick}
-                />}
+                />
+            }
+            {hasFav &&
+                <MoveTypeBadge
+                    moveType={'favorite'}
+                    value={'fav/'}
+                    onClick={onFilterClick}
+                />
+            }
             {selectedFilters.map(selectedFilter => {
                 const [filterType, parsedFilterName] = selectedFilter.split('/')
 

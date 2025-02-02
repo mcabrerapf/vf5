@@ -1,12 +1,16 @@
 import { LOCAL_KEYS, CHARACTERS } from "../constants"
 const {
     CHARACTER_COMBOS,
+    CHARACTER_FAV_MOVES,
+    CHARACTER_FAV_COMBOS,
     SELECTED_CHARACTER,
     SELECTED_CHARACTER_VIEW,
     SELECTED_MOVE_TYPE,
     SELECTED_MOVELIST_SORT,
     SELECTED_MOVELIST_FILTERS
 } = LOCAL_KEYS;
+
+
 
 const getFromLocal = (localKey) => {
     const localValue = localStorage.getItem(localKey);
@@ -29,8 +33,14 @@ const getFromLocal = (localKey) => {
 
     if (localKey.includes(CHARACTER_COMBOS)) {
         const parsedCombos = JSON.parse(localValue);
-        if(!parsedCombos || !parsedCombos.length || !parsedCombos[0].id)return [];
+        if (!parsedCombos || !parsedCombos.length || !parsedCombos[0].id) return [];
         return parsedCombos;
+    }
+
+    if (localKey.includes(CHARACTER_FAV_MOVES)) {
+        const parsedFavMoves = JSON.parse(localValue);
+        if (!parsedFavMoves || !parsedFavMoves.length) return [];
+        return parsedFavMoves;
     }
     return '';
 }

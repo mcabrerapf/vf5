@@ -6,8 +6,8 @@ import MoveTypSelectModal from '../../Modals/MoveTypSelectModal';
 import MoveListSortModal from '../../Modals/MoveListSortModal';
 import Button from '../../Button';
 import { LOCAL_KEYS } from '../../../constants';
-import { SORT_OPTIONS } from '../../../constants';
 import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
+import setLocalStorage from '../../../helpers/setLocalStorage';
 
 const MovelistHeader = ({
     moveKeys,
@@ -24,14 +24,14 @@ const MovelistHeader = ({
 
     const handleTypeSelectModalClose = (type) => {
         if (type) {
-            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVE_TYPE, type);
+            setLocalStorage(LOCAL_KEYS.SELECTED_MOVE_TYPE, type);
             setSelectedMoveType(type);
         }
         toggleMoveTypeSelectModal();
     }
 
     const handleSortModalClose = (sort) => {
-        localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_SORT, sort);
+        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_SORT, sort);
         setSelectedMovelistSort(sort);
         toggleSortModal();
     }

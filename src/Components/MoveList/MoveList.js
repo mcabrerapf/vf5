@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import './MoveList.scss'
+import React, { useState, useRef, useEffect } from 'react';
+import './Movelist.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
@@ -7,23 +7,34 @@ import { CHARACTERS, LOCAL_KEYS } from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from './ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
+import setLocalStorage from '../../helpers/setLocalStorage';
 
-const MoveList = () => {
+const Movelist = () => {
     const listRef = useRef(null);
+    const { selectedCharacter } = useMainContext();
     const localSelectedMoveType = getFromLocal(LOCAL_KEYS.SELECTED_MOVE_TYPE);
     const localSelectedSort = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
     const localFilters = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
+    const localFavoritesKey = `${LOCAL_KEYS.CHARACTER_FAV_MOVES}${selectedCharacter}`;
+    const localFavorites = getFromLocal(localFavoritesKey);
 
-    const { selectedCharacter } = useMainContext();
+
     const [selectedMoveType, setSelectedMoveType] = useState(localSelectedMoveType);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
+    const [favoriteMoves, setFavoriteMoves] = useState(localFavorites);
 
     const selectedCharacterData = CHARACTERS
         .find(character => character.id === selectedCharacter);
 
     const moveKeys = Object.keys(selectedCharacterData.movelist);
 
+    useEffect(() => {
+        const newLocalFavs = getFromLocal(localFavoritesKey);
+        setFavoriteMoves(newLocalFavs);
+    },
+        [localFavoritesKey]
+    )
     // useEffect(() => {
     //     TODO: fix scroll
     //     listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -31,13 +42,6 @@ const MoveList = () => {
     // },
     //     [selectedMovelistSort]
     // )
-
-    const handleFiltersChange = (newFilters) => {
-        if (newFilters) {
-            localStorage.setItem(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, newFilters);
-            setSelectedFilters(newFilters);
-        }
-    }
 
     const selectedCharacterMoveset = selectedCharacterData.movelist;
 
@@ -49,9 +53,36 @@ const MoveList = () => {
     const selectedMoveset = selectedCharacterMoveset[selectedMoveType];
     const isShunDi = selectedCharacter === 'shun';
 
-    const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters);
+    const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favoriteMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
 
+    const handleFiltersChange = (newFilters) => {
+        if (newFilters) {
+            setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, newFilters);
+            setSelectedFilters(newFilters);
+        }
+    }
+
+    const handleMoveNameClick = (move) => {
+        const stringCommand = move.command.join('');
+
+        let updatedFavorites;
+        if (favoriteMoves.includes(stringCommand)) {
+            updatedFavorites = favoriteMoves.filter(move => move !== stringCommand);
+        } else {
+            updatedFavorites = [...favoriteMoves.map(move => move), stringCommand];
+        }
+
+        setLocalStorage(localFavoritesKey, JSON.stringify(updatedFavorites));
+        setFavoriteMoves(updatedFavorites);
+    }
+
+    const onMoveTypeClick = ({ target: { value } }) => {
+        const parsedType = `level/${value}`
+        if (selectedFilters.includes(parsedType)) return;
+        const updatedFilters = [...selectedFilters.map(filter => filter), parsedType];
+        setSelectedFilters(updatedFilters);
+    }
 
     return (
         <div className='movelist'>
@@ -76,15 +107,22 @@ const MoveList = () => {
                     className='movelist__list-container__list'
                 >
                     {sortedMovelist.map((move, i) => {
+
+                        const isFavourite = favoriteMoves.includes(move.command.join(''));
+                        
                         return (
                             <li
                                 key={`${move}-${i}`}
                                 className='movelist__list-container__list__item'
                             >
                                 <Move
+                                    modifier={isFavourite ? 'favorite' : ''}
                                     showSober={isShunDi}
                                     move={move}
-                                    hideType={selectedMoveType !== 'allMoves'} />
+                                    hideType={selectedMoveType !== 'allMoves'}
+                                    onMoveTypeClick={onMoveTypeClick}
+                                    onMoveNameClick={handleMoveNameClick}
+                                />
                             </li>
                         )
                     })}
@@ -94,4 +132,4 @@ const MoveList = () => {
     )
 }
 
-export default MoveList;
+export default Movelist;

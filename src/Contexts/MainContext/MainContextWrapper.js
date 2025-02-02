@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MainContextProvider } from './MainContext';
 import { LOCAL_KEYS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
+import setLocalStorage from '../../helpers/setLocalStorage';
 
 
 function MainContextWrapper({
@@ -46,7 +47,7 @@ function MainContextWrapper({
   )
 
   const setSelectedCharacter = (character) => {
-    localStorage.setItem(LOCAL_KEYS.SELECTED_CHARACTER, character);
+    setLocalStorage(LOCAL_KEYS.SELECTED_CHARACTER, character);
     setContextData({ ...contextData, selectedCharacter: character });
   }
 
