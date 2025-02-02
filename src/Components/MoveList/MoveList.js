@@ -94,6 +94,7 @@ const Movelist = () => {
         const parsedType = `level/${value}`
         if (selectedFilters.includes(parsedType)) return;
         const updatedFilters = [...selectedFilters.map(filter => filter), parsedType];
+        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, updatedFilters);
         setSelectedFilters(updatedFilters);
     }
 

@@ -97,11 +97,13 @@ const Combos = () => {
     const handleCharacterClick = ({ target: { value } }) => {
         if (value === 'ALL') {
             const updatedFilters = selectedFilters.filter(filter => !filter.includes('character/'));
+            setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, updatedFilters);
             setSelectedFilters(updatedFilters);
         } else {
             const parsedValue = `character/${value}`
             if (selectedFilters.includes(parsedValue)) return;
             const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
+            setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, updatedFilters);
             setSelectedFilters(updatedFilters);
         }
 
@@ -111,6 +113,7 @@ const Combos = () => {
         const parsedValue = `other/${value}`
         if (selectedFilters.includes(parsedValue)) return;
         const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
+        setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, updatedFilters);
         setSelectedFilters(updatedFilters);
     }
 
