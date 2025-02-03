@@ -30,7 +30,7 @@ const Combo = ({
         onCharacterClick(e)
     }
 
-    const [launcher, restOfCombo] = getLauncher(command);
+    const [, restOfCombo,launcher] = getLauncher(command);
 
     if (restOfCombo[0] === 'ch') {
         launcher.push(restOfCombo[0]);

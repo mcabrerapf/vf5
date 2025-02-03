@@ -17,7 +17,8 @@ const getLauncher = (command) => {
     })
     return [
         command.slice(startIndex, endIndex),
-        command.slice(endIndex)
+        command.slice(endIndex),
+        command.slice(0, endIndex),
     ];
 }
 
