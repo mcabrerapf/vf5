@@ -1,4 +1,4 @@
-import { NOT_VALID_INPUTS } from "./constants";
+import { INVALID_LAUNCHER_NOTATIONS } from "../constants";
 
 const getLauncher = (command) => {
     let startIndex = 0;
@@ -6,11 +6,11 @@ const getLauncher = (command) => {
     let foundStart = false;
     let foundEnd = false;
     command.forEach((notation, index) => {
-        if (!foundStart && !NOT_VALID_INPUTS.includes(notation)) {
+        if (!foundStart && !INVALID_LAUNCHER_NOTATIONS.includes(notation)) {
             foundStart = true;
             startIndex = index;
         }
-        if (foundStart && !foundEnd && NOT_VALID_INPUTS.includes(notation)) {
+        if (foundStart && !foundEnd && INVALID_LAUNCHER_NOTATIONS.includes(notation)) {
             foundEnd = true;
             endIndex = index;
         }
@@ -22,6 +22,4 @@ const getLauncher = (command) => {
     ];
 }
 
-export {
-    getLauncher
-}
+export default getLauncher;

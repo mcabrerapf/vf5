@@ -120,6 +120,7 @@ const LOCAL_KEYS = {
 }
 
 const STRINGS = {
+    LAUNCHERS: 'launchers',
     MOVELIST: 'movelist',
     COMBOS: 'combos',
     COMMAND: 'command',
@@ -143,10 +144,12 @@ const SORT_OPTIONS = [
     ['sober', 'Sober'],
 ]
 
+const INVALID_LAUNCHER_NOTATIONS = ['or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
 
 export {
     B_URL,
     CHARACTERS,
+    INVALID_LAUNCHER_NOTATIONS,
     LOCAL_KEYS,
     MOVE_LEVEL_MATCH,
     NOTATION_CHARACTERS,

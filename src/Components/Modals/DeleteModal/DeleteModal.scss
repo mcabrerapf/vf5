@@ -1,18 +1,22 @@
 .delete-modal {
-    width: 18rem;
+    width: 30rem;
 
     &__content {
-        padding: 1rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
 
-        .button {
-            &.delete-button {
-                color: red;
-                border: 1px solid red;
+        &__buttons {
+            padding: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .button {
+                &.delete-button {
+                    color: red;
+                    border: 1px solid red;
+                }
             }
         }
+
     }
 
 }

@@ -4,8 +4,7 @@ import MoveCommand from '../MoveCommand';
 import CharacterBadge from '../CharacterBadge';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { CHARACTERS } from '../../constants';
-import { getLauncher } from './helpers';
-import { NOT_VALID_INPUTS } from './constants';
+import { getLauncher } from '../../helpers';
 
 const Combo = ({
     combo = {},
@@ -30,7 +29,7 @@ const Combo = ({
         onCharacterClick(e)
     }
 
-    const [, restOfCombo,launcher] = getLauncher(command);
+    const [, restOfCombo, launcher] = getLauncher(command);
 
     if (restOfCombo[0] === 'ch') {
         launcher.push(restOfCombo[0]);
@@ -46,9 +45,11 @@ const Combo = ({
                         modifier={"launcher"}
                         command={launcher}
                     />
-                    <MoveCommand
-                        command={restOfCombo}
-                    />
+                    {!!restOfCombo.length &&
+                        <MoveCommand
+                            command={restOfCombo}
+                        />
+                    }
                 </div>
                 <div className='combo__main__damage'>{damage}</div>
             </div>

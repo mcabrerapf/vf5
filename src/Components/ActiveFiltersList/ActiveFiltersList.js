@@ -11,7 +11,7 @@ const ActiveFiltersList = ({
     onSortClick,
     onFilterClick
 }) => {
-
+    const showSort = selectedSort && !!selectedSort.split('/')[0];
     return (
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
@@ -23,6 +23,14 @@ const ActiveFiltersList = ({
                             {filterType === 'command' &&
                                 <MoveCommand
                                     key={`${parsedFilterName}-command`}
+                                    command={parsedFilterName.match(/\[.*?\]/g)}
+                                    onClick={() => onFilterClick({ target: { value: selectedFilter } })}
+                                />
+                            }
+                            {filterType === 'launcher' &&
+                                <MoveCommand
+                                    key={`${parsedFilterName}-launcher`}
+                                    modifier={"launcher"}
                                     command={parsedFilterName.match(/\[.*?\]/g)}
                                     onClick={() => onFilterClick({ target: { value: selectedFilter } })}
                                 />
@@ -56,7 +64,7 @@ const ActiveFiltersList = ({
                 }
                 )}
             </div>
-            {!!selectedSort &&
+            {!!showSort &&
                 <Button
                     text={selectedSort}
                     onClick={onSortClick}

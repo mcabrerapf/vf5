@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import './CombosFiltersModal.scss'
+import TagsView from './TagsView';
 import ModalHeader from '../ModalHeader';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import MoveTypeBadge from '../../MoveTypeBadge';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { CHARACTERS, MOVE_LEVEL_MATCH } from '../../../constants';
-import CharacterBadge from '../../CharacterBadge';
+import { CHARACTERS, STRINGS } from '../../../constants';
+import LaunchersView from './LaunchersView';
+import { getLaunchers } from './helpers';
+
 
 const CombosFiltersModal = ({
+    combos,
     selectedFilters: _selectedFilters,
 }) => {
     const { closeModal } = useModalContext();
     const [selectedFilters, setSelectedFilters] = useState(_selectedFilters);
-
+    const [filtersView, setFiltersView] = useState(STRINGS.TAGS);
     const characterFilters = selectedFilters.filter(filter => filter.includes('character/'));
     const allCharactersSelected = characterFilters.length === CHARACTERS.length;
 
@@ -59,7 +62,21 @@ const CombosFiltersModal = ({
         setSelectedFilters(newTypeFilters);
     }
 
-    const otherTags = Object.keys(MOVE_LEVEL_MATCH).map(key => MOVE_LEVEL_MATCH[key]);
+    const handleLauncherClick = ({ target: { value, isSelected } }) => {
+        const stringLauncher = `launcher/${value.join('')}`;
+
+        if (isSelected) {
+            const updatedFilters = selectedFilters.filter(filter => filter !== stringLauncher);
+            setSelectedFilters(updatedFilters);
+        } else {
+            const updatedFilters = [...new Set([...selectedFilters, stringLauncher])].filter(Boolean);
+            setSelectedFilters(updatedFilters);
+        }
+
+
+    }
+
+    const launchers = getLaunchers(combos);
 
     return (
         <div className='combos-filters-modal'>
@@ -72,52 +89,35 @@ const CombosFiltersModal = ({
                     onClick={handleClose}
                 />
             </ModalHeader>
+            <div className='combos-filters-modal__sub-header'>
+                <Button
+                    modifier={filtersView === STRINGS.TAGS ? 'active' : ''}
+                    text='Tags'
+                    onClick={() => setFiltersView(STRINGS.TAGS)}
+                />
+                <Button
+                    modifier={filtersView === STRINGS.LAUNCHERS ? 'active' : ''}
+                    text='Launchers'
+                    onClick={() => setFiltersView(STRINGS.LAUNCHERS)}
+                />
+            </div>
             <div className='combos-filters-modal__content'>
-                <div className='combos-filters-modal__content__characters'>
-                    {CHARACTERS.map(character => {
-                        const isSelected = selectedFilters.includes(`character/${character.id}`);
-                        const modifier = isSelected ? '' : 'not-selected';
-
-                        return (
-                            <CharacterBadge
-                                key={character.id}
-                                modifier={modifier}
-                                character={character.id}
-                                onClick={handleCharacterClick}
-                            />
-                        )
-                    })}
-                    <CharacterBadge
-                        modifier={allCharactersSelected ? '' : 'not-selected'}
-                        character={'ALL'}
-                        onClick={handleAllClick}
+                {filtersView === STRINGS.TAGS &&
+                    <TagsView
+                        selectedFilters={selectedFilters}
+                        allCharactersSelected={allCharactersSelected}
+                        handleCharacterClick={handleCharacterClick}
+                        handleAllClick={handleAllClick}
+                        handleOtherTagClick={handleOtherTagClick}
                     />
-                </div>
-                <div className='combos-filters-modal__content__other-tags'>
-                    {otherTags.map(tag =>
-                        <MoveTypeBadge
-                            key={tag}
-                            moveType={tag}
-                            modifier={selectedFilters.includes(`other/${tag}`) ? '' : 'not-selected'}
-                            onClick={handleOtherTagClick}
-                        />
-                    )}
-                    <MoveTypeBadge
-                        moveType="side"
-                        modifier={selectedFilters.includes('other/side') ? '' : 'not-selected'}
-                        onClick={handleOtherTagClick}
+                }
+                {filtersView === STRINGS.LAUNCHERS &&
+                    <LaunchersView
+                        selectedFilters={selectedFilters}
+                        launchers={launchers}
+                        onLauncherClick={handleLauncherClick}
                     />
-                    <MoveTypeBadge
-                        moveType="ch"
-                        modifier={selectedFilters.includes('other/ch') ? '' : 'not-selected'}
-                        onClick={handleOtherTagClick}
-                    />
-                    <MoveTypeBadge
-                        moveType="wall"
-                        modifier={selectedFilters.includes('other/wall') ? '' : 'not-selected'}
-                        onClick={handleOtherTagClick}
-                    />
-                </div>
+                }
             </div>
             <ModalFooter>
                 <Button

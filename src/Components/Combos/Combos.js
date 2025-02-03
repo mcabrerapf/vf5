@@ -19,7 +19,6 @@ const Combos = () => {
     const [combos, setCombos] = useState([]);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
-    console.log(selectedFilters)
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -156,10 +155,13 @@ const Combos = () => {
                 closeModal={handleDeleteCombo}
             >
                 <Modal>
-                    <DeleteModal />
+                    <DeleteModal
+                        combo={selectedCombo}
+                    />
                 </Modal>
             </ModalContextWrapper>
             <CombosHeader
+                combos={combos}
                 selectedFilters={selectedFilters}
                 handleFiltersChange={handleFiltersChange}
             />

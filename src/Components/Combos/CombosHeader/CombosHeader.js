@@ -6,6 +6,7 @@ import Button from '../../Button';
 import CombosFiltersModal from '../../Modals/CombosFiltersModal';
 
 const CombosHeader = ({
+    combos,
     selectedFilters,
     handleFiltersChange
 }) => {
@@ -30,6 +31,7 @@ const CombosHeader = ({
             >
                 <Modal>
                     <CombosFiltersModal
+                        combos={combos}
                         selectedFilters={selectedFilters}
                     />
                 </Modal>
@@ -41,7 +43,6 @@ const CombosHeader = ({
                     onClick={toggleFiltersModal}
                 />
             </div>
-
         </header>
     )
 }

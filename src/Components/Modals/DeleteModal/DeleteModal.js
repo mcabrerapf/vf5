@@ -2,8 +2,11 @@ import React from 'react';
 import './DeleteModal.scss'
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
+import Combo from '../../Combo';
 
-const DeleteModal = () => {
+const DeleteModal = ({
+    combo
+}) => {
     const { closeModal } = useModalContext();
 
     const handleClose = (shouldDelete) => {
@@ -13,6 +16,10 @@ const DeleteModal = () => {
     return (
         <div className='delete-modal'>
             <div className='delete-modal__content'>
+                <Combo
+                combo={combo}
+                />
+                <div className='delete-modal__content__buttons'>
                 <Button
                     modifier={'delete-button'}
                     text='DELETE'
@@ -22,6 +29,8 @@ const DeleteModal = () => {
                     text='CANCEL'
                     onClick={() => handleClose()}
                 />
+                </div>
+               
             </div>
         </div>
     )

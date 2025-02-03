@@ -8,8 +8,8 @@ const MoveCommand = ({
     modifier,
     notationModifier,
     selectedNotationIndex,
-    onClick,
-    notationClick
+    onClick = () => { },
+    notationClick = () => { }
 }) => {
     const className = ['move-command', modifier].filter(Boolean).join(' ');
 
