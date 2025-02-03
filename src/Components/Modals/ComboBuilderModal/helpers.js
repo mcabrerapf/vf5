@@ -1,6 +1,6 @@
 import { CHARACTERS, MOVE_LEVEL_MATCH } from "../../../constants";
 
-const notValidCharacters = ['[+]', 'or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
+const notValidCharacters = ['or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
 
 const getLauncher = (command) => {
     let startIndex = 0;
@@ -8,7 +8,6 @@ const getLauncher = (command) => {
     let foundStart = false;
     let foundEnd = false;
     command.forEach((notation, index) => {
-        console.log({ notation })
         if (!foundStart && !notValidCharacters.includes(notation)) {
             foundStart = true;
             startIndex = index;
@@ -22,7 +21,6 @@ const getLauncher = (command) => {
 }
 
 const getLauncherType = (launcher, character) => {
-    console.log({ launcher, character });
     const stringLauncher = launcher.join(' ');
     const CHARACTERDATA = CHARACTERS.find(char => char.id === character);
     const characterMoves = CHARACTERDATA.movelist['allMoves'];
