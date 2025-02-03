@@ -20,6 +20,15 @@
             padding: 1rem;
             align-items: center;
             justify-content: center;
+
+            &.shift {
+                font-size: 1rem!important;
+            }
+
+            &.active {
+                background: white;
+                color: black!important;
+            }
         }
     }
 }

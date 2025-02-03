@@ -3,7 +3,9 @@ import './OtherButtons.scss'
 import Notation from '../Notation';
 
 const OtherButtons = ({
-    onClick
+    isShiftActive,
+    onClick,
+    onShiftClick
 }) => {
     return (
         <div className='other-buttons'>
@@ -29,30 +31,29 @@ const OtherButtons = ({
                 <Notation
                     notation='or'
                     onClick={onClick}
+
                 />
                 <Notation
-                    notation='ch'
+                    modifier={isShiftActive ? 'active' : ''}
+                    notation={isShiftActive ? 'ch' : 'hit'}
                     onClick={onClick}
                 />
             </div>
             <div className='other-buttons__grouping'>
+
                 <Notation
-                    notation='w'
-                    onClick={onClick}
-                />
-                <Notation
-                    notation='wb'
+                    modifier={isShiftActive ? 'active' : ''}
+                    notation={isShiftActive ? 'wb' : 'w'}
                     onClick={onClick}
                 />
                 <Notation
                     notation='side'
                     onClick={onClick}
                 />
-            </div>
-            <div className='other-buttons__grouping'>
                 <Notation
-                    notation='hit'
-                    onClick={onClick}
+                    modifier={isShiftActive ? 'active' : ''}
+                    notation='shift'
+                    onClick={onShiftClick}
                 />
             </div>
         </div>

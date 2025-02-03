@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import DirectionalButtons from '../../DirectionalButtons';
-import MoveCommand from '../../MoveCommand';
-import Button from '../../Button';
-import OtherButtons from '../../OtherButtons';
+import './CommandView.scss';
+import MoveCommand from '../../../MoveCommand';
+import Button from '../../../Button';
+import NotationButtons from '../../../NotationButtons';
 
 const CommandView = ({
     comboDamage,
@@ -83,9 +83,11 @@ const CommandView = ({
     }
 
     return (
-        <>
-            <div className='combo-builder-modal__content__main'>
-                <div className='combo-builder-modal__content__main__damage'>
+        <div
+            className='command-view'
+        >
+            <div className='command-view__top'>
+                <div className='command-view__top__damage'>
                     <label>Damage</label>
                     <input
                         type='number'
@@ -95,14 +97,16 @@ const CommandView = ({
                         onBlur={handleDamageBlur}
                     />
                 </div>
-                <div className='combo-builder-modal__content__main__notation'>
+                <div className='command-view__top__notation'>
                     <MoveCommand
                         command={comboNotation}
                         notationModifier={"selected"}
                         selectedNotationIndex={selectedNotationIndex}
                         notationClick={handleNotationClick}
                     />
-                    <div className='combo-builder-modal__content__notation__buttons'>
+                    <div
+                        className='command-view__top__notation__buttons'
+                    >
                         <Button
                             modifier="delete-button"
                             text='X'
@@ -123,11 +127,13 @@ const CommandView = ({
                     </div>
                 </div>
             </div>
-            <div className='combo-builder-modal__content__controls'>
-                <DirectionalButtons onClick={handleInputButtonClick} />
-                <OtherButtons onClick={handleInputButtonClick} />
+            <div className='command-view__bottom'>
+                <NotationButtons
+                    onDirectionalButtonClick={handleInputButtonClick}
+                    onOtherButtonClick={handleInputButtonClick}
+                />
             </div>
-        </>
+        </div>
     )
 }
 

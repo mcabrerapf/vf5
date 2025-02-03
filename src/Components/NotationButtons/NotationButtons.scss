@@ -1,0 +1,14 @@
+.notation-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1rem;
+
+    .button {
+        min-height: 2.5rem;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+}

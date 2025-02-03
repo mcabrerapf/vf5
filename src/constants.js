@@ -116,6 +116,7 @@ const LOCAL_KEYS = {
     // 
     CHARACTERS_DATA: 'vf5_characters_data',
     // 
+    ALL_DATA: 'vf5_all_data'
 }
 
 const STRINGS = {

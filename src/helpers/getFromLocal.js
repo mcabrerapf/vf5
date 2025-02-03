@@ -1,5 +1,6 @@
 import { LOCAL_KEYS, CHARACTERS, STRINGS } from "../constants"
 const {
+    ALL_DATA,
     CHARACTERS_DATA,
     SELECTED_CHARACTER,
     SELECTED_CHARACTER_VIEW,
@@ -7,7 +8,6 @@ const {
     SELECTED_MOVE_TYPE,
     SELECTED_MOVELIST_SORT,
     SELECTED_MOVELIST_FILTERS,
-    
 } = LOCAL_KEYS;
 
 const {
@@ -40,6 +40,8 @@ const getFromLocal = (localKey, character, characterKey) => {
     const localValue = localStorage.getItem(localKey);
 
     switch (localKey) {
+        case ALL_DATA:
+            return localStorage.getItem(CHARACTERS_DATA);
         case SELECTED_CHARACTER:
             const isValidCharacter = !!CHARACTERS.find(character => character.id === localValue);
             return isValidCharacter ? localValue : 'akira';

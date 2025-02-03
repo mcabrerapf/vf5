@@ -3,15 +3,24 @@ import './InfoModal.scss'
 import ModalHeader from '../ModalHeader';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { getLocalStorageSize } from '../../../helpers';
+import { copyToClipboard, getFromLocal, getLocalStorageSize } from '../../../helpers';
+import { LOCAL_KEYS } from '../../../constants';
 
 const InfoModal = () => {
     const { closeModal } = useModalContext();
+    const currentStorageUsed = getLocalStorageSize();
+
+    const onCopyClick = ()=> {
+        const allCharacterData = getFromLocal(LOCAL_KEYS.ALL_DATA);
+        if(!allCharacterData) return;
+        copyToClipboard(allCharacterData);
+    }
 
     const handleClose = () => {
         closeModal();
     }
-    const currentStorageUsed = getLocalStorageSize();
+    
+
     return (
         <div className='info-modal'>
             <ModalHeader modifier={"align-right"}>
@@ -22,8 +31,20 @@ const InfoModal = () => {
                 />
             </ModalHeader>
             <div className='info-modal__content'>
-                <div className='info-modal__content__header'>Storage Used:</div>
-                <div className='info-modal__content__stuff'> {currentStorageUsed} Kb</div>
+                <div className='info-modal__content__memory'>
+                    <div className='info-modal__content__memory__header'>Storage Used</div>
+                    <div className='info-modal__content__memory__ammount'> {currentStorageUsed} Kb</div>
+                </div>
+                <div className='info-modal__content__buttons'>
+                    <Button
+                        text="Copy Data to Clipboard"
+                        onClick={onCopyClick}
+                    />
+                    <Button
+                        disabled
+                        text="Import Data from clipboard"
+                    />
+                </div>
             </div>
         </div>
     )

@@ -5,6 +5,7 @@ import CharacterBadge from '../CharacterBadge';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { CHARACTERS } from '../../constants';
 import { getLauncher } from './helpers';
+import { NOT_VALID_INPUTS } from './constants';
 
 const Combo = ({
     combo = {},
@@ -30,6 +31,12 @@ const Combo = ({
     }
 
     const [launcher, restOfCombo] = getLauncher(command);
+    
+    if (restOfCombo[0] === '⊙') restOfCombo.shift();
+    if (restOfCombo[0] === 'ch') {
+        launcher.push(restOfCombo[0]);
+        restOfCombo.shift();
+    }
 
     return (
         <div className='combo' onClick={handleComboClick}>
