@@ -12,9 +12,23 @@
     &__main {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
 
-        .move-command {
-            width: 100%;
+        &__notation {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            
+            .move-command {
+                width: auto;
+
+                &.launcher {
+                    border: 1px solid gold;
+                    padding: 0.3rem 0.5rem;
+                    border-radius: 0.5rem;
+                }
+            }
         }
 
         &__damage {
@@ -30,11 +44,9 @@
             border-radius: 1rem;
         }
     }
-   
 
-    .move-command {
-      
-    }
+
+    .move-command {}
 
     &__note {
         font-size: 1.3rem;

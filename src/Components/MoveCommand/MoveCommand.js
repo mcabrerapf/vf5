@@ -5,18 +5,21 @@ import Notation from '../Notation/Notation';
 
 const MoveCommand = ({
     command,
+    modifier,
     notationModifier,
     selectedNotationIndex,
     onClick,
-    notationClick }) => {
+    notationClick
+}) => {
+    const className = ['move-command', modifier].filter(Boolean).join(' ');
 
     return (
-        <div className='move-command' onClick={onClick}>
+        <div className={className} onClick={onClick}>
             {command.map((notation, i) => {
                 const isCombiStart = checkIsCombiStart(command, i);
                 const isCombiEnd = checkIsCombiEnd(command, i);
                 const modifierToUse = selectedNotationIndex === i ? notationModifier : null;
-                
+
                 return (
                     <Notation
                         notation={notation}

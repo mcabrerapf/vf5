@@ -3,8 +3,8 @@ import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import CharacterBadge from '../CharacterBadge';
 import MoveTypeBadge from '../MoveTypeBadge';
-import Button from '../Button';
 import { CHARACTERS } from '../../constants';
+import { getLauncher } from './helpers';
 
 const Combo = ({
     combo = {},
@@ -24,16 +24,25 @@ const Combo = ({
         onTagClick(e);
     }
 
-    const handleCharacterClick = (e)=> {
+    const handleCharacterClick = (e) => {
         e.stopPropagation();
         onCharacterClick(e)
     }
+
+    const [launcher, restOfCombo] = getLauncher(command);
+
     return (
         <div className='combo' onClick={handleComboClick}>
             <div className='combo__main'>
-                <MoveCommand
-                    command={command}
-                />
+                <div className='combo__main__notation'>
+                    <MoveCommand
+                        modifier={"launcher"}
+                        command={launcher}
+                    />
+                    <MoveCommand
+                        command={restOfCombo}
+                    />
+                </div>
                 <div className='combo__main__damage'>{damage}</div>
             </div>
 
