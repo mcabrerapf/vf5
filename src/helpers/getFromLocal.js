@@ -51,7 +51,7 @@ const getFromLocal = (localKey, character, characterKey) => {
         case SELECTED_MOVE_TYPE:
             return localValue;
         case SELECTED_MOVELIST_SORT:
-            return localValue;
+            return localValue || '/asc';
         case SELECTED_MOVELIST_FILTERS:
             return !localValue ? [] : localValue.split(',');
         case SELECTED_COMBOS_FILTERS:
