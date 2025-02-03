@@ -4,6 +4,11 @@
     align-items: center;
     justify-content: space-evenly;
     gap: 1rem;
+    
+    &__separator {
+        border: 1px solid white;
+        height: 5rem;
+    }
 
     .button {
         min-height: 2.5rem;

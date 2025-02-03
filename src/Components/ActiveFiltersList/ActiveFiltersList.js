@@ -1,33 +1,20 @@
 import React from 'react';
 import './ActiveFiltersList.scss'
-import MoveTypeBadge from '../../MoveTypeBadge';
-import MoveCommand from '../../MoveCommand';
-import Button from '../../Button';
-import { LOCAL_KEYS } from '../../../constants';
-import setLocalStorage from '../../../helpers/setLocalStorage';
+import MoveTypeBadge from '../MoveTypeBadge';
+import MoveCommand from '../MoveCommand';
+import Button from '../Button';
+import CharacterBadge from '../CharacterBadge';
 
 const ActiveFiltersList = ({
     selectedFilters,
-    selectedMovelistSort,
-    setSelectedMovelistSort,
-    handleFiltersChange
+    selectedSort,
+    onSortClick,
+    onFilterClick
 }) => {
 
-    const onFilterClick = ({ target: { value } }) => {
-        const newFilters = selectedFilters.filter(filter => filter !== value);
-        handleFiltersChange(newFilters);
-    }
-
-    const onSortClick = () => {
-        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_SORT, '/asc');
-        setSelectedMovelistSort('/asc');
-    }
-
-    const [sortType] = selectedMovelistSort.split('/');
-
     return (
-        <div className='active-filters-list-movelist'>
-            <div className='active-filters-list-movelist__filters'>
+        <div className='active-filters-list'>
+            <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
                     const [filterType, parsedFilterName] = selectedFilter.split('/')
 
@@ -48,14 +35,30 @@ const ActiveFiltersList = ({
                                     onClick={onFilterClick}
                                 />
                             }
+                            {filterType === 'character' &&
+                                <CharacterBadge
+                                    key={`${parsedFilterName}-character`}
+                                    character={parsedFilterName}
+                                    value={selectedFilter}
+                                    onClick={onFilterClick}
+                                />
+                            }
+                            {filterType === 'other' &&
+                                <MoveTypeBadge
+                                    key={`${parsedFilterName}-other`}
+                                    moveType={parsedFilterName}
+                                    value={selectedFilter}
+                                    onClick={onFilterClick}
+                                />
+                            }
                         </>
                     )
                 }
                 )}
             </div>
-            {!!sortType &&
+            {!!selectedSort &&
                 <Button
-                    text={selectedMovelistSort}
+                    text={selectedSort}
                     onClick={onSortClick}
                 />
             }

@@ -9,7 +9,7 @@ import ComboBuilderModal from '../Modals/ComboBuilderModal';
 import DeleteModal from '../Modals/DeleteModal';
 import Combo from '../Combo';
 import CombosHeader from './CombosHeader';
-import ActiveFiltersList from './ActiveFiltersList';
+import ActiveFiltersList from '../ActiveFiltersList';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
 import { filterCombos, sortCombos } from './helpers';
 
@@ -19,6 +19,7 @@ const Combos = () => {
     const [combos, setCombos] = useState([]);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
+    console.log(selectedFilters)
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -132,6 +133,11 @@ const Combos = () => {
         setSelectedFilters(updatedFilters);
     }
 
+    const handleFilterClick = ({ target: { value } }) => {
+        const newFilters = selectedFilters.filter(filter => filter !== value);
+        handleFiltersChange(newFilters);
+    }
+
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos);
 
@@ -159,7 +165,7 @@ const Combos = () => {
             />
             <ActiveFiltersList
                 selectedFilters={selectedFilters}
-                handleFiltersChange={handleFiltersChange}
+                onFilterClick={handleFilterClick}
             />
             <div className='combos__list-container'>
                 <ul

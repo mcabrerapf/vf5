@@ -5,7 +5,7 @@ import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
 import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
-import ActiveFiltersList from './ActiveFiltersList';
+import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 
@@ -98,6 +98,16 @@ const Movelist = () => {
         setSelectedFilters(updatedFilters);
     }
 
+    const handleSortClick = () => {
+        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_SORT, '/asc');
+        setSelectedMovelistSort('/asc');
+    }
+
+    const handleFilterClick = ({ target: { value } }) => {
+        const newFilters = selectedFilters.filter(filter => filter !== value);
+        handleFiltersChange(newFilters);
+    }
+
     const numerOfMoves = sortedMovelist.length;
 
     return (
@@ -115,9 +125,9 @@ const Movelist = () => {
             />
             <ActiveFiltersList
                 selectedFilters={selectedFilters}
-                selectedMovelistSort={selectedMovelistSort}
-                setSelectedMovelistSort={setSelectedMovelistSort}
-                handleFiltersChange={handleFiltersChange}
+                selectedSort={selectedMovelistSort}
+                onSortClick={handleSortClick}
+                onFilterClick={handleFilterClick}
             />
             <div className='movelist__list-container'>
                 <ul

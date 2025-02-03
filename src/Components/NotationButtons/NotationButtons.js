@@ -4,8 +4,9 @@ import DirectionalButtons from '../DirectionalButtons';
 import OtherButtons from '../OtherButtons';
 
 const NotationButtons = ({
-    onDirectionalButtonClick,
-    onOtherButtonClick
+    hideSeparator,
+    onDirectionalButtonClick = () => { },
+    onOtherButtonClick = () => { }
 }) => {
     const [isShiftActive, setIsShiftActive] = useState(false)
 
@@ -34,6 +35,9 @@ const NotationButtons = ({
                 isShiftActive={isShiftActive}
                 onClick={handleDirectionalButtonClick}
             />
+            {!hideSeparator &&
+            <div className='notation-buttons__separator' />
+            }
             <OtherButtons
                 isShiftActive={isShiftActive}
                 onClick={handleOtherButtonClick}
