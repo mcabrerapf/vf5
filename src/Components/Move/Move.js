@@ -7,9 +7,8 @@ import { MOVE_LEVEL_MATCH } from '../../constants';
 const Move = ({
     move,
     modifier = "",
-    showSober = false,
     hideType = false,
-    onMoveNameClick = () => { },
+    onClick = () => { },
     onMoveTypeClick = () => { }
 }) => {
     const {
@@ -30,26 +29,30 @@ const Move = ({
     } = move;
 
 
-    const handleNameClick = (e) => {
+    const handleOnClick = (e) => {
         e.preventDefault()
-        onMoveNameClick(move)
+        onClick(move)
+    }
+
+    const handleOnMoveTypeClick = (e)=> {
+        e.stopPropagation();
+        onMoveTypeClick(e);
     }
 
     const className = ['move', modifier].filter(Boolean).join(' ');
     const parsedLevel = MOVE_LEVEL_MATCH[level];
     return (
-        <div className={className}>
+        <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
                 <div className={`move__main__name  ${modifier}`}
                     role='button'
-                    onClick={handleNameClick}
                 >
                     {name}
                 </div>
                 {parsedLevel &&
                     <MoveTypeBadge
                         moveType={parsedLevel}
-                        onClick={onMoveTypeClick}
+                        onClick={handleOnMoveTypeClick}
                     />
                 }
             </div>

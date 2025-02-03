@@ -14,7 +14,7 @@ const ActiveFiltersList = ({
     }
 
     return (
-        <div className='active-filters-list'>
+        <div className='active-filters-list-combos'>
             {selectedFilters.map(selectedFilter => {
                 const [filterType, parsedFilterName] = selectedFilter.split('/')
 

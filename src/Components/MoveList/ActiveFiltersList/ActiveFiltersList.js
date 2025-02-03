@@ -26,37 +26,39 @@ const ActiveFiltersList = ({
     const [sortType] = selectedMovelistSort.split('/');
 
     return (
-        <div className='active-filters-list'>
+        <div className='active-filters-list-movelist'>
+            <div className='active-filters-list-movelist__filters'>
+                {selectedFilters.map(selectedFilter => {
+                    const [filterType, parsedFilterName] = selectedFilter.split('/')
+
+                    return (
+                        <>
+                            {filterType === 'command' &&
+                                <MoveCommand
+                                    key={`${parsedFilterName}-command`}
+                                    command={parsedFilterName.match(/\[.*?\]/g)}
+                                    onClick={() => onFilterClick({ target: { value: selectedFilter } })}
+                                />
+                            }
+                            {filterType === 'level' &&
+                                <MoveTypeBadge
+                                    key={`${parsedFilterName}-type`}
+                                    moveType={parsedFilterName}
+                                    value={selectedFilter}
+                                    onClick={onFilterClick}
+                                />
+                            }
+                        </>
+                    )
+                }
+                )}
+            </div>
             {!!sortType &&
                 <Button
                     text={selectedMovelistSort}
                     onClick={onSortClick}
                 />
             }
-            {selectedFilters.map(selectedFilter => {
-                const [filterType, parsedFilterName] = selectedFilter.split('/')
-
-                return (
-                    <>
-                        {filterType === 'command' &&
-                            <MoveCommand
-                                key={`${parsedFilterName}-command`}
-                                command={parsedFilterName.match(/\[.*?\]/g)}
-                                onClick={() => onFilterClick({ target: { value: selectedFilter } })}
-                            />
-                        }
-                        {filterType === 'level' &&
-                            <MoveTypeBadge
-                                key={`${parsedFilterName}-type`}
-                                moveType={parsedFilterName}
-                                value={selectedFilter}
-                                onClick={onFilterClick}
-                            />
-                        }
-                    </>
-                )
-            }
-            )}
         </div>
     )
 }

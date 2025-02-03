@@ -71,7 +71,7 @@ const Movelist = () => {
         }
     }
 
-    const handleMoveNameClick = (move) => {
+    const onMoveClick = (move) => {
         const stringCommand = move.command.join('');
 
         let updatedFavorites;
@@ -97,6 +97,7 @@ const Movelist = () => {
         setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, updatedFilters);
         setSelectedFilters(updatedFilters);
     }
+
     const numerOfMoves = sortedMovelist.length;
 
     return (
@@ -137,8 +138,8 @@ const Movelist = () => {
                                     showSober={isShunDi}
                                     move={move}
                                     hideType={selectedMoveType !== 'allMoves'}
+                                    onClick={onMoveClick}
                                     onMoveTypeClick={onMoveTypeClick}
-                                    onMoveNameClick={handleMoveNameClick}
                                 />
                             </li>
                         )
