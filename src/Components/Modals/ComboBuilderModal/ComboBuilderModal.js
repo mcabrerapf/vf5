@@ -8,12 +8,15 @@ import CommandView from './CommandView';
 import TagsView from './TagsView';
 import ExtrasView from './ExtrasView';
 import { CHARACTERS } from '../../../constants';
+import { useMainContext } from '../../../Contexts/MainContext';
+import { getTagsFromCommand } from './helpers';
 
 const ComboBuilderModal = ({
     selectedCombo
 }) => {
     const characterIds = CHARACTERS.map(character => character.id);
     const { id, command, characterTags, tags, damage, note } = selectedCombo || {};
+    const { selectedCharacter } = useMainContext();
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);
@@ -23,11 +26,15 @@ const ComboBuilderModal = ({
     const [comboNote, setComboNote] = useState(note || '');
 
     const handleSaveCombo = () => {
+        const finalTags = !id ?
+            getTagsFromCommand(comboNotation, selectedCharacter, selectedTags) :
+            selectedTags;
+        
         closeModal({
             id: id,
             command: comboNotation,
             characterTags: selectedCharacterTags,
-            tags: selectedTags,
+            tags: finalTags,
             damage: comboDamage,
             note: comboNote,
         });
@@ -42,7 +49,7 @@ const ComboBuilderModal = ({
     }
 
     const canSave = !!comboNotation.length && !!selectedCharacterTags.length;
-    
+
     return (
         <div className='combo-builder-modal'>
             <ModalHeader modifier="align-right">
