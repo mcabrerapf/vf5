@@ -19,7 +19,7 @@ const filterCombos = (list, filters) => {
     const launcherFilters = filters
         .filter(filter => filter.includes('launcher/'))
         .map(filter => filter.split('launcher/')[1]);
-    
+
     return list
         .filter(listItem => {
             const { characterTags, tags, command } = listItem;
@@ -43,8 +43,8 @@ const filterCombos = (list, filters) => {
 
             launcherFilters.forEach(launcherFilter => {
                 const [launcher] = getLauncher(command);
-                const stringLauncher = launcher.join(' ');
-
+                const stringLauncher = launcher.join('');
+     
                 if (stringLauncher === launcherFilter) {
                     hasLauncherMatch = true;
                 }

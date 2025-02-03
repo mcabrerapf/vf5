@@ -137,6 +137,14 @@ const Combos = () => {
         handleFiltersChange(newFilters);
     }
 
+    const handleLauncherClick = ({ target: { value } }) => {
+        if (!value) return;
+        const stringLauncher = `launcher/${value.join('')}`;
+        const newFilters = [...new Set([...selectedFilters, stringLauncher])];
+        handleFiltersChange(newFilters);
+
+    }
+
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos);
 
@@ -181,6 +189,7 @@ const Combos = () => {
                             <Combo
                                 combo={combo}
                                 onClick={() => handleComboClick(combo)}
+                                onLauncherClick={handleLauncherClick}
                                 onTagClick={handleTagClick}
                                 onCharacterClick={handleCharacterClick}
                             />

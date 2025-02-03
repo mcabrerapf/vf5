@@ -26,8 +26,10 @@ const DirectionalButtons = ({
                 />
                 <div
                     className='directional-buttons__grouping__center-spot'
-                    onClick={() => onClick('⊙')}
-                />
+                    onClick={() => onClick(isShiftActive ? '★' : '⊙')}
+                >
+                    <span>{isShiftActive ? '★' : '⊙'}</span>
+                </div>
                 <Notation
                     color={isShiftActive ? 'red' : ''}
                     notation={isShiftActive ? "[6_]" : "[6]"}

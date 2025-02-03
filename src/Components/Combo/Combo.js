@@ -9,11 +9,13 @@ import { getLauncher } from '../../helpers';
 const Combo = ({
     combo = {},
     onClick = () => { },
+    onLauncherClick = () => { },
     onCharacterClick = () => { },
     onTagClick = () => { }
 }) => {
     const { tags, characterTags, command, damage, note } = combo || {};
     const hasAllCharacters = CHARACTERS.length === characterTags.length;
+    const [launcher, restOfCombo, fullLauncher] = getLauncher(command);
 
     const handleComboClick = (e) => {
         onClick(e);
@@ -29,10 +31,15 @@ const Combo = ({
         onCharacterClick(e)
     }
 
-    const [, restOfCombo, launcher] = getLauncher(command);
+    const handleLauncherClick = (e) => {
+        e.stopPropagation();
+        onLauncherClick({ target: { value: launcher } })
+    }
+
+
 
     if (restOfCombo[0] === 'ch') {
-        launcher.push(restOfCombo[0]);
+        fullLauncher.push(restOfCombo[0]);
         restOfCombo.shift();
     }
     if (restOfCombo[0] === '⊙') restOfCombo.shift();
@@ -42,8 +49,9 @@ const Combo = ({
             <div className='combo__main'>
                 <div className='combo__main__notation'>
                     <MoveCommand
+                        onClick={handleLauncherClick}
                         modifier={"launcher"}
-                        command={launcher}
+                        command={fullLauncher}
                     />
                     {!!restOfCombo.length &&
                         <MoveCommand
