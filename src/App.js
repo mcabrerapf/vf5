@@ -4,7 +4,6 @@ import { MainContextWrapper } from './Contexts/MainContext'
 
 
 function App() {
-  
   return (
     <div className="app">
       <MainContextWrapper>

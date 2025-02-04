@@ -1,6 +1,6 @@
 import React from "react";
 import './TagsView.scss';
-import { CHARACTERS, MOVE_LEVEL_MATCH } from "../../../../constants";
+import { CHARACTERS, MOVE_LEVEL_MATCHES } from "../../../../constants";
 import CharacterBadge from "../../../CharacterBadge";
 import MoveTypeBadge from "../../../MoveTypeBadge";
 
@@ -11,7 +11,7 @@ const TagsView = ({
     handleAllClick,
     handleOtherTagClick
 }) => {
-    const otherTags = Object.keys(MOVE_LEVEL_MATCH).map(key => MOVE_LEVEL_MATCH[key]);
+    const otherTags = [...new Set(Object.keys(MOVE_LEVEL_MATCHES).map(key => MOVE_LEVEL_MATCHES[key]))];
 
     return (
         <div className='tags-view'>

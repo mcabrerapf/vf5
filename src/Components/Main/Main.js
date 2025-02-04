@@ -3,7 +3,6 @@ import './Main.scss'
 import Character from '../Character';
 
 const Main = () => {
-
     return (
         <div className='main'>
             <Character />

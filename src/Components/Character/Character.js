@@ -9,13 +9,13 @@ import Notes from '../Notes';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
 import InfoModal from '../Modals/InfoModal';
-import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
+import { CHARACTERS, SELECTED_CHARACTER_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 
 
 const Character = () => {
-    const localSelectedView = getFromLocal(LOCAL_KEYS.SELECTED_CHARACTER_VIEW);
+    const localSelectedView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
@@ -26,7 +26,7 @@ const Character = () => {
     }
 
     const handleViewChange = ({ target: { value } }) => {
-        setLocalStorage(LOCAL_KEYS.SELECTED_CHARACTER_VIEW, value);
+        setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, value);
         setCharacterView(value);
     }
 
@@ -37,7 +37,7 @@ const Character = () => {
 
     const { name: characterName } = CHARACTERS
         .find(character => character.id === selectedCharacter);
-
+    
     return (
         <div className='character'>
             <ModalContextWrapper

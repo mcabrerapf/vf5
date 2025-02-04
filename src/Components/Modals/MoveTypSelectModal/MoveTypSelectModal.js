@@ -6,7 +6,7 @@ import { useModalContext } from '../../../Contexts/ModalContext';
 
 const MoveTypSelectModal = ({
     selectedMoveType,
-    moveKeys
+    moveCategories
 }) => {
     const { closeModal } = useModalContext();
 
@@ -29,21 +29,21 @@ const MoveTypSelectModal = ({
             </ModalHeader>
             <div className='move-type-select-modal__content'>
                 <Button
-                    modifier={'allMoves' === selectedMoveType ? 'active' : ''}
-                    value={'allMoves'}
+                    modifier={'all_moves' === selectedMoveType ? 'active' : ''}
+                    value={'all_moves'}
                     text={'All Moves'}
                     onClick={handleCharacterClick}
                 />
-                {moveKeys.map(moveKey => {
-                    if (moveKey === 'allMoves') return null;
-                    const pSelectedMoveType = moveKey.split('-').join(' ');
+                {moveCategories.map(moveKey => {
+                    if (moveKey.id === 'all_moves') return null;
+                    
                     
                     return (
                         <Button
-                            key={moveKey}
-                            modifier={moveKey === selectedMoveType ? 'active' : ''}
-                            value={moveKey}
-                            text={pSelectedMoveType}
+                            key={moveKey.id}
+                            modifier={moveKey.id === selectedMoveType ? 'active' : ''}
+                            value={moveKey.id}
+                            text={moveKey.name}
                             onClick={handleCharacterClick}
                         />
                     )

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Combos.scss'
-import { LOCAL_KEYS, STRINGS } from '../../constants';
+import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
@@ -15,7 +15,7 @@ import { filterCombos, sortCombos } from './helpers';
 
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
-    const localFilters = getFromLocal(LOCAL_KEYS.SELECTED_COMBOS_FILTERS);
+    const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
     const [combos, setCombos] = useState([]);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
@@ -25,7 +25,7 @@ const Combos = () => {
     useEffect(
         () => {
             const localCombos = getFromLocal(
-                LOCAL_KEYS.CHARACTERS_DATA,
+                CHARACTERS_DATA_KEY,
                 selectedCharacter,
                 STRINGS.COMBOS
             );
@@ -36,7 +36,7 @@ const Combos = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
-            setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, newFilters);
+            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, newFilters);
             setSelectedFilters(newFilters);
         }
 
@@ -59,7 +59,7 @@ const Combos = () => {
             }
 
             setLocalStorage(
-                LOCAL_KEYS.CHARACTERS_DATA,
+                CHARACTERS_DATA_KEY,
                 updatedCombos,
                 selectedCharacter,
                 STRINGS.COMBOS
@@ -89,7 +89,7 @@ const Combos = () => {
             const updatedCombos = combos.filter((combo) => combo.id !== selectedCombo.id);
 
             setLocalStorage(
-                LOCAL_KEYS.CHARACTERS_DATA,
+                CHARACTERS_DATA_KEY,
                 updatedCombos,
                 selectedCharacter,
                 STRINGS.COMBOS
@@ -112,13 +112,13 @@ const Combos = () => {
     const handleCharacterClick = ({ target: { value } }) => {
         if (value === 'ALL') {
             const updatedFilters = selectedFilters.filter(filter => !filter.includes('character/'));
-            setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, updatedFilters);
+            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, updatedFilters);
             setSelectedFilters(updatedFilters);
         } else {
             const parsedValue = `character/${value}`
             if (selectedFilters.includes(parsedValue)) return;
             const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
-            setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, updatedFilters);
+            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, updatedFilters);
             setSelectedFilters(updatedFilters);
         }
 
@@ -128,7 +128,7 @@ const Combos = () => {
         const parsedValue = `other/${value}`
         if (selectedFilters.includes(parsedValue)) return;
         const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
-        setLocalStorage(LOCAL_KEYS.SELECTED_COMBOS_FILTERS, updatedFilters);
+        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, updatedFilters);
         setSelectedFilters(updatedFilters);
     }
 

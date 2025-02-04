@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MainContextProvider } from './MainContext';
-import { LOCAL_KEYS } from '../../constants';
+import { SELECTED_CHARACTER_KEY } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 
@@ -14,7 +14,7 @@ function MainContextWrapper({
 
   useEffect(() => {
     async function init() {
-      const localSelectedCharacter = getFromLocal(LOCAL_KEYS.SELECTED_CHARACTER)
+      const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
       setContextData({ selectedCharacter: localSelectedCharacter })
       // const promises = CHARACTERS.map(character => fetch(`${B_URL}/vf/char/${character[0]}`));
       // const characters = {};
@@ -47,7 +47,7 @@ function MainContextWrapper({
   )
 
   const setSelectedCharacter = (character) => {
-    setLocalStorage(LOCAL_KEYS.SELECTED_CHARACTER, character);
+    setLocalStorage(SELECTED_CHARACTER_KEY, character);
     setContextData({ ...contextData, selectedCharacter: character });
   }
 

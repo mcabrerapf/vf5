@@ -1,7 +1,7 @@
 import React from 'react';
 import './TagsView.scss'
 import MoveTypeBadge from '../../../MoveTypeBadge';
-import { MOVE_LEVEL_MATCH } from '../../../../constants';
+import { MOVE_LEVEL_MATCHES } from '../../../../constants';
 
 const TagsView = ({
     selectedTypeFilters,
@@ -9,7 +9,7 @@ const TagsView = ({
     handleTypeClick,
     handleFavoriteClick
 }) => {
-    const typeOptions = Object.keys(MOVE_LEVEL_MATCH).map(key => MOVE_LEVEL_MATCH[key]);
+    const typeOptions = [...new Set(Object.keys(MOVE_LEVEL_MATCHES).map(key => MOVE_LEVEL_MATCHES[key]))];
 
     const isFavSelected = selectedTypeFilters.includes(`fav/`);
     const favModifier = isFavSelected ? 'selected' : 'not-selected';

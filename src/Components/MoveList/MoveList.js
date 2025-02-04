@@ -3,7 +3,14 @@ import './Movelist.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
-import { CHARACTERS, LOCAL_KEYS, STRINGS } from '../../constants';
+import {
+    CHARACTERS,
+    CHARACTERS_DATA_KEY,
+    SELECTED_MOVE_TYPE_KEY,
+    SELECTED_MOVELIST_SORT_KEY,
+    SELECTED_MOVELIST_FILTERS_KEY,
+    STRINGS
+} from '../../constants';
 import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
@@ -12,16 +19,14 @@ import setLocalStorage from '../../helpers/setLocalStorage';
 const Movelist = () => {
     const listRef = useRef(null);
     const { selectedCharacter } = useMainContext();
-    const localSelectedMoveType = getFromLocal(LOCAL_KEYS.SELECTED_MOVE_TYPE);
-    const localSelectedSort = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_SORT);
-    const localFilters = getFromLocal(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS);
-
+    const localSelectedMoveType = getFromLocal(SELECTED_MOVE_TYPE_KEY);
+    const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
+    const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
     const localFavorites = getFromLocal(
-        LOCAL_KEYS.CHARACTERS_DATA,
+        CHARACTERS_DATA_KEY,
         selectedCharacter,
         STRINGS.FAV_MOVES
     );
-
 
     const [selectedMoveType, setSelectedMoveType] = useState(localSelectedMoveType);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
@@ -31,11 +36,11 @@ const Movelist = () => {
     const selectedCharacterData = CHARACTERS
         .find(character => character.id === selectedCharacter);
 
-    const moveKeys = Object.keys(selectedCharacterData.movelist);
+    const { move_categories: moveCategories } = selectedCharacterData
 
     useEffect(() => {
         const newLocalFavs = getFromLocal(
-            LOCAL_KEYS.CHARACTERS_DATA,
+            CHARACTERS_DATA_KEY,
             selectedCharacter,
             STRINGS.FAV_MOVES
         );
@@ -51,38 +56,35 @@ const Movelist = () => {
     //     [selectedMovelistSort]
     // )
 
-    const selectedCharacterMoveset = selectedCharacterData.movelist;
+    const { movelist: selectedCharacterMoveset } = selectedCharacterData;
 
     if (!selectedCharacterMoveset[selectedMoveType] || !selectedMoveType) {
-        setSelectedMoveType('allMoves');
-        return null;
-    }
+        setLocalStorage(SELECTED_MOVE_TYPE_KEY, 'all_moves');
+        setSelectedMoveType('all_moves');
+        return null
+    };
 
     const selectedMoveset = selectedCharacterMoveset[selectedMoveType];
-    const isShunDi = selectedCharacter === 'shun';
-
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favoriteMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
-            setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, newFilters);
+            setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, newFilters);
             setSelectedFilters(newFilters);
         }
     }
 
     const onMoveClick = (move) => {
-        const stringCommand = move.command.join('');
-
         let updatedFavorites;
-        if (favoriteMoves.includes(stringCommand)) {
-            updatedFavorites = favoriteMoves.filter(move => move !== stringCommand);
+        if (favoriteMoves.includes(move.id)) {
+            updatedFavorites = favoriteMoves.filter(fav => fav !== move.id);
         } else {
-            updatedFavorites = [...favoriteMoves.map(move => move), stringCommand];
+            updatedFavorites = [...favoriteMoves.map(fav => fav), move.id];
         }
 
         setLocalStorage(
-            LOCAL_KEYS.CHARACTERS_DATA,
+            CHARACTERS_DATA_KEY,
             updatedFavorites,
             selectedCharacter,
             STRINGS.FAV_MOVES
@@ -94,12 +96,12 @@ const Movelist = () => {
         const parsedType = `level/${value}`
         if (selectedFilters.includes(parsedType)) return;
         const updatedFilters = [...selectedFilters.map(filter => filter), parsedType];
-        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_FILTERS, updatedFilters);
+        setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, updatedFilters);
         setSelectedFilters(updatedFilters);
     }
 
     const handleSortClick = () => {
-        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_SORT, '/asc');
+        setLocalStorage(SELECTED_MOVELIST_SORT_KEY);
         setSelectedMovelistSort('/asc');
     }
 
@@ -113,7 +115,7 @@ const Movelist = () => {
     return (
         <div className='movelist'>
             <MovelistHeader
-                moveKeys={moveKeys}
+                moveCategories={moveCategories}
                 selectedFilters={selectedFilters}
                 selectedMoveType={selectedMoveType}
                 selectedMovelistSort={selectedMovelistSort}
@@ -136,18 +138,17 @@ const Movelist = () => {
                 >
                     {sortedMovelist.map((move, i) => {
 
-                        const isFavourite = favoriteMoves.includes(move.command.join(''));
-
+                        const isFavourite = favoriteMoves.includes(move.id);
+if(i === 0) console.log(move)
                         return (
                             <li
-                                key={`${move}-${i}`}
+                                key={move.id}
                                 className='movelist__list-container__list__item'
                             >
                                 <Move
                                     modifier={isFavourite ? 'favorite' : ''}
-                                    showSober={isShunDi}
                                     move={move}
-                                    hideType={selectedMoveType !== 'allMoves'}
+                                    hideType={selectedMoveType !== 'all_moves'}
                                     onClick={onMoveClick}
                                     onMoveTypeClick={onMoveTypeClick}
                                 />

@@ -6,7 +6,7 @@ import Button from '../Button';
 import Modal from '../Modals/Modal';
 import NoteModal from '../Modals/NoteModal';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
-import { LOCAL_KEYS, STRINGS } from '../../constants';
+import { CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
 
 const Notes = () => {
     const { selectedCharacter } = useMainContext();
@@ -17,7 +17,7 @@ const Notes = () => {
     useEffect(
         () => {
             const localNotes = getFromLocal(
-                LOCAL_KEYS.CHARACTERS_DATA,
+                CHARACTERS_DATA_KEY,
                 selectedCharacter,
                 STRINGS.NOTES
             );
@@ -43,7 +43,7 @@ const Notes = () => {
             }
 
             setLocalStorage(
-                LOCAL_KEYS.CHARACTERS_DATA,
+                CHARACTERS_DATA_KEY,
                 updatedNotes,
                 selectedCharacter,
                 STRINGS.NOTES
@@ -72,7 +72,7 @@ const Notes = () => {
         const updatedNotes = notes.filter((note) => note.id !== noteId);
 
         setLocalStorage(
-            LOCAL_KEYS.CHARACTERS_DATA,
+            CHARACTERS_DATA_KEY,
             updatedNotes,
             selectedCharacter,
             STRINGS.NOTES

@@ -1,14 +1,15 @@
-import { LOCAL_KEYS, CHARACTERS, STRINGS } from "../constants"
-const {
-    ALL_DATA,
-    CHARACTERS_DATA,
-    SELECTED_CHARACTER,
-    SELECTED_CHARACTER_VIEW,
-    SELECTED_COMBOS_FILTERS,
-    SELECTED_MOVE_TYPE,
-    SELECTED_MOVELIST_SORT,
-    SELECTED_MOVELIST_FILTERS,
-} = LOCAL_KEYS;
+import {
+    ALL_DATA_KEY,
+    CHARACTERS_DATA_KEY,
+    SELECTED_CHARACTER_KEY,
+    SELECTED_CHARACTER_VIEW_KEY,
+    SELECTED_COMBOS_FILTERS_KEY,
+    SELECTED_MOVE_TYPE_KEY,
+    SELECTED_MOVELIST_SORT_KEY,
+    SELECTED_MOVELIST_FILTERS_KEY,
+    CHARACTERS,
+    STRINGS
+} from "../constants"
 
 const {
     MOVELIST,
@@ -40,25 +41,25 @@ const getFromLocal = (localKey, character, characterKey) => {
     const localValue = localStorage.getItem(localKey);
 
     switch (localKey) {
-        case ALL_DATA:
-            return localStorage.getItem(CHARACTERS_DATA);
-        case SELECTED_CHARACTER:
+        case ALL_DATA_KEY:
+            return localStorage.getItem(CHARACTERS_DATA_KEY);
+        case SELECTED_CHARACTER_KEY:
             const isValidCharacter = !!CHARACTERS.find(character => character.id === localValue);
             return isValidCharacter ? localValue : 'akira';
-        case SELECTED_CHARACTER_VIEW:
+        case SELECTED_CHARACTER_VIEW_KEY:
             return localValue === MOVELIST ||
                 localValue === COMBOS ||
                 localValue === NOTES ?
                 localValue : MOVELIST
-        case SELECTED_MOVE_TYPE:
+        case SELECTED_MOVE_TYPE_KEY:
             return localValue;
-        case SELECTED_MOVELIST_SORT:
+        case SELECTED_MOVELIST_SORT_KEY:
             return localValue || '/asc';
-        case SELECTED_MOVELIST_FILTERS:
+        case SELECTED_MOVELIST_FILTERS_KEY:
             return !localValue ? [] : localValue.split(',');
-        case SELECTED_COMBOS_FILTERS:
+        case SELECTED_COMBOS_FILTERS_KEY:
             return !localValue ? [] : localValue.split(',');
-        case CHARACTERS_DATA:
+        case CHARACTERS_DATA_KEY:
             const selectedData = getCharacterData(localValue, character, characterKey);
             return selectedData;
         default:

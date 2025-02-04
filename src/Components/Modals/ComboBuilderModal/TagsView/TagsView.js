@@ -1,7 +1,7 @@
 import React from 'react';
 import './TagsView.scss';
 import CharacterBadge from '../../../CharacterBadge';
-import { CHARACTERS, MOVE_LEVEL_MATCH } from '../../../../constants';
+import { CHARACTERS, MOVE_LEVEL_MATCHES } from '../../../../constants';
 import MoveTypeBadge from '../../../MoveTypeBadge';
 
 const TagsView = ({
@@ -37,7 +37,7 @@ const TagsView = ({
 
     const handleTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-        
+
         if (className.includes('not-selected')) {
             updatedTags = [...selectedTags.map(tag => tag), value];
         } else {
@@ -45,7 +45,7 @@ const TagsView = ({
         }
         setSelectedTags(updatedTags);
     }
-    const otherTags = Object.keys(MOVE_LEVEL_MATCH).map(key => MOVE_LEVEL_MATCH[key]);
+    const otherTags = [...new Set(Object.keys(MOVE_LEVEL_MATCHES).map(key => MOVE_LEVEL_MATCHES[key]))];
 
     return (
         <div className='tags-view'>

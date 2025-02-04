@@ -6,11 +6,11 @@ import MoveTypSelectModal from '../../Modals/MoveTypSelectModal';
 import MoveListSortModal from '../../Modals/MoveListSortModal';
 import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
-import { LOCAL_KEYS } from '../../../constants';
+import { SELECTED_MOVELIST_SORT_KEY, SELECTED_MOVE_TYPE_KEY } from '../../../constants';
 import { setLocalStorage } from '../../../helpers';
 
 const MovelistHeader = ({
-    moveKeys,
+    moveCategories,
     selectedMoveType,
     selectedMovelistSort,
     selectedFilters,
@@ -27,14 +27,14 @@ const MovelistHeader = ({
 
     const handleTypeSelectModalClose = (type) => {
         if (type) {
-            setLocalStorage(LOCAL_KEYS.SELECTED_MOVE_TYPE, type);
+            setLocalStorage(SELECTED_MOVE_TYPE_KEY, type);
             setSelectedMoveType(type);
         }
         toggleMoveTypeSelectModal();
     }
 
     const handleSortModalClose = (sort) => {
-        setLocalStorage(LOCAL_KEYS.SELECTED_MOVELIST_SORT, sort);
+        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, sort);
         setSelectedMovelistSort(sort);
         toggleSortModal();
     }
@@ -66,16 +66,13 @@ const MovelistHeader = ({
         handleFiltersChange(updatedFilters);
     }
 
-    const pSelectedMoveType = selectedMoveType.split('-').join(' ');
     const [sortType] = selectedMovelistSort.split('/');
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
     const sortButtonModifier = !!sortType ? 'active' : '';
-
-
-
-    const moveButtonText = selectedMoveType === 'allMoves' ?
+    const { name: selectedMoveTypeText } = moveCategories.find(cat => cat.id === selectedMoveType);
+    const moveButtonText = selectedMoveType === 'all_moves' ?
         `All Moves (${numerOfMoves})` :
-        `${pSelectedMoveType} (${numerOfMoves})`;
+        `${selectedMoveTypeText} (${numerOfMoves})`;
 
     return (
         <header className='movelist-header'>
@@ -86,7 +83,7 @@ const MovelistHeader = ({
                 <Modal>
                     <MoveTypSelectModal
                         selectedMoveType={selectedMoveType}
-                        moveKeys={moveKeys}
+                        moveCategories={moveCategories}
                     />
                 </Modal>
             </ModalContextWrapper>

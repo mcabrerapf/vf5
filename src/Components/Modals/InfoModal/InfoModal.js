@@ -4,14 +4,14 @@ import ModalHeader from '../ModalHeader';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { copyToClipboard, getFromLocal, getLocalStorageSize } from '../../../helpers';
-import { LOCAL_KEYS } from '../../../constants';
+import { ALL_DATA_KEY } from '../../../constants';
 
 const InfoModal = () => {
     const { closeModal } = useModalContext();
     const currentStorageUsed = getLocalStorageSize();
 
     const onCopyClick = ()=> {
-        const allCharacterData = getFromLocal(LOCAL_KEYS.ALL_DATA);
+        const allCharacterData = getFromLocal(ALL_DATA_KEY);
         if(!allCharacterData) return;
         copyToClipboard(allCharacterData);
     }

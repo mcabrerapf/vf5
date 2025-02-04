@@ -17,19 +17,20 @@ const ActiveFiltersList = ({
             <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
                     const [filterType, parsedFilterName] = selectedFilter.split('/')
+                    const key = `${parsedFilterName}-${filterType}`;
 
                     return (
                         <>
                             {filterType === 'command' &&
                                 <MoveCommand
-                                    key={`${parsedFilterName}-command`}
+                                    key={key}
                                     command={parsedFilterName.match(/\[.*?\]/g)}
                                     onClick={() => onFilterClick({ target: { value: selectedFilter } })}
                                 />
                             }
                             {filterType === 'launcher' &&
                                 <MoveCommand
-                                    key={`${parsedFilterName}-launcher`}
+                                    key={key}
                                     modifier={"launcher"}
                                     command={parsedFilterName.match(/\[.*?\]/g)}
                                     onClick={() => onFilterClick({ target: { value: selectedFilter } })}
@@ -37,7 +38,7 @@ const ActiveFiltersList = ({
                             }
                             {filterType === 'level' &&
                                 <MoveTypeBadge
-                                    key={`${parsedFilterName}-type`}
+                                    key={key}
                                     moveType={parsedFilterName}
                                     value={selectedFilter}
                                     onClick={onFilterClick}
@@ -45,7 +46,7 @@ const ActiveFiltersList = ({
                             }
                             {filterType === 'character' &&
                                 <CharacterBadge
-                                    key={`${parsedFilterName}-character`}
+                                    key={key}
                                     character={parsedFilterName}
                                     value={selectedFilter}
                                     onClick={onFilterClick}
@@ -53,7 +54,7 @@ const ActiveFiltersList = ({
                             }
                             {filterType === 'other' &&
                                 <MoveTypeBadge
-                                    key={`${parsedFilterName}-other`}
+                                    key={key}
                                     moveType={parsedFilterName}
                                     value={selectedFilter}
                                     onClick={onFilterClick}

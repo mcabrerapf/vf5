@@ -1,8 +1,5 @@
-import { LOCAL_KEYS } from "../constants";
+import { CHARACTERS_DATA_KEY } from "../constants";
 import getLocalStorageSize from "./getLocalStorageSize";
-const {
-    CHARACTERS_DATA
-} = LOCAL_KEYS;
 
 const setLocalStorage = (key, value, character, characterKey) => {
     const totalUsed = getLocalStorageSize();
@@ -11,8 +8,8 @@ const setLocalStorage = (key, value, character, characterKey) => {
         return;
     }
     switch (key) {
-        case CHARACTERS_DATA:
-            const localData = localStorage.getItem(CHARACTERS_DATA);
+        case CHARACTERS_DATA_KEY:
+            const localData = localStorage.getItem(CHARACTERS_DATA_KEY);
             const parsedLocalData = localData ? JSON.parse(localData): null;
             
             if (!parsedLocalData) {
