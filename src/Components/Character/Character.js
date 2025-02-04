@@ -34,10 +34,9 @@ const Character = () => {
         setShowInfoModal(!showInfoModal)
     }
 
-
     const { name: characterName } = CHARACTERS
         .find(character => character.id === selectedCharacter);
-    
+
     return (
         <div className='character'>
             <ModalContextWrapper

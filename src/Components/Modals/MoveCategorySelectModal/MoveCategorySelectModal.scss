@@ -1,0 +1,21 @@
+.move-type-select-modal {
+    
+    &__content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 25rem;
+        max-height: 60rem;
+        gap: 1rem;
+        padding: 0.5rem;
+
+        .button {
+            font-size: 1.1rem;
+            width: 10rem;
+            height: 5rem;
+        }
+    }
+    
+}

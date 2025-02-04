@@ -1,45 +1,6 @@
-import {
-    AKIRA,
-    AOI,
-    BRAD,
-    EILEEN,
-    EL_BLAZE,
-    GOH,
-    JACKY,
-    JEAN,
-    JEFFRY,
-    KAGE,
-    LAU,
-    LEI,
-    LION,
-    PAI,
-    SARAH,
-    SHUN,
-    TAKA,
-    VANESSA,
-    WOLF
-} from '../characters-data';
+import ALL_CHARACTERS from '../characters-data';
 
-const CHARACTERS = [
-    AKIRA,
-    AOI,
-    BRAD,
-    EILEEN,
-    EL_BLAZE,
-    GOH,
-    JACKY,
-    JEAN,
-    JEFFRY,
-    KAGE,
-    LAU,
-    LEI,
-    LION,
-    PAI,
-    SARAH,
-    SHUN,
-    TAKA,
-    VANESSA,
-    WOLF
-];
+const CHARACTERS = [];
+Object.keys(ALL_CHARACTERS).forEach(CHARACTER => CHARACTERS.push(ALL_CHARACTERS[CHARACTER]))
 
 export default CHARACTERS;

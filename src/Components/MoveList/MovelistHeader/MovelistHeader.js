@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './MovelistHeader.scss'
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import Modal from '../../Modals/Modal';
-import MoveTypSelectModal from '../../Modals/MoveTypSelectModal';
+import MoveCategorySelectModal from '../../Modals/MoveCategorySelectModal';
 import MoveListSortModal from '../../Modals/MoveListSortModal';
 import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
@@ -11,15 +11,15 @@ import { setLocalStorage } from '../../../helpers';
 
 const MovelistHeader = ({
     moveCategories,
-    selectedMoveType,
+    selectedMoveCategory,
     selectedMovelistSort,
     selectedFilters,
     numerOfMoves,
     handleFiltersChange,
-    setSelectedMoveType,
+    setSelectedMoveCategory,
     setSelectedMovelistSort,
 }) => {
-    const [showMoveTypeSelectModal, setShowMoveTypeSelectModal] = useState(false);
+    const [showMoveCategoryModal, setShowMoveCategorySelectModal] = useState(false);
     const [showSortModal, setShowSortModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
 
@@ -28,7 +28,7 @@ const MovelistHeader = ({
     const handleTypeSelectModalClose = (type) => {
         if (type) {
             setLocalStorage(SELECTED_MOVE_TYPE_KEY, type);
-            setSelectedMoveType(type);
+            setSelectedMoveCategory(type);
         }
         toggleMoveTypeSelectModal();
     }
@@ -45,7 +45,7 @@ const MovelistHeader = ({
     }
 
     const toggleMoveTypeSelectModal = () => {
-        setShowMoveTypeSelectModal(!showMoveTypeSelectModal);
+        setShowMoveCategorySelectModal(!showMoveCategoryModal);
     }
 
     const toggleSortModal = () => {
@@ -69,20 +69,21 @@ const MovelistHeader = ({
     const [sortType] = selectedMovelistSort.split('/');
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
     const sortButtonModifier = !!sortType ? 'active' : '';
-    const { name: selectedMoveTypeText } = moveCategories.find(cat => cat.id === selectedMoveType);
-    const moveButtonText = selectedMoveType === 'all_moves' ?
+    
+    const { name: selectedMoveCategoryText } = moveCategories.find(cat => cat.id === selectedMoveCategory);
+    const moveButtonText = selectedMoveCategory === 'all_moves' ?
         `All Moves (${numerOfMoves})` :
-        `${selectedMoveTypeText} (${numerOfMoves})`;
+        `${selectedMoveCategoryText} (${numerOfMoves})`;
 
     return (
         <header className='movelist-header'>
             <ModalContextWrapper
-                showModal={showMoveTypeSelectModal}
+                showModal={showMoveCategoryModal}
                 closeModal={handleTypeSelectModalClose}
             >
                 <Modal>
-                    <MoveTypSelectModal
-                        selectedMoveType={selectedMoveType}
+                    <MoveCategorySelectModal
+                        selectedMoveCategory={selectedMoveCategory}
                         moveCategories={moveCategories}
                     />
                 </Modal>
