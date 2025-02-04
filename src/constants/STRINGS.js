@@ -1,4 +1,8 @@
 const STRINGS = {
+    AKIRA: 'akira',
+    ASC: 'asc',
+    DSC: 'dsc',
+    ALL_MOVES: 'all_moves',
     LAUNCHERS: 'launchers',
     MOVELIST: 'movelist',
     COMBOS: 'combos',

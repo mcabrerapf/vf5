@@ -34,14 +34,17 @@ function ModalContextWrapper({ children, showModal, closeModal }) {
       onTouchMove={stopPropagation}
       onTouchEnd={stopPropagation}
     >
-      <ModalContextProvider
-        value={{
-          setCloseOnBgClick,
-          closeModal,
-        }}
-      >
-        {children}
-      </ModalContextProvider>
+      <div className='modal-bg__wrapper' ref={wrapperRef}>
+        <ModalContextProvider
+          value={{
+            setCloseOnBgClick,
+            closeModal,
+          }}
+        >
+          {children}
+        </ModalContextProvider>
+      </div>
+
     </div>
   );
 }

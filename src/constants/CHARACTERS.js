@@ -1,6 +1,8 @@
-import ALL_CHARACTERS from '../characters-data';
+import CHARACTERS_JSON from '../characters-data';
 
 const CHARACTERS = [];
-Object.keys(ALL_CHARACTERS).forEach(CHARACTER => CHARACTERS.push(ALL_CHARACTERS[CHARACTER]))
-
+Object.keys(CHARACTERS_JSON).forEach(CHARACTER => CHARACTERS.push(CHARACTERS_JSON[CHARACTER]));
+export {
+    CHARACTERS_JSON
+}
 export default CHARACTERS;

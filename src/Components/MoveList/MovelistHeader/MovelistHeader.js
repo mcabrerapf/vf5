@@ -6,7 +6,7 @@ import MoveCategorySelectModal from '../../Modals/MoveCategorySelectModal';
 import MoveListSortModal from '../../Modals/MoveListSortModal';
 import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
-import { SELECTED_MOVELIST_SORT_KEY, SELECTED_MOVE_TYPE_KEY } from '../../../constants';
+import { SELECTED_MOVELIST_SORT_KEY, SELECTED_MOVE_CATEGORY_KEY } from '../../../constants';
 import { setLocalStorage } from '../../../helpers';
 
 const MovelistHeader = ({
@@ -27,15 +27,18 @@ const MovelistHeader = ({
 
     const handleTypeSelectModalClose = (type) => {
         if (type) {
-            setLocalStorage(SELECTED_MOVE_TYPE_KEY, type);
+            setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, type);
             setSelectedMoveCategory(type);
         }
         toggleMoveTypeSelectModal();
     }
 
     const handleSortModalClose = (sort) => {
-        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, sort);
-        setSelectedMovelistSort(sort);
+        if (sort) {
+            setLocalStorage(SELECTED_MOVELIST_SORT_KEY, sort);
+            setSelectedMovelistSort(sort);
+
+        }
         toggleSortModal();
     }
 
@@ -69,7 +72,7 @@ const MovelistHeader = ({
     const [sortType] = selectedMovelistSort.split('/');
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
     const sortButtonModifier = !!sortType ? 'active' : '';
-    
+
     const { name: selectedMoveCategoryText } = moveCategories.find(cat => cat.id === selectedMoveCategory);
     const moveButtonText = selectedMoveCategory === 'all_moves' ?
         `All Moves (${numerOfMoves})` :

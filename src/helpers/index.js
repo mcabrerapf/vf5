@@ -3,6 +3,7 @@ import generateId from "./generateId";
 import getFromLocal from "./getFromLocal";
 import getLauncher from './getLauncher';
 import getLocalStorageSize from './getLocalStorageSize';
+import initiLocal from "./initLocal";
 import setLocalStorage from "./setLocalStorage";
 
 
@@ -12,5 +13,6 @@ export {
     getFromLocal,
     getLauncher,
     getLocalStorageSize,
+    initiLocal,
     setLocalStorage
 }

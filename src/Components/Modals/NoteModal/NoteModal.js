@@ -31,13 +31,6 @@ const NoteModal = ({
 
     return (
         <div className='note-modal'>
-            <ModalHeader modifier="align-right">
-                <Button
-                    modifier="no-border"
-                    text="X"
-                    onClick={handleCloseModal}
-                />
-            </ModalHeader>
             <div className='note-modal__content'>
                 <textarea
                     value={noteContent}

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import './CombosFiltersModal.scss'
 import TagsView from './TagsView';
-import ModalHeader from '../ModalHeader';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { CHARACTERS, STRINGS } from '../../../constants';
 import LaunchersView from './LaunchersView';
 import { getLaunchers } from './helpers';
-
+import CommandView from '../MoveListFiltersModal/CommandView';
 
 const CombosFiltersModal = ({
     combos,
@@ -16,15 +15,17 @@ const CombosFiltersModal = ({
 }) => {
     const { closeModal } = useModalContext();
     const [selectedFilters, setSelectedFilters] = useState(_selectedFilters);
+    const [commandFilter, setCommandFilter] = useState([])
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS);
     const characterFilters = selectedFilters.filter(filter => filter.includes('character/'));
     const allCharactersSelected = characterFilters.length === CHARACTERS.length;
 
-    const handleClose = () => {
-        closeModal();
-    }
     const handleFilterSave = () => {
-        closeModal(selectedFilters);
+        const parsedCommandFilter = commandFilter.length ?
+            `command/${commandFilter.join('')}`
+            : null;
+        const withCommand = [...selectedFilters, parsedCommandFilter].filter(Boolean);
+        closeModal(withCommand);
     }
 
     const handleCharacterClick = ({ target: { value } }) => {
@@ -80,15 +81,6 @@ const CombosFiltersModal = ({
 
     return (
         <div className='combos-filters-modal'>
-            <ModalHeader
-                modifier={"align-right"}
-            >
-                <Button
-                    modifier={"no-border"}
-                    text={"X"}
-                    onClick={handleClose}
-                />
-            </ModalHeader>
             <div className='combos-filters-modal__sub-header'>
                 <Button
                     modifier={filtersView === STRINGS.TAGS ? 'active' : ''}
@@ -99,6 +91,11 @@ const CombosFiltersModal = ({
                     modifier={filtersView === STRINGS.LAUNCHERS ? 'active' : ''}
                     text='Launchers'
                     onClick={() => setFiltersView(STRINGS.LAUNCHERS)}
+                />
+                <Button
+                    modifier={filtersView === STRINGS.COMMAND ? 'active' : ''}
+                    text='Command'
+                    onClick={() => setFiltersView(STRINGS.COMMAND)}
                 />
             </div>
             <div className='combos-filters-modal__content'>
@@ -116,6 +113,12 @@ const CombosFiltersModal = ({
                         selectedFilters={selectedFilters}
                         launchers={launchers}
                         onLauncherClick={handleLauncherClick}
+                    />
+                }
+                {filtersView === STRINGS.COMMAND &&
+                    <CommandView
+                    commandFilter={commandFilter}
+                    setCommandFilter={setCommandFilter}
                     />
                 }
             </div>

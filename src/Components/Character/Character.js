@@ -12,11 +12,12 @@ import InfoModal from '../Modals/InfoModal';
 import { CHARACTERS, SELECTED_CHARACTER_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
+import { CHARACTERS_JSON } from '../../constants/CHARACTERS';
 
 
 const Character = () => {
-    const localSelectedView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
     const { selectedCharacter } = useMainContext();
+    const localSelectedView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [characterView, setCharacterView] = useState(localSelectedView);
@@ -34,8 +35,7 @@ const Character = () => {
         setShowInfoModal(!showInfoModal)
     }
 
-    const { name: characterName } = CHARACTERS
-        .find(character => character.id === selectedCharacter);
+    const { name: characterName } = CHARACTERS_JSON[selectedCharacter];
 
     return (
         <div className='character'>

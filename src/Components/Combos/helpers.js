@@ -12,13 +12,15 @@ const filterCombos = (list, filters) => {
     const characterFilters = filters
         .filter(filter => filter.includes('character/'))
         .map(filter => filter.split('character/')[1]);
-
     const otherFilters = filters
         .filter(filter => filter.includes('other/'))
         .map(filter => filter.split('other/')[1]);
     const launcherFilters = filters
         .filter(filter => filter.includes('launcher/'))
         .map(filter => filter.split('launcher/')[1]);
+    const commandFilters = filters
+        .filter(filter => filter.includes('command/'))
+        .map(command => command.split('/')[1]);
 
     return list
         .filter(listItem => {
@@ -44,12 +46,20 @@ const filterCombos = (list, filters) => {
             launcherFilters.forEach(launcherFilter => {
                 const [launcher] = getLauncher(command);
                 const stringLauncher = launcher.join('');
-     
+
                 if (stringLauncher === launcherFilter) {
                     hasLauncherMatch = true;
                 }
             })
-            return hasCharacterMatch && hasTagMatch && hasLauncherMatch;
+
+            let hasCommandMatch = commandFilters.length ? false : true;
+            const stringCommand = command.join('')
+            commandFilters.forEach(commandFilter => {
+                if (stringCommand.includes(commandFilter)) {
+                    hasCommandMatch = true;
+                }
+            })
+            return hasCharacterMatch && hasTagMatch && hasLauncherMatch && hasCommandMatch;
         })
 
 }

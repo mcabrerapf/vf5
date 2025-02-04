@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './MoveListFiltersModal.scss'
-import ModalHeader from '../ModalHeader';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import TagsView from './TagsView';
@@ -16,10 +15,7 @@ const MoveListFiltersModal = ({
     const [selectedTypeFilters, setSelectedTypeFilters] = useState(selectedFilters);
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS)
     const [commandFilter, setCommandFilter] = useState([])
-
-    const handleClose = () => {
-        closeModal();
-    }
+    
     const handleFilterSave = () => {
         const parsedCommandFilter = commandFilter.length ?
             `command/${commandFilter.join('')}`
@@ -70,15 +66,6 @@ const MoveListFiltersModal = ({
 
     return (
         <div className='movelist-filters-modal'>
-            <ModalHeader
-                modifier={"align-right"}
-            >
-                <Button
-                    modifier={"no-border"}
-                    text={"X"}
-                    onClick={handleClose}
-                />
-            </ModalHeader>
             <div className='movelist-filters-modal__sub-header'>
                 <Button
                     modifier={filtersView === STRINGS.TAGS ? 'active' : ''}

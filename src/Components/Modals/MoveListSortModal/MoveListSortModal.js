@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import './MoveListSortModal.scss'
-import ModalHeader from '../ModalHeader';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { SORT_OPTIONS } from '../../../constants';
+import { MOVELIST_SORT_OPTIONS } from '../../../constants';
 
 const MoveListSortModal = ({ selectedMovelistSort }) => {
     const { closeModal } = useModalContext();
     const parsedSort = selectedMovelistSort.split('/')
     const [sortValue, setSortValue] = useState(parsedSort[0] || '')
     const [sortDirection, setSortDirection] = useState(parsedSort[1] || 'asc')
-
-    const handleClose = () => {
-        closeModal(selectedMovelistSort);
-    }
 
     const handleSortClick = (e) => {
         setSortValue(e.target.value);
@@ -29,21 +24,13 @@ const MoveListSortModal = ({ selectedMovelistSort }) => {
     
     return (
         <div className='movelist-sort-modal'>
-            <ModalHeader modifier={"align-right"}>
-                <Button
-                    modifier={"no-border"}
-                    text={"X"}
-                    onClick={handleClose}
-                />
-            </ModalHeader>
             <div className='movelist-sort-modal__content'>
                 <div className='movelist-sort-modal__content__options'>
-                    {SORT_OPTIONS.map(option => {
+                    {MOVELIST_SORT_OPTIONS.map(option => {
 
                         return (
                             <Button
                                 key={option[0]}
-                                disabled={option[0] === 'sober'}
                                 modifier={option[0] === sortValue ? 'active' : ''}
                                 value={option[0]}
                                 text={option[1]}

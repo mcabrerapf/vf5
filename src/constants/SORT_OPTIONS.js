@@ -1,5 +1,6 @@
 
-const SORT_OPTIONS = [
+
+const MOVELIST_SORT_OPTIONS = [
     ['', 'Default'],
     ['move_name', 'Name'],
     ['command', 'Command'],
@@ -10,8 +11,19 @@ const SORT_OPTIONS = [
     ['hit', 'On hit'],
     ['c_hit', 'On ch'],
     ['gd', 'On block'],
-    ['dodge_direction', 'Escape'],
+    ['dodge_direction', 'Dodge'],
     ['sober', 'Sober'],
 ]
 
+const COMBOS_SORT_OPTIONS = []
+
+const SORT_OPTIONS = {
+    COMBOS_SORT_OPTIONS,
+    MOVELIST_SORT_OPTIONS,
+}
+
+export {
+    COMBOS_SORT_OPTIONS, 
+    MOVELIST_SORT_OPTIONS
+}
 export default SORT_OPTIONS;

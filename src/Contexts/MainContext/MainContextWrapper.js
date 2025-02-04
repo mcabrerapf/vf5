@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { MainContextProvider } from './MainContext';
-import { SELECTED_CHARACTER_KEY } from '../../constants';
+import { CHARACTERS_DATA_KEY, SELECTED_CHARACTER_KEY, SELECTED_MOVE_CATEGORY_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 
@@ -8,57 +8,48 @@ import setLocalStorage from '../../helpers/setLocalStorage';
 function MainContextWrapper({
   children,
 }) {
-  const [contextData, setContextData] = useState({});
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [errorMessage, setErrorMessage] = useState(false);
+  const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
+  const localFavorites = getFromLocal(
+    CHARACTERS_DATA_KEY,
+    localSelectedCharacter,
+    STRINGS.FAV_MOVES
+  );
 
-  useEffect(() => {
-    async function init() {
-      const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
-      setContextData({ selectedCharacter: localSelectedCharacter })
-      // const promises = CHARACTERS.map(character => fetch(`${B_URL}/vf/char/${character[0]}`));
-      // const characters = {};
+  const [contextData, setContextData] = useState({
+    selectedCharacter: localSelectedCharacter,
+    favouriteMoves: localFavorites
+  });
 
-      // await Promise
-      //   .all(promises)
-      //   .then(results => {
-      //     results.forEach((res, i) => {
-      //       res.json()
-      //         .then(json => {
-      //           characters[CHARACTERS[i][0]] = json;
-      //         })
-      //     })
-      //     setContextData({ characters, selectedCharacter: selectedChar })
-      //     setIsLoading(false)
-      //   })
-      //   .catch(error => {
-      //     console.error('One of the promises failed:', error);
-      //     setContextData({ characters: {}, selectedCharacter: selectedChar });
-      //     setIsLoading(false);
-      //     setErrorMessage(error);
-      //   });
+  const { selectedCharacter } = contextData;
 
-
-    }
-
-    init();
-  },
-    []
-  )
 
   const setSelectedCharacter = (character) => {
+    const newLocalFavs = getFromLocal(
+      CHARACTERS_DATA_KEY,
+      character,
+      STRINGS.FAV_MOVES
+    );
+    setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, 'all_moves');
     setLocalStorage(SELECTED_CHARACTER_KEY, character);
-    setContextData({ ...contextData, selectedCharacter: character });
+    setContextData({ ...contextData, selectedCharacter: character, favouriteMoves: newLocalFavs });
   }
 
-  if (!contextData.selectedCharacter) return null;
-  // if (errorMessage) return <div>Oops</div>
+  const setFavouriteMoves = (updatedFavorites) => {
+    setLocalStorage(
+      CHARACTERS_DATA_KEY,
+      updatedFavorites,
+      selectedCharacter,
+      STRINGS.FAV_MOVES
+    );
+    setContextData({ ...contextData, favouriteMoves: updatedFavorites });
+  }
 
   return (
     <MainContextProvider
       value={{
         ...contextData,
-        setSelectedCharacter
+        setSelectedCharacter,
+        setFavouriteMoves
       }}
     >
       {children}

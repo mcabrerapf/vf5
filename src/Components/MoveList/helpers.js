@@ -13,6 +13,7 @@ const sortMovelist = (list, sort) => {
                 itemB[parsedSort[0]] : itemA[parsedSort[0]];
 
             // BROKEN FIX
+            if(!firstValue) return false;
             if (Array.isArray(firstValue)) return firstValue.join('').localeCompare(secondValue.join(''))
             if (typeof firstValue === "number" && !isNaN(firstValue)) return firstValue > secondValue;
             return firstValue.localeCompare(secondValue)
