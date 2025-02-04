@@ -5,7 +5,7 @@ import getLauncher from './getLauncher';
 import getLocalStorageSize from './getLocalStorageSize';
 import initiLocal from "./initLocal";
 import setLocalStorage from "./setLocalStorage";
-
+import validateImportData from "./validateImportData";
 
 export {
     copyToClipboard,
@@ -14,5 +14,6 @@ export {
     getLauncher,
     getLocalStorageSize,
     initiLocal,
-    setLocalStorage
+    setLocalStorage,
+    validateImportData
 }

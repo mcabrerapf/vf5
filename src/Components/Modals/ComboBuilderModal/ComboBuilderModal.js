@@ -35,7 +35,7 @@ const ComboBuilderModal = ({
             command: comboNotation,
             characterTags: selectedCharacterTags,
             tags: finalTags,
-            damage: comboDamage,
+            damage: Number(comboDamage),
             note: comboNote,
         });
     }

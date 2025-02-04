@@ -10,6 +10,7 @@ const STRINGS = {
     NOTES: 'notes',
     FAV_MOVES: 'fav_moves',
     TAGS: 'tags',
+    RESET_LOCAL_DATA: 'RESET_LOCAL_DATA',
 }
 
 export default STRINGS;
