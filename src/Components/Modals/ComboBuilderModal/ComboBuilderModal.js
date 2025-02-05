@@ -14,7 +14,7 @@ const ComboBuilderModal = ({
     selectedCombo
 }) => {
     const characterIds = CHARACTERS.map(character => character.id);
-    const { id, command, characterTags, tags, damage, note } = selectedCombo || {};
+    const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
     const { selectedCharacter } = useMainContext();
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
@@ -23,6 +23,7 @@ const ComboBuilderModal = ({
     const [selectedTags, setSelectedTags] = useState(tags || []);
     const [comboDamage, setComboDamage] = useState(damage || 1);
     const [comboNote, setComboNote] = useState(note || '');
+    const [isFavourite, setIsFavourite] = useState(!!favourite);
 
     const handleSaveCombo = () => {
         const finalTags = !id ?
@@ -31,7 +32,7 @@ const ComboBuilderModal = ({
 
         closeModal({
             id: id,
-            favourite: false,
+            favourite: isFavourite,
             command: comboNotation,
             characterTags: selectedCharacterTags,
             tags: finalTags,
@@ -42,6 +43,10 @@ const ComboBuilderModal = ({
 
     const handleViewChage = ({ target: { value } }) => {
         setComboView(value);
+    }
+
+    const setFavourite = () => {
+        setIsFavourite(!isFavourite);
     }
 
     const canSave = !!comboNotation.length && !!selectedCharacterTags.length;
@@ -73,6 +78,8 @@ const ComboBuilderModal = ({
                     <CommandView
                         comboDamage={comboDamage}
                         comboNotation={comboNotation}
+                        isFavourite={isFavourite}
+                        setFavourite={setFavourite}
                         setComboNotation={setComboNotation}
                         setComboDamage={setComboDamage}
 

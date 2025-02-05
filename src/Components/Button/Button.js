@@ -5,7 +5,7 @@ const Button = ({
     children,
     modifier,
     text,
-    value = 'button',
+    value,
     disabled = false,
     onClick = () => { },
 }) => {

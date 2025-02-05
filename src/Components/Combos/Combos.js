@@ -145,9 +145,23 @@ const Combos = () => {
 
     }
 
+    const onFavouriteClick = (comboId) => {
+        const updatedCombos = combos.map(combo => {
+            if (combo.id === comboId) combo.favourite = !combo.favourite;
+            return combo;
+        })
+        setLocalStorage(
+            CHARACTERS_DATA_KEY,
+            updatedCombos,
+            selectedCharacter,
+            STRINGS.COMBOS
+        );
+        setCombos(updatedCombos);
+    }
+
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos);
-    
+
     return (
         <div className='combos'>
             <ModalContextWrapper
@@ -190,6 +204,7 @@ const Combos = () => {
                                 combo={combo}
                                 onClick={() => handleComboClick(combo)}
                                 onLauncherClick={handleLauncherClick}
+                                onFavouriteClick={onFavouriteClick}
                                 onTagClick={handleTagClick}
                                 onCharacterClick={handleCharacterClick}
                             />

@@ -1,10 +1,13 @@
 import React from 'react';
 import './CommandView.scss';
 import CommandBuilder from '../../../CommandBuilder';
+import Button from '../../../Button';
 
 const CommandView = ({
     comboDamage,
     comboNotation,
+    isFavourite,
+    setFavourite,
     setComboNotation,
     setComboDamage,
 }) => {
@@ -32,6 +35,13 @@ const CommandView = ({
                         onFocus={() => setComboDamage('')}
                         onChange={handleDamageChange}
                         onBlur={handleDamageBlur}
+                    />
+                </div>
+                <div>
+                    <Button
+                        modifier={isFavourite ? 'favourite' : ""}
+                        onClick={setFavourite}
+                        text="★"
                     />
                 </div>
             </div>

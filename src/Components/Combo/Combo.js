@@ -5,15 +5,17 @@ import CharacterBadge from '../CharacterBadge';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { CHARACTERS } from '../../constants';
 import { getLauncher } from '../../helpers';
+import Button from '../Button';
 
 const Combo = ({
     combo = {},
     onClick = () => { },
     onLauncherClick = () => { },
+    onFavouriteClick = () => { },
     onCharacterClick = () => { },
     onTagClick = () => { }
 }) => {
-    const { tags, characterTags, command, damage, note } = combo || {};
+    const { tags, characterTags, command, damage, note, favourite } = combo || {};
     const hasAllCharacters = CHARACTERS.length === characterTags.length;
     const [launcher, restOfCombo, fullLauncher] = getLauncher(command);
 
@@ -36,7 +38,10 @@ const Combo = ({
         onLauncherClick({ target: { value: launcher } })
     }
 
-
+    const handleFavouriteClick = (e) => {
+        e.stopPropagation();
+        onFavouriteClick(combo.id);
+    }
 
     if (restOfCombo[0] === 'ch') {
         fullLauncher.push(restOfCombo[0]);
@@ -59,7 +64,15 @@ const Combo = ({
                         />
                     }
                 </div>
-                <div className='combo__main__damage'>{damage}</div>
+                <div className='combo__main__other'>
+                    <div className='combo__main__other__damage'>{damage}</div>
+                    <Button
+                        onClick={handleFavouriteClick}
+                        modifier={favourite ? 'small favourite' : 'small'}
+                        text={'★'}
+                    />
+                </div>
+
             </div>
 
             {note &&

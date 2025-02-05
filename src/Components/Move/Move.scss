@@ -39,6 +39,8 @@
                 min-height: 2.5rem;
                 height: 2.5rem;
                 width: 2.5rem;
+                font-size: 1.2rem;
+                padding: 0;
             }
 
             .favourite {
@@ -58,16 +60,20 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        text-align: center;
         gap: 1rem;
         font-size: 1.2rem;
+        height: 2rem;
     }
 
     &__frame-data {
         display: flex;
         flex-direction: row;
         align-items: center;
+        text-align: center;
         gap: 1rem;
         font-size: 1.2rem;
+        height: 2rem;
     }
 
     .move-command {

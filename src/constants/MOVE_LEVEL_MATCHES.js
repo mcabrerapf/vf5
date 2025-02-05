@@ -29,9 +29,6 @@ const MOVE_LEVEL_MATCHES = {
     'High': 'high',
     'Special High': 'ex-high',
     'Middle': 'mid',
-    //PARSING DOUBLE VALUE FORM API
-    'MiddleMiddle': 'mid',
-    //PARSING DOUBLE VALUE FORM API
     'Special Middle': 'ex-mid',
     'Low': 'low',
     'Special Low': 'ex-low',
@@ -46,10 +43,11 @@ const MOVE_LEVEL_MATCHES = {
     'Throw Combo': 'throw-combo',
     'Down Attacks': 'downed-attack',
     'Deflect': 'sabaki',
-    'Other (Special Action)': 'special',
+    'Other (Special Action)': 'other',
     'Atemi': 'reversal',
     'Atemi Combo': 'rev-combo',
-    '-': 'no-category'
+    '-': 'other',
+    '.': 'other'
 }
 export { MOVE_LEVELS, MOVE_LEVEL_MATCHES }
 export default MOVE_LEVEL_MATCHES;

@@ -4,12 +4,16 @@
     gap: 1rem;
 
     &__top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
         &__damage {
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 1rem;
-            
+
             label {
                 font-size: 1.5rem;
                 font-weight: 600;
@@ -22,9 +26,14 @@
             }
         }
 
+        .button {
+            &.favourite {
+                background-color: gold;
+                color: black;
+            }
+        }
+
     }
 
-    &__bottom {
-
-    } 
+    &__bottom {}
 }
