@@ -32,7 +32,7 @@ const TagsView = ({
                 })}
                 <MoveTypeBadge
                     modifier={favModifier}
-                    moveType={'favorite'}
+                    moveType={'favourite'}
                     onClick={handleFavoriteClick}
                 />
             </div>

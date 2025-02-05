@@ -1,4 +1,5 @@
 import {
+    ALL_DATA_KEY,
     CHARACTERS_DATA_KEY,
     MOVELIST_SORT_OPTIONS,
     SELECTED_CHARACTER_KEY,
@@ -9,8 +10,9 @@ import {
     SELECTED_MOVELIST_SORT_KEY,
     STRINGS
 } from "../constants";
-import { CHARACTERS_JSON } from "../constants/CHARACTERS";
+import CHARACTERS, { CHARACTERS_JSON } from "../constants/CHARACTERS";
 import getFromLocal from "./getFromLocal";
+import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
 
 const {
@@ -21,10 +23,40 @@ const {
     MOVELIST,
     NOTES
 } = STRINGS;
+const validateOnInit = () => {
 
+    try {
+        const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY)
+        if (
+            !allCharactersData ||
+            typeof allCharactersData !== 'string'
+        ) throw new Error("No characters data");
+        const parsedData = JSON.parse(allCharactersData);
+        
+        if (
+            !parsedData ||
+            Array.isArray(parsedData) ||
+            typeof parsedData !== 'object'
+        ) {
+            throw new Error("Invalid characters data");
+        };    
+        const [isDataValid] = validateImportData(parsedData);
+    
+        if (!isDataValid && typeof parsedData !== 'object') {
+            throw new Error("Invalid characters data");
+        }
+        return;
+    } catch (error) {
+        console.log(error);
+        localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify({}));
+        window.location.reload();
+        return;
+    }
+}
 const initLocal = () => {
     const selectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY);
-// TODO validate user data on init
+    validateOnInit();
+
     if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) {
         const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
         setLocalStorage(SELECTED_CHARACTER_KEY, AKIRA);

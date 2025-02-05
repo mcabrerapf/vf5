@@ -44,12 +44,12 @@ const Movelist = () => {
         }
     }
 
-    const onMoveClick = (move) => {
+    const onFavouriteClick = (moveId) => {
         let updatedFavorites;
-        if (favouriteMoves.includes(move.id)) {
-            updatedFavorites = favouriteMoves.filter(fav => fav !== move.id);
+        if (favouriteMoves.includes(moveId)) {
+            updatedFavorites = favouriteMoves.filter(fav => fav !== moveId);
         } else {
-            updatedFavorites = [...favouriteMoves.map(fav => fav), move.id];
+            updatedFavorites = [...favouriteMoves.map(fav => fav), moveId];
         }
         setFavouriteMoves(updatedFavorites);
     }
@@ -124,11 +124,11 @@ const Movelist = () => {
                                 className='movelist__list-container__list__item'
                             >
                                 <Move
-                                    modifier={isFavourite ? 'favorite' : ''}
                                     move={move}
+                                    isFavourite={isFavourite}
                                     moveCategories={moveCategories}
                                     hideType={selectedMoveCategory !== 'all_moves'}
-                                    onClick={onMoveClick}
+                                    onFavouriteClick={onFavouriteClick}
                                     onCommandClick={onCommandClick}
                                     onMoveCategoryClick={onMoveCategoryClick}
                                     onMoveTypeClick={onMoveTypeClick}

@@ -3,18 +3,22 @@ import './Move.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { MOVE_LEVEL_MATCHES } from '../../constants';
+import Button from '../Button';
 
 const Move = ({
     move,
     moveCategories,
+    isFavourite = false,
     modifier = "",
     // hideType = false,
     onClick = () => { },
     onMoveCategoryClick = () => { },
+    onFavouriteClick = () => { },
     onCommandClick = () => { },
     onMoveTypeClick = () => { }
 }) => {
     const {
+        id,
         // active,
         // total,
         // recovery_c
@@ -63,14 +67,19 @@ const Move = ({
 
     }
 
-    const className = ['move', modifier].filter(Boolean).join(' ');
+    const handleFavouriteClick = (e) => {
+        e.stopPropagation();
+        onFavouriteClick(id);
+    }
+    const favouriteModifier = isFavourite ? 'favourite' : '';
+    const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = MOVE_LEVEL_MATCHES[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
 
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
-                <div className={`move__main__name  ${modifier}`}
+                <div className={`move__main__name  ${favouriteModifier}`}
                     role='button'
                 >
                     {move_name}
@@ -79,6 +88,11 @@ const Move = ({
                     <MoveTypeBadge
                         moveType={parsedLevel}
                         onClick={handleOnMoveTypeClick}
+                    />
+                    <Button
+                        onClick={handleFavouriteClick}
+                        modifier={isFavourite ? 'small favourite' : 'small'}
+                        text={'★'}
                     />
                 </div>
 

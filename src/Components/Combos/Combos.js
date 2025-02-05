@@ -147,7 +147,7 @@ const Combos = () => {
 
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos);
-    console.log(combos)
+    
     return (
         <div className='combos'>
             <ModalContextWrapper

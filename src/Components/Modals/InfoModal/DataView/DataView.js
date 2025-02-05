@@ -16,7 +16,7 @@ const DataView = () => {
     const [dataView, setDataView] = useState('default');
     const [importData, setImportData] = useState(null);
     const [isImporting, setIsImporting] = useState(false);
-    const [importError, setImportError] = useState(null);
+    const [importError, setImportError] = useState(false);
 
     const onCopyClick = () => {
         const allCharacterData = getFromLocal(ALL_DATA_KEY);
@@ -43,19 +43,20 @@ const DataView = () => {
                     return;
                 }
                 const parsedData = JSON.parse(data);
-                const validatedData = validateImportData(parsedData);
-                const hasData = !!Object.keys(validatedData).length;
-                if (hasData) {
+                const [isValid, validatedData] = validateImportData(parsedData);
+
+                if (isValid) {
                     setImportData(validatedData)
                     setDataView('confirm')
+                } else {
+                    setImportError(true)
                 }
                 setIsImporting(false);
             })
             .catch(err => {
                 setIsImporting(false);
                 setImportData(null)
-                setImportError(err)
-                console.log(err)
+                setImportError(true)
             });
     }
 

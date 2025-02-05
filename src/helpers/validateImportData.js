@@ -20,23 +20,27 @@ const validateFavMove = (favMove, characterMoves) => {
 
 const validateCombo = (combo) => {
     if (typeof combo !== 'object' || !combo.id || typeof combo.id !== 'string') return null;
-    const { id, damage, characterTags, command, tags, note } = combo;
-    if (
-        !Array.isArray(tags) ||
-        !Array.isArray(characterTags) ||
-        !Array.isArray(command)
-    ) return null
-    const validTags = tags.filter(tag => {
-        return typeof tag === 'string' && MOVE_LEVELS.includes(tag);
-    });
-    const validCharacterTags = characterTags.filter(cTag => {
-        return typeof cTag === 'string' && !!CHARACTERS.find(ch => ch.id === cTag);
-    });
-    const validCommand = command.filter(notation => typeof notation === 'string');
+    const { id, favourite, damage, characterTags, command, tags, note } = combo;
+
+    const validTags = Array.isArray(tags) ?
+        tags.filter(tag => {
+            return typeof tag === 'string' && MOVE_LEVELS.includes(tag);
+        }) :
+        [];
+    const validCharacterTags = Array.isArray(characterTags) ?
+        characterTags.filter(cTag => {
+            return typeof cTag === 'string' && !!CHARACTERS.find(ch => ch.id === cTag);
+        }) :
+        [];
+    const validCommand = Array.isArray(command) ?
+        command.filter(notation => typeof notation === 'string') :
+        [];
     const validNote = typeof note === 'string' ? note : '';
     const validDamage = typeof damage === 'number' ? damage : 1;
+
     return {
         id,
+        favourite: favourite,
         damage: validDamage,
         command: validCommand,
         tags: [...new Set(validTags)],
@@ -46,8 +50,9 @@ const validateCombo = (combo) => {
 }
 
 const validateImportData = (data) => {
-    if (Array.isArray(data)) return false;
+    if (Array.isArray(data) || typeof data !=='object') return [false];
     const validatedData = {};
+    let isValid = false;
     CHARACTERS.forEach(character => {
         const { id } = character;
         const currentCharacterData = data[id];
@@ -75,10 +80,11 @@ const validateImportData = (data) => {
             ) {
                 return;
             }
+            isValid = true;
             validatedData[id] = validatedCharacterData;
         }
     })
-    return validatedData;
+    return [isValid, validatedData];
 }
 
 export default validateImportData;

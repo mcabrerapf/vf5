@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './ComboBuilderModal.scss'
-import ModalHeader from '../ModalHeader';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
@@ -29,9 +28,10 @@ const ComboBuilderModal = ({
         const finalTags = !id ?
             getTagsFromCommand(comboNotation, selectedCharacter, selectedTags) :
             selectedTags;
-        
+
         closeModal({
             id: id,
+            favourite: false,
             command: comboNotation,
             characterTags: selectedCharacterTags,
             tags: finalTags,

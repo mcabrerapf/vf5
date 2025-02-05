@@ -8,7 +8,7 @@
     padding: 1rem;
     cursor: pointer;
 
-    &.favorite {
+    &.favourite {
         border: 1px solid gold;
     }
 
@@ -19,26 +19,39 @@
         align-items: flex-start;
         gap: 0.5rem;
 
-        &__name {   
-            max-width: 19rem;
+        &__name {
+            max-width: 16.5rem;
             font-size: 1.5rem;
             font-weight: 600;
-            &.favorite {
+
+            &.favourite {
                 color: gold;
             }
         }
 
-        &__badges{
+        &__badges {
             display: flex;
             flex-direction: row;
             gap: 0.5rem;
+
+            .small {
+                min-width: 2.5rem;
+                min-height: 2.5rem;
+                height: 2.5rem;
+                width: 2.5rem;
+            }
+
+            .favourite {
+                color: black;
+                background-color: gold;
+            }
         }
 
     }
 
     &__type {
         font-size: 1.2rem;
-        
+
     }
 
     &__damage {
@@ -62,7 +75,7 @@
         border: 1px solid white;
         border-radius: 0.5rem;
         padding: 0.7rem 0.7rem;
-        
+
     }
 
     &__notes {
