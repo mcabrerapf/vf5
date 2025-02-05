@@ -65,6 +65,7 @@ const TagsView = ({
                     onClick={handleAllClick}
                 />
             </div>
+            <div className='tags-view__separator' />
             <div className='tags-view__others'>
                 {otherTags.map(tag =>
                     <MoveTypeBadge

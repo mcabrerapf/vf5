@@ -1,15 +1,14 @@
-const getLocalStorageSize = () =>{
-    let total = 0;
+function getLocalStorageSize(key) {
+    if (!key) return 'No data found';
+    const item = localStorage.getItem(key);
+    if (!item) return 'No data found';
 
-    for (let key in localStorage) {
-        if (localStorage.hasOwnProperty(key)) {
-            total += (localStorage[key].length * 2);
-        }
-    }
-    // LOCAL STORAGE IN KB
-    const parsedTotal  = (total / 1024).toFixed(2);
-    
-    return parsedTotal;
+    const sizeInBytes = new Blob([item]).size;
+    const sizeInKb = (sizeInBytes / 1024).toFixed(2)
+    return `${sizeInKb}Kb`;
 }
+
+console.log(getLocalStorageSize("myKey"));
+
 
 export default getLocalStorageSize;

@@ -1,8 +1,15 @@
 .info-modal {
-    .modal-header {
-
+    &__header {
+        display: flex;
+        flex-direction: row;
         .button {
             width: 50%;
         }
+    }
+
+    &__content {
+        min-height: 10rem;
+        min-width: 15rem;
+        padding: 1rem;
     }
 }

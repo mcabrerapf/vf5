@@ -72,6 +72,20 @@ const Movelist = () => {
         handleFiltersChange(newFilters);
     }
 
+    const onMoveCategoryClick = ({ target: { value } }) => {
+        const { id: categoryId } = moveCategories.find(cat => cat.name === value) || '';
+        if (!categoryId) return;
+        setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, categoryId);
+        setSelectedMoveCategory(categoryId);
+    }
+
+    const onCommandClick = (command) => {
+        const commandFilter = `command/${command}`;
+        if (!!selectedFilters.find(filter => filter === commandFilter)) return;
+        const newFilters = [...selectedFilters.map(filter => filter), commandFilter];
+        handleFiltersChange(newFilters);
+    }
+
     if (!selectedMoveset) return null;
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favouriteMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
@@ -112,8 +126,11 @@ const Movelist = () => {
                                 <Move
                                     modifier={isFavourite ? 'favorite' : ''}
                                     move={move}
+                                    moveCategories={moveCategories}
                                     hideType={selectedMoveCategory !== 'all_moves'}
                                     onClick={onMoveClick}
+                                    onCommandClick={onCommandClick}
+                                    onMoveCategoryClick={onMoveCategoryClick}
                                     onMoveTypeClick={onMoveTypeClick}
                                 />
                             </li>

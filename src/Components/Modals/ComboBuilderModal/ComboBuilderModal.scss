@@ -2,19 +2,19 @@
     &__sub-header {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
         margin-bottom: 1rem;
 
         .button {
-            width: 9rem;
+            width: 33.3%;
         }
     }
 
     &__content {
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        height: 40rem;
-        width: 29rem;
+        padding: 1rem;
+        min-width: 30rem;
     }
 }

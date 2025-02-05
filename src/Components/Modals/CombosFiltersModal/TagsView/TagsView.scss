@@ -6,7 +6,7 @@
     
     &__characters {
         width: 100%;
-        height: 14.5rem;
+        max-height: 15rem;
         gap: 0.5rem;
         display: flex;
         flex-direction: column;
@@ -21,6 +21,7 @@
             }
         }
     }
+
     &__separator {
         border: 1px solid white;
         width: 90%;
@@ -28,7 +29,7 @@
     }
     &__other-tags {
         width: 100%;
-        height: 24rem;
+        max-height: 24rem;
         gap: 0.5rem;
         display: flex;
         flex-direction: column;

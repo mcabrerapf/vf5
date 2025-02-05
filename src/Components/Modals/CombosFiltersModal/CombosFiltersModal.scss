@@ -2,18 +2,19 @@
     &__sub-header {
         display: flex;
         flex-direction: row;
-        gap: 0.5rem;
         width: 100%;
         margin-bottom: 1rem;
         
         .button {
-            width: 33%;
+            width: 33.3%;
         }
     }
 
     &__content {
+        box-sizing: border-box;
+        padding: 1rem;
         width: 30rem;
-        height: 41rem;
+        // height: 41rem;
     }
 
     .modal-footer {

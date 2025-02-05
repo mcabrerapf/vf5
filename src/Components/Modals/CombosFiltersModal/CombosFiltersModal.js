@@ -83,17 +83,17 @@ const CombosFiltersModal = ({
         <div className='combos-filters-modal'>
             <div className='combos-filters-modal__sub-header'>
                 <Button
-                    modifier={filtersView === STRINGS.TAGS ? 'active' : ''}
+                    modifier={filtersView === STRINGS.TAGS ? 'active left' : 'left'}
                     text='Tags'
                     onClick={() => setFiltersView(STRINGS.TAGS)}
                 />
                 <Button
-                    modifier={filtersView === STRINGS.LAUNCHERS ? 'active' : ''}
+                    modifier={filtersView === STRINGS.LAUNCHERS ? 'active middle' : 'middle'}
                     text='Launchers'
                     onClick={() => setFiltersView(STRINGS.LAUNCHERS)}
                 />
                 <Button
-                    modifier={filtersView === STRINGS.COMMAND ? 'active' : ''}
+                    modifier={filtersView === STRINGS.COMMAND ? 'active right' : 'right'}
                     text='Command'
                     onClick={() => setFiltersView(STRINGS.COMMAND)}
                 />

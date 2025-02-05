@@ -3,13 +3,12 @@
     &__content {
         display: flex;
         flex-direction: column;
-        // flex-wrap: wrap;
         justify-content: center;
         box-sizing: border-box;
         width: 30rem;
         max-height: 45rem;
         gap: 1rem;
-        padding: 0.5rem;
+        padding: 1rem;
 
         .button {
             width: 8rem;

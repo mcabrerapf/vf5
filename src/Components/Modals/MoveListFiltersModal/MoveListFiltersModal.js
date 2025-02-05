@@ -68,12 +68,12 @@ const MoveListFiltersModal = ({
         <div className='movelist-filters-modal'>
             <div className='movelist-filters-modal__sub-header'>
                 <Button
-                    modifier={filtersView === STRINGS.TAGS ? 'active' : ''}
+                    modifier={filtersView === STRINGS.TAGS ? 'active left' : 'left'}
                     text='Tags'
                     onClick={() => setFiltersView(STRINGS.TAGS)}
                 />
                 <Button
-                    modifier={filtersView === STRINGS.COMMAND ? 'active' : ''}
+                    modifier={filtersView === STRINGS.COMMAND ? 'active right' : 'right'}
                     text='Command'
                     onClick={() => setFiltersView(STRINGS.COMMAND)}
 

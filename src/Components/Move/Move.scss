@@ -13,18 +13,25 @@
     }
 
     &__main {
-        font-size: 1.5rem;
-        font-weight: 600;
-        gap: 0.5rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
+        gap: 0.5rem;
 
-        &__name {
+        &__name {   
+            max-width: 19rem;
+            font-size: 1.5rem;
+            font-weight: 600;
             &.favorite {
                 color: gold;
             }
+        }
+
+        &__badges{
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
         }
 
     }
@@ -48,6 +55,14 @@
         align-items: center;
         gap: 1rem;
         font-size: 1.2rem;
+    }
+
+    .move-command {
+        box-sizing: border-box;
+        border: 1px solid white;
+        border-radius: 0.5rem;
+        padding: 0.7rem 0.7rem;
+        
     }
 
     &__notes {

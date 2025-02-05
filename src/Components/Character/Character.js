@@ -70,19 +70,19 @@ const Character = () => {
             </header>
             <div className='character__sub-header'>
                 <Button
-                    modifier={characterView === STRINGS.MOVELIST ? 'active' : ''}
+                    modifier={characterView === STRINGS.MOVELIST ? 'active tab-left' : 'tab-left'}
                     value={STRINGS.MOVELIST}
                     text='Moves'
                     onClick={handleViewChange}
                 />
                 <Button
-                    modifier={characterView === STRINGS.COMBOS ? 'active' : ''}
+                    modifier={characterView === STRINGS.COMBOS ? 'active tab' : 'tab'}
                     value={STRINGS.COMBOS}
                     text='Combos'
                     onClick={handleViewChange}
                 />
                 <Button
-                    modifier={characterView === STRINGS.NOTES ? 'active' : ''}
+                    modifier={characterView === STRINGS.NOTES ? 'active tab-right' : 'tab-right'}
                     value={STRINGS.NOTES}
                     text='Notes'
                     onClick={handleViewChange}

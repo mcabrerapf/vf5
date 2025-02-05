@@ -8,14 +8,15 @@ import {
     setLocalStorage,
     validateImportData
 } from '../../../../helpers';
-import { ALL_DATA_KEY, STRINGS, SELECTED_CHARACTER_KEY, CHARACTERS } from '../../../../constants';
+import { ALL_DATA_KEY, STRINGS, SELECTED_CHARACTER_KEY, CHARACTERS_DATA_KEY } from '../../../../constants';
 import { CHARACTERS_JSON } from '../../../../constants/CHARACTERS';
 
 const DataView = () => {
-    const currentStorageUsed = getLocalStorageSize();
+    const currentStorageUsed = getLocalStorageSize(CHARACTERS_DATA_KEY);
     const [dataView, setDataView] = useState('default');
     const [importData, setImportData] = useState(null);
     const [isImporting, setIsImporting] = useState(false);
+    const [importError, setImportError] = useState(null);
 
     const onCopyClick = () => {
         const allCharacterData = getFromLocal(ALL_DATA_KEY);
@@ -29,6 +30,10 @@ const DataView = () => {
     }
 
     const onImportClick = () => {
+        setDataView('import');
+    }
+
+    const parseImportData = () => {
         setIsImporting(true);
         navigator.clipboard
             .readText()
@@ -42,20 +47,22 @@ const DataView = () => {
                 const hasData = !!Object.keys(validatedData).length;
                 if (hasData) {
                     setImportData(validatedData)
-                    setDataView('import')
+                    setDataView('confirm')
                 }
-
                 setIsImporting(false);
             })
             .catch(err => {
                 setIsImporting(false);
+                setImportData(null)
+                setImportError(err)
                 console.log(err)
-            })
+            });
     }
 
     const confirmImport = () => {
         const stringifiedData = JSON.stringify(importData);
         setLocalStorage(STRINGS.RESET_LOCAL_DATA, stringifiedData);
+        setIsImporting(true);
         window.location.reload();
         return;
     }
@@ -73,14 +80,14 @@ const DataView = () => {
             }
         }) :
         [];
-    
+
     return (
         <div className='data-view'>
             {dataView === 'default' &&
                 <div className='data-view__initial-view'>
                     <div className='data-view__initial-view__memory'>
                         <div className='data-view__initial-view__memory__header'>Storage Used</div>
-                        <div className='data-view__initial-view__memory__ammount'> {currentStorageUsed} Kb</div>
+                        <div className='data-view__initial-view__memory__ammount'> {currentStorageUsed}</div>
                     </div>
                     <div className='data-view__initial-view__buttons'>
                         <Button
@@ -95,7 +102,7 @@ const DataView = () => {
                         />
                         <Button
                             disabled={isImporting}
-                            text="Import Data from clipboard"
+                            text="Import Data"
                             onClick={onImportClick}
                         />
                     </div>
@@ -103,13 +110,27 @@ const DataView = () => {
             }
             {dataView === 'import' &&
                 <div className='data-view__import-view'>
-                    <div className='data-view__import-view__content'>
-                        <div className='data-view__import-view__content__header'
+                    {importError &&
+                        <div className='data-view__import-view__error'>
+                            Clipboard data is invalid
+                        </div>
+                    }
+                    <Button
+                        disabled={isImporting}
+                        onClick={parseImportData}
+                        text='Load from clipboard'
+                    />
+                </div>
+            }
+            {dataView === 'confirm' &&
+                <div className='data-view__confirm-view'>
+                    <div className='data-view__confirm-view__content'>
+                        <div className='data-view__confirm-view__content__header'
                         >
                             The following will be imported:
                         </div>
                         <div
-                            className='data-view__import-view__content__data'
+                            className='data-view__confirm-view__content__data'
                         >
                             {charactersToImport.map((character) => {
                                 const {
@@ -121,15 +142,15 @@ const DataView = () => {
                                 return (
                                     <div
                                         key={character.id}
-                                        className='data-view__import-view__content__data__character'
+                                        className='data-view__confirm-view__content__data__character'
                                     >
                                         <div
-                                            className='data-view__import-view__content__data__character__header'
+                                            className='data-view__confirm-view__content__data__character__header'
                                         >
                                             {name}
                                         </div>
                                         <div
-                                            className='data-view__import-view__content__data__character__content'
+                                            className='data-view__confirm-view__content__data__character__content'
                                         >
                                             <div>
                                                 Favourite moves: {numberOfFavMoves}
@@ -146,11 +167,13 @@ const DataView = () => {
                             })}
                         </div>
                     </div>
-                    <Button
-                        disabled={isImporting}
-                        text="Confirm Import"
-                        onClick={confirmImport}
-                    />
+                    <div className='data-view__confirm-view__footer'>
+                        <Button
+                            disabled={isImporting}
+                            text="Confirm Import"
+                            onClick={confirmImport}
+                        />
+                    </div>
                 </div>
             }
         </div>

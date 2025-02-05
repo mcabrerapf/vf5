@@ -1,7 +1,9 @@
 .modal-footer {
     display: flex;
-    height: 4rem;
+    // height: 4rem;
     width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
 
     &.align-left {
         align-items: flex-start;

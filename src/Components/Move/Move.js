@@ -6,9 +6,12 @@ import { MOVE_LEVEL_MATCHES } from '../../constants';
 
 const Move = ({
     move,
+    moveCategories,
     modifier = "",
-    hideType = false,
+    // hideType = false,
     onClick = () => { },
+    onMoveCategoryClick = () => { },
+    onCommandClick = () => { },
     onMoveTypeClick = () => { }
 }) => {
     const {
@@ -36,7 +39,7 @@ const Move = ({
         hit,
         // normal_hit_stats,
         notes,
-        sober,
+        // sober,
     } = move;
 
     const handleOnClick = (e) => {
@@ -49,9 +52,20 @@ const Move = ({
         onMoveTypeClick(e);
     }
 
+    const handleOnCategoryClick = (e) => {
+        e.stopPropagation();
+        onMoveCategoryClick(e);
+    }
+
+    const handleOnCommanClick = (e) => {
+        e.stopPropagation();
+        onCommandClick(command.join(''))
+
+    }
+
     const className = ['move', modifier].filter(Boolean).join(' ');
     const parsedLevel = MOVE_LEVEL_MATCHES[attack_level] || attack_level;
-
+    const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
 
     return (
         <div className={className} onClick={handleOnClick}>
@@ -61,18 +75,24 @@ const Move = ({
                 >
                     {move_name}
                 </div>
-                {parsedLevel &&
+                <div className='move__main__badges'>
                     <MoveTypeBadge
                         moveType={parsedLevel}
                         onClick={handleOnMoveTypeClick}
                     />
-                }
+                </div>
+
             </div>
-            {!hideType && <div className='move__type'>{category}</div>}
+            <div className='move__category'>
+                <MoveTypeBadge
+                    moveType={categoryName}
+                    onClick={handleOnCategoryClick}
+                />
+            </div>
             <div className='move__damage'>
                 <span><strong>damage:</strong> {damage}</span>
                 <span><strong>avoid:</strong> {dodge_direction}</span>
-                <span><strong>sober:</strong> {sober}</span>
+                {/* <span><strong>sober:</strong> {sober}</span> */}
             </div>
             <div className='move__frame-data'>
                 <span>
@@ -89,6 +109,7 @@ const Move = ({
                 </span>
             </div>
             <MoveCommand
+                onClick={handleOnCommanClick}
                 command={command}
             />
             <div className='move__notes'>

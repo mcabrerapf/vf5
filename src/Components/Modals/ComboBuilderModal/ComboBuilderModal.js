@@ -40,10 +40,6 @@ const ComboBuilderModal = ({
         });
     }
 
-    const handleCloseModal = () => {
-        closeModal();
-    }
-
     const handleViewChage = ({ target: { value } }) => {
         setComboView(value);
     }
@@ -52,28 +48,21 @@ const ComboBuilderModal = ({
 
     return (
         <div className='combo-builder-modal'>
-            <ModalHeader modifier="align-right">
-                <Button
-                    modifier="no-border"
-                    text="X"
-                    onClick={handleCloseModal}
-                />
-            </ModalHeader>
             <div className='combo-builder-modal__sub-header'>
                 <Button
-                    modifier={comboView === 'commands' ? 'active' : ''}
+                    modifier={comboView === 'commands' ? 'active left' : 'left'}
                     value="commands"
                     text="Commands"
                     onClick={handleViewChage}
                 />
                 <Button
-                    modifier={comboView === 'tags' ? 'active' : ''}
+                    modifier={comboView === 'tags' ? 'active middle' : 'middle'}
                     value="tags"
                     text="Tags"
                     onClick={handleViewChage}
                 />
                 <Button
-                    modifier={comboView === 'extras' ? 'active' : ''}
+                    modifier={comboView === 'extras' ? 'active right' : 'right'}
                     value="extras"
                     text="Extras"
                     onClick={handleViewChage}

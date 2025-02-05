@@ -1,7 +1,6 @@
 import './InfoModal.scss'
 import React, { useState } from 'react';
 import Button from '../../Button';
-import ModalHeader from '../ModalHeader';
 import DataView from './DataView';
 
 const InfoModal = () => {
@@ -9,19 +8,19 @@ const InfoModal = () => {
 
     return (
         <div className='info-modal'>
-            <ModalHeader>
+            <div className='info-modal__header'>
                 <Button
                     disabled
-                    modifier={modalView === 'info' ? 'active' : ''}
+                    modifier={modalView === 'info' ? 'active left' : 'left'}
                     text='Info'
                     onClick={() => setModalView('info')}
                 />
                 <Button
-                    modifier={modalView === 'data' ? 'active' : ''}
+                    modifier={modalView === 'data' ? 'active right' : 'right'}
                     text='Data'
                     onClick={() => setModalView('data')}
                 />
-            </ModalHeader>
+            </div>
             <div className='info-modal__content'>
                 {modalView === 'data' && <DataView />}
             </div>
