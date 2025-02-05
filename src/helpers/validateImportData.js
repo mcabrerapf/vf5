@@ -48,7 +48,7 @@ const validateImportData = (data) => {
         const { id } = character;
         const currentCharacterData = data[id];
         if (currentCharacterData) {
-            const validatedCharacterData = {}
+            const validatedCharacterData = { combos: [], fav_moves: [], notes: [] };
             const { combos, fav_moves, notes } = currentCharacterData;
 
             if (notes && Array.isArray(notes)) {
@@ -63,6 +63,13 @@ const validateImportData = (data) => {
             if (combos) {
                 const validCombos = combos.map(validateCombo).filter(Boolean);
                 validatedCharacterData.combos = validCombos;
+            }
+            if (
+                !validatedCharacterData.notes.length &&
+                !validatedCharacterData.fav_moves.length &&
+                !validatedCharacterData.combos.length
+            ) {
+                return;
             }
             validatedData[id] = validatedCharacterData;
         }
