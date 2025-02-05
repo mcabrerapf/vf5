@@ -25,7 +25,7 @@ const MovelistHeader = ({
 
     const hasFav = selectedFilters.includes('fav/')
 
-    const handleTypeSelectModalClose = (type) => {
+    const handleCategorySelectModalClose = (type) => {
         if (type) {
             setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, type);
             setSelectedMoveCategory(type);
@@ -74,15 +74,17 @@ const MovelistHeader = ({
     const sortButtonModifier = !!sortType ? 'active' : '';
 
     const { name: selectedMoveCategoryText } = moveCategories.find(cat => cat.id === selectedMoveCategory);
+    const truncatedMoveCategory = selectedMoveCategoryText.length > 20 ?
+        `${selectedMoveCategoryText.substr(0, 20)}...` : selectedMoveCategoryText;
     const moveButtonText = selectedMoveCategory === 'all_moves' ?
         `All Moves (${numerOfMoves})` :
-        `${selectedMoveCategoryText} (${numerOfMoves})`;
+        `${truncatedMoveCategory} (${numerOfMoves})`;
 
     return (
         <header className='movelist-header'>
             <ModalContextWrapper
                 showModal={showMoveCategoryModal}
-                closeModal={handleTypeSelectModalClose}
+                closeModal={handleCategorySelectModalClose}
             >
                 <Modal>
                     <MoveCategorySelectModal

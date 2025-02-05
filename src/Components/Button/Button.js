@@ -4,7 +4,7 @@ import './Button.scss'
 const Button = ({
     children,
     modifier,
-    text = 'Button',
+    text,
     value = 'button',
     disabled = false,
     onClick = () => { },

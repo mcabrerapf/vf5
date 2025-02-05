@@ -5,6 +5,7 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
 import Modal from '../Modals/Modal';
 import NoteModal from '../Modals/NoteModal';
+import DeleteNodeModal from '../Modals/DeleteNodeModal';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
 import { CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
 
@@ -13,6 +14,7 @@ const Notes = () => {
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
     const [showNoteModal, setShowNoteModal] = useState(false);
+    const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
 
     useEffect(
         () => {
@@ -68,18 +70,31 @@ const Notes = () => {
     }
 
 
-    const handleDeleteNote = (noteId) => {
-        const updatedNotes = notes.filter((note) => note.id !== noteId);
+    const handleDeleteNote = (shouldDelete) => {
+        if (shouldDelete) {
+            const updatedNotes = notes.filter((note) => note.id !== selectedNote.id);
 
-        setLocalStorage(
-            CHARACTERS_DATA_KEY,
-            updatedNotes,
-            selectedCharacter,
-            STRINGS.NOTES
-        );
-        setNotes(updatedNotes);
+            setLocalStorage(
+                CHARACTERS_DATA_KEY,
+                updatedNotes,
+                selectedCharacter,
+                STRINGS.NOTES
+            );
+            setNotes(updatedNotes);
+        }
+        setSelectedNote(null);
+        toggleNoteDeleteModal();
     }
-    
+
+    const handleDeleteNoteClick = (note) => {
+        setSelectedNote(note);
+        toggleNoteDeleteModal()
+    }
+
+    const toggleNoteDeleteModal = () => {
+        setShowDeleteNoteModal(!showDeleteNoteModal);
+    }
+
     return (
         <div className='notes'>
             <ModalContextWrapper
@@ -88,6 +103,14 @@ const Notes = () => {
             >
                 <Modal>
                     <NoteModal selectedNote={selectedNote} />
+                </Modal>
+            </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showDeleteNoteModal}
+                closeModal={handleDeleteNote}
+            >
+                <Modal>
+                    <DeleteNodeModal note={selectedNote} />
                 </Modal>
             </ModalContextWrapper>
             <div className='notes__list-container'>
@@ -109,7 +132,7 @@ const Notes = () => {
                             <Button
                                 modifier="no-border"
                                 text="X"
-                                onClick={() => handleDeleteNote(note.id)}
+                                onClick={() => handleDeleteNoteClick(note)}
                             />
                         </li>
                     )}

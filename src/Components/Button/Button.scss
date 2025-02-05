@@ -18,10 +18,10 @@
     padding: 0.3rem 0.5rem;
     border: 1px solid var(--white-color);
     transition: transform 0.2s ease, background-color 0.2s ease;
-    
+
     &:not(:disabled) {
         &:active {
-            transform: scale(0.95);
+            transform: scale(0.99);
             background-color: var(--disabled-color);
         }
 
@@ -32,48 +32,53 @@
     }
 
     &.tab {
-        border-top: 0!important;
+        border-top: 0 !important;
         border-radius: 0px;
-    }
-    &.tab-left {
-        border-top: 0!important;
-        border-left: 0!important;
-        border-radius: 0px;
-    }
-    &.tab-right {
-        border-top: 0!important;
-        border-right: 0!important;
-        border-radius: 0px;
+
+        &:not(:disabled) {
+            &:active {
+                transform: none !important;
+                background-color: var(--disabled-color);
+            }
+
+        }
+
+        &-left {
+            border-top: 0 !important;
+            border-left: 0 !important;
+            border-right: 0 !important;
+            border-radius: 0px;
+        }
+
+        &-right {
+            border-top: 0 !important;
+            border-left: 0 !important;
+            border-right: 0 !important;
+            border-radius: 0px;
+        }
     }
 
     &.left {
-        border-top-left-radius: 0.5rem!important;
-        border-bottom-left-radius: 0rem!important;
-        border-top-right-radius: 0px!important;
-        border-bottom-right-radius: 0!important;
-        border-bottom: 1px solid white;
-        // border-left: 0!important;
+        border-top-left-radius: 0.5rem !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
         border-right: 0!important;
-        border-top: 0!important;
+        border-left: 1px solid white !important;
     }
 
     &.middle {
-        border-radius: 0px!important;
+        border-radius: 0px !important;
         border-bottom: 1px solid white;
-        border-left: 0!important;
-        border-right: 0!important;
-        border-top: 0!important;
     }
 
     &.right {
-        border-top-left-radius: 0rem!important;
-        border-bottom-left-radius: 0rem!important;
-        border-top-right-radius: 0.5rem!important;
-        border-bottom-right-radius: 0rem!important;
-        border-bottom: 1px solid white;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 0.5rem !important;
+        border-bottom-right-radius: 0 !important;
         border-left: 0!important;
-        // border-right: 0!important;
-        border-top: 0!important;
+        border-right: 1px solid white !important;
     }
 
     &.danger {

@@ -1,4 +1,5 @@
 import {
+    CHARACTERS_DATA_KEY,
     MOVELIST_SORT_OPTIONS,
     SELECTED_CHARACTER_KEY,
     SELECTED_CHARACTER_VIEW_KEY,
@@ -11,6 +12,7 @@ import {
 import { CHARACTERS_JSON } from "../constants/CHARACTERS";
 import getFromLocal from "./getFromLocal";
 import setLocalStorage from "./setLocalStorage";
+
 const {
     AKIRA,
     ASC,
@@ -22,7 +24,7 @@ const {
 
 const initLocal = () => {
     const selectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY);
-    
+// TODO validate user data on init
     if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) {
         const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
         setLocalStorage(SELECTED_CHARACTER_KEY, AKIRA);

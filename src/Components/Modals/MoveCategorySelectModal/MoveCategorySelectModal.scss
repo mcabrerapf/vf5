@@ -6,15 +6,24 @@
         flex-wrap: wrap;
         justify-content: center;
         box-sizing: border-box;
-        width: 25rem;
+        max-width: 30rem;
         max-height: 60rem;
         gap: 1rem;
-        padding: 0.5rem;
+        padding: 1rem;
 
         .button {
-            font-size: 1.1rem;
-            width: 10rem;
+            width: 13rem;
             height: 5rem;
+            display: flex;
+            flex-direction: column;
+
+            .move-category-name {
+                font-size: 1.1rem;
+            }
+
+            .number-of-moves {
+                font-size: 1rem;
+            }
         }
     }
     

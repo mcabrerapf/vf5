@@ -52,7 +52,7 @@ const ComboBuilderModal = ({
                 <Button
                     modifier={comboView === 'commands' ? 'active left' : 'left'}
                     value="commands"
-                    text="Commands"
+                    text="Command"
                     onClick={handleViewChage}
                 />
                 <Button

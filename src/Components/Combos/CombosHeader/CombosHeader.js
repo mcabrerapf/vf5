@@ -39,6 +39,7 @@ const CombosHeader = ({
             <div className='combos-header__filter-buttons'>
                 <Button
                     modifier={filtersButtonModifier}
+                    disabled={!combos.length}
                     text={'Filters'}
                     onClick={toggleFiltersModal}
                 />

@@ -1,4 +1,4 @@
-import { CHARACTERS } from "../constants";
+import { CHARACTERS, MOVE_LEVELS } from "../constants";
 const validateNote = note => {
     if (
         !note ||
@@ -26,8 +26,12 @@ const validateCombo = (combo) => {
         !Array.isArray(characterTags) ||
         !Array.isArray(command)
     ) return null
-    const validTags = tags.filter(tag => typeof tag === 'string');
-    const validCharacterTags = characterTags.filter(cTag => typeof cTag === 'string');
+    const validTags = tags.filter(tag => {
+        return typeof tag === 'string' && MOVE_LEVELS.includes(tag);
+    });
+    const validCharacterTags = characterTags.filter(cTag => {
+        return typeof cTag === 'string' && !!CHARACTERS.find(ch => ch.id === cTag);
+    });
     const validCommand = command.filter(notation => typeof notation === 'string');
     const validNote = typeof note === 'string' ? note : '';
     const validDamage = typeof damage === 'number' ? damage : 1;
@@ -35,8 +39,8 @@ const validateCombo = (combo) => {
         id,
         damage: validDamage,
         command: validCommand,
-        tags: validTags,
-        characterTags: validCharacterTags,
+        tags: [...new Set(validTags)],
+        characterTags: [...new Set(validCharacterTags)],
         note: validNote
     };
 }

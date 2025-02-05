@@ -8,7 +8,4 @@ function getLocalStorageSize(key) {
     return `${sizeInKb}Kb`;
 }
 
-console.log(getLocalStorageSize("myKey"));
-
-
 export default getLocalStorageSize;

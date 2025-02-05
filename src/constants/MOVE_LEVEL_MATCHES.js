@@ -1,10 +1,36 @@
 // TODO add High (Unblockable)
+const MOVE_LEVELS = [
+    "high",
+    "ex-high",
+    "mid",
+    "mid",
+    "ex-mid",
+    "low",
+    "ex-low",
+    "high-throw",
+    "low-throw",
+    "high-catch-throw",
+    "low-catch-throw",
+    "attack-throw",
+    "downed-throw",
+    "throw-combo",
+    "downed-attack",
+    "sabaki",
+    "special",
+    "reversal",
+    "rev-combo",
+    "no-category",
+    "wall",
+    "ch",
+    "side"
+];
+
 const MOVE_LEVEL_MATCHES = {
     'High': 'high',
     'Special High': 'ex-high',
     'Middle': 'mid',
     //PARSING DOUBLE VALUE FORM API
-    'MiddleMiddle':'mid',
+    'MiddleMiddle': 'mid',
     //PARSING DOUBLE VALUE FORM API
     'Special Middle': 'ex-mid',
     'Low': 'low',
@@ -25,5 +51,5 @@ const MOVE_LEVEL_MATCHES = {
     'Atemi Combo': 'rev-combo',
     '-': 'no-category'
 }
-
+export { MOVE_LEVELS, MOVE_LEVEL_MATCHES }
 export default MOVE_LEVEL_MATCHES;

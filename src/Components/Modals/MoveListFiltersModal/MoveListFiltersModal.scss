@@ -5,7 +5,7 @@
         margin-bottom: 0.5rem;
 
         .button {
-            width: 50%;
+            flex: 1;
         }
     }
 
@@ -25,7 +25,7 @@
     .modal-footer {
         justify-content: space-between;
         align-items: end;
-        
+
         .button {
             height: 3px;
         }

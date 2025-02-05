@@ -77,6 +77,7 @@ const Combo = ({
                 }
                 {!hasAllCharacters && characterTags.map(characterTag =>
                     <CharacterBadge
+                        key={characterTag}
                         modifier={"selected"}
                         character={characterTag}
                         onClick={handleCharacterClick}
@@ -86,6 +87,7 @@ const Combo = ({
             <div className='combo__tags'>
                 {tags.map(tag =>
                     <MoveTypeBadge
+                        key={tag}
                         moveType={tag}
                         onClick={handleTagClick}
                     />

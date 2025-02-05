@@ -9,22 +9,29 @@ const MoveCategorySelectModal = ({
 }) => {
     const { closeModal } = useModalContext();
 
-    const handleCharacterClick = (e) => {
-        closeModal(e.target.value);
+    const onCategoryClick = (value) => {
+        closeModal(value);
     }
 
     return (
         <div className='move-type-select-modal'>
             <div className='move-type-select-modal__content'>
-                {moveCategories.map(category => {    
+                {moveCategories.map(category => {
                     return (
                         <Button
                             key={category.id}
                             modifier={category.id === selectedMoveCategory ? 'active' : ''}
                             value={category.id}
-                            text={`${category.name} (${category.number_of_moves})`}
-                            onClick={handleCharacterClick}
-                        />
+
+                            onClick={() => onCategoryClick(category.id)}
+                        >
+                            <span className='move-category-name'>
+                                {category.name}
+                            </span>
+                            <span className='number-of-moves'>
+                                ({category.number_of_moves})
+                            </span>
+                        </Button>
                     )
                 })}
             </div>
