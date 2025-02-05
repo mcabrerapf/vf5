@@ -2,7 +2,6 @@
     &__sub-header {
         display: flex;
         flex-direction: row;
-        margin-bottom: 1rem;
 
         .button {
             flex: 1;
@@ -10,13 +9,6 @@
     }
 
     &__content {
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        padding: 1rem;
         width: 32rem;
         height: 28rem;
     }

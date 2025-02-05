@@ -43,7 +43,7 @@ const Move = ({
         hit,
         // normal_hit_stats,
         notes,
-        // sober,
+        sober,
     } = move;
 
     const handleOnClick = (e) => {
@@ -106,7 +106,7 @@ const Move = ({
             <div className='move__damage'>
                 <span><strong>damage:</strong> {damage}</span>
                 <span><strong>avoid:</strong> {dodge_direction}</span>
-                {/* <span><strong>sober:</strong> {sober}</span> */}
+                <span><strong>sober:</strong> {sober}</span>
             </div>
             <div className='move__frame-data'>
                 <span>

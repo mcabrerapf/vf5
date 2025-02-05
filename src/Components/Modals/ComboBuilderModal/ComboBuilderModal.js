@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import './ComboBuilderModal.scss'
-import ModalFooter from '../ModalFooter';
-import Button from '../../Button';
+import React, { useState } from 'react';
 import { useModalContext } from '../../../Contexts/ModalContext';
+import { useMainContext } from '../../../Contexts/MainContext';
 import CommandView from './CommandView';
 import TagsView from './TagsView';
 import ExtrasView from './ExtrasView';
+import ModalFooter from '../ModalFooter';
+import Button from '../../Button';
 import { CHARACTERS } from '../../../constants';
-import { useMainContext } from '../../../Contexts/MainContext';
 import { getTagsFromCommand } from './helpers';
 
 const ComboBuilderModal = ({

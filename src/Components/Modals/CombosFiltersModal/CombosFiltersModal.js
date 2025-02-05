@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './CombosFiltersModal.scss'
+import { useModalContext } from '../../../Contexts/ModalContext';
 import TagsView from './TagsView';
+import LaunchersView from './LaunchersView';
+import CommandView from './CommandView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import { useModalContext } from '../../../Contexts/ModalContext';
 import { CHARACTERS, STRINGS } from '../../../constants';
-import LaunchersView from './LaunchersView';
 import { getLaunchers } from './helpers';
-import CommandView from '../MoveListFiltersModal/CommandView';
 
 const CombosFiltersModal = ({
     combos,

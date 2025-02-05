@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './TagsView.scss';
 import CharacterBadge from '../../../CharacterBadge';
 import { CHARACTERS, MOVE_LEVEL_MATCHES } from '../../../../constants';
 import MoveTypeBadge from '../../../MoveTypeBadge';
+import Button from '../../../Button';
 
 const TagsView = ({
     characterIds,
@@ -11,6 +12,7 @@ const TagsView = ({
     setSelectedTags,
     setSelectedCharacterTags
 }) => {
+    const [tagsView, setTagsView] = useState('characters');
 
     const handleCharacterTagClick = ({ target: { value, className } }) => {
         let updatedTags;
@@ -49,48 +51,66 @@ const TagsView = ({
 
     return (
         <div className='tags-view'>
-            <div className='tags-view__characters'>
-                {characterIds.map(character =>
-                    <CharacterBadge
-                        key={character}
-                        character={character}
-                        value={character}
-                        modifier={selectedCharacterTags.includes(character) ? '' : 'not-selected'}
-                        onClick={handleCharacterTagClick}
-                    />
-                )}
-                <CharacterBadge
-                    character="ALL"
-                    modifier={selectedCharacterTags.length === CHARACTERS.length ? '' : 'not-selected'}
-                    onClick={handleAllClick}
+            <div className='tags-view__header'>
+                <Button
+                    modifier={tagsView === 'characters' ? 'active middle' : 'middle'}
+                    text="Characters"
+                    onClick={() => setTagsView('characters')}
+                />
+                <Button
+                    modifier={tagsView === 'other' ? 'active middle' : 'middle'}
+                    text="Other"
+                    onClick={() => setTagsView('other')}
                 />
             </div>
-            <div className='tags-view__separator' />
-            <div className='tags-view__others'>
-                {otherTags.map(tag =>
-                    <MoveTypeBadge
-                        key={tag}
-                        moveType={tag}
-                        modifier={selectedTags.includes(tag) ? '' : 'not-selected'}
-                        onClick={handleTagClick}
-                    />
-                )}
-                <MoveTypeBadge
-                    moveType="side"
-                    modifier={selectedTags.includes('side') ? '' : 'not-selected'}
-                    onClick={handleTagClick}
-                />
-                <MoveTypeBadge
-                    moveType="ch"
-                    modifier={selectedTags.includes('ch') ? '' : 'not-selected'}
-                    onClick={handleTagClick}
-                />
-                <MoveTypeBadge
-                    moveType="wall"
-                    modifier={selectedTags.includes('wall') ? '' : 'not-selected'}
-                    onClick={handleTagClick}
-                />
+            <div className='tags-view__content'>
+                {tagsView === 'characters' &&
+                    <div className='tags-view__content__characters'>
+                        {characterIds.map(character =>
+                            <CharacterBadge
+                                key={character}
+                                character={character}
+                                value={character}
+                                modifier={selectedCharacterTags.includes(character) ? '' : 'not-selected'}
+                                onClick={handleCharacterTagClick}
+                            />
+                        )}
+                        <CharacterBadge
+                            character="ALL"
+                            modifier={selectedCharacterTags.length === CHARACTERS.length ? '' : 'not-selected'}
+                            onClick={handleAllClick}
+                        />
+                    </div>
+                }
+                {tagsView === 'other' &&
+                    <div className='tags-view__content__other-tags'>
+                        {otherTags.map(tag =>
+                            <MoveTypeBadge
+                                key={tag}
+                                moveType={tag}
+                                modifier={selectedTags.includes(tag) ? '' : 'not-selected'}
+                                onClick={handleTagClick}
+                            />
+                        )}
+                        <MoveTypeBadge
+                            moveType="side"
+                            modifier={selectedTags.includes('side') ? '' : 'not-selected'}
+                            onClick={handleTagClick}
+                        />
+                        <MoveTypeBadge
+                            moveType="ch"
+                            modifier={selectedTags.includes('ch') ? '' : 'not-selected'}
+                            onClick={handleTagClick}
+                        />
+                        <MoveTypeBadge
+                            moveType="wall"
+                            modifier={selectedTags.includes('wall') ? '' : 'not-selected'}
+                            onClick={handleTagClick}
+                        />
+                    </div>
+                }
             </div>
+
 
         </div>
     )
