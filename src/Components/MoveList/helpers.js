@@ -1,5 +1,3 @@
-import { ATTACK_LEVELS_NAME_TO_ID } from "../../constants";
-
 const sortMovelist = (list, sort) => {
     const parsedSort = sort.split('/');
     if (parsedSort[0] === '' || !parsedSort[0]) return list;
@@ -13,9 +11,9 @@ const sortMovelist = (list, sort) => {
                 itemB[parsedSort[0]] : itemA[parsedSort[0]];
 
             // BROKEN FIX
-            if (!firstValue) return false;
+            if (typeof firstValue === "number") return firstValue - secondValue;
             if (Array.isArray(firstValue)) return firstValue.join('').localeCompare(secondValue.join(''))
-            if (typeof firstValue === "number" && !isNaN(firstValue)) return firstValue > secondValue;
+            
             return firstValue.localeCompare(secondValue)
         });
 }

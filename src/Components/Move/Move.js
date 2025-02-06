@@ -1,16 +1,16 @@
-import React from 'react';
 import './Move.scss'
+import React from 'react';
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { ATTACK_LEVELS_NAME_TO_ID, ATTACK_LEVELS_OBJ } from '../../constants';
 import Button from '../Button';
+import { ATTACK_LEVELS_NAME_TO_ID } from '../../constants';
+import { getNumberColor } from '../../helpers';
 
 const Move = ({
     move,
     moveCategories,
     isFavourite = false,
     modifier = "",
-    // hideType = false,
     onClick = () => { },
     onMoveCategoryClick = () => { },
     onFavouriteClick = () => { },
@@ -71,11 +71,13 @@ const Move = ({
         e.stopPropagation();
         onFavouriteClick(id);
     }
+
     const favouriteModifier = isFavourite ? 'favourite' : '';
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-    
+    const onBlockColor = getNumberColor(gd);
+
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -112,17 +114,29 @@ const Move = ({
                 <span><strong>sober:</strong> {sober}</span>
             </div>
             <div className='move__frame-data'>
-                <span>
-                    <strong>startup:</strong> {startup}
+                <span className='move__frame-data__number'>
+                    <span className='move__frame-data__number__label'>startup:</span>
+                    <span className={'move__frame-data__number__number'}>
+                        {startup}
+                    </span>
                 </span>
-                <span>
-                    <strong>hit:</strong>  {hit}
+                <span className='move__frame-data__number'>
+                    <span className='move__frame-data__number__label'>hit:</span>
+                    <span className={'move__frame-data__number__number'}>
+                        {hit}
+                    </span>
                 </span>
-                <span>
-                    <strong>ch:</strong>  {c_hit}
+                <span className='move__frame-data__number'>
+                    <span className='move__frame-data__number__label'>ch:</span>
+                    <span className={'move__frame-data__number__number'}>
+                        {c_hit}
+                    </span>
                 </span>
-                <span>
-                    <strong>block:</strong>  {gd}
+                <span className='move__frame-data__number'>
+                    <span className='move__frame-data__number__label'>block:</span>
+                    <span className={`move__frame-data__number__number${onBlockColor}`}>
+                        {gd}
+                    </span>
                 </span>
             </div>
             <MoveCommand

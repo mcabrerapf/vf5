@@ -56,7 +56,7 @@ const Movelist = () => {
     }
 
     const onMoveTypeClick = (attackLevel) => {
-        if (selectedFilters.find(sFilter => sFilter.id === attackLevel)) return;
+        if (selectedFilters.find(sFilter => sFilter.name === attackLevel)) return;
         const { id: levelId } = MOVELIST_FILTER_OPTIONS.find(option => option.name === attackLevel);
 
         const updatedFilters = [
@@ -134,7 +134,6 @@ const Movelist = () => {
                                     move={move}
                                     isFavourite={isFavourite}
                                     moveCategories={moveCategories}
-                                    hideType={selectedMoveCategory !== 'all_moves'}
                                     onFavouriteClick={onFavouriteClick}
                                     onCommandClick={onCommandClick}
                                     onMoveCategoryClick={onMoveCategoryClick}

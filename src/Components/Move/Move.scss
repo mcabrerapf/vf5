@@ -74,6 +74,35 @@
         gap: 1rem;
         font-size: 1.2rem;
         height: 2rem;
+
+        &__number {
+            &__label {
+                padding-right: 0.5rem;
+                font-weight: 700;
+            }
+
+            &__number {
+                &.throw-attempt {
+                    color: green;
+                }
+
+                &.jab-punish {
+                    color: blue;
+                }
+
+                &.combo-punish {
+                    color: yellow;
+                }
+
+                &.launch-punishable {
+                    color: orange;
+                }
+
+                &.ded {
+                    color: red;
+                }
+            }
+        }
     }
 
     .move-command {

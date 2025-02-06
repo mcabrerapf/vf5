@@ -85,19 +85,19 @@ const CommandBuilder = ({
                 >
                     <Button
                         modifier="delete-button"
-                        text='X'
+                        text='⌫'
                         onClick={handleDelete}
                     />
                     <Button
                         modifier="delete-button"
                         disabled={selectedNotationIndex === null}
-                        text='<'
+                        text='⇦'
                         onClick={handleAddBefore}
                     />
                     <Button
                         modifier="delete-button"
                         disabled={selectedNotationIndex === null}
-                        text='>'
+                        text='⇨'
                         onClick={handleAddAfter}
                     />
                 </div>

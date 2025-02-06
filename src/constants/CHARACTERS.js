@@ -54,7 +54,7 @@ Object.keys(CHARACTERS_JSON)
         CHARACTER_IDS.push(CHARACTER);
         CHARACTERS.push(CHARACTERS_JSON[CHARACTER])
     });
-
+    
 export {
     ATTACK_LEVELS,
     ATTACK_LEVELS_OBJ,
@@ -66,4 +66,6 @@ export {
     CHARACTER_IDS,
     CHARACTERS_JSON,
 }
+
+
 export default CHARACTERS;

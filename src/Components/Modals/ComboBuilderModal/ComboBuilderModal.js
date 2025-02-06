@@ -8,17 +8,19 @@ import ExtrasView from './ExtrasView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import { getTagsFromCommand } from './helpers';
+import { CHARACTERS } from '../../../constants';
 
 const ComboBuilderModal = ({
     selectedCombo,
     handleDeleteClick
 }) => {
-    const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
     const { selectedCharacter } = useMainContext();
+    const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
+    const initCharacters = CHARACTERS.map(char=>char.id);
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);
-    const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || []);
+    const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || initCharacters);
     const [selectedTags, setSelectedTags] = useState(tags || []);
     const [comboDamage, setComboDamage] = useState(damage || 1);
     const [comboNote, setComboNote] = useState(note || '');
