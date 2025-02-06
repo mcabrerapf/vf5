@@ -30,16 +30,16 @@ const validateOnInit = () => {
             typeof allCharactersData !== 'string'
         ) throw new Error("No characters data");
         const parsedData = JSON.parse(allCharactersData);
-        
+
         if (
             !parsedData ||
             Array.isArray(parsedData) ||
             typeof parsedData !== 'object'
         ) {
             throw new Error("Invalid characters data");
-        };    
+        };
         const [isDataValid] = validateImportData(parsedData);
-    
+
         if (!isDataValid && typeof parsedData !== 'object') {
             throw new Error("Invalid characters data");
         }
@@ -51,18 +51,36 @@ const validateOnInit = () => {
         return;
     }
 }
+
+const validateFilters = () => {
+    try {
+        const comboFilters = localStorage.getItem(SELECTED_COMBOS_FILTERS_KEY)
+        const movelisFilters = localStorage.getItem(SELECTED_MOVELIST_FILTERS_KEY)
+        const parsedComboFilters = JSON.parse(comboFilters)
+        const parsedMovelisFilters = JSON.parse(movelisFilters)
+        if (!Array.isArray(parsedComboFilters) || !Array.isArray(parsedMovelisFilters)) throw new Error("Not array value in filters");
+
+
+    } catch (error) {
+        console.log(error);
+        localStorage.setItem(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify([]));
+        localStorage.setItem(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify([]));
+        window.location.reload();
+        return;
+    }
+}
 const initLocal = () => {
     const selectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY);
     validateOnInit();
-
+    validateFilters();
     if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) {
         const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
         setLocalStorage(SELECTED_CHARACTER_KEY, AKIRA);
         setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, MOVELIST);
         setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, ALL_MOVES);
         setLocalStorage(SELECTED_MOVELIST_SORT_KEY, defaultSort);
-        setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, '');
-        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, '');
+        setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, []);
+        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, []);
         return window.location.reload();
     }
     const selectedCharacterView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
