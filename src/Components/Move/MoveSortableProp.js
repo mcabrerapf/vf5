@@ -14,11 +14,10 @@ const SortableMoveProp = ({
     const parsedValue = getMovePropText(value, doFrameCheck);
     const numberColor = getNumberColor(value, doFrameCheck);
     const numberClassname = `move__props__prop__value${numberColor}`;
-    if (doFrameCheck) console.log(numberColor)
+    
     const handlePropClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (isSelected) return;
         onClick(propKey);
     }
 

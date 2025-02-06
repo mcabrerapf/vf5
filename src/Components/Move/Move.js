@@ -9,13 +9,14 @@ import { getDodgeValue } from './helpers';
 
 const Move = ({
     move,
-    sortId,
+    selectedSort,
     moveCategories,
     isFavourite = false,
     modifier = "",
     handleSortChange,
     onClick = () => { },
     onMoveCategoryClick = () => { },
+    handleSortDirChange = () => { },
     onFavouriteClick = () => { },
     onCommandClick = () => { },
     onMoveTypeClick = () => { }
@@ -68,9 +69,15 @@ const Move = ({
     }
 
     const onSortablePropClick = (newSort) => {
-        const sortValue = MOVELIST_SORT_OPTIONS.find(option => option.id === newSort);
-        if (!sortValue) return;
-        handleSortChange(sortValue);
+        if (newSort === selectedSort.id) {
+            handleSortDirChange();
+            return;
+        }
+        const newSortValue = MOVELIST_SORT_OPTIONS
+            .find(sOption => sOption.id === newSort);
+
+        if (!newSortValue) return;
+        handleSortChange(newSortValue);
     }
 
     const favouriteModifier = isFavourite ? 'favourite' : '';
@@ -78,7 +85,7 @@ const Move = ({
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
     const dodgeValue = getDodgeValue(dodge_direction);
-    
+
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -112,20 +119,20 @@ const Move = ({
             <div className='move__props other'>
                 <SortableMoveProp
                     propKey={'damage'}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={damage}
                     onClick={onSortablePropClick}
                 />
                 <SortableMoveProp
                     propKey={'dodge_direction'}
                     text={'dodge'}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={dodgeValue}
                     onClick={onSortablePropClick}
                 />
                 <SortableMoveProp
                     propKey={'sober'}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={sober}
                     onClick={onSortablePropClick}
                 />
@@ -133,13 +140,13 @@ const Move = ({
             <div className='move__props frame-data'>
                 <SortableMoveProp
                     propKey={'startup'}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={startup}
                     onClick={onSortablePropClick}
                 />
                 <SortableMoveProp
                     propKey={'hit'}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={hit}
                     doFrameCheck
                     onClick={onSortablePropClick}
@@ -147,7 +154,7 @@ const Move = ({
                 <SortableMoveProp
                     propKey={'c_hit'}
                     text={"counter"}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={c_hit}
                     doFrameCheck
                     onClick={onSortablePropClick}
@@ -155,7 +162,7 @@ const Move = ({
                 <SortableMoveProp
                     propKey={'gd'}
                     text={'block'}
-                    activeSortId={sortId}
+                    activeSortId={selectedSort.id}
                     value={gd}
                     doFrameCheck
                     onClick={onSortablePropClick}

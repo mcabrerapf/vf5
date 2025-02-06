@@ -115,6 +115,7 @@ const Movelist = () => {
 
     const handleSortChange = (sort) => {
         if (!sort) return;
+        console.log('handleSortChange', sort)
         setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(sort));
         setSelectedMovelistSort(sort);
     }
@@ -174,10 +175,11 @@ const Movelist = () => {
                             >
                                 <Move
                                     move={move}
-                                    sortId={selectedMovelistSort.id}
+                                    selectedSort={selectedMovelistSort}
                                     isFavourite={isFavourite}
                                     moveCategories={moveCategories}
                                     handleSortChange={handleSortChange}
+                                    handleSortDirChange={handleSortClick}
                                     onFavouriteClick={onFavouriteClick}
                                     onCommandClick={onCommandClick}
                                     onMoveCategoryClick={onMoveCategoryClick}
