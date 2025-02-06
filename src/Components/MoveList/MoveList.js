@@ -12,7 +12,7 @@ import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
-import { CHARACTERS_JSON, MOVELIST_FILTER_OPTIONS } from '../../constants/CHARACTERS';
+import { CHARACTERS_JSON, MOVELIST_FILTER_OPTIONS, MOVELIST_SORT_OPTIONS } from '../../constants/CHARACTERS';
 
 const Movelist = () => {
     const listRef = useRef(null);
@@ -20,7 +20,7 @@ const Movelist = () => {
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
-    
+
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
@@ -38,7 +38,7 @@ const Movelist = () => {
     )
 
     const handleFiltersChange = (newFilters) => {
-        
+
         if (newFilters) {
             setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
@@ -68,8 +68,8 @@ const Movelist = () => {
     }
 
     const handleSortClick = () => {
-        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, '/asc');
-        setSelectedMovelistSort('/asc');
+        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(MOVELIST_SORT_OPTIONS[0]));
+        setSelectedMovelistSort(MOVELIST_SORT_OPTIONS[0]);
     }
 
     const handleFilterClick = (filter) => {
@@ -97,7 +97,7 @@ const Movelist = () => {
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favouriteMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
-    const [sortKey] = selectedMovelistSort.split('/');
+    
     return (
         <div className='movelist'>
             <MovelistHeader
@@ -132,7 +132,7 @@ const Movelist = () => {
                             >
                                 <Move
                                     move={move}
-                                    sortKey={sortKey}
+                                    sortKey={selectedMovelistSort.id}
                                     isFavourite={isFavourite}
                                     moveCategories={moveCategories}
                                     onFavouriteClick={onFavouriteClick}

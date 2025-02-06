@@ -1,8 +1,8 @@
 const sortMovelist = (list, sort) => {
-    if (!sort) return list;
-    const [sortKey, sortDir] = sort.split('/');
-    if (sortKey === '' || !sortKey) return list;
-    console.log(sortKey)
+    if (!sort || !sort.id || !sort.dir) return list;
+    const { id: sortKey, dir: sortDir } = sort;
+    if (sortKey === 'default') return list;
+    
     return list
         .map(listItem => listItem)
         .sort((itemA, itemB) => {

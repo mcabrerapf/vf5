@@ -16,7 +16,7 @@ const TagsView = ({
 
     const handleCharacterTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-
+        
         if (className.includes('not-selected')) {
             updatedTags = [
                 ...selectedCharacterTags.map(tag => tag), 

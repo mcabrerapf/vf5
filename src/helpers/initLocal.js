@@ -95,14 +95,14 @@ const initLocal = () => {
         setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, ALL_MOVES);
         return window.location.reload();
     }
-    const selectedMovelistSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
-    const parsedSort = selectedMovelistSort && typeof selectedMovelistSort === 'string' ?
-        selectedMovelistSort.split('/') : '';
-    if (!MOVELIST_SORT_OPTIONS.find(option => option[0] === parsedSort[0])) {
-        const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
-        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, defaultSort);
-        return window.location.reload();
-    }
+    // const selectedMovelistSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
+    // const parsedSort = selectedMovelistSort && typeof selectedMovelistSort === 'string' ?
+    //     selectedMovelistSort.split('/') : '';
+    // if (!MOVELIST_SORT_OPTIONS.find(option => option[0] === parsedSort[0])) {
+    //     const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
+    //     setLocalStorage(SELECTED_MOVELIST_SORT_KEY, defaultSort);
+    //     return window.location.reload();
+    // }
 }
 
 export default initLocal;

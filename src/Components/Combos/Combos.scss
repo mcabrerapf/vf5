@@ -31,10 +31,19 @@
 
     &__footer {
         position: absolute;
-        height: 3rem;
-        width: 3rem;
+        height: 4rem;
+        width: 5rem;
         margin-left: 50%;
         bottom: 1rem;
+
+        .button {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 2rem;
+            border: 2px solid white;
+            font-size: 2rem;
+            font-weight: 800;
+        }
     }
     
 }

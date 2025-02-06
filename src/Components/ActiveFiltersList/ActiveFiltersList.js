@@ -6,12 +6,13 @@ import Button from '../Button';
 import { capitalizeFirstLetter } from '../../helpers';
 
 const ActiveFiltersList = ({
-    selectedFilters,
+    selectedFilters = [],
     selectedSort,
-    onSortClick,
-    onFilterClick
+    onSortClick = () => { },
+    onFilterClick = () => { },
 }) => {
-    const showSort = selectedSort && !!selectedSort.split('/')[0];
+    const showSort = selectedSort && selectedSort.id !== 'default';
+    
     return (
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
@@ -68,7 +69,7 @@ const ActiveFiltersList = ({
             </div>
             {!!showSort &&
                 <Button
-                    text={selectedSort}
+                    text={`${selectedSort.id}/${selectedSort.dir}`}
                     onClick={onSortClick}
                 />
             }

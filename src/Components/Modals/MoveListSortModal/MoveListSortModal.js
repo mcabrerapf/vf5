@@ -4,50 +4,54 @@ import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { MOVELIST_SORT_OPTIONS } from '../../../constants';
 
-const MoveListSortModal = ({ selectedMovelistSort }) => {
+const MoveListSortModal = ({
+    selectedMovelistSort = MOVELIST_SORT_OPTIONS[0]
+}) => {
     const { closeModal } = useModalContext();
-    const parsedSort = selectedMovelistSort.split('/')
-    const [sortValue, setSortValue] = useState(parsedSort[0] || '')
-    const [sortDirection, setSortDirection] = useState(parsedSort[1] || 'asc')
+    const [selectedSort, setSelectedSort] = useState(selectedMovelistSort)
 
-    const handleSortClick = (e) => {
-        setSortValue(e.target.value);
+    const handleSortClick = (sort) => {
+        setSelectedSort({ ...selectedSort, id: sort.id, name: sort.name });
     }
 
     const handleDirectionClick = (e) => {
-        setSortDirection(e.target.value);
+        setSelectedSort({ ...selectedSort, dir: e.target.value });
     }
 
     const handleSortUpdate = () => {
-        closeModal(`${sortValue}/${sortDirection}`);
+        closeModal(selectedSort);
     }
+    
+    const validSorts = MOVELIST_SORT_OPTIONS.filter(option => {
+        return !['active', 'total', 'crouch_hit', 'crouch_c_hit', 'recovery_c'].includes(option.id);
+    })
     
     return (
         <div className='movelist-sort-modal'>
             <div className='movelist-sort-modal__content'>
                 <div className='movelist-sort-modal__content__options'>
-                    {MOVELIST_SORT_OPTIONS.map(option => {
+                    {validSorts.map(option => {
 
                         return (
                             <Button
-                                key={option[0]}
-                                modifier={option[0] === sortValue ? 'active' : ''}
-                                value={option[0]}
-                                text={option[1]}
-                                onClick={handleSortClick}
+                                key={option.id}
+                                modifier={option.id === selectedSort.id ? 'active' : ''}
+                                value={option.id}
+                                text={option.name}
+                                onClick={() => handleSortClick(option)}
                             />
                         )
                     })}
                 </div>
                 <div className='movelist-sort-modal__content__options'>
                     <Button
-                        modifier={sortDirection === 'asc' ? 'active' : ''}
+                        modifier={selectedSort.dir === 'asc' ? 'active' : ''}
                         value='asc'
                         text='ASC'
                         onClick={handleDirectionClick}
                     />
                     <Button
-                        modifier={sortDirection === 'dsc' ? 'active' : ''}
+                        modifier={selectedSort.dir === 'dsc' ? 'active' : ''}
                         value='dsc'
                         text='DSC'
                         onClick={handleDirectionClick}

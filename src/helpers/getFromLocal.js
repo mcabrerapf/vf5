@@ -1,5 +1,4 @@
 import {
-    ALL_DATA_KEY,
     CHARACTERS_DATA_KEY,
     SELECTED_CHARACTER_KEY,
     SELECTED_CHARACTER_VIEW_KEY,
@@ -7,7 +6,8 @@ import {
     SELECTED_MOVE_CATEGORY_KEY,
     SELECTED_MOVELIST_SORT_KEY,
     SELECTED_MOVELIST_FILTERS_KEY,
-    STRINGS
+    STRINGS,
+    MOVELIST_SORT_OPTIONS
 } from "../constants"
 
 const {
@@ -46,7 +46,7 @@ const getFromLocal = (localKey, character, characterKey) => {
         case SELECTED_MOVE_CATEGORY_KEY:
             return localValue;
         case SELECTED_MOVELIST_SORT_KEY:
-            return localValue;
+            return localValue ? JSON.parse(localValue) : MOVELIST_SORT_OPTIONS[0];
         case SELECTED_MOVELIST_FILTERS_KEY:
             return localValue ? JSON.parse(localValue) : [];
         case SELECTED_COMBOS_FILTERS_KEY:

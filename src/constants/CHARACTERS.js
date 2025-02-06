@@ -8,21 +8,28 @@ const ATTACK_LEVELS_NAME_TO_ID = {};
 const ATTACK_LEVEL_IDS = [];
 
 const MOVELIST_FILTER_OPTIONS = [];
+const MOVELIST_SORT_OPTIONS = [
+    {
+        id: 'default',
+        name: 'Default',
+        dir: 'asc'
+    }
+];
 const COMBO_FILTER_OPTIONS = [
     {
-        id:'wall',
-        name:'Wall',
-        prefix:'other'
+        id: 'wall',
+        name: 'Wall',
+        prefix: 'other'
     },
     {
-        id:'ch',
-        name:'Counter Hit',
-        prefix:'other'
+        id: 'ch',
+        name: 'Counter Hit',
+        prefix: 'other'
     },
     {
-        id:'side',
-        name:'Side',
-        prefix:'other'
+        id: 'side',
+        name: 'Side',
+        prefix: 'other'
     }
 ];
 
@@ -53,14 +60,20 @@ Object.keys(CHARACTERS_JSON)
         });
         CHARACTER_IDS.push(CHARACTER);
         CHARACTERS.push(CHARACTERS_JSON[CHARACTER])
+        CHARACTERS_JSON[CHARACTER].move_key_props.forEach(moveKey => {
+            if (MOVELIST_SORT_OPTIONS.find(option => option.id === moveKey.id)) return;
+            MOVELIST_SORT_OPTIONS.push({ ...moveKey, dir: 'asc' });
+        })
+
     });
-    
+
 export {
     ATTACK_LEVELS,
     ATTACK_LEVELS_OBJ,
     ATTACK_LEVELS_NAME_TO_ID,
     ATTACK_LEVEL_IDS,
     MOVELIST_FILTER_OPTIONS,
+    MOVELIST_SORT_OPTIONS,
     CHARACTERS,
     COMBO_FILTER_OPTIONS,
     CHARACTER_IDS,

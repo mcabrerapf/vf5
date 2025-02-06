@@ -35,6 +35,7 @@ const CombosHeader = ({
     }
 
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
+    const hasCombos = !!combos.length;
 
     return (
         <header className='combos-header'>
@@ -51,13 +52,14 @@ const CombosHeader = ({
             </ModalContextWrapper>
             <div className='combos-header__filter-buttons'>
                 <Button
+                    disabled={!hasCombos}
                     modifier={hasFav ? 'fav' : ''}
                     text={"★"}
                     onClick={toogleFavorite}
                 />
                 <Button
                     modifier={filtersButtonModifier}
-                    disabled={!combos.length}
+                    disabled={!hasCombos}
                     text={'Filters'}
                     onClick={toggleFiltersModal}
                 />

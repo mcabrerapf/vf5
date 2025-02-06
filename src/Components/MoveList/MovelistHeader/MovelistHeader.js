@@ -35,9 +35,8 @@ const MovelistHeader = ({
 
     const handleSortModalClose = (sort) => {
         if (sort) {
-            setLocalStorage(SELECTED_MOVELIST_SORT_KEY, sort);
+            setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(sort));
             setSelectedMovelistSort(sort);
-
         }
         toggleSortModal();
     }
@@ -72,11 +71,11 @@ const MovelistHeader = ({
         handleFiltersChange(updatedFilters);
     }
 
-    const [sortType] = selectedMovelistSort.split('/');
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
-    const sortButtonModifier = !!sortType ? 'active' : '';
+    const sortButtonModifier = selectedMovelistSort.id !== 'default' ? 'active' : '';
 
-    const { name: selectedMoveCategoryText } = moveCategories.find(cat => cat.id === selectedMoveCategory);
+    const { name: selectedMoveCategoryText } = moveCategories
+        .find(cat => cat.id === selectedMoveCategory);
     const truncatedMoveCategory = selectedMoveCategoryText.length > 20 ?
         `${selectedMoveCategoryText.substr(0, 20)}...` : selectedMoveCategoryText;
     const moveButtonText = selectedMoveCategory === 'all_moves' ?
