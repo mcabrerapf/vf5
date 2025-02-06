@@ -39,6 +39,8 @@ const getFromLocal = (localKey, character, characterKey) => {
     const localValue = localStorage.getItem(localKey);
 
     switch (localKey) {
+        case 'ALL':
+            return localStorage.getItem(CHARACTERS_DATA_KEY);
         case SELECTED_CHARACTER_KEY:
             return localValue;
         case SELECTED_CHARACTER_VIEW_KEY:
