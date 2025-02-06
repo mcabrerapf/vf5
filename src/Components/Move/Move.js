@@ -80,7 +80,7 @@ const Move = ({
     const onBlockColor = getNumberColor(gd, 'on_block');
     const onHitColor = getNumberColor(hit);
     const onChColor = getNumberColor(c_hit);
-    console.log(sortKey);
+    
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -112,9 +112,9 @@ const Move = ({
                 />
             </div>
             <div className='move__damage'>
-                <span className='move__damage__number'>
+                <span className={`move__damage__number${sortKey === 'damage' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__damage__number__label${sortKey === 'damage' ? ' underline' : ''}`}
+                        className='move__damage__number__label'
                     >
                         damage:
                     </span>
@@ -122,9 +122,9 @@ const Move = ({
                         {damage}
                     </span>
                 </span>
-                <span className='move__damage__number'>
+                <span className={`move__damage__number${sortKey === 'dodge_direction' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__damage__number__label${sortKey === 'dodge_direction' ? ' underline' : ''}`}
+                        className='move__damage__number__label'
                     >
                         dodge:
                     </span>
@@ -132,9 +132,9 @@ const Move = ({
                         {dodge_direction}
                     </span>
                 </span>
-                <span className='move__damage__number'>
+                <span className={`move__damage__number${sortKey === 'sober' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__damage__number__label${sortKey === 'sober' ? ' underline' : ''}`}
+                        className='move__damage__number__label label'
                     >
                         sober:
                     </span>
@@ -144,9 +144,9 @@ const Move = ({
                 </span>
             </div>
             <div className='move__frame-data'>
-                <span className='move__frame-data__number'>
+                <span className={`move__frame-data__number${sortKey === 'startup' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__frame-data__number__label${sortKey === 'startup' ? ' underline' : ''}`}
+                        className='move__frame-data__number__label'
                     >
                         startup:
                     </span>
@@ -154,9 +154,9 @@ const Move = ({
                         {startup}
                     </span>
                 </span>
-                <span className='move__frame-data__number'>
+                <span className={`move__frame-data__number${sortKey === 'hit' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__frame-data__number__label${sortKey === 'hit' ? ' underline' : ''}`}
+                        className="move__frame-data__number__label"
                     >
                         hit:
                     </span>
@@ -164,9 +164,9 @@ const Move = ({
                         {hit > 0 ? '+' : ''}{hit}
                     </span>
                 </span>
-                <span className='move__frame-data__number'>
+                <span className={`move__frame-data__number${sortKey === 'c_hit' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__frame-data__number__label${sortKey === 'c_hit' ? ' underline' : ''}`}
+                        className='move__frame-data__number__label'
                     >
                         ch:
                     </span>
@@ -174,11 +174,11 @@ const Move = ({
                         {c_hit > 0 ? '+' : ''}{c_hit}
                     </span>
                 </span>
-                <span className='move__frame-data__number'>
+                <span className={`move__frame-data__number${sortKey === 'gd' ? ' selected-sort' : ''}`}>
                     <span
-                        className={`move__frame-data__number__label${sortKey === 'gd' ? ' underline' : ''}`}
+                        className='move__frame-data__number__label'
                     >
-                        bloack:
+                        block:
                     </span>
                     <span className={`move__frame-data__number__number${onBlockColor}`}>
                         {gd > 0 ? '+' : ''}{gd}

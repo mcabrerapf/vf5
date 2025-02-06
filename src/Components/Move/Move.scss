@@ -64,20 +64,35 @@
         gap: 1rem;
         font-size: 1.2rem;
         height: 2rem;
-        
+
         &__number {
+            &.selected-sort {
+                span:first-of-type {
+                    border-top-left-radius: 0.5rem;
+                    border-bottom-left-radius: 0.5rem;
+                    padding: 0 0 0 0.5rem;
+                    border: 1px solid white;
+                    background-color: white;
+                    color: black;
+                }
+
+                span:nth-of-type(2) {
+                    box-sizing: border-box;
+                    border-top-right-radius: 0.5rem;
+                    border-bottom-right-radius: 0.5rem;
+                    padding: 0 0.5rem 0 0.5rem;
+                    border: 1px solid white;
+                }
+            }
+
             &__label {
                 padding-right: 0.5rem;
                 font-weight: 700;
 
-                &.underline {
-                    text-decoration: underline;
-                }
+
             }
 
-            &__number {
-               
-            }
+            &__number {}
         }
     }
 
@@ -91,6 +106,25 @@
         height: 2rem;
 
         &__number {
+            &.selected-sort {
+                span:first-of-type {
+                    border-top-left-radius: 0.5rem;
+                    border-bottom-left-radius: 0.5rem;
+                    padding: 0 0 0 0.5rem;
+                    border: 1px solid white;
+                    background-color: white;
+                    color: black;
+                }
+
+                span:nth-of-type(2) {
+                    box-sizing: border-box;
+                    border-top-right-radius: 0.5rem;
+                    border-bottom-right-radius: 0.5rem;
+                    padding: 0 0.5rem 0 0.5rem;
+                    border: 1px solid white;
+                }
+            }
+
             &__label {
                 padding-right: 0.5rem;
                 font-weight: 700;
@@ -102,23 +136,28 @@
 
             &__number {
                 &.throw-attempt {
-                    color: green;
+                    color: lightgreen;
+                    font-weight: 700;
                 }
 
                 &.jab-punish {
-                    color: blue;
+                    color: aqua;
+                    font-weight: 700;
                 }
 
                 &.combo-punish {
                     color: yellow;
+                    font-weight: 700;
                 }
 
                 &.launch-punishable {
                     color: orange;
+                    font-weight: 700;
                 }
 
                 &.ded {
                     color: red;
+                    font-weight: 700;
                 }
             }
         }
