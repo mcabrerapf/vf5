@@ -29,7 +29,7 @@ const SortableMoveProp = ({
             <div
                 className='move__props__prop__label'
             >
-                {text || propKey}:
+                {text || propKey}
             </div>
             <div className={numberClassname}>
                 {parsedValue}
