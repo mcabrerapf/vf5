@@ -51,114 +51,52 @@
 
     }
 
-    &__type {
-        font-size: 1.2rem;
-
+    &__category {
+            margin-bottom: 0.5rem;
     }
 
-    &__damage {
+    &__props {
         display: flex;
         flex-direction: row;
         align-items: end;
         text-align: center;
+        box-sizing: border-box;
         gap: 1rem;
         font-size: 1.2rem;
-        height: 2rem;
+        margin-bottom: 0.5rem;
+        &__prop {
+            min-width: 6.8em;
+            text-align: start;
+            user-select: none;
+            box-sizing: border-box;
 
-        &__number {
             &.selected-sort {
                 span:first-of-type {
                     border-top-left-radius: 0.5rem;
                     border-bottom-left-radius: 0.5rem;
-                    padding: 0 0 0 0.5rem;
                     border: 1px solid white;
                     background-color: white;
                     color: black;
                 }
-
                 span:nth-of-type(2) {
-                    box-sizing: border-box;
+                    border: 1px solid white;
                     border-top-right-radius: 0.5rem;
                     border-bottom-right-radius: 0.5rem;
-                    padding: 0 0.5rem 0 0.5rem;
-                    border: 1px solid white;
                 }
             }
 
             &__label {
                 padding-right: 0.5rem;
                 font-weight: 700;
-
-
+                padding: 0.2rem 0.3rem;
+                text-align: center;
+                box-sizing: border-box;
             }
 
-            &__number {}
-        }
-    }
-
-    &__frame-data {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        text-align: center;
-        gap: 1rem;
-        font-size: 1.2rem;
-        height: 2rem;
-
-        &__number {
-            &.selected-sort {
-                span:first-of-type {
-                    border-top-left-radius: 0.5rem;
-                    border-bottom-left-radius: 0.5rem;
-                    padding: 0 0 0 0.5rem;
-                    border: 1px solid white;
-                    background-color: white;
-                    color: black;
-                }
-
-                span:nth-of-type(2) {
-                    box-sizing: border-box;
-                    border-top-right-radius: 0.5rem;
-                    border-bottom-right-radius: 0.5rem;
-                    padding: 0 0.5rem 0 0.5rem;
-                    border: 1px solid white;
-                }
-            }
-
-            &__label {
-                padding-right: 0.5rem;
-                font-weight: 700;
-
-                &.underline {
-                    text-decoration: underline;
-                }
-            }
-
-            &__number {
-                &.throw-attempt {
-                    color: lightgreen;
-                    font-weight: 700;
-                }
-
-                &.jab-punish {
-                    color: aqua;
-                    font-weight: 700;
-                }
-
-                &.combo-punish {
-                    color: yellow;
-                    font-weight: 700;
-                }
-
-                &.launch-punishable {
-                    color: orange;
-                    font-weight: 700;
-                }
-
-                &.ded {
-                    color: red;
-                    font-weight: 700;
-                }
+            &__value {
+                box-sizing: border-box;
+                text-align: center;
+                padding: 0.2rem 0.3rem
             }
         }
     }

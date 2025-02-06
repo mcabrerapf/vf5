@@ -9,10 +9,10 @@ const ActiveFiltersList = ({
     selectedFilters = [],
     selectedSort,
     onSortClick = () => { },
+    onSortDirClick = () => { },
     onFilterClick = () => { },
 }) => {
-    const showSort = selectedSort && selectedSort.id !== 'default';
-    
+
     return (
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
@@ -67,11 +67,19 @@ const ActiveFiltersList = ({
                 }
                 )}
             </div>
-            {!!showSort &&
-                <Button
-                    text={`${selectedSort.id}/${selectedSort.dir}`}
-                    onClick={onSortClick}
-                />
+            {selectedSort && selectedSort.id &&
+                <div className='active-filters-list__sort'>
+                    <Button
+                        modifier='active'
+                        text={selectedSort.name}
+                        onClick={onSortClick}
+                    />
+                    <Button
+                        disabled={selectedSort.id === 'default'}
+                        text={selectedSort.dir}
+                        onClick={onSortDirClick}
+                    />
+                </div>
             }
         </div>
     )

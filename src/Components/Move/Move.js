@@ -3,15 +3,17 @@ import React from 'react';
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import Button from '../Button';
-import { ATTACK_LEVELS_NAME_TO_ID } from '../../constants';
+import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
 import { getNumberColor } from '../../helpers';
+import SortableMoveProp from './MoveSortableProp';
 
 const Move = ({
     move,
-    sortKey,
+    sortId,
     moveCategories,
     isFavourite = false,
     modifier = "",
+    handleSortChange,
     onClick = () => { },
     onMoveCategoryClick = () => { },
     onFavouriteClick = () => { },
@@ -73,14 +75,17 @@ const Move = ({
         onFavouriteClick(id);
     }
 
+    const onSortablePropClick = (newSort) => {
+        const sortValue = MOVELIST_SORT_OPTIONS.find(option => option.id === newSort);
+        if (!sortValue) return;
+        handleSortChange(sortValue);
+    }
+
     const favouriteModifier = isFavourite ? 'favourite' : '';
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-    const onBlockColor = getNumberColor(gd, 'on_block');
-    const onHitColor = getNumberColor(hit);
-    const onChColor = getNumberColor(c_hit);
-    
+
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -106,84 +111,61 @@ const Move = ({
             </div>
             <div className='move__category'>
                 <MoveTypeBadge
-                    modifier={'not-selected'}
+                    modifier={'active'}
                     moveType={categoryName}
                     onClick={handleOnCategoryClick}
                 />
             </div>
-            <div className='move__damage'>
-                <span className={`move__damage__number${sortKey === 'damage' ? ' selected-sort' : ''}`}>
-                    <span
-                        className='move__damage__number__label'
-                    >
-                        damage:
-                    </span>
-                    <span className={'move__damage__number__number'}>
-                        {damage}
-                    </span>
-                </span>
-                <span className={`move__damage__number${sortKey === 'dodge_direction' ? ' selected-sort' : ''}`}>
-                    <span
-                        className='move__damage__number__label'
-                    >
-                        dodge:
-                    </span>
-                    <span className={'move__damage__number__number'}>
-                        {dodge_direction}
-                    </span>
-                </span>
-                <span className={`move__damage__number${sortKey === 'sober' ? ' selected-sort' : ''}`}>
-                    <span
-                        className='move__damage__number__label label'
-                    >
-                        sober:
-                    </span>
-                    <span className={'move__damage__number__number'}>
-                        {sober}
-                    </span>
-                </span>
+            <div className='move__props other'>
+                <SortableMoveProp
+                    propKey={'damage'}
+                    activeSortId={sortId}
+                    value={damage}
+                    onClick={onSortablePropClick}
+                />
+                <SortableMoveProp
+                    propKey={'dodge_direction'}
+                    text={'dodge'}
+                    activeSortId={sortId}
+                    value={dodge_direction}
+                    onClick={onSortablePropClick}
+                />
+                <SortableMoveProp
+                    propKey={'sober'}
+                    activeSortId={sortId}
+                    value={sober}
+                    onClick={onSortablePropClick}
+                />
             </div>
-            <div className='move__frame-data'>
-                <span className={`move__frame-data__number${sortKey === 'startup' ? ' selected-sort' : ''}`}>
-                    <span
-                        className='move__frame-data__number__label'
-                    >
-                        startup:
-                    </span>
-                    <span className={'move__frame-data__number__number'}>
-                        {startup}
-                    </span>
-                </span>
-                <span className={`move__frame-data__number${sortKey === 'hit' ? ' selected-sort' : ''}`}>
-                    <span
-                        className="move__frame-data__number__label"
-                    >
-                        hit:
-                    </span>
-                    <span className={`move__frame-data__number__number${onHitColor}`}>
-                        {hit > 0 ? '+' : ''}{hit}
-                    </span>
-                </span>
-                <span className={`move__frame-data__number${sortKey === 'c_hit' ? ' selected-sort' : ''}`}>
-                    <span
-                        className='move__frame-data__number__label'
-                    >
-                        ch:
-                    </span>
-                    <span className={`move__frame-data__number__number${onChColor}`}>
-                        {c_hit > 0 ? '+' : ''}{c_hit}
-                    </span>
-                </span>
-                <span className={`move__frame-data__number${sortKey === 'gd' ? ' selected-sort' : ''}`}>
-                    <span
-                        className='move__frame-data__number__label'
-                    >
-                        block:
-                    </span>
-                    <span className={`move__frame-data__number__number${onBlockColor}`}>
-                        {gd > 0 ? '+' : ''}{gd}
-                    </span>
-                </span>
+            <div className='move__props frame-data'>
+                <SortableMoveProp
+                    propKey={'startup'}
+                    activeSortId={sortId}
+                    value={startup}
+                    onClick={onSortablePropClick}
+                />
+                <SortableMoveProp
+                    propKey={'hit'}
+                    activeSortId={sortId}
+                    value={hit}
+                    doFrameCheck
+                    onClick={onSortablePropClick}
+                />
+                <SortableMoveProp
+                    propKey={'c_hit'}
+                    activeSortId={sortId}
+                    value={c_hit}
+                    doFrameCheck
+                    onClick={onSortablePropClick}
+                />
+                <SortableMoveProp
+                    propKey={'gd'}
+                    text={'block'}
+                    activeSortId={sortId}
+                    value={gd}
+                    doFrameCheck
+                    onClick={onSortablePropClick}
+                />
             </div>
             <MoveCommand
                 onClick={handleOnCommandClick}

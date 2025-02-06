@@ -34,5 +34,19 @@
         }
 
     }
+
+    &__sort {
+        display: flex;
+        flex-direction: row;
+
+        button:first-of-type {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        button:nth-of-type(2) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
   
 }

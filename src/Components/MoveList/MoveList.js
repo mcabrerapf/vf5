@@ -13,6 +13,9 @@ import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 import { CHARACTERS_JSON, MOVELIST_FILTER_OPTIONS, MOVELIST_SORT_OPTIONS } from '../../constants/CHARACTERS';
+import { ModalContextWrapper } from '../../Contexts/ModalContext';
+import Modal from '../Modals/Modal';
+import SortModal from '../Modals/SortModal';
 
 const Movelist = () => {
     const listRef = useRef(null);
@@ -20,10 +23,14 @@ const Movelist = () => {
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
+    const sortOptions = MOVELIST_SORT_OPTIONS.filter(option => {
+        return !['active', 'total', 'crouch_hit', 'crouch_c_hit', 'recovery_c'].includes(option.id);
+    })
 
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
+    const [showSortModal, setShowSortModal] = useState(false);
 
     const {
         move_categories: moveCategories,
@@ -68,8 +75,12 @@ const Movelist = () => {
     }
 
     const handleSortClick = () => {
-        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(MOVELIST_SORT_OPTIONS[0]));
-        setSelectedMovelistSort(MOVELIST_SORT_OPTIONS[0]);
+        const newSort = {
+            ...selectedMovelistSort,
+            dir: selectedMovelistSort.dir === 'asc' ? 'dsc' : 'asc'
+        }
+        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(newSort));
+        setSelectedMovelistSort(newSort);
     }
 
     const handleFilterClick = (filter) => {
@@ -93,13 +104,39 @@ const Movelist = () => {
         handleFiltersChange(newFilters);
     }
 
+    const handleSortModalClose = (sort) => {
+        handleSortChange(sort)
+        toggleSortModal();
+    }
+
+    const handleSortChange = (sort) => {
+        if (!sort) return;
+        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(sort));
+        setSelectedMovelistSort(sort);
+    }
+
+    const toggleSortModal = () => {
+        setShowSortModal(!showSortModal);
+    }
+
     if (!selectedMoveset) return null;
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favouriteMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
-    
+   
     return (
         <div className='movelist'>
+            <ModalContextWrapper
+                showModal={showSortModal}
+                closeModal={handleSortModalClose}
+            >
+                <Modal>
+                    <SortModal
+                        selectedSort={selectedMovelistSort}
+                        sortOptions={sortOptions}
+                    />
+                </Modal>
+            </ModalContextWrapper>
             <MovelistHeader
                 moveCategories={moveCategories}
                 selectedFilters={selectedFilters}
@@ -114,7 +151,8 @@ const Movelist = () => {
             <ActiveFiltersList
                 selectedFilters={selectedFilters}
                 selectedSort={selectedMovelistSort}
-                onSortClick={handleSortClick}
+                onSortClick={toggleSortModal}
+                onSortDirClick={handleSortClick}
                 onFilterClick={handleFilterClick}
             />
             <div className='movelist__list-container'>
@@ -132,9 +170,10 @@ const Movelist = () => {
                             >
                                 <Move
                                     move={move}
-                                    sortKey={selectedMovelistSort.id}
+                                    sortId={selectedMovelistSort.id}
                                     isFavourite={isFavourite}
                                     moveCategories={moveCategories}
+                                    handleSortChange={handleSortChange}
                                     onFavouriteClick={onFavouriteClick}
                                     onCommandClick={onCommandClick}
                                     onMoveCategoryClick={onMoveCategoryClick}

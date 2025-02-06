@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import './MoveListSortModal.scss'
+import './SortModal.scss'
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { MOVELIST_SORT_OPTIONS } from '../../../constants';
 
-const MoveListSortModal = ({
-    selectedMovelistSort = MOVELIST_SORT_OPTIONS[0]
+const SortModal = ({
+    selectedSort: _selectedSort,
+    sortOptions
 }) => {
     const { closeModal } = useModalContext();
-    const [selectedSort, setSelectedSort] = useState(selectedMovelistSort)
+    const [selectedSort, setSelectedSort] = useState(_selectedSort || sortOptions[0])
 
     const handleSortClick = (sort) => {
         setSelectedSort({ ...selectedSort, id: sort.id, name: sort.name });
@@ -21,16 +21,12 @@ const MoveListSortModal = ({
     const handleSortUpdate = () => {
         closeModal(selectedSort);
     }
-    
-    const validSorts = MOVELIST_SORT_OPTIONS.filter(option => {
-        return !['active', 'total', 'crouch_hit', 'crouch_c_hit', 'recovery_c'].includes(option.id);
-    })
-    
+
     return (
-        <div className='movelist-sort-modal'>
-            <div className='movelist-sort-modal__content'>
-                <div className='movelist-sort-modal__content__options'>
-                    {validSorts.map(option => {
+        <div className='sort-modal'>
+            <div className='sort-modal__content'>
+                <div className='sort-modal__content__options'>
+                    {sortOptions.map(option => {
 
                         return (
                             <Button
@@ -43,7 +39,7 @@ const MoveListSortModal = ({
                         )
                     })}
                 </div>
-                <div className='movelist-sort-modal__content__options'>
+                <div className='sort-modal__content__options'>
                     <Button
                         modifier={selectedSort.dir === 'asc' ? 'active' : ''}
                         value='asc'
@@ -58,7 +54,7 @@ const MoveListSortModal = ({
                     />
 
                 </div>
-                <div className='movelist-sort-modal__content__options'>
+                <div className='sort-modal__content__options'>
                     <Button
                         text='✓'
                         modifier={'active'}
@@ -70,4 +66,4 @@ const MoveListSortModal = ({
     )
 }
 
-export default MoveListSortModal;
+export default SortModal;

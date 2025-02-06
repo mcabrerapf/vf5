@@ -1,10 +1,35 @@
 import { getLauncher } from "../../helpers";
 
-const sortCombos = (list) => {
+const sortCombos = (list, sort) => {
+    if (!sort || !sort.id || !sort.dir) return list;
+    const { id: sortKey, dir: sortDir } = sort;
+    if (sortKey === 'default') return list;
+
     return list
         .map(listItem => listItem)
-        .sort((a, b) => {
-            return a.command.length - b.command.length
+        .sort((itemA, itemB) => {
+            const firstValue = sortDir === 'asc' ?
+                itemA[sortKey] : itemB[sortKey];
+            const secondValue = sortDir === 'asc' ?
+                itemB[sortKey] : itemA[sortKey];
+            // Tod fix this
+            // if (sortKey === 'launcher') {
+            //     const [launcherA] = getLauncher(itemA.command);
+            //     const [launcherB] = getLauncher(itemA.command);
+            //     const stringLauncherA = launcherA.join('');
+            //     const stringLauncherB = launcherB.join('');
+            //     return stringLauncherA.localeCompare(stringLauncherB)
+            // }
+
+            if (sortKey === 'damage') {
+                const numA = typeof firstValue === "number" ? firstValue : 0;
+                const numB = typeof secondValue === "number" ? secondValue : 0;
+                return numA - numB;
+            }
+
+            if (Array.isArray(firstValue)) return firstValue.join('').localeCompare(secondValue.join(''))
+
+            return firstValue.localeCompare(secondValue)
         });
 }
 

@@ -3,7 +3,6 @@ import './MovelistHeader.scss'
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import Modal from '../../Modals/Modal';
 import MoveCategorySelectModal from '../../Modals/MoveCategorySelectModal';
-import MoveListSortModal from '../../Modals/MoveListSortModal';
 import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
 import { SELECTED_MOVELIST_SORT_KEY, SELECTED_MOVE_CATEGORY_KEY } from '../../../constants';
@@ -12,7 +11,6 @@ import { setLocalStorage } from '../../../helpers';
 const MovelistHeader = ({
     moveCategories,
     selectedMoveCategory,
-    selectedMovelistSort,
     selectedFilters,
     numerOfMoves,
     handleFiltersChange,
@@ -20,7 +18,6 @@ const MovelistHeader = ({
     setSelectedMovelistSort,
 }) => {
     const [showMoveCategoryModal, setShowMoveCategorySelectModal] = useState(false);
-    const [showSortModal, setShowSortModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
 
     const hasFav = !!selectedFilters.find(sFilter => sFilter.id === 'fav');
@@ -33,14 +30,6 @@ const MovelistHeader = ({
         toggleMoveTypeSelectModal();
     }
 
-    const handleSortModalClose = (sort) => {
-        if (sort) {
-            setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(sort));
-            setSelectedMovelistSort(sort);
-        }
-        toggleSortModal();
-    }
-
     const handleFiltersModalClose = (newFilters) => {
         toggleFiltersModal();
         handleFiltersChange(newFilters);
@@ -48,10 +37,6 @@ const MovelistHeader = ({
 
     const toggleMoveTypeSelectModal = () => {
         setShowMoveCategorySelectModal(!showMoveCategoryModal);
-    }
-
-    const toggleSortModal = () => {
-        setShowSortModal(!showSortModal);
     }
 
     const toggleFiltersModal = () => {
@@ -72,7 +57,6 @@ const MovelistHeader = ({
     }
 
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
-    const sortButtonModifier = selectedMovelistSort.id !== 'default' ? 'active' : '';
 
     const { name: selectedMoveCategoryText } = moveCategories
         .find(cat => cat.id === selectedMoveCategory);
@@ -93,14 +77,6 @@ const MovelistHeader = ({
                         selectedMoveCategory={selectedMoveCategory}
                         moveCategories={moveCategories}
                     />
-                </Modal>
-            </ModalContextWrapper>
-            <ModalContextWrapper
-                showModal={showSortModal}
-                closeModal={handleSortModalClose}
-            >
-                <Modal>
-                    <MoveListSortModal selectedMovelistSort={selectedMovelistSort} />
                 </Modal>
             </ModalContextWrapper>
             <ModalContextWrapper
@@ -128,11 +104,6 @@ const MovelistHeader = ({
                     modifier={filtersButtonModifier}
                     text={'Filters'}
                     onClick={toggleFiltersModal}
-                />
-                <Button
-                    modifier={sortButtonModifier}
-                    text={"Sort"}
-                    onClick={toggleSortModal}
                 />
             </div>
 

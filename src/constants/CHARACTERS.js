@@ -33,6 +33,39 @@ const COMBO_FILTER_OPTIONS = [
     }
 ];
 
+const COMBOS_SORT_OPTIONS = [
+    {
+        id:'command',
+        name: 'Command',
+        dir: 'asc'
+    },
+    // {
+    //     id:'launcher',
+    //     name: 'Launcher',
+    //     dir: 'asc'
+    // },
+    {
+        id:'damage',
+        name: 'Damage',
+        dir: 'asc'
+    },
+    {
+        id:'characterTags',
+        name: 'Characters',
+        dir: 'asc'
+    },
+    {
+        id:'tags',
+        name: 'Tags',
+        dir: 'asc'
+    },
+    {
+        id:'note',
+        name: 'Note',
+        dir: 'asc'
+    }
+];
+
 Object.keys(CHARACTERS_JSON)
     .forEach(CHARACTER => {
         const { name, attack_levels } = CHARACTERS_JSON[CHARACTER];
@@ -76,6 +109,7 @@ export {
     MOVELIST_SORT_OPTIONS,
     CHARACTERS,
     COMBO_FILTER_OPTIONS,
+    COMBOS_SORT_OPTIONS,
     CHARACTER_IDS,
     CHARACTERS_JSON,
 }

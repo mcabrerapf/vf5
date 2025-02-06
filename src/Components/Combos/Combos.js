@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Combos.scss'
-import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS, COMBO_FILTER_OPTIONS } from '../../constants';
+import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS, COMBO_FILTER_OPTIONS, COMBOS_SORT_OPTIONS, SELECTED_COMBOS_SORT_KEY } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
@@ -12,16 +12,22 @@ import CombosHeader from './CombosHeader';
 import ActiveFiltersList from '../ActiveFiltersList';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
 import { filterCombos, sortCombos } from './helpers';
+import SortModal from '../Modals/SortModal';
 
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
+    // const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
+
+
     const [combos, setCombos] = useState([]);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+    const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[0]);
+    const [showSortModal, setShowSortModal] = useState(false);
+    
     useEffect(
         () => {
             const localCombos = getFromLocal(
@@ -161,11 +167,46 @@ const Combos = () => {
         setCombos(updatedCombos);
     }
 
+    const handleSortClick = () => {
+        const newSort = {
+            ...selectedSort,
+            dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc'
+        }
+        setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(newSort));
+        setSelectedSort(newSort);
+    }
+
+    const handleSortModalClose = (sort) => {
+        handleSortChange(sort)
+        toggleSortModal();
+    }
+
+    const handleSortChange = (sort) => {
+        if (!sort) return;
+        setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(sort));
+        setSelectedSort(sort);
+    }
+
+    const toggleSortModal = () => {
+        setShowSortModal(!showSortModal);
+    }
+
     const filteredCombos = filterCombos(combos, selectedFilters);
-    const sortedCombos = sortCombos(filteredCombos);
+    const sortedCombos = sortCombos(filteredCombos, selectedSort);
 
     return (
         <div className='combos'>
+            <ModalContextWrapper
+                showModal={showSortModal}
+                closeModal={handleSortModalClose}
+            >
+                <Modal>
+                    <SortModal
+                       selectedSort={selectedSort}
+                       sortOptions={COMBOS_SORT_OPTIONS}
+                    />
+                </Modal>
+            </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showComboBuilderModal}
                 closeModal={handleCloseModal}
@@ -191,6 +232,9 @@ const Combos = () => {
             />
             <ActiveFiltersList
                 selectedFilters={selectedFilters}
+                selectedSort={selectedSort}
+                onSortClick={toggleSortModal}
+                onSortDirClick={handleSortClick}
                 onFilterClick={handleFilterClick}
             />
             <div className='combos__list-container'>
@@ -210,7 +254,7 @@ const Combos = () => {
                                 onTagClick={handleTagClick}
                                 onCharacterClick={handleCharacterClick}
                             />
-    
+
                         </li>
                     )}
                 </ul>
