@@ -1,4 +1,4 @@
-import { ATTACK_LEVELS, CHARACTERS, COMBO_FILTER_OPTIONS } from "../../../constants";
+import { CHARACTERS } from "../../../constants";
 
 const notValidCharacters = ['or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
 

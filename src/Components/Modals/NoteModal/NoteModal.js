@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import './NoteModal.scss'
-import ModalHeader from '../ModalHeader';
 import Button from '../../Button';
 import ModalFooter from '../ModalFooter';
 import { useModalContext } from '../../../Contexts/ModalContext';
 
 const NoteModal = ({
-    selectedNote
+    selectedNote,
+    handleDeleteNoteClick
 }) => {
     const { id, content } = selectedNote || {};
     const { closeModal } = useModalContext();
     const [noteContent, setNoteContent] = useState(content || '');
-
-    const handleCloseModal = () => {
-        closeModal();
-    }
 
     const handleSaveNote = () => {
         closeModal({
@@ -38,6 +34,18 @@ const NoteModal = ({
                 />
             </div>
             <ModalFooter modifier="align-right">
+                <div>
+                    {id &&
+                        <Button
+                            text='DELETE'
+                            onClick={() => {
+                                closeModal();
+                                handleDeleteNoteClick();
+                            }}
+                        />
+                    }
+                </div>
+
                 <Button
                     text='✓'
                     disabled={!canSave}

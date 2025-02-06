@@ -64,38 +64,44 @@
         gap: 1rem;
         font-size: 1.2rem;
         margin-bottom: 0.5rem;
+
         &__prop {
-            min-width: 6.8em;
+            height: 2.3rem;
+            display: flex;
+            flex-direction: row;
             text-align: start;
             user-select: none;
             box-sizing: border-box;
+            align-items: center;
+            text-align: end;
+            border-bottom: 1px solid white;
 
             &.selected-sort {
-                span:first-of-type {
-                    border-top-left-radius: 0.5rem;
-                    border-bottom-left-radius: 0.5rem;
-                    border: 1px solid white;
+                border: 1px solid;
+                border-radius: 0.5rem;
+                div:first-of-type {
                     background-color: white;
                     color: black;
+                    height: 100%;
                 }
-                span:nth-of-type(2) {
-                    border: 1px solid white;
-                    border-top-right-radius: 0.5rem;
-                    border-bottom-right-radius: 0.5rem;
+                div:nth-of-type(2) {
+
                 }
             }
 
             &__label {
+                width: 6rem;
                 padding-right: 0.5rem;
                 font-weight: 700;
                 padding: 0.2rem 0.3rem;
-                text-align: center;
+                text-align: start;
                 box-sizing: border-box;
             }
 
             &__value {
                 box-sizing: border-box;
                 text-align: center;
+                width: 3rem;
                 padding: 0.2rem 0.3rem
             }
         }

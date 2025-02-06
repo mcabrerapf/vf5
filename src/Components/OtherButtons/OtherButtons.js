@@ -52,7 +52,7 @@ const OtherButtons = ({
                 />
                 <Notation
                     modifier={isShiftActive ? 'active' : ''}
-                    notation='shift'
+                    notation='shft'
                     onClick={onShiftClick}
                 />
             </div>

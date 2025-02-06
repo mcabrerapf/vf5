@@ -2,7 +2,7 @@ const sortMovelist = (list, sort) => {
     if (!sort || !sort.id || !sort.dir) return list;
     const { id: sortKey, dir: sortDir } = sort;
     if (sortKey === 'default') return list;
-    
+
     return list
         .map(listItem => listItem)
         .sort((itemA, itemB) => {
@@ -24,7 +24,7 @@ const sortMovelist = (list, sort) => {
         });
 }
 
-const filterMovelist = (list, filters, favMoves) => {
+const filterMovelist = (list, filters, customMoves) => {
 
     if (!filters.length) return list;
 
@@ -32,13 +32,14 @@ const filterMovelist = (list, filters, favMoves) => {
         .filter(filter => filter.prefix === 'command')
     const attackLevelFilters = filters.filter(filter => filter.prefix === 'attack_level');
     const hasFavFilter = filters.find(filter => filter.id === 'fav');
-
+    
     return list.filter(move => {
         const isValid = attackLevelFilters.length ?
             attackLevelFilters.find(parsedType => parsedType.name === move.attack_level) : true;
         let hasCommandMatch = commandFilters.length ? false : true;
         const stringCommand = move.command.join('')
-        const hasFavMatch = !hasFavFilter ? true : favMoves.includes(move.id);
+        const hasFavMatch = !hasFavFilter ?
+            true : customMoves.find(cMove => cMove.id === move.id);
         commandFilters.forEach(commandFilter => {
             if (stringCommand.includes(commandFilter.id)) {
                 hasCommandMatch = true;

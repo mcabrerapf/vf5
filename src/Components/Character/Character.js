@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import './Character.scss'
+import React, { useState } from 'react';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import Movelist from '../Movelist';
@@ -9,7 +9,7 @@ import Notes from '../Notes';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
 import InfoModal from '../Modals/InfoModal';
-import { CHARACTERS, SELECTED_CHARACTER_VIEW_KEY, STRINGS } from '../../constants';
+import { SELECTED_CHARACTER_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 import { CHARACTERS_JSON } from '../../constants/CHARACTERS';

@@ -29,7 +29,6 @@ import NOTATIONS, {
     NOTATION_TO_ICON
 } from "./NOTATIONS";
 import OTHER from './OTHER';
-import SORT_OPTIONS from "./SORT_OPTIONS";
 import STRINGS from "./STRINGS";
 
 export {
@@ -60,7 +59,6 @@ export {
     NOTATION_CHARACTERS,
     NOTATION_TO_ICON,
     OTHER,
-    SORT_OPTIONS,
     COMBOS_SORT_OPTIONS,
     STRINGS
 };

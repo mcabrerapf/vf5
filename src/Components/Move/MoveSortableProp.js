@@ -23,19 +23,19 @@ const SortableMoveProp = ({
     }
 
     return (
-        <span
+        <div
             className={className}
             onClick={handlePropClick}
         >
-            <span
+            <div
                 className='move__props__prop__label'
             >
                 {text || propKey}:
-            </span>
-            <span className={numberClassname}>
+            </div>
+            <div className={numberClassname}>
                 {parsedValue}
-            </span>
-        </span>
+            </div>
+        </div>
     )
 }
 

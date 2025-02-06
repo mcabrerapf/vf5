@@ -1,11 +1,10 @@
 import './Move.scss'
 import React from 'react';
+import SortableMoveProp from './MoveSortableProp';
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import Button from '../Button';
 import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
-import { getNumberColor } from '../../helpers';
-import SortableMoveProp from './MoveSortableProp';
 
 const Move = ({
     move,
@@ -29,22 +28,14 @@ const Move = ({
         // crouch_hit
         command,
         category,
-        // commandType,
         c_hit,
-        // counter_hit_stats,
         damage,
         dodge_direction,
-        // escape,
         startup,
-        // exe,
         gd,
-        // guard_stats,
         attack_level,
-        // level,
         move_name,
-        // name,
         hit,
-        // normal_hit_stats,
         notes,
         sober,
     } = move;
@@ -153,6 +144,7 @@ const Move = ({
                 />
                 <SortableMoveProp
                     propKey={'c_hit'}
+                    text={"counter"}
                     activeSortId={sortId}
                     value={c_hit}
                     doFrameCheck

@@ -9,15 +9,15 @@ function MainContextWrapper({
   children,
 }) {
   const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
-  const localFavorites = getFromLocal(
+  const localCustomMoves = getFromLocal(
     CHARACTERS_DATA_KEY,
     localSelectedCharacter,
-    STRINGS.FAV_MOVES
+    STRINGS.CUSTOM_MOVES
   );
 
   const [contextData, setContextData] = useState({
     selectedCharacter: localSelectedCharacter,
-    favouriteMoves: localFavorites
+    customMoves: localCustomMoves
   });
 
   const { selectedCharacter } = contextData;
@@ -27,11 +27,15 @@ function MainContextWrapper({
     const newLocalFavs = getFromLocal(
       CHARACTERS_DATA_KEY,
       character,
-      STRINGS.FAV_MOVES
+      STRINGS.CUSTOM_MOVES
     );
     setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, 'all_moves');
     setLocalStorage(SELECTED_CHARACTER_KEY, character);
-    setContextData({ ...contextData, selectedCharacter: character, favouriteMoves: newLocalFavs });
+    setContextData({
+      ...contextData,
+      selectedCharacter: character,
+      customMoves: newLocalFavs
+    });
   }
 
   const setFavouriteMoves = (updatedFavorites) => {
@@ -39,11 +43,11 @@ function MainContextWrapper({
       CHARACTERS_DATA_KEY,
       updatedFavorites,
       selectedCharacter,
-      STRINGS.FAV_MOVES
+      STRINGS.CUSTOM_MOVES
     );
-    setContextData({ ...contextData, favouriteMoves: updatedFavorites });
+    setContextData({ ...contextData, customMoves: updatedFavorites });
   }
-
+  
   return (
     <MainContextProvider
       value={{

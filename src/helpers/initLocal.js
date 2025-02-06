@@ -4,25 +4,24 @@ import {
     SELECTED_CHARACTER_KEY,
     SELECTED_CHARACTER_VIEW_KEY,
     SELECTED_COMBOS_FILTERS_KEY,
+    SELECTED_COMBOS_SORT_KEY,
     SELECTED_MOVE_CATEGORY_KEY,
     SELECTED_MOVELIST_FILTERS_KEY,
     SELECTED_MOVELIST_SORT_KEY,
     STRINGS
 } from "../constants";
-import { CHARACTERS_JSON } from "../constants/CHARACTERS";
-import getFromLocal from "./getFromLocal";
+import CHARACTERS, { CHARACTERS_JSON, COMBOS_SORT_OPTIONS } from "../constants/CHARACTERS";
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
 
 const {
-    AKIRA,
-    ASC,
     ALL_MOVES,
     COMBOS,
     MOVELIST,
     NOTES
 } = STRINGS;
-const validateOnInit = () => {
+
+const validateCharactersData = () => {
     try {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY)
         if (
@@ -46,7 +45,10 @@ const validateOnInit = () => {
         return;
     } catch (error) {
         console.log(error);
-        localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify({}));
+        const initData = {
+            [CHARACTERS[0].id]: {}
+        }
+        localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(initData));
         window.location.reload();
         return;
     }
@@ -54,15 +56,24 @@ const validateOnInit = () => {
 const validateSorts = () => {
     try {
         const movelistSort = localStorage.getItem(SELECTED_MOVELIST_SORT_KEY)
-        if (!movelistSort) throw new Error("No movelist sort");
+        const combosSort = localStorage.getItem(SELECTED_COMBOS_SORT_KEY)
+        if (!movelistSort || !combosSort) throw new Error("No sort");
         const parsedMovelistSort = JSON.parse(movelistSort);
+        const parsedCombosSort = JSON.parse(combosSort);
+
         if (
             !parsedMovelistSort ||
             !MOVELIST_SORT_OPTIONS.find(option => option.id === parsedMovelistSort.id)
         ) throw new Error("No valid movelist sort");
+
+        if (
+            !parsedCombosSort ||
+            !COMBOS_SORT_OPTIONS.find(option => option.id === parsedCombosSort.id)
+        ) throw new Error("No valid combos sort");
     } catch (error) {
         console.log(error);
         localStorage.setItem(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(MOVELIST_SORT_OPTIONS[0]));
+        localStorage.setItem(SELECTED_COMBOS_SORT_KEY, JSON.stringify(COMBOS_SORT_OPTIONS[0]));
         window.location.reload();
         return;
     }
@@ -85,34 +96,56 @@ const validateFilters = () => {
         return;
     }
 }
+const validateSelectedCharacter = () => {
+    try {
+        const selectedCharacter = localStorage.getItem(SELECTED_CHARACTER_KEY)
+        if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) throw new Error("Invalid selected character");
+
+    } catch (error) {
+        console.log(error);
+        localStorage.setItem(SELECTED_CHARACTER_KEY, CHARACTERS[0].id);
+        window.location.reload();
+    }
+}
+
+const validateSelectedCharacterView = () => {
+    try {
+        const selectedCharacterView = localStorage.getItem(SELECTED_CHARACTER_VIEW_KEY);
+        if (![COMBOS, MOVELIST, NOTES].includes(selectedCharacterView)) {
+            throw new Error("Not valid character view");
+
+        }
+    } catch (error) {
+        console.log(error);
+        setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, MOVELIST);
+        window.location.reload();
+    }
+}
+
+const validateCharacterMoveCategory = () => {
+    try {
+        const selectedCharacter = localStorage.getItem(SELECTED_CHARACTER_KEY)
+        const { move_categories: characterCategories } = CHARACTERS_JSON[selectedCharacter];
+        const selectedMoveCategory = localStorage.getItem(SELECTED_MOVE_CATEGORY_KEY);
+
+        if (!characterCategories.find(category => category.id === selectedMoveCategory)) {
+            throw new Error("Not valid character move category");
+
+        }
+    } catch (error) {
+        console.log(error)
+        localStorage.setItem(SELECTED_MOVE_CATEGORY_KEY, ALL_MOVES);
+        window.location.reload();
+    }
+}
 
 const initLocal = () => {
-    const selectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY);
-    validateOnInit();
+    validateSelectedCharacter();
+    validateSelectedCharacterView();
+    validateCharacterMoveCategory();
     validateFilters();
     validateSorts();
-    if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) {
-        const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
-        setLocalStorage(SELECTED_CHARACTER_KEY, AKIRA);
-        setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, MOVELIST);
-        setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, ALL_MOVES);
-        setLocalStorage(SELECTED_MOVELIST_SORT_KEY, defaultSort);
-        setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, []);
-        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, []);
-        return window.location.reload();
-    }
-    const selectedCharacterView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
-    if (![COMBOS, MOVELIST, NOTES].includes(selectedCharacterView)) {
-        setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, MOVELIST);
-        return window.location.reload();
-    }
-    const { move_categories: characterCategories } = CHARACTERS_JSON[selectedCharacter];
-    const selectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
-
-    if (!characterCategories.find(category => category.id === selectedMoveCategory)) {
-        setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, ALL_MOVES);
-        return window.location.reload();
-    }
+    validateCharactersData();
 }
 
 export default initLocal;

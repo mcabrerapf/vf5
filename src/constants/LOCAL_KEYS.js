@@ -1,13 +1,13 @@
-const ALL_DATA_KEY = 'vf5_all_data';
-const CHARACTERS_DATA_KEY = 'vf5_characters_data';
-const SELECTED_CHARACTER_KEY = 'vf5_selected-character';
-const SELECTED_CHARACTER_VIEW_KEY = 'vf5_selected-character-view';
-const SELECTED_MOVE_CATEGORY_KEY = 'vf5_selected-move-type';
-const SELECTED_MOVELIST_SORT_KEY = 'vf5_selected-movelist-sort';
-const SELECTED_MOVELIST_FILTERS_KEY = 'vf5_selected-movelist-filters';
-const SELECTED_COMBOS_FILTERS_KEY = 'vf5_selected-combos-filters';
-const SELECTED_COMBOS_SORT_KEY = 'vf5_selected-movelist-sort';
-const USER_DATA_KEY = 'vf5_user-data';
+const ALL_DATA_KEY =                    'vf5_all_data';
+const CHARACTERS_DATA_KEY =             'vf5_characters_data';
+const SELECTED_CHARACTER_KEY =          'vf5_selected-character';
+const SELECTED_CHARACTER_VIEW_KEY =     'vf5_selected-character-view';
+const SELECTED_MOVE_CATEGORY_KEY =      'vf5_selected-move-category';
+const SELECTED_MOVELIST_SORT_KEY =      'vf5_selected-movelist-sort';
+const SELECTED_MOVELIST_FILTERS_KEY =   'vf5_selected-movelist-filters';
+const SELECTED_COMBOS_FILTERS_KEY =     'vf5_selected-combos-filters';
+const SELECTED_COMBOS_SORT_KEY =        'vf5_selected-combos-sort';
+const USER_DATA_KEY =                   'vf5_user-data';
 
 
 

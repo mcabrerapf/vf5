@@ -86,6 +86,12 @@ const DataView = () => {
         <div className='data-view'>
             {dataView === 'default' &&
                 <div className='data-view__initial-view'>
+                    <div className='data-view__initial-view__url'>
+                        Frame data is based on
+                        <a target='blank' href='https://virtua-fighter.com/revo/en/character/skill/skill01.html'>
+                            this
+                        </a>
+                    </div>
                     <div className='data-view__initial-view__memory'>
                         <div className='data-view__initial-view__memory__header'>Storage Used</div>
                         <div className='data-view__initial-view__memory__ammount'> {currentStorageUsed}</div>

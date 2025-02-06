@@ -5,7 +5,7 @@ import Modal from '../../Modals/Modal';
 import MoveCategorySelectModal from '../../Modals/MoveCategorySelectModal';
 import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
-import { SELECTED_MOVELIST_SORT_KEY, SELECTED_MOVE_CATEGORY_KEY } from '../../../constants';
+import { SELECTED_MOVE_CATEGORY_KEY } from '../../../constants';
 import { setLocalStorage } from '../../../helpers';
 
 const MovelistHeader = ({
@@ -15,7 +15,6 @@ const MovelistHeader = ({
     numerOfMoves,
     handleFiltersChange,
     setSelectedMoveCategory,
-    setSelectedMovelistSort,
 }) => {
     const [showMoveCategoryModal, setShowMoveCategorySelectModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);

@@ -11,4 +11,10 @@
             box-sizing: border-box;
         }
     }
+
+    .modal-footer {
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
 }

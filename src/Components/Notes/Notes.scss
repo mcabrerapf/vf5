@@ -30,17 +30,14 @@
                     display: flex;
                     flex-wrap: wrap;
                     box-sizing: border-box;
+                    user-select: none;
                     border: 1px solid white;
                     cursor: pointer;
-                    padding: 1rem 0.5rem;
+                    padding: 1rem 1rem;
                     border-radius: 0.5rem;
                     width: 100%;
                     font-size: 1.5rem;
-                }
-
-                .button {
-                    height: 3rem;
-                    width: 3rem;
+                    white-space: pre-wrap;
                 }
             }
         }

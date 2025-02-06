@@ -86,8 +86,7 @@ const Notes = () => {
         toggleNoteDeleteModal();
     }
 
-    const handleDeleteNoteClick = (note) => {
-        setSelectedNote(note);
+    const handleDeleteNoteClick = () => {
         toggleNoteDeleteModal()
     }
 
@@ -102,7 +101,10 @@ const Notes = () => {
                 closeModal={handleCloseModal}
             >
                 <Modal>
-                    <NoteModal selectedNote={selectedNote} />
+                    <NoteModal
+                        selectedNote={selectedNote}
+                        handleDeleteNoteClick={handleDeleteNoteClick}
+                    />
                 </Modal>
             </ModalContextWrapper>
             <ModalContextWrapper
@@ -125,15 +127,11 @@ const Notes = () => {
                             <div
                                 className='notes__list-container__list__note__content'
                                 onClick={() => handleNoteClick(note)}
+
                             >
                                 {note.content}
-                            </div>
 
-                            <Button
-                                modifier="no-border"
-                                text="X"
-                                onClick={() => handleDeleteNoteClick(note)}
-                            />
+                            </div>
                         </li>
                     )}
                 </ul>

@@ -11,6 +11,10 @@
         display: flex;
         flex-direction: column;
 
+        &__url {
+            font-size: 1.5rem;
+        }
+
         &__memory {
             &__header {
                 text-decoration: underline;

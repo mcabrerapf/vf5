@@ -19,7 +19,7 @@ import SortModal from '../Modals/SortModal';
 
 const Movelist = () => {
     const listRef = useRef(null);
-    const { selectedCharacter, favouriteMoves, setFavouriteMoves } = useMainContext();
+    const { selectedCharacter, customMoves, setFavouriteMoves } = useMainContext();
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
@@ -54,10 +54,14 @@ const Movelist = () => {
 
     const onFavouriteClick = (moveId) => {
         let updatedFavorites;
-        if (favouriteMoves.includes(moveId)) {
-            updatedFavorites = favouriteMoves.filter(fav => fav !== moveId);
+        if (customMoves.find(fMove => fMove.id === moveId)) {
+            updatedFavorites = customMoves.filter(fMove => fMove.id !== moveId);
         } else {
-            updatedFavorites = [...favouriteMoves.map(fav => fav), moveId];
+            updatedFavorites =
+                [
+                    ...customMoves,
+                    { id: moveId, note: '' }
+                ];
         }
         setFavouriteMoves(updatedFavorites);
     }
@@ -120,10 +124,10 @@ const Movelist = () => {
     }
 
     if (!selectedMoveset) return null;
-    const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favouriteMoves);
+    const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
-   
+
     return (
         <div className='movelist'>
             <ModalContextWrapper
@@ -161,7 +165,7 @@ const Movelist = () => {
                     className='movelist__list-container__list'
                 >
                     {sortedMovelist.map((move) => {
-                        const isFavourite = favouriteMoves.includes(move.id);
+                        const isFavourite = !!customMoves.find(fMove => fMove.id === move.id);
 
                         return (
                             <li

@@ -12,7 +12,7 @@ import {
 
 const {
     COMBOS,
-    FAV_MOVES,
+    CUSTOM_MOVES,
     NOTES
 } = STRINGS;
 
@@ -24,7 +24,7 @@ const getCharacterData = (localData, character, characterKey) => {
         case COMBOS:
             if (!characterData) return [];
             return characterData[characterKey] || [];
-        case FAV_MOVES:
+        case CUSTOM_MOVES:
             if (!characterData) return [];
             return characterData[characterKey] || [];
         case NOTES:
