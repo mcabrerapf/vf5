@@ -5,6 +5,7 @@ import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import Button from '../Button';
 import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
+import { getDodgeValue } from './helpers';
 
 const Move = ({
     move,
@@ -76,7 +77,8 @@ const Move = ({
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-
+    const dodgeValue = getDodgeValue(dodge_direction);
+    
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -118,7 +120,7 @@ const Move = ({
                     propKey={'dodge_direction'}
                     text={'dodge'}
                     activeSortId={sortId}
-                    value={dodge_direction}
+                    value={dodgeValue}
                     onClick={onSortablePropClick}
                 />
                 <SortableMoveProp

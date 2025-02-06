@@ -4,7 +4,18 @@ const getMovePropText = (value, doFrameCheck) => {
     }
     return value;
 }
+const getDodgeValue = (value) => {
+    switch (value) {
+        case 'Front':
+            return 'F';
+        case 'Back':
+            return 'B';
 
+        default:
+            return value;
+    }
+}
 export {
+    getDodgeValue,
     getMovePropText
 }

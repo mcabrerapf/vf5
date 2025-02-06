@@ -12,13 +12,13 @@ const SortableMoveProp = ({
     const isSelected = activeSortId === propKey;
     const className = `move__props__prop${isSelected ? ' selected-sort' : ''}`
     const parsedValue = getMovePropText(value, doFrameCheck);
-    const numberColor = doFrameCheck ? getNumberColor(value) : '';
+    const numberColor = getNumberColor(value, doFrameCheck);
     const numberClassname = `move__props__prop__value${numberColor}`;
-
+    if (doFrameCheck) console.log(numberColor)
     const handlePropClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if(isSelected) return;
+        if (isSelected) return;
         onClick(propKey);
     }
 

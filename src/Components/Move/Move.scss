@@ -17,10 +17,12 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
+        width: 100%;
         gap: 0.5rem;
 
         &__name {
-            max-width: 16.5rem;
+            display: flex;
+            width: 55%;
             font-size: 1.5rem;
             font-weight: 600;
 
@@ -60,6 +62,7 @@
         flex-direction: row;
         align-items: end;
         text-align: center;
+        flex-wrap: wrap;
         box-sizing: border-box;
         gap: 1rem;
         font-size: 1.2rem;
@@ -90,10 +93,10 @@
             }
 
             &__label {
-                width: 6rem;
+                width: 5.2rem;
                 padding-right: 0.5rem;
                 font-weight: 700;
-                padding: 0.2rem 0.3rem;
+                padding: 0.2rem 0rem 0.2rem 0.3rem;
                 text-align: start;
                 box-sizing: border-box;
             }
@@ -102,7 +105,29 @@
                 box-sizing: border-box;
                 text-align: center;
                 width: 3rem;
-                padding: 0.2rem 0.3rem
+                padding: 0.2rem 0.1rem;
+
+                &.throw-attempt {
+                    color: lightgreen;
+                    font-weight: 700;
+                }
+                &.jab-punish {
+                    color: aqua;
+                    font-weight: 700;
+                }
+                &.combo-punish {
+                    color: yellow;
+                    font-weight: 700;
+                }
+                &.launch-punishable {
+                    color: orange;
+                    font-weight: 700;
+                }
+                &.ded {
+                    color: red;
+                    font-weight: 700;
+                }
+                
             }
         }
     }

@@ -1,4 +1,6 @@
-const getNumberColor = (number) => {
+const getNumberColor = (number, doFrameCheck) => {
+    if(!doFrameCheck) return '';
+    console.log(number)
     if(!number || typeof number !== 'number') return '';
     if(number < -9 && number > -12) return ' throw-attempt';
     if(number < -11 && number > -15) return ' jab-punish';
