@@ -97,7 +97,7 @@ const Movelist = () => {
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, favouriteMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
-
+    const [sortKey] = selectedMovelistSort.split('/');
     return (
         <div className='movelist'>
             <MovelistHeader
@@ -132,6 +132,7 @@ const Movelist = () => {
                             >
                                 <Move
                                     move={move}
+                                    sortKey={sortKey}
                                     isFavourite={isFavourite}
                                     moveCategories={moveCategories}
                                     onFavouriteClick={onFavouriteClick}

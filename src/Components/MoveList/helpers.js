@@ -1,19 +1,25 @@
 const sortMovelist = (list, sort) => {
-    const parsedSort = sort.split('/');
-    if (parsedSort[0] === '' || !parsedSort[0]) return list;
-
+    if (!sort) return list;
+    const [sortKey, sortDir] = sort.split('/');
+    if (sortKey === '' || !sortKey) return list;
+    console.log(sortKey)
     return list
         .map(listItem => listItem)
         .sort((itemA, itemB) => {
-            const firstValue = parsedSort[1] === 'asc' ?
-                itemA[parsedSort[0]] : itemB[parsedSort[0]];
-            const secondValue = parsedSort[1] === 'asc' ?
-                itemB[parsedSort[0]] : itemA[parsedSort[0]];
+            const firstValue = sortDir === 'asc' ?
+                itemA[sortKey] : itemB[sortKey];
+            const secondValue = sortDir === 'asc' ?
+                itemB[sortKey] : itemA[sortKey];
 
-            // BROKEN FIX
-            if (typeof firstValue === "number") return firstValue - secondValue;
+
+            if (['damage', 'startup', 'hit', 'c_hit', 'gd', 'sober'].includes(sortKey)) {
+                const numA = typeof firstValue === "number" ? firstValue : 0;
+                const numB = typeof secondValue === "number" ? secondValue : 0;
+                return numA - numB;
+            }
+
             if (Array.isArray(firstValue)) return firstValue.join('').localeCompare(secondValue.join(''))
-            
+
             return firstValue.localeCompare(secondValue)
         });
 }

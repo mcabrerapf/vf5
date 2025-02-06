@@ -64,6 +64,21 @@
         gap: 1rem;
         font-size: 1.2rem;
         height: 2rem;
+        
+        &__number {
+            &__label {
+                padding-right: 0.5rem;
+                font-weight: 700;
+
+                &.underline {
+                    text-decoration: underline;
+                }
+            }
+
+            &__number {
+               
+            }
+        }
     }
 
     &__frame-data {
@@ -79,6 +94,10 @@
             &__label {
                 padding-right: 0.5rem;
                 font-weight: 700;
+
+                &.underline {
+                    text-decoration: underline;
+                }
             }
 
             &__number {

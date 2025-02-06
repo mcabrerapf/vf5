@@ -8,6 +8,7 @@ import { getNumberColor } from '../../helpers';
 
 const Move = ({
     move,
+    sortKey,
     moveCategories,
     isFavourite = false,
     modifier = "",
@@ -76,8 +77,10 @@ const Move = ({
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-    const onBlockColor = getNumberColor(gd);
-
+    const onBlockColor = getNumberColor(gd, 'on_block');
+    const onHitColor = getNumberColor(hit);
+    const onChColor = getNumberColor(c_hit);
+    console.log(sortKey);
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -109,33 +112,76 @@ const Move = ({
                 />
             </div>
             <div className='move__damage'>
-                <span><strong>damage:</strong> {damage}</span>
-                <span><strong>avoid:</strong> {dodge_direction}</span>
-                <span><strong>sober:</strong> {sober}</span>
+                <span className='move__damage__number'>
+                    <span
+                        className={`move__damage__number__label${sortKey === 'damage' ? ' underline' : ''}`}
+                    >
+                        damage:
+                    </span>
+                    <span className={'move__damage__number__number'}>
+                        {damage}
+                    </span>
+                </span>
+                <span className='move__damage__number'>
+                    <span
+                        className={`move__damage__number__label${sortKey === 'dodge_direction' ? ' underline' : ''}`}
+                    >
+                        dodge:
+                    </span>
+                    <span className={'move__damage__number__number'}>
+                        {dodge_direction}
+                    </span>
+                </span>
+                <span className='move__damage__number'>
+                    <span
+                        className={`move__damage__number__label${sortKey === 'sober' ? ' underline' : ''}`}
+                    >
+                        sober:
+                    </span>
+                    <span className={'move__damage__number__number'}>
+                        {sober}
+                    </span>
+                </span>
             </div>
             <div className='move__frame-data'>
                 <span className='move__frame-data__number'>
-                    <span className='move__frame-data__number__label'>startup:</span>
+                    <span
+                        className={`move__frame-data__number__label${sortKey === 'startup' ? ' underline' : ''}`}
+                    >
+                        startup:
+                    </span>
                     <span className={'move__frame-data__number__number'}>
                         {startup}
                     </span>
                 </span>
                 <span className='move__frame-data__number'>
-                    <span className='move__frame-data__number__label'>hit:</span>
-                    <span className={'move__frame-data__number__number'}>
-                        {hit}
+                    <span
+                        className={`move__frame-data__number__label${sortKey === 'hit' ? ' underline' : ''}`}
+                    >
+                        hit:
+                    </span>
+                    <span className={`move__frame-data__number__number${onHitColor}`}>
+                        {hit > 0 ? '+' : ''}{hit}
                     </span>
                 </span>
                 <span className='move__frame-data__number'>
-                    <span className='move__frame-data__number__label'>ch:</span>
-                    <span className={'move__frame-data__number__number'}>
-                        {c_hit}
+                    <span
+                        className={`move__frame-data__number__label${sortKey === 'c_hit' ? ' underline' : ''}`}
+                    >
+                        ch:
+                    </span>
+                    <span className={`move__frame-data__number__number${onChColor}`}>
+                        {c_hit > 0 ? '+' : ''}{c_hit}
                     </span>
                 </span>
                 <span className='move__frame-data__number'>
-                    <span className='move__frame-data__number__label'>block:</span>
+                    <span
+                        className={`move__frame-data__number__label${sortKey === 'gd' ? ' underline' : ''}`}
+                    >
+                        bloack:
+                    </span>
                     <span className={`move__frame-data__number__number${onBlockColor}`}>
-                        {gd}
+                        {gd > 0 ? '+' : ''}{gd}
                     </span>
                 </span>
             </div>
