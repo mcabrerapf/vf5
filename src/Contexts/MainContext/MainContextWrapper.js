@@ -24,7 +24,7 @@ function MainContextWrapper({
 
 
   const setSelectedCharacter = (character) => {
-    const newLocalFavs = getFromLocal(
+    const newCustomMoves = getFromLocal(
       CHARACTERS_DATA_KEY,
       character,
       STRINGS.CUSTOM_MOVES
@@ -34,7 +34,7 @@ function MainContextWrapper({
     setContextData({
       ...contextData,
       selectedCharacter: character,
-      customMoves: newLocalFavs
+      customMoves: newCustomMoves
     });
   }
 
