@@ -1,4 +1,4 @@
-import { MOVE_LEVEL_MATCHES } from "../../constants";
+import { ATTACK_LEVELS_NAME_TO_ID } from "../../constants";
 
 const sortMovelist = (list, sort) => {
     const parsedSort = sort.split('/');
@@ -13,7 +13,7 @@ const sortMovelist = (list, sort) => {
                 itemB[parsedSort[0]] : itemA[parsedSort[0]];
 
             // BROKEN FIX
-            if(!firstValue) return false;
+            if (!firstValue) return false;
             if (Array.isArray(firstValue)) return firstValue.join('').localeCompare(secondValue.join(''))
             if (typeof firstValue === "number" && !isNaN(firstValue)) return firstValue > secondValue;
             return firstValue.localeCompare(secondValue)
@@ -25,20 +25,18 @@ const filterMovelist = (list, filters, favMoves) => {
     if (!filters.length) return list;
 
     const commandFilters = filters
-        .filter(filter => filter.includes('command/'))
-        .map(command => command.split('/')[1]);
-    const levelFilters = filters.filter(filter => filter.includes('level/'));
-    const hasFavFilter = filters.includes('fav/');
-
+        .filter(filter => filter.prefix === 'command')
+    const attackLevelFilters = filters.filter(filter => filter.prefix === 'attack_level');
+    const hasFavFilter = filters.find(filter => filter.id === 'fav');
 
     return list.filter(move => {
-        const parsedType = `level/${MOVE_LEVEL_MATCHES[move.attack_level]}`
-        const isValid = levelFilters.length ? levelFilters.includes(parsedType) : true;
+        const isValid = attackLevelFilters.length ?
+            attackLevelFilters.find(parsedType => parsedType.name === move.attack_level) : true;
         let hasCommandMatch = commandFilters.length ? false : true;
         const stringCommand = move.command.join('')
         const hasFavMatch = !hasFavFilter ? true : favMoves.includes(move.id);
         commandFilters.forEach(commandFilter => {
-            if (stringCommand.includes(commandFilter)) {
+            if (stringCommand.includes(commandFilter.id)) {
                 hasCommandMatch = true;
             }
         })

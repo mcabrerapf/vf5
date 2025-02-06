@@ -3,7 +3,7 @@ import './ActiveFiltersList.scss'
 import MoveTypeBadge from '../MoveTypeBadge';
 import MoveCommand from '../MoveCommand';
 import Button from '../Button';
-import CharacterBadge from '../CharacterBadge';
+import { capitalizeFirstLetter } from '../../helpers';
 
 const ActiveFiltersList = ({
     selectedFilters,
@@ -16,48 +16,49 @@ const ActiveFiltersList = ({
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
-                    const [filterType, parsedFilterName] = selectedFilter.split('/')
-                    const key = `${parsedFilterName}-${filterType}`;
-
+                    const { id, name, prefix } = selectedFilter
                     return (
                         <>
-                            {filterType === 'command' &&
+                            {prefix === 'command' &&
                                 <MoveCommand
-                                    key={key}
-                                    command={parsedFilterName.match(/\[.*?\]/g)}
-                                    onClick={() => onFilterClick({ target: { value: selectedFilter } })}
+                                    key={id}
+                                    command={name.match(/\[.*?\]/g)}
+                                    onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {filterType === 'launcher' &&
+                            {prefix === 'launcher' &&
                                 <MoveCommand
-                                    key={key}
+                                    key={id}
                                     modifier={"launcher"}
-                                    command={parsedFilterName.match(/\[.*?\]/g)}
-                                    onClick={() => onFilterClick({ target: { value: selectedFilter } })}
+                                    command={name.match(/\[.*?\]/g)}
+                                    onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {filterType === 'level' &&
+                            {prefix === 'attack_level' &&
                                 <MoveTypeBadge
-                                    key={key}
-                                    moveType={parsedFilterName}
+                                    key={id}
+                                    modifier={id}
+                                    moveType={name}
                                     value={selectedFilter}
-                                    onClick={onFilterClick}
+                                    onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {filterType === 'character' &&
-                                <CharacterBadge
-                                    key={key}
-                                    character={parsedFilterName}
-                                    value={selectedFilter}
-                                    onClick={onFilterClick}
-                                />
-                            }
-                            {filterType === 'other' &&
+                            {prefix === 'character' &&
                                 <MoveTypeBadge
-                                    key={key}
-                                    moveType={parsedFilterName}
+                                    key={id}
+                                    modifier={"character"}
+                                    moveType={capitalizeFirstLetter(id)}
                                     value={selectedFilter}
-                                    onClick={onFilterClick}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            }
+                            {prefix === 'other' &&
+                                <MoveTypeBadge
+                                    key={id}
+                                    modifier={id}
+                                    moveType={name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
                         </>

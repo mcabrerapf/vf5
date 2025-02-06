@@ -6,7 +6,7 @@ import LaunchersView from './LaunchersView';
 import CommandView from './CommandView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import { CHARACTERS, STRINGS } from '../../../constants';
+import { CHARACTERS, COMBO_FILTER_OPTIONS, STRINGS } from '../../../constants';
 import { getLaunchers } from './helpers';
 
 const CombosFiltersModal = ({
@@ -17,26 +17,40 @@ const CombosFiltersModal = ({
     const [selectedFilters, setSelectedFilters] = useState(_selectedFilters);
     const [commandFilter, setCommandFilter] = useState([])
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS);
-    const characterFilters = selectedFilters.filter(filter => filter.includes('character/'));
+    const characterFilters = selectedFilters.filter(filter => filter.prefix === 'character');
     const allCharactersSelected = characterFilters.length === CHARACTERS.length;
 
     const handleFilterSave = () => {
-        const parsedCommandFilter = commandFilter.length ?
-            `command/${commandFilter.join('')}`
-            : null;
-        const withCommand = [...selectedFilters, parsedCommandFilter].filter(Boolean);
+        const stringCommand = commandFilter.join('');
+        const isRepeat = selectedFilters.find(selected => selected.id === stringCommand);
+        if (!stringCommand || isRepeat) {
+            closeModal(selectedFilters);
+            return;
+        }
+        const finalCommandFilters = {
+            id: commandFilter.join(''),
+            prefix: 'command',
+            name: commandFilter.join('')
+        }
+        const withCommand = [...selectedFilters, finalCommandFilters];
         closeModal(withCommand);
     }
 
-    const handleCharacterClick = ({ target: { value } }) => {
-        const parsedValue = `character/${value}`;
+    const handleCharacterClick = ({ target: { value, className } }) => {
         let newTypeFilters;
-        if (!!selectedFilters.includes(parsedValue)) {
-            newTypeFilters = selectedFilters.filter(value => value !== parsedValue);
+        const { name: characterName } = COMBO_FILTER_OPTIONS.find(option => option.id === value);
+        if (className.includes('not-selected')) {
+            newTypeFilters = [
+                ...selectedFilters.map(val => val),
+                {
+                    id: value,
+                    name: characterName,
+                    prefix: 'character'
+                }
+            ];
         } else {
-            newTypeFilters = [...selectedFilters.map(val => val), parsedValue];
+            newTypeFilters = selectedFilters.filter(value => value.id !== value);
         }
-
         setSelectedFilters(newTypeFilters);
     }
 
@@ -51,26 +65,40 @@ const CombosFiltersModal = ({
         setSelectedFilters(updatedFilters);
     }
 
-    const handleOtherTagClick = ({ target: { value } }) => {
-        const parsedValue = `other/${value}`;
+    const handleOtherTagClick = ({ target: { value, className } }) => {
         let newTypeFilters;
-        if (!!selectedFilters.includes(parsedValue)) {
-            newTypeFilters = selectedFilters.filter(value => value !== parsedValue);
+        if (className.includes('not-selected')) {
+            const { name: filterName } = COMBO_FILTER_OPTIONS.find(option => option.id === value);
+            newTypeFilters = [
+                ...selectedFilters.map(val => val),
+                {
+                    id: value,
+                    name: filterName,
+                    prefix: 'other'
+                }
+            ];
         } else {
-            newTypeFilters = [...selectedFilters.map(val => val), parsedValue];
+            newTypeFilters = selectedFilters.filter(value => value.id !== value);
+
         }
 
         setSelectedFilters(newTypeFilters);
     }
 
     const handleLauncherClick = ({ target: { value, isSelected } }) => {
-        const stringLauncher = `launcher/${value.join('')}`;
-
+        const stringLauncher = value.join('');
         if (isSelected) {
-            const updatedFilters = selectedFilters.filter(filter => filter !== stringLauncher);
+            const updatedFilters = selectedFilters.filter(sFilter => sFilter.id !== stringLauncher);
             setSelectedFilters(updatedFilters);
         } else {
-            const updatedFilters = [...new Set([...selectedFilters, stringLauncher])].filter(Boolean);
+            const updatedFilters = [
+                ...selectedFilters,
+                {
+                    id: stringLauncher,
+                    name: stringLauncher,
+                    prefix: 'launcher'
+                }
+            ];
             setSelectedFilters(updatedFilters);
         }
 
@@ -88,7 +116,7 @@ const CombosFiltersModal = ({
                     onClick={() => setFiltersView(STRINGS.TAGS)}
                 />
                 <Button
-                    modifier={filtersView === STRINGS.LAUNCHERS ? 'active middle' : 'middle'}
+                    modifier={filtersView === STRINGS.LAUNCHERS ? 'active center' : 'center'}
                     text='Launchers'
                     onClick={() => setFiltersView(STRINGS.LAUNCHERS)}
                 />
@@ -117,8 +145,8 @@ const CombosFiltersModal = ({
                 }
                 {filtersView === STRINGS.COMMAND &&
                     <CommandView
-                    commandFilter={commandFilter}
-                    setCommandFilter={setCommandFilter}
+                        commandFilter={commandFilter}
+                        setCommandFilter={setCommandFilter}
                     />
                 }
             </div>

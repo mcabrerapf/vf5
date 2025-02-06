@@ -8,7 +8,7 @@ const MoveTypeBadge = ({
     value,
     onClick = () => { }
 }) => {
-    const className = ['move-type-badge', modifier, moveType].filter(Boolean).join(' ');
+    const className = ['move-type-badge', modifier].filter(Boolean).join(' ');
 
     return (
         <Button

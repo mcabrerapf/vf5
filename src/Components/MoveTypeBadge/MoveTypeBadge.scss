@@ -5,114 +5,117 @@
     height: 2.5rem!important;
     min-height: 2.5rem!important;
     box-sizing: border-box!important;
+    color: black;
 
-    &.high {
-        background-color: #ffe907;
-        color: black;
+    &.not-selected {
+        color: white!important;
+        background-color: black!important;
+        background: black!important;
     }
 
-    &.ex-high {
-        background-color: #c51a05;
-        color: black;
+    &.high {
+        background-color: var(--high);    
+    }
+
+    &.ex_high {
+        background-color: var(--ex-high);
     }
 
     &.mid {
-        background-color: #05d602;
-        color: black;
+        background-color: var(--mid);
     }
 
-    &.ex-mid {
-        background-color: #1db0f8;
-        color: black;
+    &.ex_mid {
+        background-color: var(--ex-mid);
     }
 
     &.low {
-        background-color: #df5fd9;
-        color: black;
+        background-color: var(--low);
     }
 
-    &.ex-low {
-        background-color: #904efe;
-        color: black;
+    &.ex_low {
+        background-color: var(--ex-low);
     }
 
-    &.high-throw {
-        background: linear-gradient(to right, #ffe907, white);
-        color: black;
+    &.high_unblockable {
+        background: linear-gradient(to right, var(--high), var(--catch));
     }
 
-    &.low-throw {
-        background: linear-gradient(to right, #df5fd9, white);
-        color: black;
+    &.high_throw {
+        background: linear-gradient(to right, var(--high), var(--throw));
     }
 
-    &.high-catch-throw {
+    &.low_throw {
+        background: linear-gradient(to right, var(--low), var(--throw));
+        
+    }
+
+    &.high_catch_throw {
         background: linear-gradient(to right, #ffe907, #c51a05);
-        color: black;
+        
     }
 
-    &.low-catch-throw {
+    &.low_catch_throw {
         background: linear-gradient(to right, #df5fd9, #c51a05);
-        color: black;
+        
     }
 
-    &.attack-throw {
+    &.hit_throw {
         background: linear-gradient(to right, #05d602, white);
-        color: black;
+        
     }
 
-    &.downed-throw {
+    &.down_throw {
         background: linear-gradient(to right, #904efe, white);
-        color: black;
+        
     }
 
-    &.throw-combo {
+    &.throw_combo {
         background: linear-gradient(to right, white, #05d602);
-        color: black;
+        
     }
 
-    &.downed-attack {
+    &.down_attacks {
         background-color: grey;
-        color: black;
+        
     }
 
-    &.sabaki {
+    &.deflect {
         background: linear-gradient(to right, white, grey);
-        color: black;
+        
     }
 
     &.special {
         background: linear-gradient(to right, gray, white);
-        color: black;
+        
     }
 
-    &.reversal {
+    &.atemi {
         background: linear-gradient(to top, gray, white);
-        color: black;
+        
     }
 
-    &.rev-combo {
+    &.inashi {
+        background: linear-gradient(to top, gray, white);
+        
+    }
+
+    &.rev_combo {
         background: linear-gradient(to top, #05d602, gray);
-        color: black;
-    }
-
-    &.no-category {
-        background-color: white;
-        color: black;
+        
     }
 
     &.wall {
-        color: black;
         background-color: darkgreen;
     }
 
     &.side {
-        color: black;
+        
         background-color: aqua;
     }
 
     &.ch {
-        color: black;
+        
         background-color: orange;
     }
     
@@ -122,7 +125,9 @@
 
     &.favourite  {
         background-color: gold;
-        color: black; 
     }
 
+    &.character {
+        background-color: pink;
+    }
 }

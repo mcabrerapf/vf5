@@ -1,10 +1,9 @@
 import React from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
-import CharacterBadge from '../CharacterBadge';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { CHARACTERS } from '../../constants';
-import { getLauncher } from '../../helpers';
+import { CHARACTERS, COMBO_FILTER_OPTIONS } from '../../constants';
+import { capitalizeFirstLetter, getLauncher } from '../../helpers';
 import Button from '../Button';
 
 const Combo = ({
@@ -82,29 +81,34 @@ const Combo = ({
             }
             <div className='combo__tags'>
                 {hasAllCharacters &&
-                    <CharacterBadge
-                        modifier={"selected"}
-                        character={'ALL'}
+                    <MoveTypeBadge
+                        modifier={"character"}
+                        moveType={'ALL'}
                         onClick={handleCharacterClick}
                     />
                 }
                 {!hasAllCharacters && characterTags.map(characterTag =>
-                    <CharacterBadge
+                    <MoveTypeBadge
                         key={characterTag}
-                        modifier={"selected"}
-                        character={characterTag}
+                        modifier={"character"}
+                        moveType={capitalizeFirstLetter(characterTag)}
                         onClick={handleCharacterClick}
                     />
                 )}
             </div>
             <div className='combo__tags'>
-                {tags.map(tag =>
-                    <MoveTypeBadge
-                        key={tag}
-                        moveType={tag}
-                        onClick={handleTagClick}
-                    />
-                )}
+                {tags.map(tag => {
+                    const { id } = COMBO_FILTER_OPTIONS.find(option => option.name === tag)
+
+                    return (
+                        <MoveTypeBadge
+                            key={tag}
+                            modifier={id}
+                            moveType={tag}
+                            onClick={handleTagClick}
+                        />
+                    )
+                })}
             </div>
         </div>
     )

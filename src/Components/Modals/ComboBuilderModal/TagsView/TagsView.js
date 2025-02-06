@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import './TagsView.scss';
-import CharacterBadge from '../../../CharacterBadge';
-import { CHARACTERS, MOVE_LEVEL_MATCHES } from '../../../../constants';
+import React, { useState } from 'react';
+import { CHARACTERS } from '../../../../constants';
 import MoveTypeBadge from '../../../MoveTypeBadge';
 import Button from '../../../Button';
+import { COMBO_FILTER_OPTIONS } from '../../../../constants/CHARACTERS';
+import { capitalizeFirstLetter } from '../../../../helpers';
 
 const TagsView = ({
-    characterIds,
     selectedCharacterTags,
     selectedTags,
     setSelectedTags,
@@ -18,7 +18,10 @@ const TagsView = ({
         let updatedTags;
 
         if (className.includes('not-selected')) {
-            updatedTags = [...selectedCharacterTags.map(tag => tag), value];
+            updatedTags = [
+                ...selectedCharacterTags.map(tag => tag), 
+                value
+            ];
 
         } else {
             updatedTags = selectedCharacterTags.filter(tag => tag !== value);
@@ -39,7 +42,7 @@ const TagsView = ({
 
     const handleTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-
+        
         if (className.includes('not-selected')) {
             updatedTags = [...selectedTags.map(tag => tag), value];
         } else {
@@ -47,18 +50,19 @@ const TagsView = ({
         }
         setSelectedTags(updatedTags);
     }
-    const otherTags = [...new Set(Object.keys(MOVE_LEVEL_MATCHES).map(key => MOVE_LEVEL_MATCHES[key]))];
+    const otherTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix !== 'character');
+    const characterTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix === 'character');
 
     return (
         <div className='tags-view'>
             <div className='tags-view__header'>
                 <Button
-                    modifier={tagsView === 'characters' ? 'active middle' : 'middle'}
+                    modifier={tagsView === 'characters' ? 'active center' : 'center'}
                     text="Characters"
                     onClick={() => setTagsView('characters')}
                 />
                 <Button
-                    modifier={tagsView === 'other' ? 'active middle' : 'middle'}
+                    modifier={tagsView === 'other' ? 'active center' : 'center'}
                     text="Other"
                     onClick={() => setTagsView('other')}
                 />
@@ -66,18 +70,18 @@ const TagsView = ({
             <div className='tags-view__content'>
                 {tagsView === 'characters' &&
                     <div className='tags-view__content__characters'>
-                        {characterIds.map(character =>
-                            <CharacterBadge
-                                key={character}
-                                character={character}
-                                value={character}
-                                modifier={selectedCharacterTags.includes(character) ? '' : 'not-selected'}
+                        {characterTags.map(character =>
+                            <MoveTypeBadge
+                                key={character.id}
+                                moveType={capitalizeFirstLetter(character.id)}
+                                value={character.id}
+                                modifier={selectedCharacterTags.find(sTag => sTag === character.id) ? 'character' : 'not-selected'}
                                 onClick={handleCharacterTagClick}
                             />
                         )}
-                        <CharacterBadge
-                            character="ALL"
-                            modifier={selectedCharacterTags.length === CHARACTERS.length ? '' : 'not-selected'}
+                        <MoveTypeBadge
+                            moveType="ALL"
+                            modifier={selectedCharacterTags.length === CHARACTERS.length ? 'character' : 'not-selected'}
                             onClick={handleAllClick}
                         />
                     </div>
@@ -86,27 +90,12 @@ const TagsView = ({
                     <div className='tags-view__content__other-tags'>
                         {otherTags.map(tag =>
                             <MoveTypeBadge
-                                key={tag}
-                                moveType={tag}
-                                modifier={selectedTags.includes(tag) ? '' : 'not-selected'}
+                                key={tag.id}
+                                moveType={tag.name}
+                                modifier={selectedTags.find(sTag => sTag === tag.name) ? tag.id : 'not-selected'}
                                 onClick={handleTagClick}
                             />
                         )}
-                        <MoveTypeBadge
-                            moveType="side"
-                            modifier={selectedTags.includes('side') ? '' : 'not-selected'}
-                            onClick={handleTagClick}
-                        />
-                        <MoveTypeBadge
-                            moveType="ch"
-                            modifier={selectedTags.includes('ch') ? '' : 'not-selected'}
-                            onClick={handleTagClick}
-                        />
-                        <MoveTypeBadge
-                            moveType="wall"
-                            modifier={selectedTags.includes('wall') ? '' : 'not-selected'}
-                            onClick={handleTagClick}
-                        />
                     </div>
                 }
             </div>

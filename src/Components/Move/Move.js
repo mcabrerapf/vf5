@@ -2,7 +2,7 @@ import React from 'react';
 import './Move.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { MOVE_LEVEL_MATCHES } from '../../constants';
+import { ATTACK_LEVELS_NAME_TO_ID, ATTACK_LEVELS_OBJ } from '../../constants';
 import Button from '../Button';
 
 const Move = ({
@@ -53,7 +53,7 @@ const Move = ({
 
     const handleOnMoveTypeClick = (e) => {
         e.stopPropagation();
-        onMoveTypeClick(e);
+        onMoveTypeClick(move.attack_level);
     }
 
     const handleOnCategoryClick = (e) => {
@@ -61,7 +61,7 @@ const Move = ({
         onMoveCategoryClick(e);
     }
 
-    const handleOnCommanClick = (e) => {
+    const handleOnCommandClick = (e) => {
         e.stopPropagation();
         onCommandClick(command.join(''))
 
@@ -73,9 +73,9 @@ const Move = ({
     }
     const favouriteModifier = isFavourite ? 'favourite' : '';
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
-    const parsedLevel = MOVE_LEVEL_MATCHES[attack_level] || attack_level;
+    const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-
+    
     return (
         <div className={className} onClick={handleOnClick}>
             <div className='move__main'>
@@ -86,7 +86,9 @@ const Move = ({
                 </div>
                 <div className='move__main__badges'>
                     <MoveTypeBadge
-                        moveType={parsedLevel}
+                        modifier={parsedLevel}
+                        value={parsedLevel}
+                        moveType={attack_level}
                         onClick={handleOnMoveTypeClick}
                     />
                     <Button
@@ -99,6 +101,7 @@ const Move = ({
             </div>
             <div className='move__category'>
                 <MoveTypeBadge
+                    modifier={'not-selected'}
                     moveType={categoryName}
                     onClick={handleOnCategoryClick}
                 />
@@ -123,7 +126,7 @@ const Move = ({
                 </span>
             </div>
             <MoveCommand
-                onClick={handleOnCommanClick}
+                onClick={handleOnCommandClick}
                 command={command}
             />
             <div className='move__notes'>

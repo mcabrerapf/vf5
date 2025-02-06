@@ -17,32 +17,31 @@ const MoveListFiltersModal = ({
     const [commandFilter, setCommandFilter] = useState([])
     
     const handleFilterSave = () => {
-        const parsedCommandFilter = commandFilter.length ?
-            `command/${commandFilter.join('')}`
-            : null;
-        const withCommand = [...selectedTypeFilters, parsedCommandFilter].filter(Boolean);
-        closeModal([...new Set(withCommand)]);
-    }
-
-    const handleTypeClick = ({ target: { value } }) => {
-        const parsedValue = `level/${value}`;
-        let newTypeFilters;
-        if (!!selectedTypeFilters.includes(parsedValue)) {
-            newTypeFilters = selectedTypeFilters.filter(value => value !== parsedValue);
-        } else {
-            newTypeFilters = [...selectedTypeFilters.map(val => val), parsedValue];
+        const stringCommand = commandFilter.join('');
+        const isRepeat = selectedFilters.find(selected => selected.id === stringCommand);
+        if (!stringCommand || isRepeat) {
+            closeModal(selectedTypeFilters);
+            return;
         }
 
-        setSelectedTypeFilters(newTypeFilters);
+        const finalCommandFilters = {
+            id: commandFilter.join(''),
+            prefix: 'command',
+            name: commandFilter.join('')
+        }
+
+        const withCommand = [...selectedTypeFilters, finalCommandFilters];
+        closeModal(withCommand);
     }
 
-    const handleButtonClick = (value) => {
-        const parsedValue = `command/${value}`;
+    const handleFilterClick = (filter) => {
         let newTypeFilters;
-        if (!!selectedTypeFilters.includes(parsedValue)) {
-            newTypeFilters = selectedTypeFilters.filter(value => value !== parsedValue);
+        const hasFilter = !!selectedTypeFilters.find(selected => selected.id === filter.id)
+
+        if (hasFilter) {
+            newTypeFilters = selectedTypeFilters.filter(value => value.id !== filter.id);
         } else {
-            newTypeFilters = [...selectedTypeFilters.map(val => val), parsedValue];
+            newTypeFilters = [...selectedTypeFilters.map(val => val), filter];
         }
 
         setSelectedTypeFilters(newTypeFilters);
@@ -53,12 +52,15 @@ const MoveListFiltersModal = ({
     }
 
     const handleFavoriteClick = () => {
-        const parsedValue = `fav/`;
+
         let newTypeFilters;
-        if (!!selectedTypeFilters.includes(parsedValue)) {
-            newTypeFilters = selectedTypeFilters.filter(value => value !== parsedValue);
+        if (!!selectedTypeFilters.find(sFilter => sFilter.id === 'fav')) {
+            newTypeFilters = selectedTypeFilters.filter(value => value.id !== 'fav');
         } else {
-            newTypeFilters = [...selectedTypeFilters.map(val => val), parsedValue];
+            newTypeFilters = [
+                ...selectedTypeFilters.map(val => val),
+                { id: 'fav', name: "fav", prefix: 'fav' }
+            ];
         }
 
         setSelectedTypeFilters(newTypeFilters);
@@ -83,8 +85,7 @@ const MoveListFiltersModal = ({
                 {filtersView === STRINGS.TAGS &&
                     <TagsView
                         selectedTypeFilters={selectedTypeFilters}
-                        handleButtonClick={handleButtonClick}
-                        handleTypeClick={handleTypeClick}
+                        handleFilterClick={handleFilterClick}
                         handleFavoriteClick={handleFavoriteClick}
                     />
                 }

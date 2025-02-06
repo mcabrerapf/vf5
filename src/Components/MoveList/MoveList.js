@@ -12,7 +12,7 @@ import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
-import { CHARACTERS_JSON } from '../../constants/CHARACTERS';
+import { CHARACTERS_JSON, MOVELIST_FILTER_OPTIONS } from '../../constants/CHARACTERS';
 
 const Movelist = () => {
     const listRef = useRef(null);
@@ -20,7 +20,7 @@ const Movelist = () => {
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
-
+    
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
@@ -38,8 +38,9 @@ const Movelist = () => {
     )
 
     const handleFiltersChange = (newFilters) => {
+        
         if (newFilters) {
-            setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, newFilters);
+            setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
         }
     }
@@ -54,11 +55,15 @@ const Movelist = () => {
         setFavouriteMoves(updatedFavorites);
     }
 
-    const onMoveTypeClick = ({ target: { value } }) => {
-        const parsedType = `level/${value}`
-        if (selectedFilters.includes(parsedType)) return;
-        const updatedFilters = [...selectedFilters.map(filter => filter), parsedType];
-        setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, updatedFilters);
+    const onMoveTypeClick = (attackLevel) => {
+        if (selectedFilters.find(sFilter => sFilter.id === attackLevel)) return;
+        const { id: levelId } = MOVELIST_FILTER_OPTIONS.find(option => option.name === attackLevel);
+
+        const updatedFilters = [
+            ...selectedFilters.map(filter => filter),
+            { id: levelId, prefix: "attack_level", name: attackLevel }
+        ];
+        setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(updatedFilters));
         setSelectedFilters(updatedFilters);
     }
 
@@ -67,8 +72,8 @@ const Movelist = () => {
         setSelectedMovelistSort('/asc');
     }
 
-    const handleFilterClick = ({ target: { value } }) => {
-        const newFilters = selectedFilters.filter(filter => filter !== value);
+    const handleFilterClick = (filter) => {
+        const newFilters = selectedFilters.filter(sFilter => sFilter.id !== filter.id);
         handleFiltersChange(newFilters);
     }
 
@@ -80,9 +85,11 @@ const Movelist = () => {
     }
 
     const onCommandClick = (command) => {
-        const commandFilter = `command/${command}`;
-        if (!!selectedFilters.find(filter => filter === commandFilter)) return;
-        const newFilters = [...selectedFilters.map(filter => filter), commandFilter];
+        if (!!selectedFilters.find(filter => filter.id === command)) return;
+        const newFilters = [
+            ...selectedFilters.map(filter => filter),
+            { id: command, name: command, prefix: 'command' }
+        ];
         handleFiltersChange(newFilters);
     }
 

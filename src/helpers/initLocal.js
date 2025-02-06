@@ -1,5 +1,4 @@
 import {
-    ALL_DATA_KEY,
     CHARACTERS_DATA_KEY,
     MOVELIST_SORT_OPTIONS,
     SELECTED_CHARACTER_KEY,
@@ -10,7 +9,7 @@ import {
     SELECTED_MOVELIST_SORT_KEY,
     STRINGS
 } from "../constants";
-import CHARACTERS, { CHARACTERS_JSON } from "../constants/CHARACTERS";
+import { CHARACTERS_JSON } from "../constants/CHARACTERS";
 import getFromLocal from "./getFromLocal";
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
@@ -24,7 +23,6 @@ const {
     NOTES
 } = STRINGS;
 const validateOnInit = () => {
-
     try {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY)
         if (

@@ -10,17 +10,16 @@ const sortCombos = (list) => {
 
 const filterCombos = (list, filters) => {
     const characterFilters = filters
-        .filter(filter => filter.includes('character/'))
-        .map(filter => filter.split('character/')[1]);
+        .filter(filter => filter.prefix === 'character')
     const otherFilters = filters
-        .filter(filter => filter.includes('other/'))
-        .map(filter => filter.split('other/')[1]);
+        .filter(filter => filter.prefix === 'other')
+
     const launcherFilters = filters
-        .filter(filter => filter.includes('launcher/'))
-        .map(filter => filter.split('launcher/')[1]);
+        .filter(filter => filter.prefix === 'launcher')
+
     const commandFilters = filters
-        .filter(filter => filter.includes('command/'))
-        .map(command => command.split('/')[1]);
+        .filter(filter => filter.prefix === 'command')
+
 
     return list
         .filter(listItem => {
@@ -32,13 +31,13 @@ const filterCombos = (list, filters) => {
             let hasLauncherMatch = launcherFilters.length ? false : true;
 
             characterFilters.forEach(filter => {
-                if (stringifiedCharacters.includes(filter)) {
+                if (stringifiedCharacters.includes(filter.id)) {
                     hasCharacterMatch = true;
                 }
             })
 
             tags.forEach(tag => {
-                if (!!otherFilters.includes(tag)) {
+                if (!!otherFilters.find(oFilter => oFilter.name === tag)) {
                     hasTagMatch = true;
                 }
             })
@@ -47,7 +46,7 @@ const filterCombos = (list, filters) => {
                 const [launcher] = getLauncher(command);
                 const stringLauncher = launcher.join('');
 
-                if (stringLauncher === launcherFilter) {
+                if (stringLauncher === launcherFilter.id) {
                     hasLauncherMatch = true;
                 }
             })
@@ -55,7 +54,7 @@ const filterCombos = (list, filters) => {
             let hasCommandMatch = commandFilters.length ? false : true;
             const stringCommand = command.join('')
             commandFilters.forEach(commandFilter => {
-                if (stringCommand.includes(commandFilter)) {
+                if (stringCommand.includes(commandFilter.id)) {
                     hasCommandMatch = true;
                 }
             })

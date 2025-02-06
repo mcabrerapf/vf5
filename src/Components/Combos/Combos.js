@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Combos.scss'
-import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
+import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS, COMBO_FILTER_OPTIONS } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
@@ -36,7 +36,7 @@ const Combos = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
-            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, newFilters);
+            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
         }
 
@@ -111,36 +111,38 @@ const Combos = () => {
 
     const handleCharacterClick = ({ target: { value } }) => {
         if (value === 'ALL') {
-            const updatedFilters = selectedFilters.filter(filter => !filter.includes('character/'));
-            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, updatedFilters);
+            const updatedFilters = selectedFilters.filter(filter => filter.prefix !== 'character');
+            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(updatedFilters));
             setSelectedFilters(updatedFilters);
         } else {
-            const parsedValue = `character/${value}`
-            if (selectedFilters.includes(parsedValue)) return;
-            const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
-            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, updatedFilters);
-            setSelectedFilters(updatedFilters);
+            if (selectedFilters.find(sFilter => sFilter.name === value)) return;
+            const newFilter = COMBO_FILTER_OPTIONS.find(option => option.id === value.toLocaleLowerCase());
+            const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
+            handleFiltersChange(updatedFilters);
         }
 
     }
 
     const handleTagClick = ({ target: { value } }) => {
-        const parsedValue = `other/${value}`
-        if (selectedFilters.includes(parsedValue)) return;
-        const updatedFilters = [...selectedFilters.map(filter => filter), parsedValue];
-        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, updatedFilters);
-        setSelectedFilters(updatedFilters);
+        if (selectedFilters.find(sFilter => sFilter.name === value)) return;
+        const newFilter = COMBO_FILTER_OPTIONS.find(option => option.name === value);
+        const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
+        handleFiltersChange(updatedFilters);
     }
 
-    const handleFilterClick = ({ target: { value } }) => {
-        const newFilters = selectedFilters.filter(filter => filter !== value);
+    const handleFilterClick = (filter) => {
+        const newFilters = selectedFilters.filter(sFilter => sFilter.id !== filter.id);
         handleFiltersChange(newFilters);
     }
 
     const handleLauncherClick = ({ target: { value } }) => {
-        if (!value) return;
-        const stringLauncher = `launcher/${value.join('')}`;
-        const newFilters = [...new Set([...selectedFilters, stringLauncher])];
+        if (!value || selectedFilters.find(sFilter => sFilter.id === value.join(''))) return;
+        const stringLauncher = value.join('');
+        const newFilters = [
+            ...selectedFilters,
+            { id: stringLauncher, name: stringLauncher, prefix: 'launcher' }
+
+        ]
         handleFiltersChange(newFilters);
 
     }

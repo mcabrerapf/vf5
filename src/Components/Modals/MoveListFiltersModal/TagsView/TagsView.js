@@ -1,38 +1,38 @@
 import React from 'react';
 import './TagsView.scss'
 import MoveTypeBadge from '../../../MoveTypeBadge';
-import { MOVE_LEVEL_MATCHES } from '../../../../constants';
+import { MOVELIST_FILTER_OPTIONS } from '../../../../constants';
 
 const TagsView = ({
     selectedTypeFilters,
-    handleButtonClick,
-    handleTypeClick,
+    handleFilterClick,
     handleFavoriteClick
 }) => {
-    const typeOptions = [...new Set(Object.keys(MOVE_LEVEL_MATCHES).map(key => MOVE_LEVEL_MATCHES[key]))];
 
-    const isFavSelected = selectedTypeFilters.includes(`fav/`);
-    const favModifier = isFavSelected ? 'selected' : 'not-selected';
+    const isFavSelected = selectedTypeFilters.find(filter => filter.id === 'fav');
+    const favModifier = isFavSelected ? 'favourite' : 'not-selected';
 
     return (
         <div className='tags-view'>
             <div className='tags-view__types'>
-                {typeOptions.map(typeOption => {
-                    const isSelected = selectedTypeFilters.includes(`level/${typeOption}`);
-                    const modifier = isSelected ? 'selected' : 'not-selected';
+                {MOVELIST_FILTER_OPTIONS.map(filterOption => {
+                    const isSelected = selectedTypeFilters.find(selected => selected.id === filterOption.id);
+                    const modifier = isSelected ? filterOption.id : 'not-selected';
 
                     return (
                         <MoveTypeBadge
-                            key={typeOption}
+                            key={filterOption.id}
                             modifier={modifier}
-                            moveType={typeOption}
-                            onClick={handleTypeClick}
+                            value={filterOption.id}
+                            moveType={filterOption.name}
+                            onClick={() => handleFilterClick(filterOption)}
                         />
                     )
                 })}
                 <MoveTypeBadge
                     modifier={favModifier}
-                    moveType={'favourite'}
+                    value={"favourite"}
+                    moveType={'Favourite'}
                     onClick={handleFavoriteClick}
                 />
             </div>

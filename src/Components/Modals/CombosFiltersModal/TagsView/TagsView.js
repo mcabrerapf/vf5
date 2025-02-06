@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import './TagsView.scss';
-import { CHARACTERS, MOVE_LEVEL_MATCHES } from "../../../../constants";
-import CharacterBadge from "../../../CharacterBadge";
+import { CHARACTERS, COMBO_FILTER_OPTIONS } from "../../../../constants";
 import MoveTypeBadge from "../../../MoveTypeBadge";
 import Button from "../../../Button";
+import { capitalizeFirstLetter } from "../../../../helpers";
 
 const TagsView = ({
     selectedFilters,
@@ -13,18 +13,18 @@ const TagsView = ({
     handleOtherTagClick
 }) => {
     const [tagsView, setTagsView] = useState('characters');
-    const otherTags = [...new Set(Object.keys(MOVE_LEVEL_MATCHES).map(key => MOVE_LEVEL_MATCHES[key]))];
+    const otherTags = COMBO_FILTER_OPTIONS.filter(filter => filter.prefix === 'other');
 
     return (
         <div className='tags-view'>
             <div className='tags-view__header'>
                 <Button
-                    modifier={tagsView === 'characters' ? 'active middle' : 'middle'}
+                    modifier={tagsView === 'characters' ? 'active center' : 'center'}
                     text="Characters"
                     onClick={() => setTagsView('characters')}
                 />
                 <Button
-                    modifier={tagsView === 'other' ? 'active middle' : 'middle'}
+                    modifier={tagsView === 'other' ? 'active center' : 'center'}
                     text="Other"
                     onClick={() => setTagsView('other')}
                 />
@@ -33,21 +33,22 @@ const TagsView = ({
                 {tagsView === 'characters' &&
                     <div className='tags-view__content__characters'>
                         {CHARACTERS.map(character => {
-                            const isSelected = selectedFilters.includes(`character/${character.id}`);
-                            const modifier = isSelected ? '' : 'not-selected';
+                            const isSelected = selectedFilters.find(sFilter=> sFilter.id === character.id);
+                            const modifier = isSelected ? 'character' : 'not-selected';
 
                             return (
-                                <CharacterBadge
+                                <MoveTypeBadge
                                     key={character.id}
                                     modifier={modifier}
-                                    character={character.id}
+                                    value={character.id}
+                                    moveType={capitalizeFirstLetter(character.id)}
                                     onClick={handleCharacterClick}
                                 />
                             )
                         })}
-                        <CharacterBadge
+                        <MoveTypeBadge
                             modifier={allCharactersSelected ? '' : 'not-selected'}
-                            character={'ALL'}
+                            moveType={'ALL'}
                             onClick={handleAllClick}
                         />
                     </div>
@@ -55,29 +56,15 @@ const TagsView = ({
 
                 {tagsView === 'other' &&
                     <div className='tags-view__content__other-tags'>
-                        {otherTags.map(tag =>
+                         {otherTags.map(tag =>
                             <MoveTypeBadge
-                                key={tag}
-                                moveType={tag}
-                                modifier={selectedFilters.includes(`other/${tag}`) ? '' : 'not-selected'}
+                                key={tag.id}
+                                moveType={tag.name}
+                                value={tag.id}
+                                modifier={selectedFilters.find(sTag => sTag.id === tag.id) ? tag.id : 'not-selected'}
                                 onClick={handleOtherTagClick}
                             />
                         )}
-                        <MoveTypeBadge
-                            moveType="side"
-                            modifier={selectedFilters.includes('other/side') ? '' : 'not-selected'}
-                            onClick={handleOtherTagClick}
-                        />
-                        <MoveTypeBadge
-                            moveType="ch"
-                            modifier={selectedFilters.includes('other/ch') ? '' : 'not-selected'}
-                            onClick={handleOtherTagClick}
-                        />
-                        <MoveTypeBadge
-                            moveType="wall"
-                            modifier={selectedFilters.includes('other/wall') ? '' : 'not-selected'}
-                            onClick={handleOtherTagClick}
-                        />
                     </div>
                 }
             </div>

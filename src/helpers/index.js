@@ -1,3 +1,4 @@
+import capitalizeFirstLetter from "./capitalizeFirstLetter";
 import copyToClipboard from "./copyToClipboard";
 import generateId from "./generateId";
 import getFromLocal from "./getFromLocal";
@@ -7,7 +8,9 @@ import initiLocal from "./initLocal";
 import setLocalStorage from "./setLocalStorage";
 import validateImportData from "./validateImportData";
 
+
 export {
+    capitalizeFirstLetter,
     copyToClipboard,
     generateId,
     getFromLocal,

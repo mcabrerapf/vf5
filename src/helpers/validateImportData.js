@@ -1,4 +1,4 @@
-import { CHARACTERS, MOVE_LEVELS } from "../constants";
+import { ATTACK_LEVELS, CHARACTERS } from "../constants";
 const validateNote = note => {
     if (
         !note ||
@@ -24,7 +24,7 @@ const validateCombo = (combo) => {
 
     const validTags = Array.isArray(tags) ?
         tags.filter(tag => {
-            return typeof tag === 'string' && MOVE_LEVELS.includes(tag);
+            return typeof tag === 'string' && ATTACK_LEVELS.find(attackLevel => attackLevel.id === tag);
         }) :
         [];
     const validCharacterTags = Array.isArray(characterTags) ?
@@ -50,7 +50,7 @@ const validateCombo = (combo) => {
 }
 
 const validateImportData = (data) => {
-    if (Array.isArray(data) || typeof data !=='object') return [false];
+    if (Array.isArray(data) || typeof data !== 'object') return [false];
     const validatedData = {};
     let isValid = false;
     CHARACTERS.forEach(character => {

@@ -23,7 +23,7 @@ const MovelistHeader = ({
     const [showSortModal, setShowSortModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
 
-    const hasFav = selectedFilters.includes('fav/')
+    const hasFav = !!selectedFilters.find(sFilter => sFilter.id === 'fav');
 
     const handleCategorySelectModalClose = (type) => {
         if (type) {
@@ -62,9 +62,12 @@ const MovelistHeader = ({
     const toogleFavorite = () => {
         let updatedFilters;
         if (hasFav) {
-            updatedFilters = selectedFilters.filter(filter => !filter.includes('fav/'));
+            updatedFilters = selectedFilters.filter(filter => !filter.id === 'fav');
         } else {
-            updatedFilters = [...selectedFilters.map(filter => filter), 'fav/'];
+            updatedFilters = [
+                ...selectedFilters.map(filter => filter),
+                { id: 'fav', name: 'fav', prefix: 'fav' }
+            ];
         }
         handleFiltersChange(updatedFilters);
     }

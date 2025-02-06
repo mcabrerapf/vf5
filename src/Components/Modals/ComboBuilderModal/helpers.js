@@ -1,4 +1,4 @@
-import { CHARACTERS, MOVE_LEVEL_MATCHES } from "../../../constants";
+import { ATTACK_LEVELS, CHARACTERS } from "../../../constants";
 
 const notValidCharacters = ['or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
 
@@ -28,7 +28,7 @@ const getLauncherType = (launcher, character) => {
 
     if (!moveMatch) return null;
     const { attack_level } = moveMatch;
-    return MOVE_LEVEL_MATCHES[attack_level];
+    return ATTACK_LEVELS[attack_level];
 }
 
 const getExtraTags = (command) => {

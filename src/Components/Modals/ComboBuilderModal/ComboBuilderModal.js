@@ -7,19 +7,17 @@ import TagsView from './TagsView';
 import ExtrasView from './ExtrasView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import { CHARACTERS } from '../../../constants';
 import { getTagsFromCommand } from './helpers';
 
 const ComboBuilderModal = ({
     selectedCombo
 }) => {
-    const characterIds = CHARACTERS.map(character => character.id);
     const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
     const { selectedCharacter } = useMainContext();
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);
-    const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || characterIds);
+    const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || []);
     const [selectedTags, setSelectedTags] = useState(tags || []);
     const [comboDamage, setComboDamage] = useState(damage || 1);
     const [comboNote, setComboNote] = useState(note || '');
@@ -61,7 +59,7 @@ const ComboBuilderModal = ({
                     onClick={handleViewChage}
                 />
                 <Button
-                    modifier={comboView === 'tags' ? 'active middle' : 'middle'}
+                    modifier={comboView === 'tags' ? 'active center' : 'center'}
                     value="tags"
                     text="Tags"
                     onClick={handleViewChage}
@@ -87,7 +85,6 @@ const ComboBuilderModal = ({
                 }
                 {comboView === 'tags' &&
                     <TagsView
-                        characterIds={characterIds}
                         selectedCharacterTags={selectedCharacterTags}
                         selectedTags={selectedTags}
                         setSelectedTags={setSelectedTags}
