@@ -109,7 +109,7 @@ const ComboBuilderModal = ({
                 <div>
                     {!!id &&
                         <Button
-                            text='⌦'
+                            text='DELETE'
                             disabled={!canSave}
                             onClick={onDeleteClose}
                         />
