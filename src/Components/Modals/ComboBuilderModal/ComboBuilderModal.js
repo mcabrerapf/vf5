@@ -10,7 +10,8 @@ import Button from '../../Button';
 import { getTagsFromCommand } from './helpers';
 
 const ComboBuilderModal = ({
-    selectedCombo
+    selectedCombo,
+    handleDeleteClick
 }) => {
     const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
     const { selectedCharacter } = useMainContext();
@@ -47,6 +48,10 @@ const ComboBuilderModal = ({
         setIsFavourite(!isFavourite);
     }
 
+    const onDeleteClose = () => {
+        handleDeleteClick(selectedCombo)
+        closeModal();
+    }
     const canSave = !!comboNotation.length && !!selectedCharacterTags.length;
 
     return (
@@ -100,7 +105,17 @@ const ComboBuilderModal = ({
                     />
                 }
             </div>
-            <ModalFooter modifier="align-right">
+            <ModalFooter>
+                <div>
+                    {!!id &&
+                        <Button
+                            text='⌦'
+                            disabled={!canSave}
+                            onClick={onDeleteClose}
+                        />
+                    }
+                </div>
+
                 <Button
                     text='✓'
                     disabled={!canSave}

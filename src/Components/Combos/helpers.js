@@ -20,10 +20,11 @@ const filterCombos = (list, filters) => {
     const commandFilters = filters
         .filter(filter => filter.prefix === 'command')
 
+    const hasFavFilter = filters.find(filter => filter.id === 'fav')
 
     return list
         .filter(listItem => {
-            const { characterTags, tags, command } = listItem;
+            const { characterTags, tags, command, favourite } = listItem;
             const stringifiedCharacters = characterTags.join(' ');
 
             let hasCharacterMatch = characterFilters.length ? false : true;
@@ -58,7 +59,9 @@ const filterCombos = (list, filters) => {
                     hasCommandMatch = true;
                 }
             })
-            return hasCharacterMatch && hasTagMatch && hasLauncherMatch && hasCommandMatch;
+
+            const hasFavMatch = hasFavFilter ? favourite : true
+            return hasCharacterMatch && hasTagMatch && hasLauncherMatch && hasCommandMatch && hasFavMatch;
         })
 
 }

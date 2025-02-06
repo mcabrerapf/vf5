@@ -171,7 +171,7 @@ const Combos = () => {
                 closeModal={handleCloseModal}
             >
                 <Modal>
-                    <ComboBuilderModal selectedCombo={selectedCombo} />
+                    <ComboBuilderModal selectedCombo={selectedCombo} handleDeleteClick={handleDeleteClick} />
                 </Modal>
             </ModalContextWrapper>
             <ModalContextWrapper
@@ -210,11 +210,7 @@ const Combos = () => {
                                 onTagClick={handleTagClick}
                                 onCharacterClick={handleCharacterClick}
                             />
-                            <Button
-                                modifier="no-border"
-                                text="X"
-                                onClick={() => handleDeleteClick(combo)}
-                            />
+    
                         </li>
                     )}
                 </ul>
