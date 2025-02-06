@@ -51,6 +51,22 @@ const validateOnInit = () => {
         return;
     }
 }
+const validateSorts = () => {
+    try {
+        const movelistSort = localStorage.getItem(SELECTED_MOVELIST_SORT_KEY)
+        if (!movelistSort) throw new Error("No movelist sort");
+        const parsedMovelistSort = JSON.parse(movelistSort);
+        if (
+            !parsedMovelistSort ||
+            !MOVELIST_SORT_OPTIONS.find(option => option.id === parsedMovelistSort.id)
+        ) throw new Error("No valid movelist sort");
+    } catch (error) {
+        console.log(error);
+        localStorage.setItem(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(MOVELIST_SORT_OPTIONS[0]));
+        window.location.reload();
+        return;
+    }
+}
 
 const validateFilters = () => {
     try {
@@ -69,10 +85,12 @@ const validateFilters = () => {
         return;
     }
 }
+
 const initLocal = () => {
     const selectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY);
     validateOnInit();
     validateFilters();
+    validateSorts();
     if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) {
         const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
         setLocalStorage(SELECTED_CHARACTER_KEY, AKIRA);
@@ -95,14 +113,6 @@ const initLocal = () => {
         setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, ALL_MOVES);
         return window.location.reload();
     }
-    // const selectedMovelistSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
-    // const parsedSort = selectedMovelistSort && typeof selectedMovelistSort === 'string' ?
-    //     selectedMovelistSort.split('/') : '';
-    // if (!MOVELIST_SORT_OPTIONS.find(option => option[0] === parsedSort[0])) {
-    //     const defaultSort = `${MOVELIST_SORT_OPTIONS[0][0]}/${ASC}`
-    //     setLocalStorage(SELECTED_MOVELIST_SORT_KEY, defaultSort);
-    //     return window.location.reload();
-    // }
 }
 
 export default initLocal;
