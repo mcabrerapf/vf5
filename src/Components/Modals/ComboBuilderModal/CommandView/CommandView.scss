@@ -7,20 +7,25 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        height: 3rem;
 
-        &__damage {
+        &__inputs {
             display: flex;
             flex-direction: row;
-            align-items: center;
-            gap: 1rem;
-
-            label {
-                font-size: 1.5rem;
-                font-weight: 600;
-                text-decoration: underline;
+            gap: 0.5rem;
+            input[type="number"]::-webkit-outer-spin-button,
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"] {
+                -webkit-appearance: none;
+                margin: 0;
+                -moz-appearance: textfield;
             }
 
-            input {
+            &__name {
+                width: 20rem;
+            }
+
+            &__damage {
                 width: 2.5rem;
                 text-align: center;
             }

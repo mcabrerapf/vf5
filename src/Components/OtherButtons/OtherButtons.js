@@ -1,6 +1,6 @@
 import React from 'react';
 import './OtherButtons.scss'
-import Notation from '../Notation';
+import Button from '../Button';
 
 const OtherButtons = ({
     isShiftActive,
@@ -10,49 +10,51 @@ const OtherButtons = ({
     return (
         <div className='other-buttons'>
             <div className='other-buttons__grouping'>
-                <Notation
-                    notation='[P]'
-                    onClick={onClick}
+                <Button
+                    modifier={"P"}
+                    text="P"
+                    onClick={() => onClick('[P]')}
                 />
-                <Notation
-                    notation='[K]'
-                    onClick={onClick}
+                <Button
+                    modifier={"K"}
+                    text="K"
+                    onClick={() => onClick('[K]')}
                 />
-                <Notation
-                    notation='[G]'
-                    onClick={onClick}
-                />
-            </div>
-            <div className='other-buttons__grouping'>
-                <Notation
-                    notation='[+]'
-                    onClick={onClick}
-                />
-                <Notation
-                    notation='or'
-                    onClick={onClick}
-
-                />
-                <Notation
-                    modifier={isShiftActive ? 'active' : ''}
-                    notation={isShiftActive ? 'ch' : 'hit'}
-                    onClick={onClick}
+                <Button
+                    modifier={"G"}
+                    text="G"
+                    onClick={() => onClick('[G]')}
                 />
             </div>
             <div className='other-buttons__grouping'>
-
-                <Notation
-                    modifier={isShiftActive ? 'active' : ''}
-                    notation={isShiftActive ? 'wb' : 'w'}
-                    onClick={onClick}
+                <Button
+                    text="+"
+                    onClick={() => onClick('[+]')}
                 />
-                <Notation
-                    notation='side'
-                    onClick={onClick}
+                <Button
+                    text="or"
+                    onClick={() => onClick('or')}
                 />
-                <Notation
+                <Button
+                    modifier={isShiftActive ? 'ch' : 'hit'}
+                    text={isShiftActive ? 'ch' : 'hit'}
+                    onClick={() => onClick(isShiftActive ? 'ch' : 'hit')}
+                />
+            </div>
+            <div className='other-buttons__grouping'>
+                <Button
+                    modifier={isShiftActive ? 'wb' : 'w'}
+                    text={isShiftActive ? 'wb' : 'w'}
+                    onClick={() => onClick(isShiftActive ? 'wb' : 'w')}
+                />
+                <Button
+                    modifier={'sd'}
+                    text={'sd'}
+                    onClick={() => onClick('sd')}
+                />
+                <Button
                     modifier={isShiftActive ? 'active' : ''}
-                    notation='shft'
+                    text={'⇪'}
                     onClick={onShiftClick}
                 />
             </div>

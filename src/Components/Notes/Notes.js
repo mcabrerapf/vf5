@@ -5,7 +5,7 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
 import Modal from '../Modals/Modal';
 import NoteModal from '../Modals/NoteModal';
-import DeleteNodeModal from '../Modals/DeleteNodeModal';
+import DeleteModal from '../Modals/DeleteModal';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
 import { CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
 
@@ -112,7 +112,7 @@ const Notes = () => {
                 closeModal={handleDeleteNote}
             >
                 <Modal>
-                    <DeleteNodeModal note={selectedNote} />
+                    <DeleteModal data={selectedNote} />
                 </Modal>
             </ModalContextWrapper>
             <div className='notes__list-container'>

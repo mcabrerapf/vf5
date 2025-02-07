@@ -7,7 +7,7 @@ import TagsView from './TagsView';
 import ExtrasView from './ExtrasView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import { getTagsFromCommand } from './helpers';
+import { getCommandData } from './helpers';
 import { CHARACTERS } from '../../../constants';
 
 const ComboBuilderModal = ({
@@ -15,7 +15,7 @@ const ComboBuilderModal = ({
     handleDeleteClick
 }) => {
     const { selectedCharacter } = useMainContext();
-    const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
+    const { id, name, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
     const initCharacters = CHARACTERS.map(char => char.id);
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
@@ -23,16 +23,17 @@ const ComboBuilderModal = ({
     const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || initCharacters);
     const [selectedTags, setSelectedTags] = useState(tags || []);
     const [comboDamage, setComboDamage] = useState(damage || 1);
+    const [comboName, setComboName] = useState(name || 'Combo Name');
     const [comboNote, setComboNote] = useState(note || '');
     const [isFavourite, setIsFavourite] = useState(!!favourite);
 
     const handleSaveCombo = () => {
-        const finalTags = !id ?
-            getTagsFromCommand(comboNotation, selectedCharacter, selectedTags) :
-            selectedTags;
-
+        const [finalTags, launcherName] = !id ?
+            getCommandData(comboNotation, selectedCharacter, selectedTags) :
+            [selectedTags];
         closeModal({
             id: id,
+            name: comboName || launcherName || 'Combo Name',
             favourite: isFavourite,
             command: comboNotation,
             characterTags: selectedCharacterTags,
@@ -82,11 +83,13 @@ const ComboBuilderModal = ({
                 {comboView === 'commands' &&
                     <CommandView
                         comboDamage={comboDamage}
+                        comboName={comboName}
                         comboNotation={comboNotation}
                         isFavourite={isFavourite}
                         setFavourite={setFavourite}
                         setComboNotation={setComboNotation}
                         setComboDamage={setComboDamage}
+                        setComboName={setComboName}
 
                     />
                 }

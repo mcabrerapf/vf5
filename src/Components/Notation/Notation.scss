@@ -12,7 +12,7 @@
     &.P {
         display: flex;
         justify-content: center;
-        background-color: blue;
+        background-color: var(--punch);
         width: 2rem;
         height: 2rem;
         border-radius: 1.5rem;
@@ -24,7 +24,7 @@
     &.K {
         display: flex;
         justify-content: center;
-        background-color: red;
+        background-color: var(--kick);
         width: 2rem;
         height: 2rem;
         border-radius: 1.5rem;
@@ -35,7 +35,7 @@
     &.G {
         display: flex;
         justify-content: center;
-        background-color: green;
+        background-color: var(--guard);
         width: 2rem;
         height: 2rem;
         border-radius: 1.5rem;
@@ -56,7 +56,7 @@
     &.ch {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #ffe907;
+        color: var(--ch);
     }
 
     &.combi {
@@ -64,28 +64,28 @@
         font-weight: 700;
     }
 
-    &.side {
+    &.sd {
         font-size: 1.2rem;
         font-weight: 700;
-        color: aqua;
+        color: var(--side);
     }
     
     &.w {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #904efe;
+        color: var(--wall);
     }
 
     &.wb {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #904efe;
+        color: var(--wall);
     }
 
     &.hit {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #05d602;
+        color: var(--high);
     }
 
     &.shft {

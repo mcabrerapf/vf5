@@ -7,12 +7,11 @@ import { capitalizeFirstLetter } from '../../helpers';
 
 const ActiveFiltersList = ({
     selectedFilters = [],
-    selectedSort,
+    selectedSort = {},
     onSortClick = () => { },
     onSortDirClick = () => { },
     onFilterClick = () => { },
 }) => {
-
     return (
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
@@ -76,7 +75,7 @@ const ActiveFiltersList = ({
                 }
                 )}
             </div>
-            {selectedSort && selectedSort.id &&
+            {selectedSort.id &&
                 <div className='active-filters-list__sort'>
                     <Button
                         modifier='active'

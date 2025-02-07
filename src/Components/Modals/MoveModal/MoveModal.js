@@ -8,7 +8,9 @@ import Button from '../../Button';
 const MoveModal = ({
     move,
     moveCategories,
-    selectedSort
+    selectedSort,
+    customMoves,
+    onFavouriteClick
 }) => {
     const [noteValue, setNoteValue] = useState(move.notes || '')
     const { closeModal } = useModalContext();
@@ -28,6 +30,8 @@ const MoveModal = ({
                     move={move}
                     moveCategories={moveCategories}
                     selectedSort={selectedSort}
+                    customMoves={customMoves}
+                    onFavouriteClick={onFavouriteClick}
                 />
                 <div  className='move-modal__textarea-container'>
                     <textarea

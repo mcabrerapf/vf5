@@ -9,43 +9,58 @@
     gap: 0.5rem;
     width: 100%;
 
+    &.favourite {
+        border: 1px solid gold;
+    }
+
+    .move-command {
+        display: flex;
+        box-sizing: border-box;
+        border: 1px solid white;
+        min-height: 2.8rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        width: fit-content;
+
+        &.launcher {
+            border: 1px solid gold;
+            margin-bottom: 0.5rem;
+        }
+    }
+
     &__main {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        gap: 0.5rem;
 
-        &__notation {
-            .move-command {
-                display: flex;
-                box-sizing: border-box;
-                border: 1px solid white;
-                min-height: 2.8rem;
-                padding: 0.5rem 1rem;
-                border-radius: 0.5rem;
-                width: fit-content;
+        &__name {
+            display: flex;
+            width: 55%;
+            font-size: 1.5rem;
+            font-weight: 600;
 
-                &.launcher {
-                    border: 1px solid gold;
-                    margin-bottom: 0.5rem;
-                }
+            &.favourite {
+                color: gold;
             }
         }
 
         &__other {
             display: flex;
             gap: 0.5rem;
-            &__damage {
+
+            .damage {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 1.4rem;
-                width: 5rem;
-                height: 2rem;
-                padding: 0.2rem 0;
-                margin-left: 0.5rem;
+                font-size: 1.2rem;
+                min-width: 2.5rem;
+                min-height: 2.5rem;
+                height: 2.5rem;
+                width: 3rem;
                 font-weight: 700;
                 border: 1px solid;
-                border-radius: 1rem;
+                border-radius: 0.5rem;
             }
 
             .small {

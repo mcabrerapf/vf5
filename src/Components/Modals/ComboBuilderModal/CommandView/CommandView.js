@@ -5,11 +5,13 @@ import Button from '../../../Button';
 
 const CommandView = ({
     comboDamage,
+    comboName,
     comboNotation,
     isFavourite,
     setFavourite,
     setComboNotation,
     setComboDamage,
+    setComboName
 }) => {
     const handleDamageChange = ({ target: { value } }) => {
         const parsedDamage = isNaN(value) ? 1 : value;
@@ -27,9 +29,15 @@ const CommandView = ({
             className='command-view'
         >
             <div className='command-view__top'>
-                <div className='command-view__top__damage'>
-                    <label>Damage</label>
+                <div className='command-view__top__inputs'>
                     <input
+                        className='command-view__top__inputs__name'
+                        value={comboName}
+                        onChange={({ target: { value } }) => setComboName(value)}
+                        onBlur={handleDamageBlur}
+                    />
+                    <input
+                        className='command-view__top__inputs__damage'
                         type='number'
                         value={comboDamage}
                         onFocus={() => setComboDamage('')}

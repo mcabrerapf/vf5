@@ -21,20 +21,20 @@ const getLauncher = (command) => {
     return command.slice(startIndex, endIndex);
 }
 
-const getLauncherType = (launcher, character) => {
+const getLauncherData = (launcher, character) => {
     const stringLauncher = launcher.join('');
     const CHARACTERDATA = CHARACTERS.find(char => char.id === character);
     const characterMoves = CHARACTERDATA.movelist['all_moves'];
 
     const moveMatch = characterMoves.find(move => move.command.join('') === stringLauncher);
 
-    if (!moveMatch) return null;
-    const { attack_level } = moveMatch;
-    
+    if (!moveMatch) return {};
+    const { attack_level, move_name } = moveMatch;
+
     const { id: validatedLauncerType } = COMBO_FILTER_OPTIONS
         .find(option => option.name === attack_level) || {};
 
-    return validatedLauncerType;
+    return { attackLevel: validatedLauncerType, name: move_name };
 }
 
 const getExtraTags = (command) => {
@@ -49,14 +49,14 @@ const getExtraTags = (command) => {
     return extraTags;
 }
 
-const getTagsFromCommand = (command, character, tags) => {
+const getCommandData = (command, character, tags) => {
     const launcher = getLauncher(command);
-    const launcherTag = getLauncherType(launcher, character);
+    const {attackLevel, name} = getLauncherData(launcher, character);
     const extraTags = getExtraTags(command);
-    const finalTags = [...tags, ...extraTags, launcherTag].filter(Boolean);
-    return [...new Set(finalTags)];
+    const finalTags = [...tags, ...extraTags, attackLevel].filter(Boolean);
+    return [[...new Set(finalTags)], name];
 }
 
 export {
-    getTagsFromCommand
+    getCommandData
 }

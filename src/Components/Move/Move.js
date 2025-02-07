@@ -9,11 +9,10 @@ import { getDodgeValue } from './helpers';
 
 const Move = ({
     move,
-    extraNote = '',
     selectedSort = {},
     moveCategories = [],
     selectedMoveCategory = '',
-    isFavourite = false,
+    customMoves = [],
     modifier = "",
     selectedFilters = [],
     handleFiltersChange = () => { },
@@ -50,7 +49,9 @@ const Move = ({
     const dodgeFilter = selectedFilters.find(filter => filter.prefix === 'dodge');
     const dodgeValue = getDodgeValue(dodge_direction);
     const isSelectedDodge = dodgeFilter && dodgeFilter.id === dodge_direction;
-
+    const customMatch = customMoves.find(fMove =>  fMove.id === move.id) || {};
+    const isFavourite = !!customMatch.favourite;
+    const extraNote = customMatch.note;
     const handleOnClick = (e) => {
         e.preventDefault()
         onMoveClick(move)

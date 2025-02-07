@@ -190,6 +190,8 @@ const Movelist = () => {
                     <MoveModal
                         move={selectedMove}
                         moveCategories={moveCategories}
+                        customMoves={customMoves}
+                        onFavouriteClick={onFavouriteClick}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -217,8 +219,7 @@ const Movelist = () => {
                     className='movelist__list-container__list'
                 >
                     {sortedMovelist.map((move) => {
-                        const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
-                        
+
                         return (
                             <li
                                 key={move.id}
@@ -226,11 +227,10 @@ const Movelist = () => {
                             >
                                 <Move
                                     move={move}
+                                    customMoves={customMoves}
                                     selectedSort={selectedMovelistSort}
-                                    isFavourite={customMatch.favourite}
                                     moveCategories={moveCategories}
                                     selectedMoveCategory={selectedMoveCategory}
-                                    extraNote={customMatch.note}
                                     selectedFilters={selectedFilters}
                                     handleFiltersChange={handleFiltersChange}
                                     onMoveClick={onMoveClick}

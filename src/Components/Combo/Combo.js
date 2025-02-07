@@ -8,15 +8,19 @@ import Button from '../Button';
 
 const Combo = ({
     combo = {},
+    selectedSort = {},
     onClick = () => { },
+    handleSortChange = () => { },
     onLauncherClick = () => { },
     onFavouriteClick = () => { },
     onCharacterClick = () => { },
     onTagClick = () => { }
 }) => {
-    const { tags, characterTags, command, damage, note, favourite } = combo || {};
+    const { name, tags, characterTags, command, damage, note, favourite } = combo || {};
     const hasAllCharacters = CHARACTERS.length === characterTags.length;
     const [launcher, restOfCombo, fullLauncher] = getLauncher(command);
+    const isDamageSortSelected = selectedSort.id === 'damage';
+    const isCommandSortSelected = selectedSort.id === 'command';
 
     const handleComboClick = (e) => {
         onClick(e);
@@ -42,6 +46,22 @@ const Combo = ({
         onFavouriteClick(combo.id);
     }
 
+    const handleDamageClick = (e) => {
+        e.stopPropagation();
+        const updatedSort = isDamageSortSelected ?
+            { ...selectedSort, dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc' } :
+            { id: 'damage', name: 'Damage', dir: 'asc' }
+        handleSortChange(updatedSort);
+    }
+
+    const handleCommandClick = (e) => {
+        e.stopPropagation();
+        const updatedSort = isCommandSortSelected ?
+            { ...selectedSort, dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc' } :
+            { id: 'command', name: 'Command', dir: 'asc' }
+        handleSortChange(updatedSort);
+    }
+
     if (restOfCombo[0] === 'ch') {
         fullLauncher.push(restOfCombo[0]);
         restOfCombo.shift();
@@ -49,31 +69,38 @@ const Combo = ({
     if (restOfCombo[0] === '⊙') restOfCombo.shift();
 
     return (
-        <div className='combo' onClick={handleComboClick}>
+        <div
+            className={`combo${favourite ? ' favourite' : ''}`}
+            onClick={handleComboClick}
+        >
             <div className='combo__main'>
-                <div className='combo__main__notation'>
-                    <MoveCommand
-                        onClick={handleLauncherClick}
-                        modifier={"launcher"}
-                        command={fullLauncher}
-                    />
-                    {!!restOfCombo.length &&
-                        <MoveCommand
-                            command={restOfCombo}
-                        />
-                    }
+                <div className={`combo__main__name${favourite ? ' favourite' : ''}`}>
+                    {name}
                 </div>
                 <div className='combo__main__other'>
-                    <div className='combo__main__other__damage'>{damage}</div>
+                    <Button
+                        onClick={handleDamageClick}
+                        modifier={isDamageSortSelected ? 'active damage' : 'damage'}
+                        text={damage}
+                    />
                     <Button
                         onClick={handleFavouriteClick}
                         modifier={favourite ? 'small favourite' : 'small'}
                         text={'★'}
                     />
                 </div>
-
             </div>
-
+            <MoveCommand
+                onClick={handleLauncherClick}
+                modifier={"launcher"}
+                command={fullLauncher}
+            />
+            {!!restOfCombo.length &&
+                <MoveCommand
+                    onClick={handleCommandClick}
+                    command={restOfCombo}
+                />
+            }
             {note &&
                 <div className='combo__note'>
                     {note}

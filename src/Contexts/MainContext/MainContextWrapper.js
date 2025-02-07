@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { MainContextProvider } from './MainContext';
-import { CHARACTERS_DATA_KEY, SELECTED_CHARACTER_KEY, SELECTED_MOVE_CATEGORY_KEY, STRINGS } from '../../constants';
+import {
+  CHARACTERS_DATA_KEY,
+  SELECTED_CHARACTER_KEY,
+  SELECTED_MOVE_CATEGORY_KEY,
+  STRINGS
+} from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 
 
-function MainContextWrapper({
+const MainContextWrapper = ({
   children,
-}) {
+}) => {
   const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
   const localCustomMoves = getFromLocal(
     CHARACTERS_DATA_KEY,
@@ -29,6 +34,7 @@ function MainContextWrapper({
       character,
       STRINGS.CUSTOM_MOVES
     );
+
     setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, 'all_moves');
     setLocalStorage(SELECTED_CHARACTER_KEY, character);
     setContextData({
@@ -57,7 +63,7 @@ function MainContextWrapper({
     );
     setContextData({ ...contextData, customMoves: updatedNotes });
   }
-  
+
   return (
     <MainContextProvider
       value={{

@@ -36,7 +36,7 @@ const NotationButtons = ({
                 onClick={handleDirectionalButtonClick}
             />
             {!hideSeparator &&
-            <div className='notation-buttons__separator' />
+                <div className='notation-buttons__separator' />
             }
             <OtherButtons
                 isShiftActive={isShiftActive}

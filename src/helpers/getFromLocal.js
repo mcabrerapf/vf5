@@ -7,7 +7,8 @@ import {
     SELECTED_MOVELIST_SORT_KEY,
     SELECTED_MOVELIST_FILTERS_KEY,
     STRINGS,
-    MOVELIST_SORT_OPTIONS
+    MOVELIST_SORT_OPTIONS,
+    SELECTED_COMBOS_SORT_KEY
 } from "../constants"
 
 const {
@@ -52,6 +53,8 @@ const getFromLocal = (localKey, character, characterKey) => {
         case SELECTED_MOVELIST_FILTERS_KEY:
             return localValue ? JSON.parse(localValue) : [];
         case SELECTED_COMBOS_FILTERS_KEY:
+            return localValue ? JSON.parse(localValue) : [];
+        case SELECTED_COMBOS_SORT_KEY:
             return localValue ? JSON.parse(localValue) : [];
         case CHARACTERS_DATA_KEY:
             const selectedData = getCharacterData(localValue, character, characterKey);

@@ -17,15 +17,14 @@ import SortModal from '../Modals/SortModal';
 const Combos = () => {
     const { selectedCharacter } = useMainContext();
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
-    // const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
-
+    const localSelectedSort = getFromLocal(SELECTED_COMBOS_SORT_KEY);
 
     const [combos, setCombos] = useState([]);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[0]);
+    const [selectedSort, setSelectedSort] = useState(localSelectedSort);
     const [showSortModal, setShowSortModal] = useState(false);
     
     useEffect(
@@ -221,7 +220,7 @@ const Combos = () => {
             >
                 <Modal>
                     <DeleteModal
-                        combo={selectedCombo}
+                        data={selectedCombo}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -248,6 +247,8 @@ const Combos = () => {
                         >
                             <Combo
                                 combo={combo}
+                                selectedSort={selectedSort}
+                                handleSortChange={handleSortChange}
                                 onClick={() => handleComboClick(combo)}
                                 onLauncherClick={handleLauncherClick}
                                 onFavouriteClick={onFavouriteClick}
