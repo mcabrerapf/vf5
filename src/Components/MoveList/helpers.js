@@ -38,7 +38,7 @@ const filterMovelist = (list, filters, customMoves) => {
         const isValid = attackLevelFilters.length ?
             attackLevelFilters.find(parsedType => parsedType.name === move.attack_level) : true;
         let hasCommandMatch = commandFilters.length ? false : true;
-        const stringCommand = move.command.join('')
+        const stringCommand = move.command.join('-')
         const hasFavMatch = !hasFavFilter ?
             true : !!customMoves.find(cMove => cMove.id === move.id && cMove.favourite);
         const hasDodgeMatch = dodgeFilter ?

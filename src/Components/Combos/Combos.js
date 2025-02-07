@@ -141,8 +141,8 @@ const Combos = () => {
     }
 
     const handleLauncherClick = ({ target: { value } }) => {
-        if (!value || selectedFilters.find(sFilter => sFilter.id === value.join(''))) return;
-        const stringLauncher = value.join('');
+        if (!value || selectedFilters.find(sFilter => sFilter.id === value.join('-'))) return;
+        const stringLauncher = value.join('-');
         const newFilters = [
             ...selectedFilters,
             { id: stringLauncher, name: stringLauncher, prefix: 'launcher' }

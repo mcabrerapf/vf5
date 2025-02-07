@@ -12,6 +12,7 @@ const ActiveFiltersList = ({
     onSortDirClick = () => { },
     onFilterClick = () => { },
 }) => {
+    console.log(selectedFilters)
     return (
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
@@ -22,7 +23,7 @@ const ActiveFiltersList = ({
                             {prefix === 'command' &&
                                 <MoveCommand
                                     key={id}
-                                    command={name.match(/\[.*?\]/g)}
+                                    command={name.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
@@ -30,7 +31,7 @@ const ActiveFiltersList = ({
                                 <MoveCommand
                                     key={id}
                                     modifier={"launcher"}
-                                    command={name.match(/\[.*?\]/g)}
+                                    command={name.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }

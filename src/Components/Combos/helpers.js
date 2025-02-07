@@ -70,7 +70,7 @@ const filterCombos = (list, filters) => {
 
             launcherFilters.forEach(launcherFilter => {
                 const [launcher] = getLauncher(command);
-                const stringLauncher = launcher.join('');
+                const stringLauncher = launcher.join('-');
 
                 if (stringLauncher === launcherFilter.id) {
                     hasLauncherMatch = true;
@@ -78,7 +78,7 @@ const filterCombos = (list, filters) => {
             })
 
             let hasCommandMatch = commandFilters.length ? false : true;
-            const stringCommand = command.join('')
+            const stringCommand = command.join('-')
             commandFilters.forEach(commandFilter => {
                 if (stringCommand.includes(commandFilter.id)) {
                     hasCommandMatch = true;

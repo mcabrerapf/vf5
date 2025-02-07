@@ -17,7 +17,7 @@ const MoveListFiltersModal = ({
     const [commandFilter, setCommandFilter] = useState([])
     
     const handleFilterSave = () => {
-        const stringCommand = commandFilter.join('');
+        const stringCommand = commandFilter.join('-');
         const isRepeat = selectedFilters.find(selected => selected.id === stringCommand);
         if (!stringCommand || isRepeat) {
             closeModal(selectedTypeFilters);
@@ -25,9 +25,9 @@ const MoveListFiltersModal = ({
         }
 
         const finalCommandFilters = {
-            id: commandFilter.join(''),
+            id: stringCommand,
             prefix: 'command',
-            name: commandFilter.join('')
+            name: stringCommand
         }
 
         const withCommand = [...selectedTypeFilters, finalCommandFilters];

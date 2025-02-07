@@ -13,7 +13,7 @@ const LaunchersView = ({
     return (
         <div className='launchers-view'>
             {launchers.map(launcher => {
-                const isSelected = !!launcherFilters.find(lFilter=>lFilter.id ===launcher.join(''))
+                const isSelected = !!launcherFilters.find(lFilter=>lFilter.id ===launcher.join('-'))
                 
                 return (
                     <MoveCommand

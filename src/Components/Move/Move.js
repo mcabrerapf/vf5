@@ -69,7 +69,7 @@ const Move = ({
 
     const handleOnCommandClick = (e) => {
         e.stopPropagation();
-        onCommandClick(command.join(''))
+        onCommandClick(command.join('-'))
 
     }
 

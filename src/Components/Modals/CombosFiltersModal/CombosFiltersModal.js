@@ -21,16 +21,16 @@ const CombosFiltersModal = ({
     const allCharactersSelected = characterFilters.length === CHARACTERS.length;
 
     const handleFilterSave = () => {
-        const stringCommand = commandFilter.join('');
+        const stringCommand = commandFilter.join('-');
         const isRepeat = selectedFilters.find(selected => selected.id === stringCommand);
         if (!stringCommand || isRepeat) {
             closeModal(selectedFilters);
             return;
         }
         const finalCommandFilters = {
-            id: commandFilter.join(''),
+            id: stringCommand,
             prefix: 'command',
-            name: commandFilter.join('')
+            name: stringCommand
         }
         const withCommand = [...selectedFilters, finalCommandFilters];
         closeModal(withCommand);
@@ -86,7 +86,8 @@ const CombosFiltersModal = ({
     }
 
     const handleLauncherClick = ({ target: { value, isSelected } }) => {
-        const stringLauncher = value.join('');
+        const stringLauncher = value.join('-');
+        console.log(value,stringLauncher)
         if (isSelected) {
             const updatedFilters = selectedFilters.filter(sFilter => sFilter.id !== stringLauncher);
             setSelectedFilters(updatedFilters);
