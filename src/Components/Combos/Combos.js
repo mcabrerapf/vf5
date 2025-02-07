@@ -19,14 +19,14 @@ const Combos = () => {
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
     const localSelectedSort = getFromLocal(SELECTED_COMBOS_SORT_KEY);
 
-    const [combos, setCombos] = useState([]);
+    const [combos, setCombos] = useState(null);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedSort, setSelectedSort] = useState(localSelectedSort);
     const [showSortModal, setShowSortModal] = useState(false);
-    
+
     useEffect(
         () => {
             const localCombos = getFromLocal(
@@ -38,6 +38,8 @@ const Combos = () => {
         },
         [selectedCharacter]
     )
+    
+    if(!combos) return null;
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
@@ -201,8 +203,8 @@ const Combos = () => {
             >
                 <Modal>
                     <SortModal
-                       selectedSort={selectedSort}
-                       sortOptions={COMBOS_SORT_OPTIONS}
+                        selectedSort={selectedSort}
+                        sortOptions={COMBOS_SORT_OPTIONS}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -211,7 +213,11 @@ const Combos = () => {
                 closeModal={handleCloseModal}
             >
                 <Modal>
-                    <ComboBuilderModal selectedCombo={selectedCombo} handleDeleteClick={handleDeleteClick} />
+                    <ComboBuilderModal
+                        selectedCombo={selectedCombo}
+                        combos={combos}
+                        handleDeleteClick={handleDeleteClick}
+                    />
                 </Modal>
             </ModalContextWrapper>
             <ModalContextWrapper

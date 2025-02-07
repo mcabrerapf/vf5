@@ -14,7 +14,7 @@ const validateNote = note => {
 }
 
 const validateFavMove = (favMove, characterMoves) => {
-    if (typeof favMove !== 'string') return false;
+    if (typeof favMove !== 'object') return false;
     return !!characterMoves.find(move => move.id === favMove);
 }
 
@@ -53,21 +53,22 @@ const validateImportData = (data) => {
     if (Array.isArray(data) || typeof data !== 'object') return [false];
     const validatedData = {};
     let isValid = false;
+
     CHARACTERS.forEach(character => {
         const { id } = character;
         const currentCharacterData = data[id];
         if (currentCharacterData) {
-            const validatedCharacterData = { combos: [], fav_moves: [], notes: [] };
-            const { combos, fav_moves, notes } = currentCharacterData;
+            const validatedCharacterData = { combos: [], custom_moves: [], notes: [] };
+            const { combos, custom_moves, notes } = currentCharacterData;
 
             if (notes && Array.isArray(notes)) {
                 const validNotes = notes.map(validateNote).filter(Boolean);
                 validatedCharacterData.notes = validNotes;
             }
-            if (fav_moves) {
+            if (custom_moves) {
                 const { movelist: { all_moves } } = character;
-                const validFavMoves = fav_moves.filter(favMove => validateFavMove(favMove, all_moves));
-                validatedCharacterData.fav_moves = validFavMoves;
+                const validFavMoves = custom_moves.filter(favMove => validateFavMove(favMove, all_moves));
+                validatedCharacterData.custom_moves = validFavMoves;
             }
             if (combos) {
                 const validCombos = combos.map(validateCombo).filter(Boolean);
@@ -75,7 +76,7 @@ const validateImportData = (data) => {
             }
             if (
                 !validatedCharacterData.notes.length &&
-                !validatedCharacterData.fav_moves.length &&
+                !validatedCharacterData.custom_moves.length &&
                 !validatedCharacterData.combos.length
             ) {
                 return;

@@ -2,6 +2,7 @@ import CHARACTERS_JSON from '../characters-data';
 
 const CHARACTERS = [];
 const CHARACTER_IDS = [];
+const CHARACTER_ID_TO_NAME = {};
 const ATTACK_LEVELS = [];
 const ATTACK_LEVELS_OBJ = {};
 const ATTACK_LEVELS_NAME_TO_ID = {};
@@ -35,7 +36,7 @@ const COMBO_FILTER_OPTIONS = [
 
 const COMBOS_SORT_OPTIONS = [
     {
-        id:'command',
+        id: 'command',
         name: 'Command',
         dir: 'asc'
     },
@@ -45,22 +46,22 @@ const COMBOS_SORT_OPTIONS = [
     //     dir: 'asc'
     // },
     {
-        id:'damage',
+        id: 'damage',
         name: 'Damage',
         dir: 'asc'
     },
     {
-        id:'characterTags',
+        id: 'characterTags',
         name: 'Characters',
         dir: 'asc'
     },
     {
-        id:'tags',
+        id: 'tags',
         name: 'Tags',
         dir: 'asc'
     },
     {
-        id:'note',
+        id: 'note',
         name: 'Note',
         dir: 'asc'
     }
@@ -68,7 +69,7 @@ const COMBOS_SORT_OPTIONS = [
 
 Object.keys(CHARACTERS_JSON)
     .forEach(CHARACTER => {
-        const { name, attack_levels } = CHARACTERS_JSON[CHARACTER];
+        const { id, name, attack_levels } = CHARACTERS_JSON[CHARACTER];
         attack_levels.forEach(attack_level => {
             if (!!ATTACK_LEVELS.find(A_L => A_L.id === attack_level.id)) return;
             ATTACK_LEVELS.push({ id: attack_level.id, name: attack_level.name })
@@ -93,6 +94,7 @@ Object.keys(CHARACTERS_JSON)
         });
         CHARACTER_IDS.push(CHARACTER);
         CHARACTERS.push(CHARACTERS_JSON[CHARACTER])
+        CHARACTER_ID_TO_NAME[id] = name;
         CHARACTERS_JSON[CHARACTER].move_key_props.forEach(moveKey => {
             if (MOVELIST_SORT_OPTIONS.find(option => option.id === moveKey.id)) return;
             MOVELIST_SORT_OPTIONS.push({ ...moveKey, dir: 'asc' });
@@ -110,6 +112,7 @@ export {
     CHARACTERS,
     COMBO_FILTER_OPTIONS,
     COMBOS_SORT_OPTIONS,
+    CHARACTER_ID_TO_NAME,
     CHARACTER_IDS,
     CHARACTERS_JSON,
 }

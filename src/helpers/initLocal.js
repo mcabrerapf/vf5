@@ -18,6 +18,7 @@ const {
     ALL_MOVES,
     COMBOS,
     MOVELIST,
+    MATCHUPS,
     NOTES
 } = STRINGS;
 
@@ -45,9 +46,22 @@ const validateCharactersData = () => {
         return;
     } catch (error) {
         console.log(error);
-        const initData = {
-            [CHARACTERS[0].id]: {}
-        }
+        const initData = {};
+        CHARACTERS.forEach(char => {
+            initData[char.id] = {
+                combos: [],
+                custom_moves: [],
+                notes: [],
+                matchups: CHARACTERS.map(mCharp => ({
+                    id: mCharp.id,
+                    name: mCharp.name,
+                    wins: 0,
+                    loses: 0,
+                    win_rate: 100,
+                    note: ''
+                }))
+            }
+        })
         localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(initData));
         window.location.reload();
         return;
@@ -111,7 +125,7 @@ const validateSelectedCharacter = () => {
 const validateSelectedCharacterView = () => {
     try {
         const selectedCharacterView = localStorage.getItem(SELECTED_CHARACTER_VIEW_KEY);
-        if (![COMBOS, MOVELIST, NOTES].includes(selectedCharacterView)) {
+        if (![COMBOS, MOVELIST, NOTES, MATCHUPS].includes(selectedCharacterView)) {
             throw new Error("Not valid character view");
 
         }

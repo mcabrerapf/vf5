@@ -14,6 +14,7 @@ import {
 const {
     COMBOS,
     CUSTOM_MOVES,
+    MATCHUPS,
     NOTES
 } = STRINGS;
 
@@ -29,6 +30,9 @@ const getCharacterData = (localData, character, characterKey) => {
             if (!characterData) return [];
             return characterData[characterKey] || [];
         case NOTES:
+            if (!characterData) return [];
+            return characterData[characterKey] || [];
+        case MATCHUPS:
             if (!characterData) return [];
             return characterData[characterKey] || [];
         default:

@@ -1,4 +1,4 @@
-import { CHARACTERS, COMBO_FILTER_OPTIONS } from "../../../constants";
+import { CHARACTERS, COMBO_FILTER_OPTIONS, STRINGS } from "../../../constants";
 
 const notValidCharacters = ['or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
 
@@ -26,7 +26,7 @@ const getLauncherData = (launcher, character) => {
 
     const characterMoves = CHARACTERS.find(char => char.id === character).movelist['all_moves'];
     const moveMatch = characterMoves.find(move => move.command.join('') === stringLauncher);
-    
+
     if (!moveMatch) return {};
     const { attack_level, move_name } = moveMatch;
 
@@ -56,6 +56,30 @@ const getCommandData = (command, character, tags) => {
     return [[...new Set(finalTags)], name];
 }
 
+const checkNameRecusively = (name, comboNames, increment = 0) => {
+    const numberSuffix = increment ? `(${increment})` : '';
+    const nameWithSuffix = `${name}${numberSuffix}`;
+    if (comboNames.includes(nameWithSuffix)) return checkNameRecusively(name, comboNames, increment + 1);
+    return increment ? nameWithSuffix : name;
+}
+
+const getUniqueComboName = (comboId, comboName, launcherName, combos) => {
+    let nameToCheck;
+    
+    const allComboNames = combos
+        .filter(com => com !== comboId)
+        .map(com => com.name);
+    if (!comboId) {
+        nameToCheck = comboName === STRINGS.DEFAULT_COMBO_NAME && launcherName ?
+            launcherName : comboName;
+    } else {
+        nameToCheck = !comboName ? launcherName || STRINGS.DEFAULT_COMBO_NAME : comboName;
+    }
+    const finalName = checkNameRecusively(nameToCheck, allComboNames);
+    return finalName.trim();
+}
+
 export {
-    getCommandData
+    getCommandData,
+    getUniqueComboName
 }

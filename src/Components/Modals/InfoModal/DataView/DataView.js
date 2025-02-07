@@ -75,7 +75,7 @@ const DataView = () => {
             return {
                 id: key,
                 name: CHARACTERS_JSON[key].name,
-                numberOfFavMoves: data.fav_moves?.length || 0,
+                numberOfFavMoves: data.custom_moves?.length || 0,
                 numberOfCombos: data.combos?.length || 0,
                 numberOfNotes: data.notes?.length || 0,
             }

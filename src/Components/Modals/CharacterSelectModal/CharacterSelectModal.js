@@ -9,8 +9,8 @@ const CharacterSelectModal = () => {
     const { closeModal } = useModalContext();
     const { setSelectedCharacter, selectedCharacter } = useMainContext();
 
-    const handleCharacterClick = (e) => {
-        setSelectedCharacter(e.target.value);
+    const handleCharacterClick = (character) => {
+        setSelectedCharacter(character);
         closeModal();
     }
 
@@ -23,7 +23,7 @@ const CharacterSelectModal = () => {
                         modifier={character.id === selectedCharacter ? 'active' : ''}
                         value={character.id}
                         text={character.name}
-                        onClick={handleCharacterClick}
+                        onClick={() => handleCharacterClick(character)}
                     />
                 )}
             </div>

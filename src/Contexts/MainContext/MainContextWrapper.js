@@ -31,15 +31,15 @@ const MainContextWrapper = ({
   const setSelectedCharacter = (character) => {
     const newCustomMoves = getFromLocal(
       CHARACTERS_DATA_KEY,
-      character,
+      character.id,
       STRINGS.CUSTOM_MOVES
     );
 
     setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, 'all_moves');
-    setLocalStorage(SELECTED_CHARACTER_KEY, character);
+    setLocalStorage(SELECTED_CHARACTER_KEY, character.id);
     setContextData({
       ...contextData,
-      selectedCharacter: character,
+      selectedCharacter: character.id,
       customMoves: newCustomMoves
     });
   }

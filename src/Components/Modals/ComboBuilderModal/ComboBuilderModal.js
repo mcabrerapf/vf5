@@ -7,11 +7,12 @@ import TagsView from './TagsView';
 import ExtrasView from './ExtrasView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import { getCommandData } from './helpers';
-import { CHARACTERS } from '../../../constants';
+import { getCommandData, getUniqueComboName } from './helpers';
+import { CHARACTERS, STRINGS } from '../../../constants';
 
 const ComboBuilderModal = ({
     selectedCombo,
+    combos,
     handleDeleteClick
 }) => {
     const { selectedCharacter } = useMainContext();
@@ -23,7 +24,7 @@ const ComboBuilderModal = ({
     const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || initCharacters);
     const [selectedTags, setSelectedTags] = useState(tags || []);
     const [comboDamage, setComboDamage] = useState(damage || 1);
-    const [comboName, setComboName] = useState(name || 'Combo Name');
+    const [comboName, setComboName] = useState(name || STRINGS.DEFAULT_COMBO_NAME);
     const [comboNote, setComboNote] = useState(note || '');
     const [isFavourite, setIsFavourite] = useState(!!favourite);
 
@@ -31,11 +32,16 @@ const ComboBuilderModal = ({
         const [finalTags, launcherName] = !id ?
             getCommandData(comboNotation, selectedCharacter, selectedTags) :
             [selectedTags];
-        const nameToUse = !id && comboName === 'Combo Name' ? launcherName : comboDamage;
-        
+        const nameToUse = getUniqueComboName(
+            id,
+            comboName,
+            launcherName,
+            combos
+        );
+
         closeModal({
             id: id,
-            name: nameToUse || 'Combo Name',
+            name: nameToUse,
             favourite: isFavourite,
             command: comboNotation,
             characterTags: selectedCharacterTags,

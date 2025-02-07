@@ -13,6 +13,7 @@ import { SELECTED_CHARACTER_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 import { CHARACTERS_JSON } from '../../constants/CHARACTERS';
+import Matchups from '../Matchups/Matchups';
 
 
 const Character = () => {
@@ -82,15 +83,22 @@ const Character = () => {
                     onClick={handleViewChange}
                 />
                 <Button
-                    modifier={characterView === STRINGS.NOTES ? 'active tab-right' : 'tab-right'}
+                    modifier={characterView === STRINGS.NOTES ? 'active tab' : 'tab'}
                     value={STRINGS.NOTES}
                     text='Notes'
+                    onClick={handleViewChange}
+                />
+                <Button
+                    modifier={characterView === STRINGS.MATCHUPS ? 'active tab-right' : 'tab-right'}
+                    value={STRINGS.MATCHUPS}
+                    text='Matchups'
                     onClick={handleViewChange}
                 />
             </div>
             {characterView === STRINGS.MOVELIST && <Movelist />}
             {characterView === STRINGS.COMBOS && <Combos />}
             {characterView === STRINGS.NOTES && <Notes />}
+            {characterView === STRINGS.MATCHUPS && <Matchups />}
         </div>
     )
 }
