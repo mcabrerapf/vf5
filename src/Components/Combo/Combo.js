@@ -98,7 +98,7 @@ const Combo = ({
             </div>
             <div className='combo__tags'>
                 {tags.map(tag => {
-                    const { id } = COMBO_FILTER_OPTIONS.find(option => option.name === tag)
+                    const { id } = COMBO_FILTER_OPTIONS.find(option => option.id === tag)
 
                     return (
                         <MoveTypeBadge

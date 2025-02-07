@@ -115,7 +115,6 @@ const Movelist = () => {
 
     const handleSortChange = (sort) => {
         if (!sort) return;
-        console.log('handleSortChange', sort)
         setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(sort));
         setSelectedMovelistSort(sort);
     }

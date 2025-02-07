@@ -3,7 +3,6 @@ import './Main.scss'
 import Character from '../Character';
 
 const Main = () => {
-    throw new Error("shit");
     
     return (
         <div className='main'>

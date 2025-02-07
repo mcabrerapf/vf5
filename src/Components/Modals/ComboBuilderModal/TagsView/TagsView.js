@@ -42,7 +42,7 @@ const TagsView = ({
 
     const handleTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-        
+    
         if (className.includes('not-selected')) {
             updatedTags = [...selectedTags.map(tag => tag), value];
         } else {
@@ -52,7 +52,7 @@ const TagsView = ({
     }
     const otherTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix !== 'character');
     const characterTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix === 'character');
-
+    
     return (
         <div className='tags-view'>
             <div className='tags-view__header'>
@@ -91,8 +91,9 @@ const TagsView = ({
                         {otherTags.map(tag =>
                             <MoveTypeBadge
                                 key={tag.id}
+                                value={tag.id}
                                 moveType={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.name) ? tag.id : 'not-selected'}
+                                modifier={selectedTags.find(sTag => sTag === tag.id) ? tag.id : 'not-selected'}
                                 onClick={handleTagClick}
                             />
                         )}
