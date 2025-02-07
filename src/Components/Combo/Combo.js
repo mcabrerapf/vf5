@@ -2,7 +2,7 @@ import React from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { CHARACTERS, COMBO_FILTER_OPTIONS } from '../../constants';
+import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS, COMBO_FILTER_OPTIONS } from '../../constants';
 import { capitalizeFirstLetter, getLauncher } from '../../helpers';
 import Button from '../Button';
 
@@ -125,13 +125,14 @@ const Combo = ({
             </div>
             <div className='combo__tags'>
                 {tags.map(tag => {
-                    const { id } = COMBO_FILTER_OPTIONS.find(option => option.id === tag)
+
 
                     return (
                         <MoveTypeBadge
                             key={tag}
-                            modifier={id}
-                            moveType={tag}
+                            modifier={tag}
+                            value={tag}
+                            moveType={ATTACK_LEVELS_ID_TO_NAME[tag] || tag}
                             onClick={handleTagClick}
                         />
                     )

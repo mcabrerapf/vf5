@@ -1,19 +1,19 @@
 import './Matchup.scss'
 import React from 'react';
 import VSIcon from './VSIcon';
+import Button from '../Button';
 import { calculateWinRate } from '../../helpers';
 
 const Matchup = ({
     matchup = {},
-    selectedCharacterName,
-    updateMatchups,
+    handleMatchupUpdate,
     onVsClick
 }) => {
     const { name, loses, wins, win_rate } = matchup;
 
     const onOponentClick = (e) => {
         e.preventDefault();
-        updateMatchups({
+        handleMatchupUpdate({
             ...matchup,
             loses: loses + 1,
             win_rate: calculateWinRate(loses + 1, wins)
@@ -22,7 +22,7 @@ const Matchup = ({
 
     const onPlayerClick = (e) => {
         e.preventDefault();
-        updateMatchups({
+        handleMatchupUpdate({
             ...matchup,
             wins: wins + 1,
             win_rate: calculateWinRate(loses, wins + 1)
@@ -37,22 +37,18 @@ const Matchup = ({
         <div className='matchup'>
             <div
                 role='button'
-                className='matchup__character'
-                onClick={onOponentClick}
+                className='matchup__buttons'
             >
-                <div
-                    className='matchup__character__name oponent'
-                >
-                    <span>
-                        {name}
-                    </span>
-                </div>
-                <div
-                    className='matchup__character__stats'
-                >
-                    {loses}
-                </div>
-
+                <Button
+                  onClick={onOponentClick}
+                    modifier={'loses'}
+                    text={loses}
+                />
+                <Button
+                    onClick={onPlayerClick}
+                    modifier={'wins'}
+                    text={wins}
+                />
             </div>
             <div
                 role='button'
@@ -73,20 +69,14 @@ const Matchup = ({
             <div
                 role='button'
                 className='matchup__character'
-                onClick={onPlayerClick}
+                onClick={handleVsClick}
             >
                 <div
                     className='matchup__character__name'
                 >
-                    <span>
-                        {selectedCharacterName}
-                    </span>
-
-                </div>
-                <div
-                    className='matchup__character__stats'
-                >
-                    {wins}
+                    <div>
+                        {name}
+                    </div>
                 </div>
             </div>
         </div>

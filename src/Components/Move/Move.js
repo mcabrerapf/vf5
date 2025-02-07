@@ -15,6 +15,7 @@ const Move = ({
     customMoves = [],
     modifier = "",
     selectedFilters = [],
+    hideNote,
     handleFiltersChange = () => { },
     handleSortChange = () => { },
     onMoveClick = () => { },
@@ -49,7 +50,7 @@ const Move = ({
     const dodgeFilter = selectedFilters.find(filter => filter.prefix === 'dodge');
     const dodgeValue = getDodgeValue(dodge_direction);
     const isSelectedDodge = dodgeFilter && dodgeFilter.id === dodge_direction;
-    const customMatch = customMoves.find(fMove =>  fMove.id === move.id) || {};
+    const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
     const isFavourite = !!customMatch.favourite;
     const extraNote = customMatch.note;
     const handleOnClick = (e) => {
@@ -213,9 +214,11 @@ const Move = ({
                 onClick={handleOnCommandClick}
                 command={command}
             />
-            <div className='move__notes'>
-                {extraNote || notes}
-            </div>
+            {!hideNote &&
+                <div className='move__notes'>
+                    {extraNote || notes}
+                </div>
+            }
         </div>
     )
 }

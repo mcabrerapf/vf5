@@ -67,8 +67,9 @@ const getUniqueComboName = (comboId, comboName, launcherName, combos) => {
     let nameToCheck;
     
     const allComboNames = combos
-        .filter(com => com !== comboId)
+        .filter(com => com.id !== comboId)
         .map(com => com.name);
+        
     if (!comboId) {
         nameToCheck = comboName === STRINGS.DEFAULT_COMBO_NAME && launcherName ?
             launcherName : comboName;

@@ -31,6 +31,7 @@ const MoveModal = ({
                     moveCategories={moveCategories}
                     selectedSort={selectedSort}
                     customMoves={customMoves}
+                    hideNote
                     onFavouriteClick={onFavouriteClick}
                 />
                 <div  className='move-modal__textarea-container'>

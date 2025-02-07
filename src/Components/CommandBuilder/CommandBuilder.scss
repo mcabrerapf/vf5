@@ -6,12 +6,13 @@
     &__top {
         display: flex;
         flex-direction: row;
+        gap: 0.5rem;
         justify-content: space-between;
         align-items: center;
 
         .move-command {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             border: 1px solid white;
             box-sizing: border-box;
             overflow-y: auto;
@@ -19,7 +20,6 @@
             height: 9rem;
             border-radius: 0.5rem;
             padding: 0.5rem;
-            margin-right: 0.5rem;
 
             .notation {
                 border: 2px solid transparent;

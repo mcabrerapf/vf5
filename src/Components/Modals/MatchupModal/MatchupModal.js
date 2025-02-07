@@ -1,13 +1,13 @@
 import './MatchupModal.scss';
 import React, { useState } from 'react';
 import ModalFooter from '../ModalFooter';
+import Matchup from '../../Matchup';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { calculateWinRate } from '../../../helpers';
 
 const MatchupModal = ({
 	matchup = {},
-	selectedCharacterName = () => { }
 }) => {
 	const { closeModal } = useModalContext();
 	const { name, note: _note, wins: _wins, loses: _loses } = matchup
@@ -26,16 +26,27 @@ const MatchupModal = ({
 		});
 	}
 
-	const onCounterClick = (isOponent, iAdd) => {
-		if (isOponent) {
-			setLoses(iAdd ? loses + 1 : loses - 1);
-		} else {
-			setWins(iAdd ? wins + 1 : wins - 1);
-		}
+	const updateMatchups = (newMatchup) => {
+		setWins(newMatchup.wins);
+		setLoses(newMatchup.loses);
 	}
 
+	const onResetClick = () => {
+		setWins(0);
+		setLoses(0);
+	}
+
+	const handleLosesClick = () => {
+		if (loses < 2) return;
+		setLoses(loses - 1)
+	}
+
+	const handleWinsClick = () => {
+		if (wins < 2) return;
+		setWins(wins - 1)
+	}
 	const winRate = calculateWinRate(loses, wins);
-	
+
 	return (
 		<div
 			className="matchup-modal"
@@ -47,65 +58,23 @@ const MatchupModal = ({
 				<div
 					className="matchup-modal__content__top"
 				>
+					<Matchup
+						matchup={{ wins, loses, name, win_rate: winRate }}
+						handleMatchupUpdate={updateMatchups}
+					/>
 					<div
-						className="matchup-modal__content__top__character"
+						className="matchup-modal__content__top__buttons"
 					>
-						<div
-							className="matchup-modal__content__top__character__name"
-						>
-							{name}
-						</div>
-						<div
-							className="matchup-modal__content__top__character__buttons"
-						>
-							<Button
-								disabled={loses < 1}
-								onClick={() => onCounterClick(true, false)}
-								text="-"
-							/>
-							<div
-								className="matchup-modal__content__top__character__buttons__number"
-							>
-								{loses}
-							</div>
-							<Button
-
-								onClick={() => onCounterClick(true, true)}
-								text="+"
-							/>
-						</div>
-					</div>
-					<div
-						className="matchup-modal__content__top__win-rate"
-					>
-						{winRate}%
-					</div>
-					<div
-						className="matchup-modal__content__top__character"
-					>
-						<div
-							className="matchup-modal__content__top__character__name"
-						>
-							{selectedCharacterName}
-						</div>
-						<div
-							className="matchup-modal__content__top__character__buttons"
-						>
-							<Button
-								disabled={wins < 1}
-								onClick={() => onCounterClick(false, false)}
-								text="-"
-							/>
-							<div
-								className="matchup-modal__content__top__character__buttons__number"
-							>
-								{wins}
-							</div>
-							<Button
-								onClick={() => onCounterClick(false, true)}
-								text="+"
-							/>
-						</div>
+						<Button
+							disabled={loses < 2}
+							onClick={handleLosesClick}
+							text={"-"}
+						/>
+						<Button
+							disabled={wins < 2}
+							onClick={handleWinsClick}
+							text={"-"}
+						/>
 					</div>
 				</div>
 				<div
@@ -118,8 +87,12 @@ const MatchupModal = ({
 				</div>
 			</div>
 			<ModalFooter
-				modifier={"align-right"}
 			>
+				<Button
+					modifier={"danger"}
+					onClick={onResetClick}
+					text='RESET'
+				/>
 				<Button
 					onClick={onSaveClick}
 					text='✓'

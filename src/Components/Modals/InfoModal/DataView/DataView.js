@@ -8,7 +8,7 @@ import {
     setLocalStorage,
     validateImportData
 } from '../../../../helpers';
-import { ALL_DATA_KEY, STRINGS, SELECTED_CHARACTER_KEY, CHARACTERS_DATA_KEY } from '../../../../constants';
+import { STRINGS, SELECTED_CHARACTER_KEY, CHARACTERS_DATA_KEY } from '../../../../constants';
 import { CHARACTERS_JSON } from '../../../../constants/CHARACTERS';
 
 const DataView = () => {
@@ -19,7 +19,7 @@ const DataView = () => {
     const [importError, setImportError] = useState(false);
 
     const onCopyClick = () => {
-        const allCharacterData = getFromLocal(ALL_DATA_KEY);
+        const allCharacterData = getFromLocal("ALL");
         if (!allCharacterData) return;
         copyToClipboard(allCharacterData);
     }

@@ -5,8 +5,8 @@ import { useMainContext } from '../../Contexts/MainContext'
 import Modal from '../Modals/Modal';
 import MatchupModal from '../Modals/MatchupModal';
 import Matchup from '../Matchup';
-import { CHARACTER_ID_TO_NAME, CHARACTERS_DATA_KEY, STRINGS, } from '../../constants'
-import { getFromLocal, setLocalStorage } from '../../helpers';
+import { CHARACTER_ID_TO_NAME, } from '../../constants'
+import { getMatchups, updateMatchups } from '../../services';
 
 const Matchups = () => {
     const { selectedCharacter } = useMainContext();
@@ -16,39 +16,28 @@ const Matchups = () => {
     const [showMatchupModal, setShowMatchupModal] = useState(null);
 
     useEffect(() => {
-        const localMatchups = getFromLocal(
-            CHARACTERS_DATA_KEY,
-            selectedCharacter,
-            STRINGS.MATCHUPS
-        );
+        const localMatchups = getMatchups(selectedCharacter);
         setMatchups(localMatchups);
     },
         [selectedCharacter]
     )
     if (!matchups) return null;
 
-    const updateMatchups = (newMatchup) => {
-        if (!newMatchup) return;
-        const updatedMatchups = matchups.map(matchup => {
-            if (matchup.id === newMatchup.id) return newMatchup;
-            return matchup;
-        })
-        setLocalStorage(
-            CHARACTERS_DATA_KEY,
-            updatedMatchups,
-            selectedCharacter,
-            STRINGS.MATCHUPS
-        )
-        setMatchups(updatedMatchups);
-    }
+
 
     const onVsClick = (matchup) => {
         setSelectedMatchup(matchup);
         toggleMatchupModal();
     }
 
+    const handleMatchupUpdate = (newMatchup) => {
+        console.log({ selectedCharacter })
+        const updatedMatchups = updateMatchups(selectedCharacter, newMatchup);
+        setMatchups(updatedMatchups);
+    }
+
     const onMatchupModalClose = (newMatchup) => {
-        updateMatchups(newMatchup);
+        handleMatchupUpdate(newMatchup);
         setSelectedMatchup(null);
         toggleMatchupModal();
     }
@@ -77,7 +66,7 @@ const Matchups = () => {
                             key={matchup.id}
                             matchup={matchup}
                             selectedCharacterName={selectedCharacterName}
-                            updateMatchups={updateMatchups}
+                            handleMatchupUpdate={handleMatchupUpdate}
                             onVsClick={onVsClick}
                         />
                     )
