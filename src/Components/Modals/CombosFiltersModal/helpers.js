@@ -1,7 +1,6 @@
 import { getLauncher } from "../../../helpers";
 
 const getLaunchers = (combos) => {
-    console.log(combos)
     if (!combos || !combos.length) return [];
     const stringLaunchers = combos.map(combo => {
         const [launcher] = getLauncher(combo.command);

@@ -87,7 +87,7 @@ const CombosFiltersModal = ({
 
     const handleLauncherClick = ({ target: { value, isSelected } }) => {
         const stringLauncher = value.join('-');
-        console.log(value,stringLauncher)
+        
         if (isSelected) {
             const updatedFilters = selectedFilters.filter(sFilter => sFilter.id !== stringLauncher);
             setSelectedFilters(updatedFilters);

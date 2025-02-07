@@ -23,11 +23,10 @@ const getLauncher = (command) => {
 
 const getLauncherData = (launcher, character) => {
     const stringLauncher = launcher.join('');
-    const CHARACTERDATA = CHARACTERS.find(char => char.id === character);
-    const characterMoves = CHARACTERDATA.movelist['all_moves'];
 
+    const characterMoves = CHARACTERS.find(char => char.id === character).movelist['all_moves'];
     const moveMatch = characterMoves.find(move => move.command.join('') === stringLauncher);
-
+    
     if (!moveMatch) return {};
     const { attack_level, move_name } = moveMatch;
 
@@ -51,7 +50,7 @@ const getExtraTags = (command) => {
 
 const getCommandData = (command, character, tags) => {
     const launcher = getLauncher(command);
-    const {attackLevel, name} = getLauncherData(launcher, character);
+    const { attackLevel, name } = getLauncherData(launcher, character);
     const extraTags = getExtraTags(command);
     const finalTags = [...tags, ...extraTags, attackLevel].filter(Boolean);
     return [[...new Set(finalTags)], name];

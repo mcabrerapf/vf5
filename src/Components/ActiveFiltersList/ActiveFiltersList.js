@@ -12,7 +12,6 @@ const ActiveFiltersList = ({
     onSortDirClick = () => { },
     onFilterClick = () => { },
 }) => {
-    console.log(selectedFilters)
     return (
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>

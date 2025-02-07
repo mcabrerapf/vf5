@@ -31,9 +31,11 @@ const ComboBuilderModal = ({
         const [finalTags, launcherName] = !id ?
             getCommandData(comboNotation, selectedCharacter, selectedTags) :
             [selectedTags];
+        const nameToUse = !id && comboName === 'Combo Name' ? launcherName : comboDamage;
+        
         closeModal({
             id: id,
-            name: comboName || launcherName || 'Combo Name',
+            name: nameToUse || 'Combo Name',
             favourite: isFavourite,
             command: comboNotation,
             characterTags: selectedCharacterTags,
