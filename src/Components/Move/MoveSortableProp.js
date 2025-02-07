@@ -14,7 +14,7 @@ const SortableMoveProp = ({
     const parsedValue = getMovePropText(value, doFrameCheck);
     const numberColor = getNumberColor(value, doFrameCheck);
     const numberClassname = `move__props__prop__value${numberColor}`;
-    
+
     const handlePropClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -29,7 +29,10 @@ const SortableMoveProp = ({
             <div
                 className='move__props__prop__label'
             >
-                {text || propKey}
+                <span>
+                    {text || propKey}
+                </span>
+
             </div>
             <div className={numberClassname}>
                 {parsedValue}

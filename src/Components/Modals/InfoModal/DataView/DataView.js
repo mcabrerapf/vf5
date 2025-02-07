@@ -87,7 +87,7 @@ const DataView = () => {
             {dataView === 'default' &&
                 <div className='data-view__initial-view'>
                     <div className='data-view__initial-view__url'>
-                        Frame data is based on
+                        <span>Frame data is based on</span>
                         <a target='blank' href='https://virtua-fighter.com/revo/en/character/skill/skill01.html'>
                             this
                         </a>
