@@ -9,12 +9,13 @@ import { getDodgeValue } from './helpers';
 
 const Move = ({
     move,
+    extraNote,
     selectedSort,
     moveCategories,
     isFavourite = false,
     modifier = "",
-    handleSortChange,
-    onClick = () => { },
+    handleSortChange = () => { },
+    onMoveClick = () => { },
     onMoveCategoryClick = () => { },
     handleSortDirChange = () => { },
     onFavouriteClick = () => { },
@@ -44,7 +45,7 @@ const Move = ({
 
     const handleOnClick = (e) => {
         e.preventDefault()
-        onClick(move)
+        onMoveClick(move)
     }
 
     const handleOnMoveTypeClick = (e) => {
@@ -173,7 +174,7 @@ const Move = ({
                 command={command}
             />
             <div className='move__notes'>
-                {notes}
+                {extraNote || notes}
             </div>
         </div>
     )

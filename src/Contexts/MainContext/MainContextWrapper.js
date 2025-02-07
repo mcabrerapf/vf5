@@ -47,13 +47,24 @@ function MainContextWrapper({
     );
     setContextData({ ...contextData, customMoves: updatedFavorites });
   }
+
+  const setCharacterNotes = (updatedNotes) => {
+    setLocalStorage(
+      CHARACTERS_DATA_KEY,
+      updatedNotes,
+      selectedCharacter,
+      STRINGS.CUSTOM_MOVES
+    );
+    setContextData({ ...contextData, customMoves: updatedNotes });
+  }
   
   return (
     <MainContextProvider
       value={{
         ...contextData,
         setSelectedCharacter,
-        setFavouriteMoves
+        setFavouriteMoves,
+        setCharacterNotes
       }}
     >
       {children}

@@ -9,6 +9,7 @@ const STRINGS = {
     MOVELIST: 'movelist',
     COMBOS: 'combos',
     COMMAND: 'command',
+    NOTE: 'note',
     NOTES: 'notes',
     TAGS: 'tags',
     RESET_LOCAL_DATA: 'RESET_LOCAL_DATA',

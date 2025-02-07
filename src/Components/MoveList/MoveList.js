@@ -16,10 +16,11 @@ import { CHARACTERS_JSON, MOVELIST_FILTER_OPTIONS, MOVELIST_SORT_OPTIONS } from 
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Modal from '../Modals/Modal';
 import SortModal from '../Modals/SortModal';
+import MoveModal from '../Modals/MoveModal';
 
 const Movelist = () => {
     const listRef = useRef(null);
-    const { selectedCharacter, customMoves, setFavouriteMoves } = useMainContext();
+    const { selectedCharacter, customMoves, setFavouriteMoves, setCharacterNotes } = useMainContext();
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
@@ -31,6 +32,8 @@ const Movelist = () => {
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [showSortModal, setShowSortModal] = useState(false);
+    const [selectedMove, setSelectedMove] = useState(null);
+    const [showMoveModal, setShowMoveModal] = useState(false);
 
     const {
         move_categories: moveCategories,
@@ -45,7 +48,6 @@ const Movelist = () => {
     )
 
     const handleFiltersChange = (newFilters) => {
-
         if (newFilters) {
             setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
@@ -54,13 +56,17 @@ const Movelist = () => {
 
     const onFavouriteClick = (moveId) => {
         let updatedFavorites;
+
         if (customMoves.find(fMove => fMove.id === moveId)) {
-            updatedFavorites = customMoves.filter(fMove => fMove.id !== moveId);
+            updatedFavorites = customMoves.map(fMove => {
+                if (fMove.id === moveId) fMove.favourite = !fMove.favourite;
+                return fMove;
+            });
         } else {
             updatedFavorites =
                 [
                     ...customMoves,
-                    { id: moveId, note: '' }
+                    { id: moveId, note: '', favourite: true }
                 ];
         }
         setFavouriteMoves(updatedFavorites);
@@ -123,6 +129,41 @@ const Movelist = () => {
         setShowSortModal(!showSortModal);
     }
 
+    const onMoveClick = (move) => {
+        const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
+        setSelectedMove({ ...move, notes: customMatch.note || move.notes })
+        toggleMoveModal();
+    }
+
+    const handleMoveModalClose = (note) => {
+        if (note === undefined) {
+            toggleMoveModal();
+            return;
+        }
+        let updatedNotes;
+
+        if (customMoves.find(fMove => fMove.id === selectedMove.id)) {
+            updatedNotes = customMoves.map(fMove => {
+                if (fMove.id === selectedMove.id) fMove.note = note;
+                return fMove;
+            });
+        } else {
+            updatedNotes =
+                [
+                    ...customMoves,
+                    { id: selectedMove.id, favourite: false, note: note }
+                ];
+        }
+
+        setCharacterNotes(updatedNotes);
+        setSelectedMove(null);
+        toggleMoveModal();
+    }
+
+    const toggleMoveModal = () => {
+        setShowMoveModal(!showMoveModal);
+    }
+
     if (!selectedMoveset) return null;
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
@@ -138,6 +179,18 @@ const Movelist = () => {
                     <SortModal
                         selectedSort={selectedMovelistSort}
                         sortOptions={sortOptions}
+                    />
+                </Modal>
+            </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showMoveModal}
+                closeModal={handleMoveModalClose}
+            >
+                <Modal>
+                    <MoveModal
+                        move={selectedMove}
+                        moveCategories={moveCategories}
+                        selectedSort={selectedMovelistSort}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -165,7 +218,7 @@ const Movelist = () => {
                     className='movelist__list-container__list'
                 >
                     {sortedMovelist.map((move) => {
-                        const isFavourite = !!customMoves.find(fMove => fMove.id === move.id);
+                        const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
 
                         return (
                             <li
@@ -175,8 +228,10 @@ const Movelist = () => {
                                 <Move
                                     move={move}
                                     selectedSort={selectedMovelistSort}
-                                    isFavourite={isFavourite}
+                                    isFavourite={customMatch.favourite}
                                     moveCategories={moveCategories}
+                                    extraNote={customMatch.note}
+                                    onMoveClick={onMoveClick}
                                     handleSortChange={handleSortChange}
                                     handleSortDirChange={handleSortClick}
                                     onFavouriteClick={onFavouriteClick}

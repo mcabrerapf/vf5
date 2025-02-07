@@ -1,7 +1,7 @@
 import { CHARACTERS_DATA_KEY, STRINGS } from "../constants";
 import getLocalStorageSize from "./getLocalStorageSize";
-
 const { RESET_LOCAL_DATA } = STRINGS;
+
 const setLocalStorage = (key, value, character, characterKey) => {
     const totalUsed = getLocalStorageSize();
     if (totalUsed > 5000) {
