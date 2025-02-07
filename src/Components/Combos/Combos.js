@@ -130,8 +130,8 @@ const Combos = () => {
     }
 
     const handleTagClick = ({ target: { value } }) => {
-        if (selectedFilters.find(sFilter => sFilter.name === value)) return;
-        const newFilter = COMBO_FILTER_OPTIONS.find(option => option.name === value);
+        if (selectedFilters.find(sFilter => sFilter.id === value)) return;
+        const newFilter = COMBO_FILTER_OPTIONS.find(option => option.id === value);
         const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
         handleFiltersChange(updatedFilters);
     }

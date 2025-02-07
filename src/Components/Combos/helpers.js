@@ -63,7 +63,7 @@ const filterCombos = (list, filters) => {
             })
 
             tags.forEach(tag => {
-                if (!!otherFilters.find(oFilter => oFilter.name === tag)) {
+                if (!!otherFilters.find(oFilter => oFilter.id === tag)) {
                     hasTagMatch = true;
                 }
             })
