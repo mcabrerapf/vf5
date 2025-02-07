@@ -1,4 +1,4 @@
-import { CHARACTERS } from "../../../constants";
+import { CHARACTERS, COMBO_FILTER_OPTIONS } from "../../../constants";
 
 const notValidCharacters = ['or', 'ch', 'side', 'wb', 'w', 'hit', '⊙'];
 
@@ -7,6 +7,7 @@ const getLauncher = (command) => {
     let endIndex = command.length;
     let foundStart = false;
     let foundEnd = false;
+
     command.forEach((notation, index) => {
         if (!foundStart && !notValidCharacters.includes(notation)) {
             foundStart = true;
@@ -29,7 +30,11 @@ const getLauncherType = (launcher, character) => {
 
     if (!moveMatch) return null;
     const { attack_level } = moveMatch;
-    return attack_level;
+    
+    const { id: validatedLauncerType } = COMBO_FILTER_OPTIONS
+        .find(option => option.name === attack_level) || {};
+
+    return validatedLauncerType;
 }
 
 const getExtraTags = (command) => {

@@ -62,6 +62,15 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
+                            {prefix === 'dodge' &&
+                                <MoveTypeBadge
+                                    key={id}
+                                    modifier={'not-selected'}
+                                    moveType={name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            }
                         </>
                     )
                 }

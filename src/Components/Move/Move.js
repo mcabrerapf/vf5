@@ -9,11 +9,14 @@ import { getDodgeValue } from './helpers';
 
 const Move = ({
     move,
-    extraNote,
-    selectedSort,
-    moveCategories,
+    extraNote = '',
+    selectedSort = {},
+    moveCategories = [],
+    selectedMoveCategory = '',
     isFavourite = false,
     modifier = "",
+    selectedFilters = [],
+    handleFiltersChange = () => { },
     handleSortChange = () => { },
     onMoveClick = () => { },
     onMoveCategoryClick = () => { },
@@ -22,6 +25,7 @@ const Move = ({
     onCommandClick = () => { },
     onMoveTypeClick = () => { }
 }) => {
+    if (!move) return null;
     const {
         id,
         // active,
@@ -42,6 +46,10 @@ const Move = ({
         notes,
         sober,
     } = move;
+
+    const dodgeFilter = selectedFilters.find(filter => filter.prefix === 'dodge');
+    const dodgeValue = getDodgeValue(dodge_direction);
+    const isSelectedDodge = dodgeFilter && dodgeFilter.id === dodge_direction;
 
     const handleOnClick = (e) => {
         e.preventDefault()
@@ -81,11 +89,36 @@ const Move = ({
         handleSortChange(newSortValue);
     }
 
+    const onDodgeClick = (e) => {
+        e.stopPropagation();
+        let updatedFilters
+        const newDodgeFilter = {
+            id: dodge_direction,
+            prefix: 'dodge',
+            name: `Dodge (${dodgeValue})`
+        };
+        if (dodgeFilter) {
+            updatedFilters = isSelectedDodge ?
+                selectedFilters.filter(fOption => fOption.prefix !== 'dodge')
+                :
+                selectedFilters.map(fOption => {
+                    if (fOption.prefix === 'dodge') return newDodgeFilter;
+                    return fOption;
+                })
+        } else {
+            updatedFilters = [
+                ...selectedFilters,
+                newDodgeFilter
+            ]
+        }
+        handleFiltersChange(updatedFilters);
+    }
+
     const favouriteModifier = isFavourite ? 'favourite' : '';
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-    const dodgeValue = getDodgeValue(dodge_direction);
+
 
     return (
         <div className={className} onClick={handleOnClick}>
@@ -111,13 +144,25 @@ const Move = ({
 
             </div>
             <div className='move__category'>
+                <Button
+                    modifier={isSelectedDodge ? 'active dodge' : 'not-selected dodge'}
+                    text={dodgeValue}
+                    onClick={onDodgeClick}
+                />
                 <MoveTypeBadge
-                    modifier={'active'}
+                    modifier={selectedMoveCategory === category ? 'active' : 'not-selected'}
                     moveType={categoryName}
                     onClick={handleOnCategoryClick}
                 />
             </div>
             <div className='move__props other'>
+                {/* <SortableMoveProp
+                    propKey={'dodge_direction'}
+                    text={'dodge'}
+                    activeSortId={selectedSort.id}
+                    value={dodgeValue}
+                    onClick={onSortablePropClick}
+                /> */}
                 <SortableMoveProp
                     propKey={'damage'}
                     activeSortId={selectedSort.id}
@@ -125,10 +170,9 @@ const Move = ({
                     onClick={onSortablePropClick}
                 />
                 <SortableMoveProp
-                    propKey={'dodge_direction'}
-                    text={'dodge'}
+                    propKey={'startup'}
                     activeSortId={selectedSort.id}
-                    value={dodgeValue}
+                    value={startup}
                     onClick={onSortablePropClick}
                 />
                 <SortableMoveProp
@@ -139,12 +183,7 @@ const Move = ({
                 />
             </div>
             <div className='move__props frame-data'>
-                <SortableMoveProp
-                    propKey={'startup'}
-                    activeSortId={selectedSort.id}
-                    value={startup}
-                    onClick={onSortablePropClick}
-                />
+
                 <SortableMoveProp
                     propKey={'hit'}
                     activeSortId={selectedSort.id}

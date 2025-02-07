@@ -16,7 +16,7 @@ const ComboBuilderModal = ({
 }) => {
     const { selectedCharacter } = useMainContext();
     const { id, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
-    const initCharacters = CHARACTERS.map(char=>char.id);
+    const initCharacters = CHARACTERS.map(char => char.id);
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
     const [comboNotation, setComboNotation] = useState(command || []);

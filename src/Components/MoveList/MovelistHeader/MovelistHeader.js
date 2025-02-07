@@ -44,8 +44,9 @@ const MovelistHeader = ({
 
     const toogleFavorite = () => {
         let updatedFilters;
+        
         if (hasFav) {
-            updatedFilters = selectedFilters.filter(filter => !filter.id === 'fav');
+            updatedFilters = selectedFilters.filter(filter => filter.id !== 'fav');
         } else {
             updatedFilters = [
                 ...selectedFilters.map(filter => filter),

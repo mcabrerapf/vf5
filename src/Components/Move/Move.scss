@@ -54,7 +54,16 @@
     }
 
     &__category {
-            margin-bottom: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+
+        .dodge {
+            min-width: 2.5em;
+            width: 2.5em;
+            min-height: 2.5rem;
+            height: 2.5rem;
+        }
     }
 
     &__props {
@@ -82,18 +91,18 @@
             &.selected-sort {
                 border: 1px solid;
                 border-radius: 0.5rem;
+
                 div:first-of-type {
                     background-color: white;
                     color: black;
                     height: 100%;
                 }
-                div:nth-of-type(2) {
 
-                }
+                div:nth-of-type(2) {}
             }
 
             &__label {
-                width: 5.2rem;
+                width: 5rem;
                 padding-right: 0.5rem;
                 font-weight: 700;
                 padding: 0.2rem 0rem 0.2rem 0.3rem;
@@ -111,23 +120,27 @@
                     color: lightgreen;
                     font-weight: 700;
                 }
+
                 &.jab-punish {
                     color: aqua;
                     font-weight: 700;
                 }
+
                 &.combo-punish {
                     color: yellow;
                     font-weight: 700;
                 }
+
                 &.launch-punishable {
                     color: orange;
                     font-weight: 700;
                 }
+
                 &.ded {
                     color: red;
                     font-weight: 700;
                 }
-                
+
             }
         }
     }

@@ -190,7 +190,6 @@ const Movelist = () => {
                     <MoveModal
                         move={selectedMove}
                         moveCategories={moveCategories}
-                        selectedSort={selectedMovelistSort}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -219,7 +218,7 @@ const Movelist = () => {
                 >
                     {sortedMovelist.map((move) => {
                         const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
-
+                        
                         return (
                             <li
                                 key={move.id}
@@ -230,7 +229,10 @@ const Movelist = () => {
                                     selectedSort={selectedMovelistSort}
                                     isFavourite={customMatch.favourite}
                                     moveCategories={moveCategories}
+                                    selectedMoveCategory={selectedMoveCategory}
                                     extraNote={customMatch.note}
+                                    selectedFilters={selectedFilters}
+                                    handleFiltersChange={handleFiltersChange}
                                     onMoveClick={onMoveClick}
                                     handleSortChange={handleSortChange}
                                     handleSortDirChange={handleSortClick}

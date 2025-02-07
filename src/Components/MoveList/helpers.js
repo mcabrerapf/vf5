@@ -32,21 +32,24 @@ const filterMovelist = (list, filters, customMoves) => {
         .filter(filter => filter.prefix === 'command')
     const attackLevelFilters = filters.filter(filter => filter.prefix === 'attack_level');
     const hasFavFilter = filters.find(filter => filter.id === 'fav');
-    
+    const dodgeFilter = filters.find(filter => filter.prefix === 'dodge');
+
     return list.filter(move => {
         const isValid = attackLevelFilters.length ?
             attackLevelFilters.find(parsedType => parsedType.name === move.attack_level) : true;
         let hasCommandMatch = commandFilters.length ? false : true;
         const stringCommand = move.command.join('')
         const hasFavMatch = !hasFavFilter ?
-            true : customMoves.find(cMove => cMove.id === move.id);
+            true : !!customMoves.find(cMove => cMove.id === move.id && cMove.favourite);
+        const hasDodgeMatch = dodgeFilter ?
+            move.dodge_direction === dodgeFilter.id : true;
         commandFilters.forEach(commandFilter => {
             if (stringCommand.includes(commandFilter.id)) {
                 hasCommandMatch = true;
             }
         })
 
-        return isValid && hasCommandMatch && hasFavMatch;
+        return isValid && hasCommandMatch && hasFavMatch && hasDodgeMatch;
     })
 }
 
