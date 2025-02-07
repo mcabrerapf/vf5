@@ -37,11 +37,6 @@ const NOTATION_TO_ICON = {
 
 const INVALID_LAUNCHER_NOTATIONS = [
     'or',
-    'ch',
-    'side',
-    'wb',
-    'w',
-    'hit',
     '⊙'
 ];
 
