@@ -9,6 +9,7 @@ import Button from '../Button';
 const Combo = ({
     combo = {},
     selectedSort = {},
+    showSimpleView = false,
     onClick = () => { },
     handleSortChange = () => { },
     onLauncherClick = () => { },
@@ -119,38 +120,42 @@ const Combo = ({
                     {note}
                 </div>
             }
-            <div className='combo__tags'>
-                {hasAllCharacters &&
-                    <MoveTypeBadge
-                        modifier={"character"}
-                        moveType={'ALL'}
-                        onClick={handleCharacterClick}
-                    />
-                }
-                {!hasAllCharacters && characterTags.map(characterTag =>
-                    <MoveTypeBadge
-                        key={characterTag}
-                        modifier={"character"}
-                        moveType={capitalizeFirstLetter(characterTag)}
-                        onClick={handleCharacterClick}
-                    />
-                )}
-            </div>
-            <div className='combo__tags'>
-                {tags.map(tag => {
-
-
-                    return (
+            {!showSimpleView &&
+                <div className='combo__tags'>
+                    {hasAllCharacters &&
                         <MoveTypeBadge
-                            key={tag}
-                            modifier={tag}
-                            value={tag}
-                            moveType={ATTACK_LEVELS_ID_TO_NAME[tag] || tag}
-                            onClick={handleTagClick}
+                            modifier={"character"}
+                            moveType={'ALL'}
+                            onClick={handleCharacterClick}
                         />
-                    )
-                })}
-            </div>
+                    }
+                    {!hasAllCharacters && characterTags.map(characterTag =>
+                        <MoveTypeBadge
+                            key={characterTag}
+                            modifier={"character"}
+                            moveType={capitalizeFirstLetter(characterTag)}
+                            onClick={handleCharacterClick}
+                        />
+                    )}
+                </div>
+            }
+            {!showSimpleView &&
+                <div className='combo__tags'>
+                    {tags.map(tag => {
+
+
+                        return (
+                            <MoveTypeBadge
+                                key={tag}
+                                modifier={tag}
+                                value={tag}
+                                moveType={ATTACK_LEVELS_ID_TO_NAME[tag] || tag}
+                                onClick={handleTagClick}
+                            />
+                        )
+                    })}
+                </div>
+            }
         </div>
     )
 }

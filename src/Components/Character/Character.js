@@ -17,7 +17,7 @@ import Matchups from '../Matchups/Matchups';
 
 
 const Character = () => {
-    const { selectedCharacter } = useMainContext();
+    const { selectedCharacter, listView, setListView } = useMainContext();
     const localSelectedView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
@@ -34,6 +34,10 @@ const Character = () => {
 
     const toggleInfoModal = () => {
         setShowInfoModal(!showInfoModal)
+    }
+
+    const toggleListViewMode = () => {
+        setListView()
     }
 
     const { name: characterName } = CHARACTERS_JSON[selectedCharacter];
@@ -60,11 +64,16 @@ const Character = () => {
             <header className='character__header'>
                 <Button
                     modifier={'no-border'}
+                    text={listView}
+                    onClick={toggleListViewMode}
+                />
+                <Button
+                    modifier={'no-border'}
                     onClick={toggleCharacterSelectModal}
                     text={characterName}
                 />
                 <Button
-                    modifier={'no-border info-button'}
+                    modifier={'no-border'}
                     text="ℹ"
                     onClick={toggleInfoModal}
                 />

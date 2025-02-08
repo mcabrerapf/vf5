@@ -1,5 +1,6 @@
 const ALL_DATA_KEY =                    'vf5_all_data';
 const CHARACTERS_DATA_KEY =             'vf5_characters_data';
+const LIST_VIEW_KEY =                   'vf5_list-vew';
 const SELECTED_CHARACTER_KEY =          'vf5_selected-character';
 const SELECTED_CHARACTER_VIEW_KEY =     'vf5_selected-character-view';
 const SELECTED_MOVE_CATEGORY_KEY =      'vf5_selected-move-category';
@@ -30,6 +31,7 @@ const LOCAL_KEYS = {
 export {
     ALL_DATA_KEY,
     CHARACTERS_DATA_KEY,
+    LIST_VIEW_KEY,
     SELECTED_CHARACTER_KEY,
     SELECTED_CHARACTER_VIEW_KEY,
     SELECTED_MOVE_CATEGORY_KEY,

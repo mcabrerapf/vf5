@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MainContextProvider } from './MainContext';
 import {
   CHARACTERS_DATA_KEY,
+  LIST_VIEW_KEY,
   SELECTED_CHARACTER_KEY,
   SELECTED_MOVE_CATEGORY_KEY,
   STRINGS
@@ -22,10 +23,11 @@ const MainContextWrapper = ({
 
   const [contextData, setContextData] = useState({
     selectedCharacter: localSelectedCharacter,
-    customMoves: localCustomMoves
+    customMoves: localCustomMoves,
+    listView: 'F'
   });
 
-  const { selectedCharacter } = contextData;
+  const { selectedCharacter, listView } = contextData;
 
 
   const setSelectedCharacter = (character) => {
@@ -64,13 +66,26 @@ const MainContextWrapper = ({
     setContextData({ ...contextData, customMoves: updatedNotes });
   }
 
+  const setListView = () => {
+    const newListView = listView === 'F' ? 'S' : 'F';
+    setLocalStorage(
+      LIST_VIEW_KEY,
+      newListView
+    );
+    setContextData({
+      ...contextData,
+      listView: newListView
+    });
+  }
+
   return (
     <MainContextProvider
       value={{
         ...contextData,
         setSelectedCharacter,
         setFavouriteMoves,
-        setCharacterNotes
+        setCharacterNotes,
+        setListView
       }}
     >
       {children}

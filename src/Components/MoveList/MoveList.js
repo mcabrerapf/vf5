@@ -20,7 +20,12 @@ import MoveModal from '../Modals/MoveModal';
 
 const Movelist = () => {
     const listRef = useRef(null);
-    const { selectedCharacter, customMoves, setFavouriteMoves, setCharacterNotes } = useMainContext();
+    const { selectedCharacter,
+        customMoves,
+        listView,
+        setFavouriteMoves,
+        setCharacterNotes
+    } = useMainContext();
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
@@ -101,8 +106,10 @@ const Movelist = () => {
     const onMoveCategoryClick = ({ target: { value } }) => {
         const { id: categoryId } = moveCategories.find(cat => cat.name === value) || '';
         if (!categoryId) return;
-        setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, categoryId);
-        setSelectedMoveCategory(categoryId);
+        const categoryToSet = categoryId === selectedMoveCategory ?
+            moveCategories[0].id : categoryId;
+        setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, categoryToSet);
+        setSelectedMoveCategory(categoryToSet);
     }
 
     const onCommandClick = (command) => {
@@ -168,7 +175,8 @@ const Movelist = () => {
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
-
+    const showSimpleView = listView ==='S';
+    
     return (
         <div className='movelist'>
             <ModalContextWrapper
@@ -232,6 +240,7 @@ const Movelist = () => {
                                     moveCategories={moveCategories}
                                     selectedMoveCategory={selectedMoveCategory}
                                     selectedFilters={selectedFilters}
+                                    showSimpleView={showSimpleView}
                                     handleFiltersChange={handleFiltersChange}
                                     onMoveClick={onMoveClick}
                                     handleSortChange={handleSortChange}

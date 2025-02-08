@@ -16,6 +16,7 @@ const Move = ({
     modifier = "",
     selectedFilters = [],
     hideNote,
+    showSimpleView = false,
     handleFiltersChange = () => { },
     handleSortChange = () => { },
     onMoveClick = () => { },
@@ -157,59 +158,56 @@ const Move = ({
                     onClick={handleOnCategoryClick}
                 />
             </div>
-            <div className='move__props other'>
-                {/* <SortableMoveProp
-                    propKey={'dodge_direction'}
-                    text={'dodge'}
-                    activeSortId={selectedSort.id}
-                    value={dodgeValue}
-                    onClick={onSortablePropClick}
-                /> */}
-                <SortableMoveProp
-                    propKey={'damage'}
-                    activeSortId={selectedSort.id}
-                    value={damage}
-                    onClick={onSortablePropClick}
-                />
-                <SortableMoveProp
-                    propKey={'startup'}
-                    activeSortId={selectedSort.id}
-                    value={startup}
-                    onClick={onSortablePropClick}
-                />
-                <SortableMoveProp
-                    propKey={'sober'}
-                    activeSortId={selectedSort.id}
-                    value={sober}
-                    onClick={onSortablePropClick}
-                />
-            </div>
-            <div className='move__props frame-data'>
+            {!showSimpleView &&
+                <div className='move__props other'>
+                    <SortableMoveProp
+                        propKey={'damage'}
+                        activeSortId={selectedSort.id}
+                        value={damage}
+                        onClick={onSortablePropClick}
+                    />
+                    <SortableMoveProp
+                        propKey={'startup'}
+                        activeSortId={selectedSort.id}
+                        value={startup}
+                        onClick={onSortablePropClick}
+                    />
+                    <SortableMoveProp
+                        propKey={'sober'}
+                        activeSortId={selectedSort.id}
+                        value={sober}
+                        onClick={onSortablePropClick}
+                    />
+                </div>
+            }
+            {!showSimpleView &&
+                <div className='move__props frame-data'>
 
-                <SortableMoveProp
-                    propKey={'hit'}
-                    activeSortId={selectedSort.id}
-                    value={hit}
-                    doFrameCheck
-                    onClick={onSortablePropClick}
-                />
-                <SortableMoveProp
-                    propKey={'c_hit'}
-                    text={"counter"}
-                    activeSortId={selectedSort.id}
-                    value={c_hit}
-                    doFrameCheck
-                    onClick={onSortablePropClick}
-                />
-                <SortableMoveProp
-                    propKey={'gd'}
-                    text={'block'}
-                    activeSortId={selectedSort.id}
-                    value={gd}
-                    doFrameCheck
-                    onClick={onSortablePropClick}
-                />
-            </div>
+                    <SortableMoveProp
+                        propKey={'hit'}
+                        activeSortId={selectedSort.id}
+                        value={hit}
+                        doFrameCheck
+                        onClick={onSortablePropClick}
+                    />
+                    <SortableMoveProp
+                        propKey={'c_hit'}
+                        text={"counter"}
+                        activeSortId={selectedSort.id}
+                        value={c_hit}
+                        doFrameCheck
+                        onClick={onSortablePropClick}
+                    />
+                    <SortableMoveProp
+                        propKey={'gd'}
+                        text={'block'}
+                        activeSortId={selectedSort.id}
+                        value={gd}
+                        doFrameCheck
+                        onClick={onSortablePropClick}
+                    />
+                </div>
+            }
             <MoveCommand
                 onClick={handleOnCommandClick}
                 command={command}
