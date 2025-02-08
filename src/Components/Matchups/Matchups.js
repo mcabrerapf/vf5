@@ -37,7 +37,7 @@ const Matchups = () => {
     }
 
     const onMatchupModalClose = (newMatchup) => {
-        handleMatchupUpdate(newMatchup);
+        if (newMatchup) handleMatchupUpdate(newMatchup);
         setSelectedMatchup(null);
         toggleMatchupModal();
     }
