@@ -54,6 +54,7 @@ const Movelist = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
+            scrollToTop();
             setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
         }
@@ -85,6 +86,7 @@ const Movelist = () => {
             ...selectedFilters.map(filter => filter),
             { id: levelId, prefix: "attack_level", name: attackLevel }
         ];
+        scrollToTop();
         setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(updatedFilters));
         setSelectedFilters(updatedFilters);
     }
@@ -94,6 +96,7 @@ const Movelist = () => {
             ...selectedMovelistSort,
             dir: selectedMovelistSort.dir === 'asc' ? 'dsc' : 'asc'
         }
+        scrollToTop();
         setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(newSort));
         setSelectedMovelistSort(newSort);
     }
@@ -108,6 +111,7 @@ const Movelist = () => {
         if (!categoryId) return;
         const categoryToSet = categoryId === selectedMoveCategory ?
             moveCategories[0].id : categoryId;
+        scrollToTop();
         setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, categoryToSet);
         setSelectedMoveCategory(categoryToSet);
     }
@@ -118,6 +122,7 @@ const Movelist = () => {
             ...selectedFilters.map(filter => filter),
             { id: command, name: command, prefix: 'command' }
         ];
+        scrollToTop();
         handleFiltersChange(newFilters);
     }
 
@@ -128,6 +133,7 @@ const Movelist = () => {
 
     const handleSortChange = (sort) => {
         if (!sort) return;
+        scrollToTop();
         setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(sort));
         setSelectedMovelistSort(sort);
     }
@@ -170,13 +176,17 @@ const Movelist = () => {
     const toggleMoveModal = () => {
         setShowMoveModal(!showMoveModal);
     }
+    
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     if (!selectedMoveset) return null;
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
-    const showSimpleView = listView ==='S';
-    
+    const showSimpleView = listView === 'S';
+
     return (
         <div className='movelist'>
             <ModalContextWrapper

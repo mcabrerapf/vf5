@@ -8,8 +8,10 @@ import getLocalStorageSize from './getLocalStorageSize';
 import getNumberColor from "./getNumberColor";
 import initiLocal from "./initLocal";
 import setLocalStorage from "./setLocalStorage";
+import stringNotationParser from "./stringNotationParser";
+import stringNotationSpliter from "./stringNotationSpliter";
+import stringToNotation from "./stringToNotation";
 import validateImportData from "./validateImportData";
-
 
 export {
     calculateWinRate,
@@ -22,5 +24,8 @@ export {
     getNumberColor,
     initiLocal,
     setLocalStorage,
+    stringNotationSpliter,
+    stringNotationParser,
+    stringToNotation,
     validateImportData
 }

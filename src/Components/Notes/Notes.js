@@ -8,6 +8,7 @@ import NoteModal from '../Modals/NoteModal';
 import DeleteModal from '../Modals/DeleteModal';
 import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
 import { CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
+import Note from '../Note/Note';
 
 const Notes = () => {
     const { selectedCharacter } = useMainContext();
@@ -121,19 +122,10 @@ const Notes = () => {
                     className='notes__list-container__list'
                 >
                     {notes.map((note) =>
-                        <li
-                            key={note.id}
-                            className='notes__list-container__list__note'
-                        >
-                            <div
-                                className='notes__list-container__list__note__content'
-                                onClick={() => handleNoteClick(note)}
-
-                            >
-                                {note.content}
-
-                            </div>
-                        </li>
+                        <Note
+                            note={note}
+                            handleNoteClick={handleNoteClick}
+                        />
                     )}
                 </ul>
             </div>

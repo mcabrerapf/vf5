@@ -2,7 +2,8 @@ import './Matchup.scss'
 import React from 'react';
 import VSIcon from './VSIcon';
 import Button from '../Button';
-import { calculateWinRate } from '../../helpers';
+import { calculateWinRate, stringNotationParser } from '../../helpers';
+import TextWithCommand from '../TextWithCommand';
 
 const Matchup = ({
     matchup = {},
@@ -35,7 +36,7 @@ const Matchup = ({
     const handleVsClick = () => {
         onVsClick(matchup);
     }
-
+    const parsedNote = stringNotationParser(note);
     return (
         <div className='matchup'
         >
@@ -88,7 +89,9 @@ const Matchup = ({
             </div>
             {!hideNote && !!note &&
                 <div className='matchup__note'>
-                    {note}
+                    <TextWithCommand
+                    content={parsedNote}
+                    />
                 </div>
             }
         </div>

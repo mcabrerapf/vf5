@@ -57,7 +57,7 @@ const validateCharactersData = () => {
                     name: mCharp.name,
                     wins: 0,
                     loses: 0,
-                    total:0,
+                    total: 0,
                     win_rate: 0,
                     note: ''
                 }))
@@ -154,6 +154,33 @@ const validateCharacterMoveCategory = () => {
     }
 }
 
+const validateMatchups = () => {
+    try {
+        const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
+        const parsedCharacters = JSON.parse(allCharactersData);
+        const updatedChars = {};
+
+        Object.keys(parsedCharacters).forEach(charId => {
+            updatedChars[charId] = parsedCharacters[charId];
+            const matchups = parsedCharacters[charId].matchups.map(matchup => {
+                const { loses, wins, total, win_rate } = matchup;
+
+                return {
+                    ...matchup,
+                    loses: Number(loses),
+                    wins: Number(wins),
+                    total: Number(total),
+                    win_rate: Number(win_rate),
+                }
+            })
+            updatedChars[charId].matchups = matchups;
+        })
+    } catch (error) {
+
+    }
+
+}
+
 const initLocal = () => {
     validateSelectedCharacter();
     validateSelectedCharacterView();
@@ -161,6 +188,7 @@ const initLocal = () => {
     validateFilters();
     validateSorts();
     validateCharactersData();
+    validateMatchups();
 }
 
 export default initLocal;

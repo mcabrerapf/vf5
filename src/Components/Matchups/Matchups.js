@@ -1,5 +1,5 @@
 import './Matchups.scss'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import { useMainContext } from '../../Contexts/MainContext'
 import Modal from '../Modals/Modal';
@@ -13,6 +13,7 @@ import { getFromLocal, setLocalStorage } from '../../helpers';
 import { sortMatchups } from './helpers';
 
 const Matchups = () => {
+    const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
     const localSelectedSort = getFromLocal(SELECTED_MATCHUPS_SORT_KEY);
     const selectedCharacterName = CHARACTER_ID_TO_NAME[selectedCharacter]
@@ -61,6 +62,7 @@ const Matchups = () => {
             ...selectedSort,
             dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc'
         }
+        scrollToTop();
         setLocalStorage(SELECTED_MATCHUPS_SORT_KEY, JSON.stringify(newSort));
         setSelectedSort(newSort);
     }
@@ -72,6 +74,7 @@ const Matchups = () => {
 
     const handleSortChange = (sort) => {
         if (!sort) return;
+        scrollToTop();
         setLocalStorage(SELECTED_MATCHUPS_SORT_KEY, JSON.stringify(sort));
         setSelectedSort(sort);
     }
@@ -79,6 +82,11 @@ const Matchups = () => {
     const toggleSortModal = () => {
         setShowSortModal(!showSortModal);
     }
+
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
 
     const sortedMatchups = sortMatchups(matchups, selectedSort);
     return (
@@ -111,13 +119,16 @@ const Matchups = () => {
                 onSortDirClick={onSortDirClick}
                 selectedSort={selectedSort}
             />
-            <div className='matchups__container'>
+            <div
+                ref={listRef}
+                className='matchups__container'
+            >
                 {sortedMatchups.map(matchup => {
                     return (
                         <Matchup
                             key={matchup.id}
                             matchup={matchup}
-                            hideNote={listView ==='S'}
+                            hideNote={listView === 'S'}
                             selectedCharacterName={selectedCharacterName}
                             handleMatchupUpdate={handleMatchupUpdate}
                             onVsClick={onVsClick}

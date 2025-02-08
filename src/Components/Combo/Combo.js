@@ -3,8 +3,9 @@ import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS } from '../../constants';
-import { capitalizeFirstLetter, getLauncher } from '../../helpers';
+import { capitalizeFirstLetter, getLauncher, stringNotationParser } from '../../helpers';
 import Button from '../Button';
+import TextWithCommand from '../TextWithCommand';
 
 const Combo = ({
     combo = {},
@@ -77,7 +78,7 @@ const Combo = ({
         restOfCombo.shift();
     }
     if (restOfCombo[0] === '⊙') restOfCombo.shift();
-
+    const parsedNote = stringNotationParser(note);
     return (
         <div
             className={`combo${favourite ? ' favourite' : ''}`}
@@ -117,7 +118,9 @@ const Combo = ({
             }
             {note &&
                 <div className='combo__note'>
-                    {note}
+                    <TextWithCommand
+                        content={parsedNote}
+                    />
                 </div>
             }
             {!showSimpleView &&
@@ -142,8 +145,6 @@ const Combo = ({
             {!showSimpleView &&
                 <div className='combo__tags'>
                     {tags.map(tag => {
-
-
                         return (
                             <MoveTypeBadge
                                 key={tag}

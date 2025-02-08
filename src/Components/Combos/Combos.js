@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Combos.scss'
 import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS, COMBO_FILTER_OPTIONS, COMBOS_SORT_OPTIONS, SELECTED_COMBOS_SORT_KEY } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
@@ -15,6 +15,7 @@ import { filterCombos, sortCombos } from './helpers';
 import SortModal from '../Modals/SortModal';
 
 const Combos = () => {
+    const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
     const localSelectedSort = getFromLocal(SELECTED_COMBOS_SORT_KEY);
@@ -43,6 +44,7 @@ const Combos = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
+            scrollToTop();
             setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
         }
@@ -150,6 +152,7 @@ const Combos = () => {
             { id: stringLauncher, name: stringLauncher, prefix: 'launcher' }
 
         ]
+        scrollToTop();
         handleFiltersChange(newFilters);
 
     }
@@ -173,6 +176,7 @@ const Combos = () => {
             ...selectedSort,
             dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc'
         }
+        scrollToTop();
         setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(newSort));
         setSelectedSort(newSort);
     }
@@ -184,12 +188,17 @@ const Combos = () => {
 
     const handleSortChange = (sort) => {
         if (!sort) return;
+        scrollToTop();
         setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(sort));
         setSelectedSort(sort);
     }
 
     const toggleSortModal = () => {
         setShowSortModal(!showSortModal);
+    }
+
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     const filteredCombos = filterCombos(combos, selectedFilters);
@@ -246,6 +255,7 @@ const Combos = () => {
             />
             <div className='combos__list-container'>
                 <ul
+                    ref={listRef}
                     className='combos__list-container__list'
                 >
                     {sortedCombos.map((combo) =>
