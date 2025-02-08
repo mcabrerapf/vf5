@@ -2,7 +2,7 @@ import React from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS, COMBO_FILTER_OPTIONS } from '../../constants';
+import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS } from '../../constants';
 import { capitalizeFirstLetter, getLauncher } from '../../helpers';
 import Button from '../Button';
 
@@ -20,6 +20,7 @@ const Combo = ({
     const hasAllCharacters = CHARACTERS.length === characterTags.length;
     const [launcher, restOfCombo, fullLauncher] = getLauncher(command);
     const isDamageSortSelected = selectedSort.id === 'damage';
+    const isNameSortSelected = selectedSort.id === 'name';
     const isCommandSortSelected = selectedSort.id === 'command';
 
     const handleComboClick = (e) => {
@@ -54,6 +55,14 @@ const Combo = ({
         handleSortChange(updatedSort);
     }
 
+    const handleNameClick = (e) => {
+        e.stopPropagation();
+        const updatedSort = isNameSortSelected ?
+            { ...selectedSort, dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc' } :
+            { id: 'name', name: 'Name', dir: 'asc' }
+        handleSortChange(updatedSort);
+    }
+
     const handleCommandClick = (e) => {
         e.stopPropagation();
         const updatedSort = isCommandSortSelected ?
@@ -74,7 +83,11 @@ const Combo = ({
             onClick={handleComboClick}
         >
             <div className='combo__main'>
-                <div className={`combo__main__name${favourite ? ' favourite' : ''}`}>
+                <div
+                    role='button'
+                    className={`combo__main__name${favourite ? ' favourite' : ''}`}
+                    onClick={handleNameClick}
+                >
                     {name}
                 </div>
                 <div className='combo__main__other'>

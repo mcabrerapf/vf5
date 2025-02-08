@@ -12,14 +12,20 @@ const sortCombos = (list, sort) => {
                 itemA[sortKey] : itemB[sortKey];
             const secondValue = sortDir === 'asc' ?
                 itemB[sortKey] : itemA[sortKey];
-            // Tod fix this
-            // if (sortKey === 'launcher') {
-            //     const [launcherA] = getLauncher(itemA.command);
-            //     const [launcherB] = getLauncher(itemA.command);
-            //     const stringLauncherA = launcherA.join('');
-            //     const stringLauncherB = launcherB.join('');
-            //     return stringLauncherA.localeCompare(stringLauncherB)
-            // }
+            
+            if (sortKey === 'launcher') {
+                const firstLauncher = sortDir === 'asc' ?
+                    itemA.command : itemB.command;
+                const secondLauncher = sortDir === 'asc' ?
+                    itemB.command : itemA.command;
+                const [launcherA] = getLauncher(firstLauncher);
+                const [launcherB] = getLauncher(secondLauncher);
+
+                const stringLauncherA = launcherA.join('');
+                const stringLauncherB = launcherB.join('');
+                console.log(stringLauncherA, stringLauncherB)
+                return stringLauncherA.localeCompare(stringLauncherB)
+            }
 
             if (sortKey === 'damage') {
                 const numA = typeof firstValue === "number" ? firstValue : 0;

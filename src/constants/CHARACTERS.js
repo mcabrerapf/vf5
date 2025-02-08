@@ -40,11 +40,16 @@ const COMBOS_SORT_OPTIONS = [
         name: 'Command',
         dir: 'asc'
     },
-    // {
-    //     id:'launcher',
-    //     name: 'Launcher',
-    //     dir: 'asc'
-    // },
+    {
+        id: 'name',
+        name: 'Name',
+        dir: 'asc'
+    },
+    {
+        id:'launcher',
+        name: 'Launcher',
+        dir: 'asc'
+    },
     {
         id: 'damage',
         name: 'Damage',
