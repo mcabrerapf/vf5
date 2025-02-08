@@ -164,13 +164,13 @@ const validateMatchups = () => {
             updatedChars[charId] = parsedCharacters[charId];
             const matchups = parsedCharacters[charId].matchups.map(matchup => {
                 const { loses, wins, total, win_rate } = matchup;
-
+                const parsesdTotal = total ? Number(total) : loses + wins;
                 return {
                     ...matchup,
                     loses: Number(loses),
                     wins: Number(wins),
-                    total: Number(total),
-                    win_rate: total === 0 ? 0 : Number(win_rate),
+                    total: parsesdTotal,
+                    win_rate: parsesdTotal === 0 || !parsesdTotal ? 0 : Number(win_rate),
                 }
             })
             updatedChars[charId].matchups = matchups;
