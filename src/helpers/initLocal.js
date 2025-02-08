@@ -170,10 +170,11 @@ const validateMatchups = () => {
                     loses: Number(loses),
                     wins: Number(wins),
                     total: Number(total),
-                    win_rate: Number(win_rate),
+                    win_rate: total === 0 ? 0 : Number(win_rate),
                 }
             })
             updatedChars[charId].matchups = matchups;
+            localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(updatedChars))
         })
     } catch (error) {
 
