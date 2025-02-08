@@ -1,7 +1,9 @@
-import { getNumberColor } from "../../helpers";
-import { getMovePropText } from "./helpers";
+import './SortableProp.scss';
+import React from 'react';
+import { getMovePropText } from '../helpers';
+import { getNumberColor } from "../../../helpers";
 
-const SortableMoveProp = ({
+const SortableProp = ({
     propKey,
     text,
     activeSortId,
@@ -10,10 +12,10 @@ const SortableMoveProp = ({
     onClick
 }) => {
     const isSelected = activeSortId === propKey;
-    const className = `move__props__prop${isSelected ? ' selected-sort' : ''}`
+    const className = `sortable-prop${isSelected ? ' selected-sort' : ''}`
     const parsedValue = getMovePropText(value, doFrameCheck);
     const numberColor = getNumberColor(value, doFrameCheck);
-    const numberClassname = `move__props__prop__value${numberColor}`;
+    const numberClassname = `sortable-prop__value${numberColor}`;
 
     const handlePropClick = (e) => {
         e.preventDefault();
@@ -27,7 +29,7 @@ const SortableMoveProp = ({
             onClick={handlePropClick}
         >
             <div
-                className='move__props__prop__label'
+                className='sortable-prop__label'
             >
                 <span>
                     {text || propKey}
@@ -41,4 +43,4 @@ const SortableMoveProp = ({
     )
 }
 
-export default SortableMoveProp;
+export default SortableProp;

@@ -34,7 +34,7 @@ const MoveModal = ({
                     hideNote
                     onFavouriteClick={onFavouriteClick}
                 />
-                <div  className='move-modal__textarea-container'>
+                <div className='move-modal__textarea-container'>
                     <textarea
                         value={noteValue}
                         onChange={onChange}
@@ -42,12 +42,18 @@ const MoveModal = ({
                 </div>
             </div>
             <ModalFooter modifier={"align-right"}>
-                <Button
-                onClick={onSave}
-                    text="✓"
-                />
-            </ModalFooter>
 
+                <Button
+                    text='X'
+                    onClick={() => closeModal()}
+                />
+                <Button
+                    modifier={'save-button'}
+                    text='✓'
+                    onClick={onSave}
+                />
+
+            </ModalFooter>
         </div>
     )
 }

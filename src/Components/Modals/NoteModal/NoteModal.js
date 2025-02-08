@@ -37,6 +37,7 @@ const NoteModal = ({
                 <div>
                     {id &&
                         <Button
+                        modifier={'danger'}
                             text='DELETE'
                             onClick={() => {
                                 closeModal();
@@ -46,11 +47,20 @@ const NoteModal = ({
                     }
                 </div>
 
-                <Button
-                    text='✓'
-                    disabled={!canSave}
-                    onClick={handleSaveNote}
-                />
+                <div
+                    className='modal-footer__main-buttons'
+                >
+                    <Button
+                        text='X'
+                        onClick={() => closeModal()}
+                    />
+                    <Button
+                        modifier={'save-button'}
+                        text='✓'
+                        disabled={!canSave}
+                        onClick={handleSaveNote}
+                    />
+                </div>
             </ModalFooter>
         </div>
     )

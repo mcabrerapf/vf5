@@ -119,21 +119,32 @@ const ComboBuilderModal = ({
                 }
             </div>
             <ModalFooter>
-                <div>
+                <div
+                    className='modal-footer__delete-button'
+                >
                     {!!id &&
                         <Button
+                            modifier={'danger'}
                             text='DELETE'
                             disabled={!canSave}
                             onClick={onDeleteClose}
                         />
                     }
                 </div>
-
-                <Button
-                    text='✓'
-                    disabled={!canSave}
-                    onClick={handleSaveCombo}
-                />
+                <div
+                    className='modal-footer__main-buttons'
+                >
+                    <Button
+                        text='X'
+                        onClick={() => closeModal()}
+                    />
+                    <Button
+                        modifier={'save-button'}
+                        text='✓'
+                        disabled={!canSave}
+                        onClick={handleSaveCombo}
+                    />
+                </div>
             </ModalFooter>
         </div>
     )

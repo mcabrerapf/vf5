@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './CommandView.scss';
 import CommandBuilder from '../../../CommandBuilder';
 import Button from '../../../Button';
@@ -13,6 +13,8 @@ const CommandView = ({
     setComboDamage,
     setComboName
 }) => {
+    const nameInputRef = useRef();
+    const damageInputRef = useRef();
     const handleDamageChange = ({ target: { value } }) => {
         const parsedDamage = isNaN(value) ? 1 : value;
         const maxChecked = Number(parsedDamage) > 999 ? 999 : parsedDamage;
@@ -20,9 +22,23 @@ const CommandView = ({
     }
 
     const handleDamageBlur = ({ target: { value } }) => {
-        const parsedDamage = isNaN(value) || !value ? 1 : value;
+        const parsedDamage = isNaN(value) || !value || value < 1 ? 1 : value;
         setComboDamage(parsedDamage);
     }
+
+    const handleNameEnterKey = (event) => {
+        if (event.key === "Enter") {
+            if (event.target.className.includes('name-input')) {
+                nameInputRef.current.blur();
+            }
+            if (event.target.className.includes('damage-input')) {
+                damageInputRef.current.blur();
+            }
+        }
+    };
+
+
+
 
     return (
         <div
@@ -31,15 +47,18 @@ const CommandView = ({
             <div className='command-view__top'>
                 <div className='command-view__top__inputs'>
                     <input
-                        className='command-view__top__inputs__name'
+                        ref={nameInputRef}
+                        className='command-view__top__inputs__name name-input'
                         value={comboName}
+                        onKeyDown={handleNameEnterKey}
                         onChange={({ target: { value } }) => setComboName(value)}
-                        onBlur={handleDamageBlur}
                     />
                     <input
-                        className='command-view__top__inputs__damage'
+                        ref={damageInputRef}
+                        className='command-view__top__inputs__damage damage-input'
                         type='number'
                         value={comboDamage}
+                        onKeyDown={handleNameEnterKey}
                         onFocus={() => setComboDamage('')}
                         onChange={handleDamageChange}
                         onBlur={handleDamageBlur}

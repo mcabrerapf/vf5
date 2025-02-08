@@ -1,0 +1,72 @@
+
+.sortable-prop {
+    height: 2.3rem;
+    display: flex;
+    flex-direction: row;
+    text-align: start;
+    user-select: none;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: end;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+
+    &.selected-sort {
+        border: 1px solid;
+        
+
+        div:first-of-type {
+            background-color: white;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+            color: black;
+            
+        }
+
+        div:nth-of-type(2) {}
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        width: 5.5rem;
+        padding-left: 0.5rem;
+        font-weight: 700;
+        text-align: start;
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    &__value {
+        box-sizing: border-box;
+        text-align: center;
+        width: 3rem;
+        padding: 0.2rem 0.1rem;
+
+        &.throw-attempt {
+            color: lightgreen;
+            font-weight: 700;
+        }
+
+        &.jab-punish {
+            color: aqua;
+            font-weight: 700;
+        }
+
+        &.combo-punish {
+            color: yellow;
+            font-weight: 700;
+        }
+
+        &.launch-punishable {
+            color: orange;
+            font-weight: 700;
+        }
+
+        &.ded {
+            color: red;
+            font-weight: 700;
+        }
+
+    }
+}

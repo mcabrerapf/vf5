@@ -8,7 +8,11 @@ import {
     SELECTED_MOVELIST_FILTERS_KEY,
     STRINGS,
     MOVELIST_SORT_OPTIONS,
-    SELECTED_COMBOS_SORT_KEY
+    SELECTED_COMBOS_SORT_KEY,
+    LIST_VIEW_KEY,
+    COMBOS_SORT_OPTIONS,
+    SELECTED_MATCHUPS_SORT_KEY,
+    MATHCHUPS_SORT_OPTIONS
 } from "../constants"
 
 const {
@@ -52,6 +56,8 @@ const getFromLocal = (localKey, character, characterKey) => {
             return localValue;
         case SELECTED_MOVE_CATEGORY_KEY:
             return localValue;
+        case LIST_VIEW_KEY:
+            return localValue;
         case SELECTED_MOVELIST_SORT_KEY:
             return localValue ? JSON.parse(localValue) : MOVELIST_SORT_OPTIONS[0];
         case SELECTED_MOVELIST_FILTERS_KEY:
@@ -59,7 +65,9 @@ const getFromLocal = (localKey, character, characterKey) => {
         case SELECTED_COMBOS_FILTERS_KEY:
             return localValue ? JSON.parse(localValue) : [];
         case SELECTED_COMBOS_SORT_KEY:
-            return localValue ? JSON.parse(localValue) : [];
+            return localValue ? JSON.parse(localValue) : COMBOS_SORT_OPTIONS[0];
+        case SELECTED_MATCHUPS_SORT_KEY:
+            return localValue ? JSON.parse(localValue) : MATHCHUPS_SORT_OPTIONS[0];
         case CHARACTERS_DATA_KEY:
             const selectedData = getCharacterData(localValue, character, characterKey);
             return selectedData;

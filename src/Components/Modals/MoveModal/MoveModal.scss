@@ -14,4 +14,12 @@
 
     }
 
+    .modal-footer {
+        gap: 1rem;
+
+        .save-button {
+            color: var(--mid);
+        }
+    }
+
 }

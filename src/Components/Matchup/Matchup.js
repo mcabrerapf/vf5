@@ -6,16 +6,18 @@ import { calculateWinRate } from '../../helpers';
 
 const Matchup = ({
     matchup = {},
+    hideNote = false,
     handleMatchupUpdate,
     onVsClick
 }) => {
-    const { name, loses, wins, win_rate } = matchup;
+    const { name, loses, wins, win_rate, note } = matchup;
 
     const onOponentClick = (e) => {
         e.preventDefault();
         handleMatchupUpdate({
             ...matchup,
             loses: loses + 1,
+            total: wins + loses + 1,
             win_rate: calculateWinRate(loses + 1, wins)
         })
     }
@@ -25,6 +27,7 @@ const Matchup = ({
         handleMatchupUpdate({
             ...matchup,
             wins: wins + 1,
+            total: wins + loses + 1,
             win_rate: calculateWinRate(loses, wins + 1)
         })
     }
@@ -34,52 +37,62 @@ const Matchup = ({
     }
 
     return (
-        <div className='matchup'>
-            <div
-                role='button'
-                className='matchup__buttons'
-            >
-                <Button
-                  onClick={onOponentClick}
-                    modifier={'loses'}
-                    text={loses}
-                />
-                <Button
-                    onClick={onPlayerClick}
-                    modifier={'wins'}
-                    text={wins}
-                />
-            </div>
-            <div
-                role='button'
-                className='matchup__vs'
-                onClick={handleVsClick}
+        <div className='matchup'
+        >
+            <div className='matchup__content'
             >
                 <div
-                    className='matchup__vs__icon'
+                    role='button'
+                    className='matchup__content__buttons'
                 >
-                    <VSIcon />
+                    <Button
+                        onClick={onOponentClick}
+                        modifier={'loses'}
+                        text={loses}
+                    />
+                    <Button
+                        onClick={onPlayerClick}
+                        modifier={'wins'}
+                        text={wins}
+                    />
                 </div>
                 <div
-                    className='matchup__vs__win-rate'
+                    role='button'
+                    className='matchup__content__vs'
+                    onClick={handleVsClick}
                 >
-                    {win_rate}%
+                    <div
+                        className='matchup__content__vs__icon'
+                    >
+                        <VSIcon />
+                    </div>
+                    <div
+                        className='matchup__content__vs__win-rate'
+                    >
+                        {win_rate}%
+                    </div>
                 </div>
-            </div>
-            <div
-                role='button'
-                className='matchup__character'
-                onClick={handleVsClick}
-            >
                 <div
-                    className='matchup__character__name'
+                    role='button'
+                    className='matchup__content__character'
+                    onClick={handleVsClick}
                 >
-                    <div>
-                        {name}
+                    <div
+                        className='matchup__content__character__name'
+                    >
+                        <div>
+                            {name}
+                        </div>
                     </div>
                 </div>
             </div>
+            {!hideNote && !!note &&
+                <div className='matchup__note'>
+                    {note}
+                </div>
+            }
         </div>
+
     )
 }
 

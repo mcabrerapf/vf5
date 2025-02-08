@@ -15,6 +15,7 @@ const MainContextWrapper = ({
   children,
 }) => {
   const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
+  const localListView = getFromLocal(LIST_VIEW_KEY)
   const localCustomMoves = getFromLocal(
     CHARACTERS_DATA_KEY,
     localSelectedCharacter,
@@ -24,7 +25,7 @@ const MainContextWrapper = ({
   const [contextData, setContextData] = useState({
     selectedCharacter: localSelectedCharacter,
     customMoves: localCustomMoves,
-    listView: 'F'
+    listView: localListView
   });
 
   const { selectedCharacter, listView } = contextData;

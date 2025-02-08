@@ -15,7 +15,7 @@ import { filterCombos, sortCombos } from './helpers';
 import SortModal from '../Modals/SortModal';
 
 const Combos = () => {
-    const { selectedCharacter,listView } = useMainContext();
+    const { selectedCharacter, listView } = useMainContext();
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
     const localSelectedSort = getFromLocal(SELECTED_COMBOS_SORT_KEY);
 
@@ -38,8 +38,8 @@ const Combos = () => {
         },
         [selectedCharacter]
     )
-    
-    if(!combos) return null;
+
+    if (!combos) return null;
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
@@ -194,7 +194,7 @@ const Combos = () => {
 
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos, selectedSort);
-    const showSimpleView = listView ==='S';
+    const showSimpleView = listView === 'S';
 
     return (
         <div className='combos'>
@@ -212,6 +212,7 @@ const Combos = () => {
             <ModalContextWrapper
                 showModal={showComboBuilderModal}
                 closeModal={handleCloseModal}
+                closeOnBgClick={false}
             >
                 <Modal>
                     <ComboBuilderModal

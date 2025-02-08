@@ -23,7 +23,7 @@ const sortCombos = (list, sort) => {
 
                 const stringLauncherA = launcherA.join('');
                 const stringLauncherB = launcherB.join('');
-                console.log(stringLauncherA, stringLauncherB)
+                
                 return stringLauncherA.localeCompare(stringLauncherB)
             }
 

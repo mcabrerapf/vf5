@@ -34,5 +34,15 @@
 
     .modal-footer {
         justify-content: space-between;
+
+        &__main-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+
+            .save-button {
+                color: var(--mid);
+            }
+        }
     }
 }

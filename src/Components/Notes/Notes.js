@@ -99,6 +99,7 @@ const Notes = () => {
             <ModalContextWrapper
                 showModal={showNoteModal}
                 closeModal={handleCloseModal}
+                closeOnBgClick={false}
             >
                 <Modal>
                     <NoteModal

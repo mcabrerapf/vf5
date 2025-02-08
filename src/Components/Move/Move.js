@@ -1,6 +1,6 @@
 import './Move.scss'
 import React from 'react';
-import SortableMoveProp from './MoveSortableProp';
+import SortableProp from './SortableProp';
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import Button from '../Button';
@@ -160,19 +160,19 @@ const Move = ({
             </div>
             {!showSimpleView &&
                 <div className='move__props other'>
-                    <SortableMoveProp
+                    <SortableProp
                         propKey={'damage'}
                         activeSortId={selectedSort.id}
                         value={damage}
                         onClick={onSortablePropClick}
                     />
-                    <SortableMoveProp
+                    <SortableProp
                         propKey={'startup'}
                         activeSortId={selectedSort.id}
                         value={startup}
                         onClick={onSortablePropClick}
                     />
-                    <SortableMoveProp
+                    <SortableProp
                         propKey={'sober'}
                         activeSortId={selectedSort.id}
                         value={sober}
@@ -183,14 +183,14 @@ const Move = ({
             {!showSimpleView &&
                 <div className='move__props frame-data'>
 
-                    <SortableMoveProp
+                    <SortableProp
                         propKey={'hit'}
                         activeSortId={selectedSort.id}
                         value={hit}
                         doFrameCheck
                         onClick={onSortablePropClick}
                     />
-                    <SortableMoveProp
+                    <SortableProp
                         propKey={'c_hit'}
                         text={"counter"}
                         activeSortId={selectedSort.id}
@@ -198,7 +198,7 @@ const Move = ({
                         doFrameCheck
                         onClick={onSortablePropClick}
                     />
-                    <SortableMoveProp
+                    <SortableProp
                         propKey={'gd'}
                         text={'block'}
                         activeSortId={selectedSort.id}

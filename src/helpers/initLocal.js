@@ -57,6 +57,7 @@ const validateCharactersData = () => {
                     name: mCharp.name,
                     wins: 0,
                     loses: 0,
+                    total:0,
                     win_rate: 0,
                     note: ''
                 }))

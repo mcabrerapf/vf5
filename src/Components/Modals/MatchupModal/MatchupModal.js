@@ -21,6 +21,7 @@ const MatchupModal = ({
 			...matchup,
 			wins,
 			loses,
+			total: wins + loses,
 			win_rate: newWinRate,
 			note
 		});
@@ -46,6 +47,7 @@ const MatchupModal = ({
 		setWins(wins - 1)
 	}
 	const winRate = calculateWinRate(loses, wins);
+	const newMatchup = { wins, loses, name, win_rate: winRate };
 
 	return (
 		<div
@@ -59,7 +61,8 @@ const MatchupModal = ({
 					className="matchup-modal__content__top"
 				>
 					<Matchup
-						matchup={{ wins, loses, name, win_rate: winRate }}
+						matchup={newMatchup}
+						hideNote
 						handleMatchupUpdate={updateMatchups}
 					/>
 					<div
@@ -88,15 +91,28 @@ const MatchupModal = ({
 			</div>
 			<ModalFooter
 			>
-				<Button
-					modifier={"danger"}
-					onClick={onResetClick}
-					text='RESET'
-				/>
-				<Button
-					onClick={onSaveClick}
-					text='✓'
-				/>
+				<div
+					className='modal-footer__delete-button'
+				>
+					<Button
+						modifier={"danger"}
+						onClick={onResetClick}
+						text='RESET'
+					/>
+				</div>
+				<div
+					className='modal-footer__main-buttons'
+				>
+					<Button
+						text='X'
+						onClick={() => closeModal()}
+					/>
+					<Button
+						modifier={'save-button'}
+						text='✓'
+						onClick={onSaveClick}
+					/>
+				</div>
 			</ModalFooter>
 		</div>
 	);

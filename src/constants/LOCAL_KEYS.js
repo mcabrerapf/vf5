@@ -8,6 +8,7 @@ const SELECTED_MOVELIST_SORT_KEY =      'vf5_selected-movelist-sort';
 const SELECTED_MOVELIST_FILTERS_KEY =   'vf5_selected-movelist-filters';
 const SELECTED_COMBOS_FILTERS_KEY =     'vf5_selected-combos-filters';
 const SELECTED_COMBOS_SORT_KEY =        'vf5_selected-combos-sort';
+const SELECTED_MATCHUPS_SORT_KEY =      'vf5_selected-matchups-sort';
 const USER_DATA_KEY =                   'vf5_user-data';
 
 
@@ -39,6 +40,7 @@ export {
     SELECTED_MOVELIST_FILTERS_KEY,
     SELECTED_COMBOS_FILTERS_KEY,
     SELECTED_COMBOS_SORT_KEY,
+    SELECTED_MATCHUPS_SORT_KEY,
     USER_DATA_KEY,
 }
 

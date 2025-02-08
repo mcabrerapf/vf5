@@ -193,6 +193,7 @@ const Movelist = () => {
             <ModalContextWrapper
                 showModal={showMoveModal}
                 closeModal={handleMoveModalClose}
+                closeOnBgClick={false}
             >
                 <Modal>
                     <MoveModal

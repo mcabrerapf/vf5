@@ -72,6 +72,39 @@ const COMBOS_SORT_OPTIONS = [
     }
 ];
 
+const MATHCHUPS_SORT_OPTIONS = [
+    {
+        id: 'name',
+        name: 'Name',
+        dir:'asc' 
+    },
+    {
+        id: 'wins',
+        name: 'Wins',
+        dir:'asc' 
+    },
+    {
+        id: 'loses',
+        name: 'Loses',
+        dir:'asc' 
+    },
+    {
+        id: 'total',
+        name: 'Total',
+        dir:'asc' 
+    },
+    {
+        id: 'win_rate',
+        name: 'Win Rate',
+        dir:'asc' 
+    },
+    {
+        id: 'note',
+        name: 'Note',
+        dir:'asc' 
+    },
+]
+
 Object.keys(CHARACTERS_JSON)
     .forEach(CHARACTER => {
         const { id, name, attack_levels } = CHARACTERS_JSON[CHARACTER];
@@ -112,6 +145,7 @@ export {
     ATTACK_LEVELS_ID_TO_NAME,
     ATTACK_LEVELS_NAME_TO_ID,
     ATTACK_LEVEL_IDS,
+    MATHCHUPS_SORT_OPTIONS,
     MOVELIST_FILTER_OPTIONS,
     MOVELIST_SORT_OPTIONS,
     CHARACTERS,

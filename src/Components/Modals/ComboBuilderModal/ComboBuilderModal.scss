@@ -17,5 +17,15 @@
         width: 100%;
         justify-content: space-between;
         align-items: flex-end;
+
+        &__main-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+
+            .save-button {
+                color: var(--mid);
+            }
+        }
     }
 }
