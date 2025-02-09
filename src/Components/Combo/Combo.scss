@@ -14,13 +14,7 @@
     }
 
     .move-command {
-        display: flex;
-        box-sizing: border-box;
         border: 1px solid white;
-        min-height: 2.8rem;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        width: fit-content;
 
         &.launcher {
             border: 1px solid gold;

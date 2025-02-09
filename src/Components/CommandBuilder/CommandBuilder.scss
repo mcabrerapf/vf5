@@ -11,17 +11,12 @@
         align-items: center;
 
         .move-command {
-            display: flex;
-            align-items: flex-start;
             border: 1px solid white;
-            box-sizing: border-box;
             overflow-y: auto;
             width: 25rem;
             height: 9rem;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
 
-            .notation {
+            .notation-container {
                 border: 2px solid transparent;
 
                 &.selected {

@@ -23,25 +23,25 @@ const Notation = ({
     return (
         <>
             {isCombiStart &&
-                <div
+                <span
                     className="notation combi"
                 >
-                    [
-                </div>
+                    {"["}
+                </span>
             }
-            <div
-                className={`${className} ${parsedCommand === '+' ? 'and' : parsedCommand}`}
+            <span
+                className={`${className} notation ${parsedCommand === '+' ? 'and' : parsedCommand}`}
                 onClick={handleOnClick}
             >
                 {iconName && <Icon icon={iconName} color={iconColor} />}
-                {!iconName && <div>{parsedCommand}</div>}
-            </div>
+                {!iconName && parsedCommand}
+            </span>
             {isCombiEnd &&
-                <div
+                <span
                     className="notation combi"
                 >
-                    ]
-                </div>
+                    {"]"}
+                </span>
             }
         </>
     )

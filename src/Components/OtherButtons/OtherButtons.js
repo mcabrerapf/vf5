@@ -33,24 +33,24 @@ const OtherButtons = ({
                 />
                 <Button
                     text="or"
-                    onClick={() => onClick('or')}
+                    onClick={() => onClick('[or]')}
                 />
                 <Button
                     modifier={isShiftActive ? 'ch' : 'hit'}
                     text={isShiftActive ? 'ch' : 'hit'}
-                    onClick={() => onClick(isShiftActive ? 'ch' : 'hit')}
+                    onClick={() => onClick(isShiftActive ? '[ch]' : '[hit]')}
                 />
             </div>
             <div className='other-buttons__grouping'>
                 <Button
                     modifier={isShiftActive ? 'wb' : 'w'}
                     text={isShiftActive ? 'wb' : 'w'}
-                    onClick={() => onClick(isShiftActive ? 'wb' : 'w')}
+                    onClick={() => onClick(isShiftActive ? '[wb]' : '[w]')}
                 />
                 <Button
                     modifier={'sd'}
                     text={'sd'}
-                    onClick={() => onClick('sd')}
+                    onClick={() => onClick('[sd]')}
                 />
                 <Button
                     modifier={isShiftActive ? 'active' : ''}

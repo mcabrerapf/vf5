@@ -22,7 +22,7 @@
     &:not(:disabled) {
         &:active {
             transform: scale(0.99);
-            background-color: var(--disabled-color);
+            background-color: var(white);
         }
 
     }

@@ -19,7 +19,8 @@ const MoveCommand = ({
                 const isCombiStart = checkIsCombiStart(command, i);
                 const isCombiEnd = checkIsCombiEnd(command, i);
                 const modifierToUse = selectedNotationIndex === i ? notationModifier : null;
-
+                console.log(notation)
+                if (notation[0] !== '[' && notation[notation.length[-1]] !== ']') return <span>{notation}</span>
                 return (
                     <Notation
                         notation={notation}

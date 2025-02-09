@@ -17,13 +17,7 @@
         scrollbar-color: var(--white-color) var(--white-color);
 
         .move-command {
-            height: 2.5rem;
             border: 1px solid white;
-            border-radius: 0.5rem;
-            box-sizing: border-box;
-            padding: 0rem 0.5rem;
-            align-items: center;
-            flex-wrap: nowrap;
             cursor: pointer;
             
             &.launcher {
