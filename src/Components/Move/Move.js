@@ -49,11 +49,13 @@ const Move = ({
     } = move;
 
     const dodgeFilter = selectedFilters.find(filter => filter.prefix === 'dodge');
+    const isCommandFilterActive = !!selectedFilters.find(filter => filter.prefix === 'command');
     const dodgeValue = getDodgeValue(dodge_direction);
     const isSelectedDodge = dodgeFilter && dodgeFilter.id === dodge_direction;
     const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
     const isFavourite = !!customMatch.favourite;
     const extraNote = customMatch.note;
+
     const handleOnClick = (e) => {
         e.preventDefault()
         onMoveClick(move)
@@ -78,6 +80,10 @@ const Move = ({
     const handleFavouriteClick = (e) => {
         e.stopPropagation();
         onFavouriteClick(id);
+    }
+    const onNameClick = (e) => {
+        e.stopPropagation();
+        onSortablePropClick('move_name')
     }
 
     const onSortablePropClick = (newSort) => {
@@ -121,12 +127,20 @@ const Move = ({
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-
+    const nameModifier = selectedSort.id === 'move_name' && 'sort-selected';
+    const nameClassName = ['move__main__name', nameModifier, favouriteModifier]
+        .filter(Boolean)
+        .join(' ');
 
     return (
-        <div className={className} onClick={handleOnClick}>
+        <div
+            className={className}
+            onClick={handleOnClick}
+        >
             <div className='move__main'>
-                <div className={`move__main__name  ${favouriteModifier}`}
+                <div
+                    className={nameClassName}
+                    onClick={onNameClick}
                     role='button'
                 >
                     {move_name}
@@ -209,6 +223,7 @@ const Move = ({
                 </div>
             }
             <MoveCommand
+                modifier={isCommandFilterActive ? 'active' : ''}
                 onClick={handleOnCommandClick}
                 command={command}
             />

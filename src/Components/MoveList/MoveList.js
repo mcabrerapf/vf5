@@ -117,11 +117,16 @@ const Movelist = () => {
     }
 
     const onCommandClick = (command) => {
-        if (!!selectedFilters.find(filter => filter.id === command)) return;
-        const newFilters = [
-            ...selectedFilters.map(filter => filter),
-            { id: command, name: command, prefix: 'command' }
-        ];
+        let newFilters;
+        if (!!selectedFilters.find(filter => filter.id === command)) {
+            newFilters = selectedFilters.filter(filter=> filter.id !== command);
+        }else {
+            newFilters = [
+                ...selectedFilters.map(filter => filter),
+                { id: command, name: command, prefix: 'command' }
+            ]
+        }
+      
         scrollToTop();
         handleFiltersChange(newFilters);
     }

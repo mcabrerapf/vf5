@@ -16,10 +16,16 @@
         gap: 0.5rem;
         scrollbar-color: var(--white-color) var(--white-color);
 
+        .move-type-badge {
+            height: 3rem!important;
+        }
+
         .move-command {
             border: 1px solid white;
+            flex-shrink: 0;
+            height: 3rem;
             cursor: pointer;
-            
+
             &.launcher {
                 border: 1px solid gold;
             }
@@ -35,6 +41,7 @@
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
         }
+
         button:nth-of-type(2) {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;

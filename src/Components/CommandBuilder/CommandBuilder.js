@@ -76,7 +76,6 @@ const CommandBuilder = ({
             <div className='command-builder__top'>
                 <MoveCommand
                     command={command}
-                    notationModifier={"selected"}
                     selectedNotationIndex={selectedNotationIndex}
                     notationClick={handleNotationClick}
                 />

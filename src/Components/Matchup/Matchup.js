@@ -8,10 +8,10 @@ import TextWithCommand from '../TextWithCommand';
 const Matchup = ({
     matchup = {},
     hideNote = false,
-    handleMatchupUpdate,
-    onVsClick
+    handleMatchupUpdate = () => { },
+    onVsClick = () => { }
 }) => {
-    const { name, loses, wins, win_rate, note } = matchup;
+    const { name, loses, wins, total, win_rate, note } = matchup;
 
     const onOponentClick = (e) => {
         e.preventDefault();
@@ -61,6 +61,7 @@ const Matchup = ({
                     role='button'
                     className='matchup__content__vs'
                     onClick={handleVsClick}
+
                 >
                     <div
                         className='matchup__content__vs__icon'
@@ -70,8 +71,9 @@ const Matchup = ({
                     <div
                         className='matchup__content__vs__win-rate'
                     >
-                        {win_rate}%
+                        {`${win_rate}%(${total})`}
                     </div>
+
                 </div>
                 <div
                     role='button'
@@ -81,16 +83,14 @@ const Matchup = ({
                     <div
                         className='matchup__content__character__name'
                     >
-                        <div>
-                            {name}
-                        </div>
+                        {name}
                     </div>
                 </div>
             </div>
             {!hideNote && !!note &&
                 <div className='matchup__note'>
                     <TextWithCommand
-                    content={parsedNote}
+                        content={parsedNote}
                     />
                 </div>
             }

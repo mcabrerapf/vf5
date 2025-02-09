@@ -12,7 +12,7 @@ const Icon = ({
     const iconProps = ICONS[icon];
 
     return (
-        <svg width={width} height={height} viewBox="0 0 16 16" fill="none">
+        <svg className={`icon ${icon} ${color}`} width={width} height={height} viewBox="0 0 16 16" fill="none">
             <path
                 {...iconProps}
                 fill={color}

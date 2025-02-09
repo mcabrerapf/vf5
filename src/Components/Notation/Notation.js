@@ -13,13 +13,14 @@ const Notation = ({
 }) => {
     const iconName = NOTATION_TO_ICON[notation];
     const iconColor = notation.includes('_') ? 'red' : 'white';
-    const parsedCommand = notation.replace(/[[\]]/g, "")
+    const parsedCommand = notation.replace(/[[\]]/g, "");
+    const commandClassName = parsedCommand.toLocaleLowerCase();
     const className = ['notation', modifier].filter(Boolean).join(' ')
 
     const handleOnClick = () => {
         onClick(notation, notationIndex);
     }
-    
+
     return (
         <>
             {isCombiStart &&
@@ -30,7 +31,7 @@ const Notation = ({
                 </span>
             }
             <span
-                className={`${className} notation ${parsedCommand === '+' ? 'and' : parsedCommand}`}
+                className={`${className} ${parsedCommand === '+' ? 'and' : commandClassName}`}
                 onClick={handleOnClick}
             >
                 {iconName && <Icon icon={iconName} color={iconColor} />}

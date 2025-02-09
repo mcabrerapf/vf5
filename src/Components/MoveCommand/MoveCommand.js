@@ -6,7 +6,6 @@ import Notation from '../Notation/Notation';
 const MoveCommand = ({
     command,
     modifier,
-    notationModifier,
     selectedNotationIndex,
     onClick = () => { },
     notationClick = () => { }
@@ -18,9 +17,8 @@ const MoveCommand = ({
             {command.map((notation, i) => {
                 const isCombiStart = checkIsCombiStart(command, i);
                 const isCombiEnd = checkIsCombiEnd(command, i);
-                const modifierToUse = selectedNotationIndex === i ? notationModifier : null;
-                console.log(notation)
-                if (notation[0] !== '[' && notation[notation.length[-1]] !== ']') return <span>{notation}</span>
+                const modifierToUse = selectedNotationIndex === i ? 'selected' : null;
+
                 return (
                     <Notation
                         notation={notation}

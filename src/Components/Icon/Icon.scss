@@ -1,3 +1,7 @@
 .icon {
- 
+    &.red {
+        path {
+            fill: red!important;
+        }
+    }
 }

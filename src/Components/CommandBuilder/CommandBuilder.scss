@@ -16,29 +16,21 @@
             width: 25rem;
             height: 9rem;
 
-            .notation-container {
+            .notation {
                 border: 2px solid transparent;
-
                 &.selected {
                     border: 2px solid yellow;
                 }
             }
+
         }
 
         &__buttons {
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
-
-            .button {
-                
-            }
         }
     }
 
     &__bottom {}
-
-
-
-
 }

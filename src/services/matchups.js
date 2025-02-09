@@ -12,14 +12,14 @@ const getMatchups = (characterId) => {
     }
 }
 
-const updateMatchups = (characterId, newMatchup) => {
+const updateMatchups = (characterId, matchup) => {
     try {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
         const parsedAllCharacters = JSON.parse(allCharactersData);
         const oldMatchups = parsedAllCharacters[characterId].matchups;
         parsedAllCharacters[characterId].matchups = oldMatchups
             .map(oMachup => {
-                if (oMachup.id === newMatchup.id) return newMatchup;
+                if (oMachup.id === matchup.id) return matchup;
                 return oMachup;
             })
 
