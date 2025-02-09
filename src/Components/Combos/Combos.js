@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Combos.scss'
-import { SELECTED_COMBOS_FILTERS_KEY, CHARACTERS_DATA_KEY, STRINGS, COMBO_FILTER_OPTIONS, COMBOS_SORT_OPTIONS, SELECTED_COMBOS_SORT_KEY } from '../../constants';
+import { SELECTED_COMBOS_FILTERS_KEY, COMBO_FILTER_OPTIONS, COMBOS_SORT_OPTIONS, SELECTED_COMBOS_SORT_KEY } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
@@ -10,9 +10,10 @@ import DeleteModal from '../Modals/DeleteModal';
 import Combo from '../Combo';
 import CombosHeader from './CombosHeader';
 import ActiveFiltersList from '../ActiveFiltersList';
-import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
+import { getFromLocal, setLocalStorage } from '../../helpers';
 import { filterCombos, sortCombos } from './helpers';
 import SortModal from '../Modals/SortModal';
+import { deleteCombo, getCombos, updateCombos } from '../../services';
 
 const Combos = () => {
     const listRef = useRef(null);
@@ -30,11 +31,7 @@ const Combos = () => {
 
     useEffect(
         () => {
-            const localCombos = getFromLocal(
-                CHARACTERS_DATA_KEY,
-                selectedCharacter,
-                STRINGS.COMBOS
-            );
+            const localCombos = getCombos(selectedCharacter);
             setCombos(localCombos);
         },
         [selectedCharacter]
@@ -53,26 +50,7 @@ const Combos = () => {
 
     const handleCloseModal = (newCombo) => {
         if (newCombo) {
-            let updatedCombos;
-            if (!newCombo.id) {
-                updatedCombos = [
-                    ...combos.map(combo => combo),
-                    { ...newCombo, id: generateId() }
-                ];
-
-            } else {
-                updatedCombos = combos.map((combo) => {
-                    if (combo.id === newCombo.id) return newCombo;
-                    return combo;
-                });
-            }
-
-            setLocalStorage(
-                CHARACTERS_DATA_KEY,
-                updatedCombos,
-                selectedCharacter,
-                STRINGS.COMBOS
-            );
+            const updatedCombos = updateCombos(selectedCharacter, newCombo);
             setCombos(updatedCombos);
         }
         toggleComboBuilderModal();
@@ -95,14 +73,7 @@ const Combos = () => {
 
     const handleDeleteCombo = (shouldDelete) => {
         if (shouldDelete) {
-            const updatedCombos = combos.filter((combo) => combo.id !== selectedCombo.id);
-
-            setLocalStorage(
-                CHARACTERS_DATA_KEY,
-                updatedCombos,
-                selectedCharacter,
-                STRINGS.COMBOS
-            );
+            const updatedCombos = deleteCombo(selectedCharacter, selectedCombo.id);
             setCombos(updatedCombos);
         }
         setSelectedCombo(null);
@@ -158,16 +129,9 @@ const Combos = () => {
     }
 
     const onFavouriteClick = (comboId) => {
-        const updatedCombos = combos.map(combo => {
-            if (combo.id === comboId) combo.favourite = !combo.favourite;
-            return combo;
-        })
-        setLocalStorage(
-            CHARACTERS_DATA_KEY,
-            updatedCombos,
-            selectedCharacter,
-            STRINGS.COMBOS
-        );
+        const comboMatch = combos.find(combo => combo.id === comboId)
+        const updatedCombo = { ...comboMatch, favourite: !comboMatch.favourite };
+        const updatedCombos = updateCombos(selectedCharacter, updatedCombo);
         setCombos(updatedCombos);
     }
 
@@ -204,6 +168,8 @@ const Combos = () => {
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos, selectedSort);
     const showSimpleView = listView === 'S';
+    const characterFilterOptions = COMBO_FILTER_OPTIONS
+        .filter(option => option.prefix === 'character');
 
     return (
         <div className='combos'>
@@ -266,8 +232,9 @@ const Combos = () => {
                             <Combo
                                 combo={combo}
                                 selectedSort={selectedSort}
-                                handleSortChange={handleSortChange}
                                 showSimpleView={showSimpleView}
+                                characterFilterOptions={characterFilterOptions}
+                                handleSortChange={handleSortChange}
                                 onClick={() => handleComboClick(combo)}
                                 onLauncherClick={handleLauncherClick}
                                 onFavouriteClick={onFavouriteClick}

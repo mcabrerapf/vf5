@@ -11,6 +11,7 @@ const Combo = ({
     combo = {},
     selectedSort = {},
     showSimpleView = false,
+    characterFilterOptions = [],
     onClick = () => { },
     handleSortChange = () => { },
     onLauncherClick = () => { },
@@ -79,6 +80,11 @@ const Combo = ({
     }
     if (restOfCombo[0] === '⊙') restOfCombo.shift();
     const parsedNote = stringNotationParser(note);
+    const favouriteModifier = favourite ? ' favourite' : '';
+    const nameModifier = isNameSortSelected && 'sort-selected';
+    const nameClassName = ['combo__main__name', nameModifier, favouriteModifier]
+        .filter(Boolean)
+        .join(' ');
     return (
         <div
             className={`combo${favourite ? ' favourite' : ''}`}
@@ -87,7 +93,7 @@ const Combo = ({
             <div className='combo__main'>
                 <div
                     role='button'
-                    className={`combo__main__name${favourite ? ' favourite' : ''}`}
+                    className={nameClassName}
                     onClick={handleNameClick}
                 >
                     {name}
@@ -95,7 +101,7 @@ const Combo = ({
                 <div className='combo__main__other'>
                     <Button
                         onClick={handleDamageClick}
-                        modifier={isDamageSortSelected ? 'active damage' : 'damage'}
+                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
                         text={damage}
                     />
                     <Button
@@ -132,11 +138,12 @@ const Combo = ({
                             onClick={handleCharacterClick}
                         />
                     }
-                    {!hasAllCharacters && characterTags.map(characterTag =>
+                    {!hasAllCharacters && characterFilterOptions.map(cOption =>
                         <MoveTypeBadge
-                            key={characterTag}
+                            key={cOption.id}
+                            disabled={!characterTags.find(cTag => cTag === cOption.id)}
                             modifier={"character"}
-                            moveType={capitalizeFirstLetter(characterTag)}
+                            moveType={capitalizeFirstLetter(cOption.id)}
                             onClick={handleCharacterClick}
                         />
                     )}

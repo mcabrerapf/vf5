@@ -1,9 +1,17 @@
-import { 
+import {
     getMatchups,
     updateMatchups
- } from "./matchups";
+} from "./matchups";
+import {
+    getCombos,
+    deleteCombo,
+    updateCombos
+} from "./combos";
 
 export {
+    getCombos,
+    deleteCombo,
+    updateCombos,
     getMatchups,
     updateMatchups
 }

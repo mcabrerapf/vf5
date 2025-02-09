@@ -2,14 +2,14 @@ import './Matchups.scss'
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import { useMainContext } from '../../Contexts/MainContext'
-import Button from '../Button';
+import Matchup from '../Matchup';
+import ActiveFiltersList from '../ActiveFiltersList';
 import Modal from '../Modals/Modal';
 import MatchupModal from '../Modals/MatchupModal';
-import Matchup from '../Matchup';
+import SortModal from '../Modals/SortModal';
+
 import { CHARACTER_ID_TO_NAME, MATHCHUPS_SORT_OPTIONS, SELECTED_MATCHUPS_SORT_KEY, } from '../../constants'
 import { getMatchups, updateMatchups } from '../../services';
-import ActiveFiltersList from '../ActiveFiltersList';
-import SortModal from '../Modals/SortModal';
 import { getFromLocal, setLocalStorage } from '../../helpers';
 import { sortMatchups } from './helpers';
 
@@ -137,9 +137,6 @@ const Matchups = () => {
                     )
                 })}
             </div>
-            {/* <Button
-                text="Reset ALL Matchups"
-            /> */}
         </div>
     )
 }

@@ -129,5 +129,9 @@
 
     &.character {
         background-color: pink;
+
+        &.disabled {
+            background-color: black;
+        }
     }
 }

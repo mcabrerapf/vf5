@@ -8,6 +8,7 @@
     border-radius: 0.5rem;
     gap: 0.5rem;
     width: 100%;
+    user-select: none;
 
     &.favourite {
         border: 1px solid gold;
@@ -33,6 +34,14 @@
             width: auto;
             font-size: 1.5rem;
             font-weight: 600;
+            padding: 0.2rem 0.5rem;
+
+            &.sort-selected {
+                border: 1px solid var(--side);
+                background-color: var(--side);
+                border-radius: 0.5rem;
+                color: black !important;
+            }
 
             &.favourite {
                 color: gold;
@@ -55,6 +64,13 @@
                 font-weight: 700;
                 border: 1px solid;
                 border-radius: 0.5rem;
+
+                &.sort-selected {
+                    border: 1px solid var(--side);
+                    background-color: var(--side);
+                    border-radius: 0.5rem;
+                    color: black !important;
+                }
             }
 
             .small {

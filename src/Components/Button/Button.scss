@@ -101,7 +101,7 @@
 
     &.disabled {
         border: 1px dashed var(--disabled-color);
-        color: var(--disabled-color);
+        color: var(--disabled-color)!important;
     }
 
     &.no-border {
