@@ -2,6 +2,7 @@ import './Matchups.scss'
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import { useMainContext } from '../../Contexts/MainContext'
+import Button from '../Button';
 import Modal from '../Modals/Modal';
 import MatchupModal from '../Modals/MatchupModal';
 import Matchup from '../Matchup';
@@ -136,6 +137,9 @@ const Matchups = () => {
                     )
                 })}
             </div>
+            {/* <Button
+                text="Reset ALL Matchups"
+            /> */}
         </div>
     )
 }

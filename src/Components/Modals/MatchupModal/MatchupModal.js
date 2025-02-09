@@ -10,7 +10,7 @@ const MatchupModal = ({
 	matchup = {},
 }) => {
 	const { closeModal } = useModalContext();
-	const { name, note: _note, wins: _wins, loses: _loses } = matchup
+	const { name, note: _note, wins: _wins, total, loses: _loses } = matchup
 	const [note, setNote] = useState(_note || '')
 	const [wins, setWins] = useState(_wins);
 	const [loses, setLoses] = useState(_loses);
@@ -47,7 +47,7 @@ const MatchupModal = ({
 		setWins(wins - 1)
 	}
 	const winRate = calculateWinRate(loses, wins);
-	const newMatchup = { wins, loses, name, win_rate: winRate };
+	const newMatchup = { wins, loses, name, total, win_rate: winRate };
 
 	return (
 		<div

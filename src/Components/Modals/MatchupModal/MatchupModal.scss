@@ -10,6 +10,22 @@
             display: flex;
             flex-direction: column;
 
+            .matchup {
+                &__content {
+                    &__vs {
+                        &__win-rate {
+                            font-size:0.8rem
+                        }
+                    }
+
+                    &__character {
+                        &__name {
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+            }
+
             &__buttons {
                 display: flex;
                 flex-direction: row;
