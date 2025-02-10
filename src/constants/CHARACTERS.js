@@ -56,7 +56,7 @@ const COMBOS_SORT_OPTIONS = [
         dir: 'asc'
     },
     {
-        id: 'characterTags',
+        id: 'character_tags',
         name: 'Characters',
         dir: 'asc'
     },

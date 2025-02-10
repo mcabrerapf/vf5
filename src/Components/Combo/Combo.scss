@@ -32,9 +32,10 @@
         &__name {
             display: flex;
             width: auto;
+            align-items: center;
             font-size: 1.5rem;
             font-weight: 600;
-            padding: 0.2rem 0.5rem;
+            padding: 0rem 0.5rem;
 
             &.sort-selected {
                 border: 1px solid var(--side);

@@ -1,5 +1,3 @@
-import { getLauncher } from "../../helpers";
-
 const sortCombos = (list, sort) => {
     if (!sort || !sort.id || !sort.dir) return list;
     const { id: sortKey, dir: sortDir } = sort;
