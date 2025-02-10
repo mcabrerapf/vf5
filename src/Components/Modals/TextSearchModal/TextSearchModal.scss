@@ -1,0 +1,26 @@
+.text-search-modal {
+    
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-sizing: border-box;
+        max-width: 30rem;
+        max-height: 60rem;
+        gap: 1rem;
+        padding: 1rem;
+
+        input {
+            width: 20rem;
+            height: 3rem;
+        }
+    }
+
+    .modal-footer {
+        justify-content: space-between;
+        .danger {
+            width: 4.6rem;
+        }
+    }
+    
+}

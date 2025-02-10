@@ -70,6 +70,15 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
+                            {prefix === 'text_search' &&
+                                <MoveTypeBadge
+                                    key={id}
+                                    modifier={'not-selected'}
+                                    moveType={name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            }
                         </>
                     )
                 }

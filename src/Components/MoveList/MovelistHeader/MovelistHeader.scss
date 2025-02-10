@@ -17,5 +17,17 @@
             color: black;
             background-color: gold;
         }
+
+        .button {
+            &.active {
+                .search-icon {
+                    path {
+                        fill: black;
+                    }
+                }
+
+            }
+        }
+
     }
 }

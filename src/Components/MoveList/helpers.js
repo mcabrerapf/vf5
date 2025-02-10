@@ -33,6 +33,7 @@ const filterMovelist = (list, filters, customMoves) => {
     const attackLevelFilters = filters.filter(filter => filter.prefix === 'attack_level');
     const hasFavFilter = filters.find(filter => filter.id === 'fav');
     const dodgeFilter = filters.find(filter => filter.prefix === 'dodge');
+    const textFilter = filters.find(filter => filter.prefix === 'text_search');
 
     return list.filter(move => {
         const isValid = attackLevelFilters.length ?
@@ -49,7 +50,15 @@ const filterMovelist = (list, filters, customMoves) => {
             }
         })
 
-        return isValid && hasCommandMatch && hasFavMatch && hasDodgeMatch;
+        let hasTextMatch = textFilter?.id ? false : true;
+        if (textFilter?.id) {
+            hasTextMatch =
+                move.move_name.toLocaleLowerCase().includes(textFilter.id) ||
+                stringCommand.toLocaleLowerCase().includes(textFilter.id) ||
+                move.notes.toLocaleLowerCase().includes(textFilter.id);
+        }
+
+        return isValid && hasCommandMatch && hasFavMatch && hasDodgeMatch && hasTextMatch;
     })
 }
 

@@ -7,6 +7,8 @@ import MoveListFiltersModal from '../../Modals/MoveListFiltersModal';
 import Button from '../../Button';
 import { SELECTED_MOVE_CATEGORY_KEY } from '../../../constants';
 import { setLocalStorage } from '../../../helpers';
+import { SearchIcon } from '../../Icon';
+import TextSearchModal from '../../Modals/TextSearchModal';
 
 const MovelistHeader = ({
     moveCategories,
@@ -18,8 +20,10 @@ const MovelistHeader = ({
 }) => {
     const [showMoveCategoryModal, setShowMoveCategorySelectModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
+    const [showTextSearchModal, setShowTextSearchModal] = useState(false);
 
     const hasFav = !!selectedFilters.find(sFilter => sFilter.id === 'fav');
+    const hasTextSearch = !!selectedFilters.find(sFilter => sFilter.prefix === 'text_search');
 
     const handleCategorySelectModalClose = (type) => {
         if (type) {
@@ -42,9 +46,9 @@ const MovelistHeader = ({
         setShowFiltersModal(!showFiltersModal)
     }
 
-    const toogleFavorite = () => {
+    const toggleFavorite = () => {
         let updatedFilters;
-        
+
         if (hasFav) {
             updatedFilters = selectedFilters.filter(filter => filter.id !== 'fav');
         } else {
@@ -54,6 +58,15 @@ const MovelistHeader = ({
             ];
         }
         handleFiltersChange(updatedFilters);
+    }
+
+    const handleTextSearchModalClose = (newFilters) => {
+        toggleTextSearchModal();
+        handleFiltersChange(newFilters);
+    }
+
+    const toggleTextSearchModal = ()=> {
+        setShowTextSearchModal(!showTextSearchModal);
     }
 
     const filtersButtonModifier = !!selectedFilters.length ? 'active' : '';
@@ -89,6 +102,16 @@ const MovelistHeader = ({
                     />
                 </Modal>
             </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showTextSearchModal}
+                closeModal={handleTextSearchModalClose}
+            >
+                <Modal>
+                    <TextSearchModal
+                        selectedFilters={selectedFilters}
+                    />
+                </Modal>
+            </ModalContextWrapper>
             <Button
                 modifier={'active'}
                 text={moveButtonText}
@@ -98,8 +121,14 @@ const MovelistHeader = ({
                 <Button
                     modifier={hasFav ? 'fav' : ''}
                     text={"★"}
-                    onClick={toogleFavorite}
+                    onClick={toggleFavorite}
                 />
+                <Button
+                    modifier={hasTextSearch ? 'active' : ''}
+                    onClick={toggleTextSearchModal}
+                >
+                    <SearchIcon />
+                </Button>
                 <Button
                     modifier={filtersButtonModifier}
                     text={'Filters'}

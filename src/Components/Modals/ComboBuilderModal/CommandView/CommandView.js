@@ -37,9 +37,6 @@ const CommandView = ({
         }
     };
 
-
-
-
     return (
         <div
             className='command-view'

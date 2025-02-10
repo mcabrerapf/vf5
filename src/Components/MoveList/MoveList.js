@@ -64,9 +64,9 @@ const Movelist = () => {
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
-            scrollToTop();
             setLocalStorage(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify(newFilters));
             setSelectedFilters(newFilters);
+            scrollToTop();
         }
     }
 
