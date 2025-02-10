@@ -10,6 +10,7 @@ import Button from '../../Button';
 import { getCommandData, getUniqueComboName } from './helpers';
 import { CHARACTERS, STRINGS } from '../../../constants';
 import { SaveIcon } from '../../Icon';
+import { getLauncher } from '../../../helpers';
 
 const ComboBuilderModal = ({
     selectedCombo,
@@ -17,12 +18,13 @@ const ComboBuilderModal = ({
     handleDeleteClick
 }) => {
     const { selectedCharacter } = useMainContext();
-    const { id, name, command, characterTags, tags, damage, note, favourite } = selectedCombo || {};
+    const { id, name, launcher = [], command = [], character_tags, tags, damage, note, favourite } = selectedCombo || {};
+    const parsedMoveCommand = command.length ? [...launcher, '⊙', ...command] : [...launcher];
     const initCharacters = CHARACTERS.map(char => char.id);
     const { closeModal } = useModalContext();
     const [comboView, setComboView] = useState('commands');
-    const [comboNotation, setComboNotation] = useState(command || []);
-    const [selectedCharacterTags, setSelectedCharacterTags] = useState(characterTags || initCharacters);
+    const [comboNotation, setComboNotation] = useState(parsedMoveCommand || []);
+    const [selectedCharacterTags, setSelectedCharacterTags] = useState(character_tags || initCharacters);
     const [selectedTags, setSelectedTags] = useState(tags || []);
     const [comboDamage, setComboDamage] = useState(damage || 1);
     const [comboName, setComboName] = useState(name || STRINGS.DEFAULT_COMBO_NAME);
@@ -30,8 +32,9 @@ const ComboBuilderModal = ({
     const [isFavourite, setIsFavourite] = useState(!!favourite);
 
     const handleSaveCombo = () => {
+        const [comboLauncher, restOfCombo] = getLauncher(comboNotation);
         const [finalTags, launcherName] = !id ?
-            getCommandData(comboNotation, selectedCharacter, selectedTags) :
+            getCommandData(comboLauncher, comboNotation, selectedCharacter, selectedTags) :
             [selectedTags];
         const nameToUse = getUniqueComboName(
             id,
@@ -39,13 +42,14 @@ const ComboBuilderModal = ({
             launcherName,
             combos
         );
-
+        
         closeModal({
             id: id,
             name: nameToUse,
             favourite: isFavourite,
-            command: comboNotation,
-            characterTags: selectedCharacterTags,
+            launcher: comboLauncher,
+            command: restOfCombo,
+            character_tags: selectedCharacterTags,
             tags: finalTags,
             damage: Number(comboDamage),
             note: comboNote,

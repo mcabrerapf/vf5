@@ -96,7 +96,7 @@ const Combos = () => {
 
     const handleCharacterClick = ({ target: { value } }) => {
         if (value === 'ALL') {
-            const updatedFilters = selectedFilters.filter(filter => filter.prefix !== 'character');
+            const updatedFilters = selectedFilters.filter(filter => filter.prefix !== 'character_tags');
             setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(updatedFilters));
             setSelectedFilters(updatedFilters);
         } else {
@@ -174,7 +174,7 @@ const Combos = () => {
     const sortedCombos = sortCombos(filteredCombos, selectedSort);
     const showSimpleView = listView === 'S';
     const characterFilterOptions = COMBO_FILTER_OPTIONS
-        .filter(option => option.prefix === 'character');
+        .filter(option => option.prefix === 'character_tags');
 
     return (
         <div className='combos'>

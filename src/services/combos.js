@@ -34,7 +34,6 @@ const updateCombos = (characterId, combo) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        console.log(updatedCombos);
         return updatedCombos;
     } catch (error) {
         console.log(error);

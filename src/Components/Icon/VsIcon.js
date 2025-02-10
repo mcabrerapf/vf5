@@ -1,8 +1,9 @@
 import React from "react";
 
-const VSIcon = () => {
+const VsIcon = () => {
     return (
         <svg
+            className="vs-icon"
             width="2.5rem"
             height="2.5rem"
             viewBox="0 0 250 150"
@@ -15,7 +16,7 @@ const VSIcon = () => {
                 fontFamily="Impact, sans-serif"
                 fontSize="19rem"
                 fontWeight="bold"
-                fill="red" 
+                fill="red"
                 stroke="black"
                 strokeWidth="8"
                 textAnchor="middle"
@@ -40,4 +41,4 @@ const VSIcon = () => {
     )
 }
 
-export default VSIcon;
+export default VsIcon;

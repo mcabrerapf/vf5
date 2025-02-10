@@ -80,6 +80,11 @@
 
     }
 
+    &__command {
+        display: flex;
+        flex-direction: column;
+    }
+    
     &__note {
         font-size: 1.2rem;
         width: 100%;

@@ -12,20 +12,6 @@ const sortCombos = (list, sort) => {
                 itemA[sortKey] : itemB[sortKey];
             const secondValue = sortDir === 'asc' ?
                 itemB[sortKey] : itemA[sortKey];
-            
-            if (sortKey === 'launcher') {
-                const firstLauncher = sortDir === 'asc' ?
-                    itemA.command : itemB.command;
-                const secondLauncher = sortDir === 'asc' ?
-                    itemB.command : itemA.command;
-                const [launcherA] = getLauncher(firstLauncher);
-                const [launcherB] = getLauncher(secondLauncher);
-
-                const stringLauncherA = launcherA.join('');
-                const stringLauncherB = launcherB.join('');
-                
-                return stringLauncherA.localeCompare(stringLauncherB)
-            }
 
             if (sortKey === 'damage') {
                 const numA = typeof firstValue === "number" ? firstValue : 0;
@@ -40,59 +26,33 @@ const sortCombos = (list, sort) => {
 }
 
 const filterCombos = (list, filters) => {
-    const characterFilters = filters
-        .filter(filter => filter.prefix === 'character')
-    const otherFilters = filters
-        .filter(filter => filter.prefix === 'other')
-
-    const launcherFilters = filters
-        .filter(filter => filter.prefix === 'launcher')
-
-    const commandFilters = filters
-        .filter(filter => filter.prefix === 'command')
-
+    const otherFilters = filters.filter(filter => filter.id !== 'fav')
     const hasFavFilter = filters.find(filter => filter.id === 'fav')
 
     return list
         .filter(listItem => {
-            const { characterTags, tags, command, favourite } = listItem;
-            const stringifiedCharacters = characterTags.join(' ');
-
-            let hasCharacterMatch = characterFilters.length ? false : true;
-            let hasTagMatch = otherFilters.length ? false : true;
-            let hasLauncherMatch = launcherFilters.length ? false : true;
-
-            characterFilters.forEach(filter => {
-                if (stringifiedCharacters.includes(filter.id)) {
-                    hasCharacterMatch = true;
-                }
-            })
-
-            tags.forEach(tag => {
-                if (!!otherFilters.find(oFilter => oFilter.id === tag)) {
-                    hasTagMatch = true;
-                }
-            })
-
-            launcherFilters.forEach(launcherFilter => {
-                const [launcher] = getLauncher(command);
-                const stringLauncher = launcher.join('-');
-
-                if (stringLauncher === launcherFilter.id) {
-                    hasLauncherMatch = true;
-                }
-            })
-
-            let hasCommandMatch = commandFilters.length ? false : true;
-            const stringCommand = command.join('-')
-            commandFilters.forEach(commandFilter => {
-                if (stringCommand.includes(commandFilter.id)) {
-                    hasCommandMatch = true;
-                }
-            })
-
+            const { favourite } = listItem;
             const hasFavMatch = hasFavFilter ? favourite : true
-            return hasCharacterMatch && hasTagMatch && hasLauncherMatch && hasCommandMatch && hasFavMatch;
+            if (!otherFilters.length) return hasFavMatch;
+            const filterMatches = [];
+            
+            otherFilters.forEach(filter => {
+                const { prefix, id } = filter;
+                const valueToCheck = listItem[prefix];
+                if (valueToCheck === 'string') {
+                } else if (prefix === 'launcher') {
+                    const stringifiedValue = valueToCheck.join('-');
+                    filterMatches.push(stringifiedValue === id);
+                } else if (prefix === 'command') {
+                    const stringifiedValue = valueToCheck.join('-');
+                    filterMatches.push(stringifiedValue.includes(id));
+                } else if (Array.isArray(valueToCheck)) {
+                    const isValid = valueToCheck.find(value => value === id)
+                    filterMatches.push(!!isValid);
+                }
+            });
+            const allFiltersMatch = !filterMatches.includes(false)
+            return hasFavMatch && allFiltersMatch;
         })
 
 }

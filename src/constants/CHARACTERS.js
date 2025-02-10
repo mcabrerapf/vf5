@@ -20,17 +20,17 @@ const COMBO_FILTER_OPTIONS = [
     {
         id: 'wall',
         name: 'Wall',
-        prefix: 'other'
+        prefix: 'tags'
     },
     {
         id: 'ch',
         name: 'Counter Hit',
-        prefix: 'other'
+        prefix: 'tags'
     },
     {
         id: 'side',
         name: 'Side',
-        prefix: 'other'
+        prefix: 'tags'
     }
 ];
 
@@ -121,13 +121,13 @@ Object.keys(CHARACTERS_JSON)
             });
             COMBO_FILTER_OPTIONS.push({
                 id: attackLevelMatch,
-                prefix: 'other',
+                prefix: 'tags',
                 name: attack_level.name
             });
         })
         COMBO_FILTER_OPTIONS.push({
             id: CHARACTER,
-            prefix: 'character',
+            prefix: 'character_tags',
             name: name
         });
         CHARACTER_IDS.push(CHARACTER);

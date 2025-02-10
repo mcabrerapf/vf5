@@ -50,8 +50,8 @@ const TagsView = ({
         }
         setSelectedTags(updatedTags);
     }
-    const otherTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix !== 'character');
-    const characterTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix === 'character');
+    const otherTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix !== 'character_tags');
+    const characterTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix === 'character_tags');
     
     return (
         <div className='tags-view'>

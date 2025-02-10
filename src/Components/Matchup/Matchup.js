@@ -1,6 +1,6 @@
 import './Matchup.scss'
 import React, { useState } from 'react';
-import VSIcon from './VSIcon';
+import { VsIcon } from '../Icon';
 import Button from '../Button';
 import { calculateWinRate, stringNotationParser } from '../../helpers';
 import TextWithCommand from '../TextWithCommand';
@@ -12,7 +12,7 @@ const Matchup = ({
     onNameClick = () => { }
 }) => {
     const { name, loses, wins, total, win_rate, note } = matchup;
-    const [showNote, setShowNote] = useState(false);
+    const [showNote, setShowNote] = useState(true);
 
     const onOponentClick = (e) => {
         e.preventDefault();
@@ -38,7 +38,7 @@ const Matchup = ({
         onNameClick(matchup);
     }
 
-    const toggleShowNote = ()=> {
+    const toggleShowNote = () => {
         setShowNote(!showNote);
     }
 
@@ -73,7 +73,7 @@ const Matchup = ({
                     <div
                         className='matchup__content__vs__icon'
                     >
-                        <VSIcon />
+                        <VsIcon />
                     </div>
                     <div
                         className='matchup__content__vs__win-rate'

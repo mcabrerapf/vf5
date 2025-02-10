@@ -3,7 +3,7 @@ import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS } from '../../constants';
-import { capitalizeFirstLetter, getLauncher, stringNotationParser } from '../../helpers';
+import { capitalizeFirstLetter, stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
 import { EditIcon } from '../Icon';
@@ -21,9 +21,17 @@ const Combo = ({
     onCharacterClick = () => { },
     onTagClick = () => { }
 }) => {
-    const { name, tags, characterTags, command, damage, note, favourite } = combo || {};
-    const hasAllCharacters = CHARACTERS.length === characterTags.length;
-    const [launcher, restOfCombo, fullLauncher] = getLauncher(command);
+    const {
+        name,
+        tags,
+        character_tags,
+        launcher,
+        command,
+        damage,
+        note,
+        favourite
+    } = combo || {};
+    const hasAllCharacters = CHARACTERS.length === character_tags.length;
     const isDamageSortSelected = selectedSort.id === 'damage';
     const isNameSortSelected = selectedSort.id === 'name';
     const isCommandSortSelected = selectedSort.id === 'command';
@@ -75,18 +83,13 @@ const Combo = ({
             { id: 'command', name: 'Command', dir: 'asc' }
         handleSortChange(updatedSort);
     }
-
-    if (restOfCombo[0] === 'ch') {
-        fullLauncher.push(restOfCombo[0]);
-        restOfCombo.shift();
-    }
-    if (restOfCombo[0] === '⊙') restOfCombo.shift();
     const parsedNote = stringNotationParser(note);
     const favouriteModifier = favourite ? ' favourite' : '';
     const nameModifier = isNameSortSelected && 'sort-selected';
     const nameClassName = ['combo__main__name', nameModifier, favouriteModifier]
         .filter(Boolean)
         .join(' ');
+
     return (
         <div
             className={`combo${favourite ? ' favourite' : ''}`}
@@ -120,16 +123,16 @@ const Combo = ({
                     }
                 </div>
             </div>
-            <div>
+            <div className='combo__command'>
                 <MoveCommand
                     onClick={handleLauncherClick}
                     modifier={"launcher"}
-                    command={fullLauncher}
+                    command={launcher}
                 />
-                {!!restOfCombo.length &&
+                {!!command.length &&
                     <MoveCommand
                         onClick={handleCommandClick}
-                        command={restOfCombo}
+                        command={command}
                     />
                 }
             </div>
@@ -152,7 +155,7 @@ const Combo = ({
                     {!hasAllCharacters && characterFilterOptions.map(cOption =>
                         <MoveTypeBadge
                             key={cOption.id}
-                            disabled={!characterTags.find(cTag => cTag === cOption.id)}
+                            disabled={!character_tags.find(cTag => cTag === cOption.id)}
                             modifier={"character"}
                             moveType={capitalizeFirstLetter(cOption.id)}
                             onClick={handleCharacterClick}

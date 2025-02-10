@@ -43,7 +43,7 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'character' &&
+                            {prefix === 'character_tags' &&
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={"character"}
@@ -52,7 +52,7 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'other' &&
+                            {prefix === 'tags' &&
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={id}

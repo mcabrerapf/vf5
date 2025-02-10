@@ -40,7 +40,6 @@ const updateNotes = (characterId, note) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        console.log(updatedCombos);
         return updatedCombos;
 
     } catch (error) {
@@ -63,7 +62,6 @@ const deleteNote = (characterId, noteId) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        console.log(updatedNotes);
         return updatedNotes;
     } catch (error) {
         console.log(error);

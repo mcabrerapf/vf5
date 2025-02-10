@@ -1,5 +1,5 @@
 import { CHARACTERS_DATA_KEY } from "../constants";
-import validateCustomMove from "./utils/validateCustomMove";
+import { validateCustomMove } from "./utils";
 
 const getCustomMoves = (characterId) => {
     try {
@@ -17,8 +17,7 @@ const updateCustomMoves = (characterId, move, isNew) => {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
         const parsedAllCharacters = JSON.parse(allCharactersData);
         const characterData = parsedAllCharacters[characterId];
-        console.log(isNew);
-        console.log(move)
+        
         const updatedCustomMoves = isNew ?
             [...characterData.custom_moves, validateCustomMove(move)] :
             characterData.custom_moves
@@ -33,7 +32,6 @@ const updateCustomMoves = (characterId, move, isNew) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        console.log(updatedCustomMoves)
         return updatedCustomMoves;
 
     } catch (error) {

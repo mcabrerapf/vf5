@@ -17,7 +17,7 @@ const CombosFiltersModal = ({
     const [selectedFilters, setSelectedFilters] = useState(_selectedFilters);
     const [commandFilter, setCommandFilter] = useState([])
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS);
-    const characterFilters = selectedFilters.filter(filter => filter.prefix === 'character');
+    const characterFilters = selectedFilters.filter(filter => filter.prefix === 'character_tags');
     const allCharactersSelected = characterFilters.length === CHARACTERS.length;
 
     const handleFilterSave = () => {
@@ -45,7 +45,7 @@ const CombosFiltersModal = ({
                 {
                     id: value,
                     name: characterName,
-                    prefix: 'character'
+                    prefix: 'character_tags'
                 }
             ];
         } else {
@@ -68,13 +68,13 @@ const CombosFiltersModal = ({
     const handleOtherTagClick = ({ target: { value, className } }) => {
         let newTypeFilters;
         if (className.includes('not-selected')) {
-            const { name: filterName } = COMBO_FILTER_OPTIONS.find(option => option.id === value);
+            const { name: filterName, prefix } = COMBO_FILTER_OPTIONS.find(option => option.id === value);
             newTypeFilters = [
                 ...selectedFilters.map(val => val),
                 {
                     id: value,
                     name: filterName,
-                    prefix: 'other'
+                    prefix
                 }
             ];
         } else {

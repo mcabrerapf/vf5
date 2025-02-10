@@ -8,7 +8,7 @@ const MoveRight = () => {
             width="1.5rem"
             height="1.5rem"
             viewBox="0 0 52 52"
-            enable-background="new 0 0 52 52"
+            enableBackground="new 0 0 52 52"
             className="move-right-icon"
         >
             <path

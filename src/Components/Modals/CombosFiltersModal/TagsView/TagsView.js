@@ -13,7 +13,7 @@ const TagsView = ({
     handleOtherTagClick
 }) => {
     const [tagsView, setTagsView] = useState('characters');
-    const otherTags = COMBO_FILTER_OPTIONS.filter(filter => filter.prefix === 'other');
+    const otherTags = COMBO_FILTER_OPTIONS.filter(filter => filter.prefix === 'tags');
 
     return (
         <div className='tags-view'>

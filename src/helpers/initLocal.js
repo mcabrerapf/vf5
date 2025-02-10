@@ -13,6 +13,8 @@ import {
 import CHARACTERS, { CHARACTERS_JSON, COMBOS_SORT_OPTIONS } from "../constants/CHARACTERS";
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
+import validateMatchup from "../services/utils/validateMatchup";
+import { validateCombo } from "../services/utils";
 
 const {
     ALL_MOVES,
@@ -164,17 +166,13 @@ const validateMatchups = () => {
         Object.keys(parsedCharacters).forEach(charId => {
             updatedChars[charId] = parsedCharacters[charId];
             const matchups = parsedCharacters[charId].matchups.map(matchup => {
-                const { loses, wins, total, win_rate } = matchup;
-                const parsesdTotal = total ? Number(total) : loses + wins;
-                return {
-                    ...matchup,
-                    loses: Number(loses),
-                    wins: Number(wins),
-                    total: parsesdTotal,
-                    win_rate: parsesdTotal === 0 || !parsesdTotal ? 0 : Number(win_rate),
-                }
+                return validateMatchup(matchup);
+            })
+            const combos = parsedCharacters[charId].combos.map(combo => {
+                return validateCombo(combo)
             })
             updatedChars[charId].matchups = matchups;
+            updatedChars[charId].combos = combos;
             localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(updatedChars))
         })
     } catch (error) {
