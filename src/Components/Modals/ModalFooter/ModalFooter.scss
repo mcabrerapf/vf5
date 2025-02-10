@@ -1,10 +1,13 @@
 .modal-footer {
     display: flex;
-    // height: 4rem;
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
     box-sizing: border-box;
 
+    .button {
+        height: 3.5rem;
+        width: 3.5rem;
+    }
     &.align-left {
         align-items: flex-start;
         justify-content: flex-start;

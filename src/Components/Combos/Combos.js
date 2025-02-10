@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Combos.scss'
-import { SELECTED_COMBOS_FILTERS_KEY, COMBO_FILTER_OPTIONS, COMBOS_SORT_OPTIONS, SELECTED_COMBOS_SORT_KEY } from '../../constants';
+import {
+    SELECTED_COMBOS_FILTERS_KEY,
+    SELECTED_COMBOS_SORT_KEY,
+    COMBO_FILTER_OPTIONS,
+    COMBOS_SORT_OPTIONS
+} from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
+import Combo from '../Combo';
 import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
 import DeleteModal from '../Modals/DeleteModal';
-import Combo from '../Combo';
 import CombosHeader from './CombosHeader';
 import ActiveFiltersList from '../ActiveFiltersList';
 import { getFromLocal, setLocalStorage } from '../../helpers';

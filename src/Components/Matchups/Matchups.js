@@ -34,7 +34,7 @@ const Matchups = () => {
 
 
 
-    const onVsClick = (matchup) => {
+    const onNameClick = (matchup) => {
         setSelectedMatchup(matchup);
         toggleMatchupModal();
     }
@@ -132,7 +132,7 @@ const Matchups = () => {
                             hideNote={listView === 'S'}
                             selectedCharacterName={selectedCharacterName}
                             handleMatchupUpdate={handleMatchupUpdate}
-                            onVsClick={onVsClick}
+                            onNameClick={onNameClick}
                         />
                     )
                 })}

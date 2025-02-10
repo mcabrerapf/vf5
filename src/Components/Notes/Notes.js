@@ -6,51 +6,29 @@ import Button from '../Button';
 import Modal from '../Modals/Modal';
 import NoteModal from '../Modals/NoteModal';
 import DeleteModal from '../Modals/DeleteModal';
-import { generateId, getFromLocal, setLocalStorage } from '../../helpers';
-import { CHARACTERS_DATA_KEY, STRINGS } from '../../constants';
-import Note from '../Note/Note';
+import Note from '../Note';
+import { deleteNote, getNotes, updateNotes } from '../../services';
 
 const Notes = () => {
     const { selectedCharacter } = useMainContext();
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState(null);
     const [selectedNote, setSelectedNote] = useState(null);
     const [showNoteModal, setShowNoteModal] = useState(false);
     const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
 
     useEffect(
         () => {
-            const localNotes = getFromLocal(
-                CHARACTERS_DATA_KEY,
-                selectedCharacter,
-                STRINGS.NOTES
-            );
+            const localNotes = getNotes(selectedCharacter);
             setNotes(localNotes);
         },
         [selectedCharacter]
     )
 
+    if(!notes) return null;
+
     const handleCloseModal = (newNote) => {
         if (newNote) {
-            let updatedNotes;
-            if (!newNote.id) {
-                updatedNotes = [
-                    ...notes.map(note => note),
-                    { ...newNote, id: generateId() }
-                ];
-
-            } else {
-                updatedNotes = notes.map((note) => {
-                    if (note.id === newNote.id) return newNote;
-                    return note;
-                });
-            }
-
-            setLocalStorage(
-                CHARACTERS_DATA_KEY,
-                updatedNotes,
-                selectedCharacter,
-                STRINGS.NOTES
-            );
+            const updatedNotes = updateNotes(selectedCharacter, newNote);
             setNotes(updatedNotes);
         }
         toggleNoteModal();
@@ -73,14 +51,7 @@ const Notes = () => {
 
     const handleDeleteNote = (shouldDelete) => {
         if (shouldDelete) {
-            const updatedNotes = notes.filter((note) => note.id !== selectedNote.id);
-
-            setLocalStorage(
-                CHARACTERS_DATA_KEY,
-                updatedNotes,
-                selectedCharacter,
-                STRINGS.NOTES
-            );
+            const updatedNotes = deleteNote(selectedCharacter, selectedNote.id);
             setNotes(updatedNotes);
         }
         setSelectedNote(null);

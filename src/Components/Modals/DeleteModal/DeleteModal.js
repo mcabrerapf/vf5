@@ -3,13 +3,15 @@ import './DeleteModal.scss'
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import Combo from '../../Combo';
+import ModalFooter from '../ModalFooter';
+import Note from '../../Note';
 
 const DeleteModal = ({
     data = {}
 }) => {
     const { closeModal } = useModalContext();
     const { command, content } = data;
-    
+
     const handleClose = (shouldDelete) => {
         closeModal(shouldDelete);
     }
@@ -23,23 +25,23 @@ const DeleteModal = ({
                     />
                 }
                 {!!content &&
-                    <div className='delete-note-modal__content__note-content'>
-                        {data.content}
-                    </div>
+                    <Note
+                        note={data}
+                    />
                 }
-                <div className='delete-modal__content__buttons'>
-                    <Button
-                        modifier={'delete-button'}
-                        text='DELETE'
-                        onClick={() => handleClose(true)}
-                    />
-                    <Button
-                        text='CANCEL'
-                        onClick={() => handleClose()}
-                    />
-                </div>
-
             </div>
+            <ModalFooter>
+                <Button
+                    modifier={'danger'}
+                    text='DEL'
+                    onClick={() => handleClose(true)}
+                />
+                <Button
+                    modifier={'cancel'}
+                    text='CANCEL'
+                    onClick={() => handleClose()}
+                />
+            </ModalFooter>
         </div>
     )
 }

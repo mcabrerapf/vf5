@@ -1,5 +1,5 @@
 import './Matchup.scss'
-import React from 'react';
+import React, { useState } from 'react';
 import VSIcon from './VSIcon';
 import Button from '../Button';
 import { calculateWinRate, stringNotationParser } from '../../helpers';
@@ -9,9 +9,10 @@ const Matchup = ({
     matchup = {},
     hideNote = false,
     handleMatchupUpdate = () => { },
-    onVsClick = () => { }
+    onNameClick = () => { }
 }) => {
     const { name, loses, wins, total, win_rate, note } = matchup;
+    const [showNote, setShowNote] = useState(false);
 
     const onOponentClick = (e) => {
         e.preventDefault();
@@ -33,10 +34,16 @@ const Matchup = ({
         })
     }
 
-    const handleVsClick = () => {
-        onVsClick(matchup);
+    const handleNameClick = () => {
+        onNameClick(matchup);
     }
+
+    const toggleShowNote = ()=> {
+        setShowNote(!showNote);
+    }
+
     const parsedNote = stringNotationParser(note);
+
     return (
         <div className='matchup'
         >
@@ -60,7 +67,7 @@ const Matchup = ({
                 <div
                     role='button'
                     className='matchup__content__vs'
-                    onClick={handleVsClick}
+                    onClick={toggleShowNote}
 
                 >
                     <div
@@ -78,7 +85,7 @@ const Matchup = ({
                 <div
                     role='button'
                     className='matchup__content__character'
-                    onClick={handleVsClick}
+                    onClick={handleNameClick}
                 >
                     <div
                         className='matchup__content__character__name'
@@ -87,7 +94,7 @@ const Matchup = ({
                     </div>
                 </div>
             </div>
-            {!hideNote && !!note &&
+            {!hideNote && showNote && !!note &&
                 <div className='matchup__note'>
                     <TextWithCommand
                         content={parsedNote}

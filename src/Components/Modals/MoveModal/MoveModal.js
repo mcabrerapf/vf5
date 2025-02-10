@@ -34,7 +34,7 @@ const MoveModal = ({
                     hideNote
                     onFavouriteClick={onFavouriteClick}
                 />
-                <div className='move-modal__textarea-container'>
+                <div className='move-modal__content__textarea-container'>
                     <textarea
                         value={noteValue}
                         onChange={onChange}

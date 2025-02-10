@@ -1,18 +1,25 @@
 .move-modal {
     max-width: 30rem;
-    &__textarea-container {
-        width: 100%;
-        box-sizing: border-box;
+
+    &__content {
         padding: 1rem;
 
-        textarea {
+        &__textarea-container {
             width: 100%;
-            height: 5rem;
-            resize: none;
+            margin-top: 0.5rem;
             box-sizing: border-box;
-        }
+            
 
+            textarea {
+                width: 100%;
+                height: 5rem;
+                resize: none;
+                box-sizing: border-box;
+            }
+
+        }
     }
+
 
     .modal-footer {
         gap: 1rem;

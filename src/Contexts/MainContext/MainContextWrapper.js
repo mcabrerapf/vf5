@@ -16,15 +16,9 @@ const MainContextWrapper = ({
 }) => {
   const localSelectedCharacter = getFromLocal(SELECTED_CHARACTER_KEY)
   const localListView = getFromLocal(LIST_VIEW_KEY)
-  const localCustomMoves = getFromLocal(
-    CHARACTERS_DATA_KEY,
-    localSelectedCharacter,
-    STRINGS.CUSTOM_MOVES
-  );
 
   const [contextData, setContextData] = useState({
     selectedCharacter: localSelectedCharacter,
-    customMoves: localCustomMoves,
     listView: localListView
   });
 
@@ -47,26 +41,6 @@ const MainContextWrapper = ({
     });
   }
 
-  const setFavouriteMoves = (updatedFavorites) => {
-    setLocalStorage(
-      CHARACTERS_DATA_KEY,
-      updatedFavorites,
-      selectedCharacter,
-      STRINGS.CUSTOM_MOVES
-    );
-    setContextData({ ...contextData, customMoves: updatedFavorites });
-  }
-
-  const setCharacterNotes = (updatedNotes) => {
-    setLocalStorage(
-      CHARACTERS_DATA_KEY,
-      updatedNotes,
-      selectedCharacter,
-      STRINGS.CUSTOM_MOVES
-    );
-    setContextData({ ...contextData, customMoves: updatedNotes });
-  }
-
   const setListView = () => {
     const newListView = listView === 'F' ? 'S' : 'F';
     setLocalStorage(
@@ -84,8 +58,6 @@ const MainContextWrapper = ({
       value={{
         ...contextData,
         setSelectedCharacter,
-        setFavouriteMoves,
-        setCharacterNotes,
         setListView
       }}
     >

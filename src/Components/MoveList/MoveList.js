@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Movelist.scss'
+import { deleteCustomMove, getCustomMoves, updateCustomMoves } from '../../services';
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
@@ -18,13 +19,12 @@ import Modal from '../Modals/Modal';
 import SortModal from '../Modals/SortModal';
 import MoveModal from '../Modals/MoveModal';
 
+
 const Movelist = () => {
     const listRef = useRef(null);
-    const { selectedCharacter,
-        customMoves,
+    const {
+        selectedCharacter,
         listView,
-        setFavouriteMoves,
-        setCharacterNotes
     } = useMainContext();
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
@@ -33,6 +33,7 @@ const Movelist = () => {
         return !['active', 'total', 'crouch_hit', 'crouch_c_hit', 'recovery_c'].includes(option.id);
     })
 
+    const [customMoves, setCustomMoves] = useState(null);
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
@@ -47,10 +48,19 @@ const Movelist = () => {
     const selectedMoveset = selectedCharacterMoveset[selectedMoveCategory];
 
     useEffect(() => {
+        const localCustomMoves = getCustomMoves(selectedCharacter)
+        setCustomMoves(localCustomMoves);
+    },
+        [selectedCharacter]
+    )
+
+    useEffect(() => {
         if (!selectedMoveset) setSelectedMoveCategory('all_moves');
     },
         [selectedMoveset]
     )
+
+    if (!customMoves) return null;
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
@@ -61,21 +71,42 @@ const Movelist = () => {
     }
 
     const onFavouriteClick = (moveId) => {
-        let updatedFavorites;
-
-        if (customMoves.find(fMove => fMove.id === moveId)) {
-            updatedFavorites = customMoves.map(fMove => {
-                if (fMove.id === moveId) fMove.favourite = !fMove.favourite;
-                return fMove;
-            });
+        const moveMatch = customMoves.find(fMove => fMove.id === moveId);
+        let updatedCustomMoves;
+        
+        if (!!moveMatch?.favourite && !moveMatch?.note) {
+            updatedCustomMoves = deleteCustomMove(selectedCharacter, moveId);
         } else {
-            updatedFavorites =
-                [
-                    ...customMoves,
-                    { id: moveId, note: '', favourite: true }
-                ];
+            const newMove = {
+                ...moveMatch,
+                id: moveId,
+                favourite: !moveMatch?.favourite,
+            };
+            updatedCustomMoves = updateCustomMoves(selectedCharacter, newMove, !moveMatch);
         }
-        setFavouriteMoves(updatedFavorites);
+        setCustomMoves(updatedCustomMoves);
+    }
+
+    const handleMoveModalClose = (note, moveId) => {
+        if (note === undefined) {
+            toggleMoveModal();
+            return;
+        }
+        const moveMatch = customMoves.find(fMove => fMove.id === moveId);
+        let updatedCustomMoves;
+        if (!moveMatch?.favourite && !note) {
+            updatedCustomMoves = deleteCustomMove(selectedCharacter, moveId);
+        } else {
+            const newMove = {
+                ...moveMatch,
+                id: moveId,
+                note: note
+            };
+            updatedCustomMoves = updateCustomMoves(selectedCharacter, newMove, !moveMatch);
+        }
+        setSelectedMove(null);
+        setCustomMoves(updatedCustomMoves);
+        toggleMoveModal();
     }
 
     const onMoveTypeClick = (attackLevel) => {
@@ -119,14 +150,14 @@ const Movelist = () => {
     const onCommandClick = (command) => {
         let newFilters;
         if (!!selectedFilters.find(filter => filter.id === command)) {
-            newFilters = selectedFilters.filter(filter=> filter.id !== command);
-        }else {
+            newFilters = selectedFilters.filter(filter => filter.id !== command);
+        } else {
             newFilters = [
                 ...selectedFilters.map(filter => filter),
                 { id: command, name: command, prefix: 'command' }
             ]
         }
-      
+
         scrollToTop();
         handleFiltersChange(newFilters);
     }
@@ -153,35 +184,10 @@ const Movelist = () => {
         toggleMoveModal();
     }
 
-    const handleMoveModalClose = (note) => {
-        if (note === undefined) {
-            toggleMoveModal();
-            return;
-        }
-        let updatedNotes;
-
-        if (customMoves.find(fMove => fMove.id === selectedMove.id)) {
-            updatedNotes = customMoves.map(fMove => {
-                if (fMove.id === selectedMove.id) fMove.note = note;
-                return fMove;
-            });
-        } else {
-            updatedNotes =
-                [
-                    ...customMoves,
-                    { id: selectedMove.id, favourite: false, note: note }
-                ];
-        }
-
-        setCharacterNotes(updatedNotes);
-        setSelectedMove(null);
-        toggleMoveModal();
-    }
-
     const toggleMoveModal = () => {
         setShowMoveModal(!showMoveModal);
     }
-    
+
     const scrollToTop = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }

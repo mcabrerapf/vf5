@@ -18,9 +18,9 @@ const updateCombos = (characterId, combo) => {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
         const parsedAllCharacters = JSON.parse(allCharactersData);
         const characterData = parsedAllCharacters[characterId];
-        const isNewCombo = !combo.id;
+        const isNew = !combo.id;
 
-        const updatedCombos = !isNewCombo ?
+        const updatedCombos = !isNew ?
             characterData.combos
                 .map(oCombo => {
                     if (oCombo.id === combo.id) return combo;
@@ -47,8 +47,6 @@ const deleteCombo = (characterId, comboId) => {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
         const parsedAllCharacters = JSON.parse(allCharactersData);
         const characterData = parsedAllCharacters[characterId];
-
-
         const updatedCombos = characterData.combos
             .filter(combo => combo.id !== comboId);
 
@@ -58,7 +56,6 @@ const deleteCombo = (characterId, comboId) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        console.log(updatedCombos);
         return updatedCombos;
     } catch (error) {
         console.log(error);

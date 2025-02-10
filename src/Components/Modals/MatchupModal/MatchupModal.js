@@ -95,7 +95,7 @@ const MatchupModal = ({
 					className='modal-footer__delete-button'
 				>
 					<Button
-						modifier={"danger"}
+						modifier={"danger reset"}
 						onClick={onResetClick}
 						text='RESET'
 					/>

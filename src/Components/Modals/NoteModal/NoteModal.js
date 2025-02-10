@@ -38,7 +38,7 @@ const NoteModal = ({
                     {id &&
                         <Button
                         modifier={'danger'}
-                            text='DELETE'
+                            text='DEL'
                             onClick={() => {
                                 closeModal();
                                 handleDeleteNoteClick();

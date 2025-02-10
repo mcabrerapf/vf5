@@ -68,7 +68,7 @@ const Character = () => {
                     onClick={toggleListViewMode}
                 />
                 <Button
-                    modifier={'no-border'}
+                    modifier={'no-border character-name'}
                     onClick={toggleCharacterSelectModal}
                     text={characterName}
                 />

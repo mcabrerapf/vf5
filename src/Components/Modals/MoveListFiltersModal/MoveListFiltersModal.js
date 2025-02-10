@@ -99,7 +99,7 @@ const MoveListFiltersModal = ({
             <ModalFooter>
                 <Button
                     text='Reset'
-                    modifier={'active'}
+                    modifier={'active reset'}
                     onClick={handleFiltersReset}
                 />
                 <Button
