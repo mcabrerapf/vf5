@@ -3,6 +3,7 @@ import './CommandBuilder.scss';
 import MoveCommand from '../MoveCommand';
 import Button from '../Button';
 import NotationButtons from '../NotationButtons';
+import { BackspaceIcon, MoveLeft, MoveRight } from '../Icon';
 
 const CommandBuilder = ({
     command = [],
@@ -84,21 +85,24 @@ const CommandBuilder = ({
                 >
                     <Button
                         modifier="delete-button"
-                        text='⌫'
                         onClick={handleDelete}
-                    />
+                    >
+                        <BackspaceIcon />
+                    </Button>
                     <Button
                         modifier="delete-button"
                         disabled={selectedNotationIndex === null}
-                        text='⇦'
                         onClick={handleAddBefore}
-                    />
+                    >
+                        <MoveLeft />
+                    </Button>
                     <Button
                         modifier="delete-button"
                         disabled={selectedNotationIndex === null}
-                        text='⇨'
                         onClick={handleAddAfter}
-                    />
+                    >
+                        <MoveRight />
+                    </Button>
                 </div>
             </div>
             <div className='command-builder__bottom'>

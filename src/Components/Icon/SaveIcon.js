@@ -3,11 +3,12 @@ import React from "react";
 const SaveIcon = () => {
     return (
         <svg
-            width="800px"
-            height="800px"
+            width="2rem"
+            height="2rem"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             fill="white"
+            className="save-icon"
         >
             <path
                 fill="white"

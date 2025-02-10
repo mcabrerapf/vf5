@@ -120,17 +120,19 @@ const Combo = ({
                     }
                 </div>
             </div>
-            <MoveCommand
-                onClick={handleLauncherClick}
-                modifier={"launcher"}
-                command={fullLauncher}
-            />
-            {!!restOfCombo.length &&
+            <div>
                 <MoveCommand
-                    onClick={handleCommandClick}
-                    command={restOfCombo}
+                    onClick={handleLauncherClick}
+                    modifier={"launcher"}
+                    command={fullLauncher}
                 />
-            }
+                {!!restOfCombo.length &&
+                    <MoveCommand
+                        onClick={handleCommandClick}
+                        command={restOfCombo}
+                    />
+                }
+            </div>
             {note &&
                 <div className='combo__note'>
                     <TextWithCommand

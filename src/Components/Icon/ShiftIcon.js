@@ -3,7 +3,7 @@ import React from "react";
 const ShiftIcon = () => {
     return (
         <svg
-        className="shift-icon"
+            className="shift-icon"
             width="1.5rem"
             height="1.5rem"
             viewBox="0 0 24 24"

@@ -1,5 +1,4 @@
 const STRINGS = {
-    AKIRA: 'akira',
     ASC: 'asc',
     DSC: 'dsc',
     ALL_MOVES: 'all_moves',

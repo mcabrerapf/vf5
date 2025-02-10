@@ -111,6 +111,7 @@ const validateFilters = () => {
         return;
     }
 }
+
 const validateSelectedCharacter = () => {
     try {
         const selectedCharacter = localStorage.getItem(SELECTED_CHARACTER_KEY)
