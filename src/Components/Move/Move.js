@@ -3,10 +3,12 @@ import React from 'react';
 import SortableProp from './SortableProp';
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
+import TextWithCommand from '../TextWithCommand';
 import Button from '../Button';
 import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
 import { getDodgeValue } from './helpers';
 import { EditIcon } from '../Icon';
+import { stringNotationParser } from '../../helpers';
 
 const Move = ({
     move,
@@ -46,7 +48,7 @@ const Move = ({
         attack_level,
         move_name,
         hit,
-        notes,
+        notes = '',
         sober,
     } = move;
 
@@ -134,6 +136,7 @@ const Move = ({
         .filter(Boolean)
         .join(' ');
 
+    const parsedNote = stringNotationParser(extraNote || notes);
     return (
         <div
             className={className}
@@ -240,7 +243,9 @@ const Move = ({
             </div>
             {!hideNote &&
                 <div className='move__notes'>
-                    {extraNote || notes}
+                    <TextWithCommand
+                        content={parsedNote}
+                    />
                 </div>
             }
         </div>

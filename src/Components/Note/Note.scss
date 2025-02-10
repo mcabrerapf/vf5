@@ -14,5 +14,9 @@
         font-size: 1.5rem;
         white-space: pre-wrap;
         align-items: baseline;
+
+        .move-command {
+            padding: 0;
+        }
     }
 }
