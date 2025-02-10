@@ -6,11 +6,13 @@ import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS } from '../../constants';
 import { capitalizeFirstLetter, getLauncher, stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
+import { EditIcon } from '../Icon';
 
 const Combo = ({
     combo = {},
     selectedSort = {},
     showSimpleView = false,
+    hideEditButton = false,
     characterFilterOptions = [],
     onClick = () => { },
     handleSortChange = () => { },
@@ -109,6 +111,13 @@ const Combo = ({
                         modifier={favourite ? 'small favourite' : 'small'}
                         text={'★'}
                     />
+                    {!hideEditButton &&
+                        <Button
+                            onClick={handleComboClick}
+                        >
+                            <EditIcon />
+                        </Button>
+                    }
                 </div>
             </div>
             <MoveCommand

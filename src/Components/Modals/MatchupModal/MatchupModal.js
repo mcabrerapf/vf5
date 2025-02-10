@@ -5,6 +5,7 @@ import Matchup from '../../Matchup';
 import Button from '../../Button';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { calculateWinRate } from '../../../helpers';
+import { SaveIcon } from '../../Icon';
 
 const MatchupModal = ({
 	matchup = {},
@@ -38,12 +39,12 @@ const MatchupModal = ({
 	}
 
 	const handleLosesClick = () => {
-		if (loses < 2) return;
+		if (loses < 1) return;
 		setLoses(loses - 1)
 	}
 
 	const handleWinsClick = () => {
-		if (wins < 2) return;
+		if (wins < 1) return;
 		setWins(wins - 1)
 	}
 	const winRate = calculateWinRate(loses, wins);
@@ -69,12 +70,12 @@ const MatchupModal = ({
 						className="matchup-modal__content__top__buttons"
 					>
 						<Button
-							disabled={loses < 2}
+							disabled={loses < 1}
 							onClick={handleLosesClick}
 							text={"-"}
 						/>
 						<Button
-							disabled={wins < 2}
+							disabled={wins < 1}
 							onClick={handleWinsClick}
 							text={"-"}
 						/>
@@ -109,9 +110,10 @@ const MatchupModal = ({
 					/>
 					<Button
 						modifier={'save-button'}
-						text='✓'
 						onClick={onSaveClick}
-					/>
+					>
+						<SaveIcon />
+					</Button>
 				</div>
 			</ModalFooter>
 		</div>

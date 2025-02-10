@@ -154,7 +154,7 @@ const CombosFiltersModal = ({
             <ModalFooter>
                 <Button
                     text='Reset'
-                    modifier={'active reset'}
+                    modifier={'active'}
                     onClick={handleFiltersReset}
                 />
                 <Button

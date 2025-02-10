@@ -4,6 +4,7 @@ import { useModalContext } from '../../../Contexts/ModalContext';
 import Move from '../../Move';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
+import { SaveIcon } from '../../Icon';
 
 const MoveModal = ({
     move,
@@ -32,6 +33,7 @@ const MoveModal = ({
                     selectedSort={selectedSort}
                     customMoves={customMoves}
                     hideNote
+                    hideEditButton
                     onFavouriteClick={onFavouriteClick}
                 />
                 <div className='move-modal__content__textarea-container'>
@@ -49,9 +51,10 @@ const MoveModal = ({
                 />
                 <Button
                     modifier={'save-button'}
-                    text='✓'
                     onClick={onSave}
-                />
+                >
+                    <SaveIcon />
+                </Button>
 
             </ModalFooter>
         </div>

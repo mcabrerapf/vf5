@@ -1,6 +1,7 @@
 import React from 'react';
 import './OtherButtons.scss'
 import Button from '../Button';
+import { ShiftIcon } from '../Icon';
 
 const OtherButtons = ({
     isShiftActive,
@@ -54,9 +55,10 @@ const OtherButtons = ({
                 />
                 <Button
                     modifier={isShiftActive ? 'active' : ''}
-                    text={'⇪'}
                     onClick={onShiftClick}
-                />
+                >
+                    <ShiftIcon />
+                </Button>
             </div>
         </div>
     )

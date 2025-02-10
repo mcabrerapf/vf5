@@ -6,6 +6,7 @@ import MoveTypeBadge from '../MoveTypeBadge';
 import Button from '../Button';
 import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
 import { getDodgeValue } from './helpers';
+import { EditIcon } from '../Icon';
 
 const Move = ({
     move,
@@ -15,7 +16,8 @@ const Move = ({
     customMoves = [],
     modifier = "",
     selectedFilters = [],
-    hideNote,
+    hideEditButton = false,
+    hideNote = false,
     showSimpleView = false,
     handleFiltersChange = () => { },
     handleSortChange = () => { },
@@ -146,17 +148,18 @@ const Move = ({
                     {move_name}
                 </div>
                 <div className='move__main__badges'>
-                    <MoveTypeBadge
-                        modifier={parsedLevel}
-                        value={parsedLevel}
-                        moveType={attack_level}
-                        onClick={handleOnMoveTypeClick}
-                    />
                     <Button
                         onClick={handleFavouriteClick}
-                        modifier={isFavourite ? 'small favourite' : 'small'}
+                        modifier={isFavourite ? ' favourite' : ''}
                         text={'★'}
                     />
+                    {!hideEditButton &&
+                        <Button
+                            onClick={onMoveClick}
+                        >
+                            <EditIcon />
+                        </Button>
+                    }
                 </div>
 
             </div>
@@ -227,6 +230,14 @@ const Move = ({
                 onClick={handleOnCommandClick}
                 command={command}
             />
+            <div className='move__move-attack-level'>
+                <MoveTypeBadge
+                    modifier={parsedLevel}
+                    value={parsedLevel}
+                    moveType={attack_level}
+                    onClick={handleOnMoveTypeClick}
+                />
+            </div>
             {!hideNote &&
                 <div className='move__notes'>
                     {extraNote || notes}

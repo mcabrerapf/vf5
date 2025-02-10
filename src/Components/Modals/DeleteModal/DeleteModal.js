@@ -22,6 +22,7 @@ const DeleteModal = ({
                 {!!command &&
                     <Combo
                         combo={data}
+                        hideEditButton
                     />
                 }
                 {!!content &&

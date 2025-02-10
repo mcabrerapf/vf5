@@ -11,49 +11,45 @@
         width: 100%;
 
         .button {
+            &.active {
+                svg {
+                    path {
+                        fill: black;
+                        stroke: black;
+                    }
+                }
+            }
+
             &.P {
                 background-color: var(--punch);
             }
+
             &.K {
                 background-color: var(--kick);
             }
+
             &.G {
                 background-color: var(--guard);
             }
+
             &.hit {
                 color: var(--high);
             }
+
             &.ch {
                 color: var(--ch);
             }
+
             &.w {
                 color: var(--wall);
             }
+
             &.wb {
                 color: var(--wall);
             }
+
             &.sd {
                 color: var(--side);
-            }
-        }
-        .notation {
-            width: 3rem;
-            height: 3rem;
-            font-size: 1.1rem!important;
-            font-weight: 700!important;
-            border: 1px solid white;
-            border-radius: 2rem;
-            padding: 1rem;
-            align-items: center;
-            justify-content: center;
-
-            &.shft {
-                font-size: 1rem!important;
-            }
-
-            &.active {
-                background: white;
-                color: black!important;
             }
         }
     }

@@ -118,6 +118,11 @@
     &.disabled {
         border: 1px dashed var(--disabled-color);
         color: var(--disabled-color)!important;
+        svg {
+            path {
+                fill: var(--disabled-color);
+            }
+        }
     }
 
     &.no-border {

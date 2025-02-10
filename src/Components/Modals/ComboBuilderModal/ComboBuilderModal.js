@@ -9,6 +9,7 @@ import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import { getCommandData, getUniqueComboName } from './helpers';
 import { CHARACTERS, STRINGS } from '../../../constants';
+import { SaveIcon } from '../../Icon';
 
 const ComboBuilderModal = ({
     selectedCombo,
@@ -140,10 +141,11 @@ const ComboBuilderModal = ({
                     />
                     <Button
                         modifier={'save-button'}
-                        text='✓'
                         disabled={!canSave}
                         onClick={handleSaveCombo}
-                    />
+                    >
+                        <SaveIcon />
+                    </Button>
                 </div>
             </ModalFooter>
         </div>

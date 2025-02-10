@@ -3,6 +3,7 @@ import './NoteModal.scss'
 import Button from '../../Button';
 import ModalFooter from '../ModalFooter';
 import { useModalContext } from '../../../Contexts/ModalContext';
+import { SaveIcon } from '../../Icon';
 
 const NoteModal = ({
     selectedNote,
@@ -37,7 +38,7 @@ const NoteModal = ({
                 <div>
                     {id &&
                         <Button
-                        modifier={'danger'}
+                            modifier={'danger'}
                             text='DEL'
                             onClick={() => {
                                 closeModal();
@@ -56,10 +57,11 @@ const NoteModal = ({
                     />
                     <Button
                         modifier={'save-button'}
-                        text='✓'
                         disabled={!canSave}
                         onClick={handleSaveNote}
-                    />
+                    >
+                        <SaveIcon />
+                    </Button>
                 </div>
             </ModalFooter>
         </div>
