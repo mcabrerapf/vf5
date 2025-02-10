@@ -13,8 +13,7 @@ import {
 import CHARACTERS, { CHARACTERS_JSON, COMBOS_SORT_OPTIONS } from "../constants/CHARACTERS";
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
-import validateMatchup from "../services/utils/validateMatchup";
-import { validateCombo } from "../services/utils";
+import { validateCombo, validateMatchup } from "../services/utils";
 
 const {
     ALL_MOVES,
