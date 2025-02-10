@@ -28,7 +28,7 @@ const TextSearchModal = ({
         }
         const lowerCaseText = textFilter.toLocaleLowerCase();
         const newText = {
-            id: lowerCaseText, prefix: 'text_search', name: lowerCaseText
+            id: lowerCaseText, prefix: 'text_search', name: textFilter
         };
         const updatedFilters = !!currentTextFilter ?
             selectedFilters.map(oFilter => {
