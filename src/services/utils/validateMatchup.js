@@ -1,7 +1,7 @@
 import { CHARACTER_ID_TO_NAME } from "../../constants";
 
 const validateMatchup = (matchup) => {
-    const { id, name,loses, wins, total, win_rate } = matchup;
+    const { id, name, loses, wins, total, note, win_rate } = matchup;
     const parsesdTotal = total ? Number(total) : loses + wins;
     return {
         id: id,
@@ -9,6 +9,7 @@ const validateMatchup = (matchup) => {
         loses: Number(loses),
         wins: Number(wins),
         total: parsesdTotal,
+        note: note || '',
         win_rate: parsesdTotal === 0 || !parsesdTotal ? 0 : Number(win_rate),
     };
 }
