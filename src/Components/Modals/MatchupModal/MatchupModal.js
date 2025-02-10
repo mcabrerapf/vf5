@@ -48,7 +48,7 @@ const MatchupModal = ({
 		setWins(wins - 1)
 	}
 	const winRate = calculateWinRate(loses, wins);
-	const newMatchup = { wins, loses, name, total, win_rate: winRate };
+	const newMatchup = { wins, loses, name, total: wins + loses, win_rate: winRate };
 
 	return (
 		<div

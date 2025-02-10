@@ -130,6 +130,7 @@ const Matchups = () => {
                             key={matchup.id}
                             matchup={matchup}
                             hideNote={listView === 'S'}
+                            disableButtons
                             selectedCharacterName={selectedCharacterName}
                             handleMatchupUpdate={handleMatchupUpdate}
                             onNameClick={onNameClick}

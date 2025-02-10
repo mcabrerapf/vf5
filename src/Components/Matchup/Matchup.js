@@ -8,14 +8,14 @@ import TextWithCommand from '../TextWithCommand';
 const Matchup = ({
     matchup = {},
     hideNote = false,
+    disableButtons = false,
     handleMatchupUpdate = () => { },
     onNameClick = () => { }
 }) => {
     const { name, loses, wins, total, win_rate, note } = matchup;
     const [showNote, setShowNote] = useState(true);
 
-    const onOponentClick = (e) => {
-        e.preventDefault();
+    const onOponentClick = () => {
         handleMatchupUpdate({
             ...matchup,
             loses: loses + 1,
@@ -24,8 +24,7 @@ const Matchup = ({
         })
     }
 
-    const onPlayerClick = (e) => {
-        e.preventDefault();
+    const onPlayerClick = () => {
         handleMatchupUpdate({
             ...matchup,
             wins: wins + 1,
@@ -54,12 +53,12 @@ const Matchup = ({
                     className='matchup__content__buttons'
                 >
                     <Button
-                        onClick={onOponentClick}
+                        onClick={() => disableButtons ? handleNameClick() : onOponentClick()}
                         modifier={'loses'}
                         text={loses}
                     />
                     <Button
-                        onClick={onPlayerClick}
+                         onClick={() => disableButtons ? handleNameClick() : onPlayerClick()}
                         modifier={'wins'}
                         text={wins}
                     />
