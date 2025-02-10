@@ -73,6 +73,7 @@ const Character = () => {
                     text={characterName}
                 />
                 <Button
+                    disabled
                     modifier={'no-border'}
                     text="ℹ"
                     onClick={toggleInfoModal}
