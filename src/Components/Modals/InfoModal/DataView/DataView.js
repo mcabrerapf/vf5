@@ -34,30 +34,43 @@ const DataView = () => {
     }
 
     const parseImportData = () => {
-        setIsImporting(true);
         navigator.clipboard
             .readText()
             .then(data => {
-                if (!data || typeof data !== 'string') {
-                    setIsImporting(false);
-                    return;
-                }
+            
                 const parsedData = JSON.parse(data);
-                const [isValid, validatedData] = validateImportData(parsedData);
-
-                if (isValid) {
-                    setImportData(validatedData)
-                    setDataView('confirm')
-                } else {
-                    setImportError(true)
-                }
-                setIsImporting(false);
+                const stringifiedData = JSON.stringify(parsedData);
+                setLocalStorage(STRINGS.RESET_LOCAL_DATA, stringifiedData);
+                window.location.reload();
+                return;
             })
             .catch(err => {
-                setIsImporting(false);
-                setImportData(null)
-                setImportError(true)
+              
             });
+        // setIsImporting(true);
+        // navigator.clipboard
+        //     .readText()
+        //     .then(data => {
+        //         if (!data || typeof data !== 'string') {
+        //             setIsImporting(false);
+        //             return;
+        //         }
+        //         const parsedData = JSON.parse(data);
+        //         const [isValid, validatedData] = validateImportData(parsedData);
+
+        //         if (isValid) {
+        //             setImportData(validatedData)
+        //             setDataView('confirm')
+        //         } else {
+        //             setImportError(true)
+        //         }
+        //         setIsImporting(false);
+        //     })
+        //     .catch(err => {
+        //         setIsImporting(false);
+        //         setImportData(null)
+        //         setImportError(true)
+        //     });
     }
 
     const confirmImport = () => {
