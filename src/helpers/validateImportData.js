@@ -1,4 +1,5 @@
 import { ATTACK_LEVELS, CHARACTERS } from "../constants";
+import { validateMatchup } from "../services/utils";
 const validateNote = note => {
     if (
         !note ||
@@ -59,7 +60,7 @@ const validateImportData = (data) => {
         const currentCharacterData = data[id];
         if (currentCharacterData) {
             const validatedCharacterData = { combos: [], custom_moves: [], notes: [] };
-            const { combos, custom_moves, notes } = currentCharacterData;
+            const { combos, custom_moves, notes, matchups } = currentCharacterData;
 
             if (notes && Array.isArray(notes)) {
                 const validNotes = notes.map(validateNote).filter(Boolean);
@@ -73,6 +74,10 @@ const validateImportData = (data) => {
             if (combos) {
                 const validCombos = combos.map(validateCombo).filter(Boolean);
                 validatedCharacterData.combos = validCombos;
+            }
+            if (matchups) {
+                const validatedMatchups = matchups.map(validateMatchup).filter(Boolean);
+                validatedCharacterData.matchups = validatedMatchups;
             }
             if (
                 !validatedCharacterData.notes.length &&
