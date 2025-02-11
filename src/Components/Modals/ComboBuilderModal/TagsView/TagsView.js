@@ -16,10 +16,10 @@ const TagsView = ({
 
     const handleCharacterTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-        
+
         if (className.includes('not-selected')) {
             updatedTags = [
-                ...selectedCharacterTags.map(tag => tag), 
+                ...selectedCharacterTags.map(tag => tag),
                 value
             ];
 
@@ -42,7 +42,7 @@ const TagsView = ({
 
     const handleTagClick = ({ target: { value, className } }) => {
         let updatedTags;
-    
+
         if (className.includes('not-selected')) {
             updatedTags = [...selectedTags.map(tag => tag), value];
         } else {
@@ -51,8 +51,10 @@ const TagsView = ({
         setSelectedTags(updatedTags);
     }
     const otherTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix !== 'character_tags');
-    const characterTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix === 'character_tags');
-    
+    const characterTags = COMBO_FILTER_OPTIONS
+        .filter(option => option.prefix === 'character_tags')
+        .sort((a, b) => a.weight_id - b.weight_id);
+
     return (
         <div className='tags-view'>
             <div className='tags-view__header'>
@@ -70,14 +72,18 @@ const TagsView = ({
             <div className='tags-view__content'>
                 {tagsView === 'characters' &&
                     <div className='tags-view__content__characters'>
-                        {characterTags.map(character =>
-                            <MoveTypeBadge
-                                key={character.id}
-                                moveType={capitalizeFirstLetter(character.id)}
-                                value={character.id}
-                                modifier={selectedCharacterTags.find(sTag => sTag === character.id) ? 'character' : 'not-selected'}
-                                onClick={handleCharacterTagClick}
-                            />
+                        {characterTags.map(character => {
+                            const weightModifier = character.weight_name.toLocaleLowerCase().replace(' ', '-');
+                            return (
+                                <MoveTypeBadge
+                                    key={character.id}
+                                    moveType={capitalizeFirstLetter(character.id)}
+                                    value={character.id}
+                                    modifier={selectedCharacterTags.find(sTag => sTag === character.id) ? weightModifier : 'not-selected'}
+                                    onClick={handleCharacterTagClick}
+                                />
+                            )
+                        }
                         )}
                         <MoveTypeBadge
                             moveType="ALL"

@@ -102,5 +102,26 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 0.5rem;
+
+        .super-lightweight {
+            color: white;
+            background-color: var(--super-lightweight);
+        }
+        .lightweight {
+            color: white;
+            background-color: var(--lightweight);
+        }
+        .midweight {
+            color: white;
+            background-color: var(--midweight);
+        }
+        .heavyweight {
+            color: white;
+            background-color: var(--heavyweight);
+        }
+        .super-heavyweight {
+            color: white;
+            background-color: var(--super-heavyweight);
+        }
     }
 }

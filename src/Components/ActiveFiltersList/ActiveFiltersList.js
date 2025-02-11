@@ -4,6 +4,7 @@ import MoveTypeBadge from '../MoveTypeBadge';
 import MoveCommand from '../MoveCommand';
 import Button from '../Button';
 import { capitalizeFirstLetter } from '../../helpers';
+import { WEIGHT_CLASES } from '../../constants';
 
 const ActiveFiltersList = ({
     selectedFilters = [],
@@ -17,6 +18,11 @@ const ActiveFiltersList = ({
             <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
                     const { id, name, prefix } = selectedFilter
+                    const weightModifier = prefix === 'character_tags' ?
+                        WEIGHT_CLASES.find(wClass => wClass.characters.includes(id)).name?.toLocaleLowerCase().replace(' ', '-')
+                        :
+                        '';
+
                     return (
                         <>
                             {prefix === 'command' &&
@@ -54,7 +60,7 @@ const ActiveFiltersList = ({
                             {prefix === 'character_tags' &&
                                 <MoveTypeBadge
                                     key={id}
-                                    modifier={"character"}
+                                    modifier={weightModifier}
                                     moveType={capitalizeFirstLetter(id)}
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}

@@ -20,6 +20,28 @@
             height: 3rem!important;
         }
 
+
+        .super-lightweight {
+            color: white;
+            background-color: var(--super-lightweight);
+        }
+        .lightweight {
+            color: white;
+            background-color: var(--lightweight);
+        }
+        .midweight {
+            color: white;
+            background-color: var(--midweight);
+        }
+        .heavyweight {
+            color: white;
+            background-color: var(--heavyweight);
+        }
+        .super-heavyweight {
+            color: white;
+            background-color: var(--super-heavyweight);
+        }
+
         .move-command {
             border: 1px solid white;
             flex-shrink: 0;

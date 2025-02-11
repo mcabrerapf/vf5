@@ -46,7 +46,7 @@ const COMBOS_SORT_OPTIONS = [
         dir: 'asc'
     },
     {
-        id:'launcher',
+        id: 'launcher',
         name: 'Launcher',
         dir: 'asc'
     },
@@ -76,33 +76,62 @@ const MATHCHUPS_SORT_OPTIONS = [
     {
         id: 'name',
         name: 'Name',
-        dir:'asc' 
+        dir: 'asc'
     },
     {
         id: 'wins',
         name: 'Wins',
-        dir:'asc' 
+        dir: 'asc'
     },
     {
         id: 'loses',
         name: 'Loses',
-        dir:'asc' 
+        dir: 'asc'
     },
     {
         id: 'total',
         name: 'Total',
-        dir:'asc' 
+        dir: 'asc'
     },
     {
         id: 'win_rate',
         name: 'Win Rate',
-        dir:'asc' 
+        dir: 'asc'
     },
     {
         id: 'note',
         name: 'Note',
-        dir:'asc' 
+        dir: 'asc'
     },
+]
+
+
+const WEIGHT_CLASES = [
+    {
+        id: 0,
+        name: 'Super lightweight',
+        characters: ['aoi', 'eileen', 'elblaze']
+    },
+    {
+        id: 1,
+        name: 'Lightweight',
+        characters: ['sarah', 'shun', 'pai', 'lion', 'vanessa']
+    },
+    {
+        id: 2,
+        name: 'Midweight',
+        characters: ['akira', 'lau', 'jacky', 'kage', 'lei', 'brad', 'goh', 'jean']
+    },
+    {
+        id: 3,
+        name: 'Heavyweight',
+        characters: ['wolf', 'jeffry']
+    },
+    {
+        id: 4,
+        name: 'Super Heavyweight',
+        characters: ['taka']
+    }
 ]
 
 Object.keys(CHARACTERS_JSON)
@@ -125,10 +154,13 @@ Object.keys(CHARACTERS_JSON)
                 name: attack_level.name
             });
         })
+        const weight = WEIGHT_CLASES.find(wCLass => wCLass.characters.includes(CHARACTER))
         COMBO_FILTER_OPTIONS.push({
             id: CHARACTER,
             prefix: 'character_tags',
-            name: name
+            name: name,
+            weight_id: weight.id,
+            weight_name: weight.name
         });
         CHARACTER_IDS.push(CHARACTER);
         CHARACTERS.push(CHARACTERS_JSON[CHARACTER])
@@ -154,6 +186,7 @@ export {
     CHARACTER_ID_TO_NAME,
     CHARACTER_IDS,
     CHARACTERS_JSON,
+    WEIGHT_CLASES
 }
 
 export default CHARACTERS;

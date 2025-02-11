@@ -51,6 +51,7 @@ const Movelist = ({
         move_categories: moveCategories,
         movelist: selectedCharacterMoveset
     } = CHARACTERS_JSON[selectedCharacter];
+    
     const selectedMoveset = selectedCharacterMoveset[selectedMoveCategory];
 
     useEffect(() => {

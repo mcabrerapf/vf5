@@ -13,7 +13,7 @@ import {
 import CHARACTERS, { CHARACTERS_JSON, COMBOS_SORT_OPTIONS } from "../constants/CHARACTERS";
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
-import { validateCombo, validateMatchup } from "../services/utils";
+import { validateCombo, validateCustomMove, validateMatchup } from "../services/utils";
 
 const {
     ALL_MOVES,
@@ -164,30 +164,37 @@ const validateMatchups = () => {
 
         Object.keys(parsedCharacters).forEach(charId => {
             updatedChars[charId] = parsedCharacters[charId];
+            
             const matchups = parsedCharacters[charId].matchups.map(matchup => {
                 return validateMatchup(matchup);
             })
             const combos = parsedCharacters[charId].combos.map(combo => {
                 return validateCombo(combo)
             })
+            const customMoves = parsedCharacters[charId].custom_moves.map(custom_move => {
+                return validateCustomMove(custom_move)
+            })
+            
             updatedChars[charId].matchups = matchups;
             updatedChars[charId].combos = combos;
+            updatedChars[charId].custom_moves = customMoves;
             localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(updatedChars))
         })
     } catch (error) {
-
+        console.log(error)
     }
 
 }
 
 const initLocal = () => {
     validateSelectedCharacter();
+    validateMatchups();
     validateSelectedCharacterView();
     validateCharacterMoveCategory();
     validateFilters();
     validateSorts();
-    validateCharactersData();
-    validateMatchups();
+    // validateCharactersData();
+    
 }
 
 export default initLocal;

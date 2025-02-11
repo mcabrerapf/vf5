@@ -173,9 +173,10 @@ const Combos = () => {
     const filteredCombos = filterCombos(combos, selectedFilters);
     const sortedCombos = sortCombos(filteredCombos, selectedSort);
     const showSimpleView = listView === 'S';
-    const characterFilterOptions = COMBO_FILTER_OPTIONS
-        .filter(option => option.prefix === 'character_tags');
 
+    const characterFilterOptions = COMBO_FILTER_OPTIONS
+        .filter(option => option.prefix === 'character_tags')
+        .sort((a, b) => a.weight_id - b.weight_id);
     return (
         <div className='combos'>
             <ModalContextWrapper

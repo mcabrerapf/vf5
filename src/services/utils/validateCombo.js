@@ -2,6 +2,7 @@ import { CHARACTERS, STRINGS } from "../../constants";
 import { getLauncher } from "../../helpers";
 
 const validateCombo = (combo) => {
+    
     const { id,
         name,
         damage,

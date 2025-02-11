@@ -152,14 +152,18 @@ const Combo = ({
                             onClick={handleCharacterClick}
                         />
                     }
-                    {!hasAllCharacters && characterFilterOptions.map(cOption =>
-                        <MoveTypeBadge
-                            key={cOption.id}
-                            disabled={!character_tags.find(cTag => cTag === cOption.id)}
-                            modifier={"character"}
-                            moveType={capitalizeFirstLetter(cOption.id)}
-                            onClick={handleCharacterClick}
-                        />
+                    {!hasAllCharacters && characterFilterOptions.map(cOption => {
+                        const weightModifier = cOption.weight_name.toLocaleLowerCase().replace(' ', '-');
+                        return (
+                            <MoveTypeBadge
+                                key={cOption.id}
+                                disabled={!character_tags.find(cTag => cTag === cOption.id)}
+                                modifier={weightModifier}
+                                moveType={capitalizeFirstLetter(cOption.id)}
+                                onClick={handleCharacterClick}
+                            />
+                        )
+                    }
                     )}
                 </div>
             }

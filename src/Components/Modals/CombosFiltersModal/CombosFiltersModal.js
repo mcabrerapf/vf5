@@ -19,6 +19,10 @@ const CombosFiltersModal = ({
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS);
     const characterFilters = selectedFilters.filter(filter => filter.prefix === 'character_tags');
     const allCharactersSelected = characterFilters.length === CHARACTERS.length;
+    const characterOptions = COMBO_FILTER_OPTIONS
+        .filter(cOption => cOption.prefix === 'character_tags')
+        .sort((a, b) => a.weight_id - b.weight_id);
+
 
     const handleFilterSave = () => {
         const stringCommand = commandFilter.join('-');
@@ -37,10 +41,11 @@ const CombosFiltersModal = ({
     }
 
     const handleCharacterClick = ({ target: { value, className } }) => {
-        let newTypeFilters;
+        let newCharacterFilters;
         const { name: characterName } = COMBO_FILTER_OPTIONS.find(option => option.id === value);
+        
         if (className.includes('not-selected')) {
-            newTypeFilters = [
+            newCharacterFilters = [
                 ...selectedFilters.map(val => val),
                 {
                     id: value,
@@ -49,9 +54,10 @@ const CombosFiltersModal = ({
                 }
             ];
         } else {
-            newTypeFilters = selectedFilters.filter(value => value.id !== value);
+            newCharacterFilters = selectedFilters.filter(sFilter => sFilter.id !== value);
         }
-        setSelectedFilters(newTypeFilters);
+
+        setSelectedFilters(newCharacterFilters);
     }
 
     const handleFiltersReset = () => {
@@ -59,8 +65,8 @@ const CombosFiltersModal = ({
     }
 
     const handleAllClick = () => {
-        const nonCharacterFilters = selectedFilters.filter(filter => !filter.includes('character/'));
-        const updatedCharacterFilters = allCharactersSelected ? [] : CHARACTERS.map(character => `character/${character.id}`);
+        const nonCharacterFilters = selectedFilters.filter(filter => filter.prefix !== 'character_tags');
+        const updatedCharacterFilters = allCharactersSelected ? [] : characterOptions;
         const updatedFilters = [...nonCharacterFilters, ...updatedCharacterFilters];
         setSelectedFilters(updatedFilters);
     }
@@ -87,7 +93,7 @@ const CombosFiltersModal = ({
 
     const handleLauncherClick = ({ target: { value, isSelected } }) => {
         const stringLauncher = value.join('-');
-        
+
         if (isSelected) {
             const updatedFilters = selectedFilters.filter(sFilter => sFilter.id !== stringLauncher);
             setSelectedFilters(updatedFilters);
@@ -131,6 +137,7 @@ const CombosFiltersModal = ({
                 {filtersView === STRINGS.TAGS &&
                     <TagsView
                         selectedFilters={selectedFilters}
+                        characterOptions={characterOptions}
                         allCharactersSelected={allCharactersSelected}
                         handleCharacterClick={handleCharacterClick}
                         handleAllClick={handleAllClick}

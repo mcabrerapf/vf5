@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './TagsView.scss';
-import { CHARACTERS, COMBO_FILTER_OPTIONS } from "../../../../constants";
+import { COMBO_FILTER_OPTIONS } from "../../../../constants";
 import MoveTypeBadge from "../../../MoveTypeBadge";
 import Button from "../../../Button";
 import { capitalizeFirstLetter } from "../../../../helpers";
@@ -8,12 +8,14 @@ import { capitalizeFirstLetter } from "../../../../helpers";
 const TagsView = ({
     selectedFilters,
     allCharactersSelected,
+    characterOptions,
     handleCharacterClick,
     handleAllClick,
     handleOtherTagClick
 }) => {
     const [tagsView, setTagsView] = useState('characters');
     const otherTags = COMBO_FILTER_OPTIONS.filter(filter => filter.prefix === 'tags');
+
 
     return (
         <div className='tags-view'>
@@ -32,10 +34,11 @@ const TagsView = ({
             <div className='tags-view__content'>
                 {tagsView === 'characters' &&
                     <div className='tags-view__content__characters'>
-                        {CHARACTERS.map(character => {
+                        {characterOptions.map(character => {
                             const isSelected = selectedFilters.find(sFilter=> sFilter.id === character.id);
-                            const modifier = isSelected ? 'character' : 'not-selected';
-
+                            const weightModifier = character.weight_name.toLocaleLowerCase().replace(' ', '-');
+                            const modifier = isSelected ? weightModifier : 'not-selected';
+                            
                             return (
                                 <MoveTypeBadge
                                     key={character.id}
@@ -47,7 +50,7 @@ const TagsView = ({
                             )
                         })}
                         <MoveTypeBadge
-                            modifier={allCharactersSelected ? '' : 'not-selected'}
+                            modifier={allCharactersSelected ? 'character' : 'not-selected'}
                             moveType={'ALL'}
                             onClick={handleAllClick}
                         />
