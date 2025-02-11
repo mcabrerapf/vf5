@@ -34,6 +34,14 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
+                            {prefix === 'pseudo-launcher' &&
+                                <MoveCommand
+                                    key={id}
+                                    modifier={"pseudo-launcher"}
+                                    command={name.split('-')}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            }
                             {prefix === 'attack_level' &&
                                 <MoveTypeBadge
                                     key={id}

@@ -135,7 +135,7 @@ const Move = ({
         const launcherFilter = {
             id: stringCommand,
             name: stringCommand,
-            prefix: 'launcher'
+            prefix: 'pseudo-launcher'
         }
         onCombosClick(launcherFilter);
     }

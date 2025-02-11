@@ -1,3 +1,5 @@
+import { getPseudoLaunchers } from "../../helpers";
+
 const sortCombos = (list, sort) => {
     if (!sort || !sort.id || !sort.dir) return list;
     const { id: sortKey, dir: sortDir } = sort;
@@ -33,17 +35,23 @@ const filterCombos = (list, filters) => {
             const hasFavMatch = hasFavFilter ? favourite : true
             if (!otherFilters.length) return hasFavMatch;
             const filterMatches = [];
-            
+
             otherFilters.forEach(filter => {
                 const { prefix, id } = filter;
                 const valueToCheck = listItem[prefix];
                 if (valueToCheck === 'string') {
                 } else if (prefix === 'launcher') {
                     const stringifiedValue = valueToCheck.join('-');
-                    filterMatches.push(stringifiedValue.includes(id));
+                    filterMatches.push(stringifiedValue === id);
+                } else if (prefix === 'pseudo-launcher') {
+                    const pseudoLauncher = getPseudoLaunchers([listItem]);
+                    const stringifiedValue = pseudoLauncher.join('-');
+                    filterMatches.push(stringifiedValue === id);
                 } else if (prefix === 'command') {
                     const stringifiedValue = valueToCheck.join('-');
-                    filterMatches.push(stringifiedValue.includes(id));
+                    const stringLauncher = listItem.launcher.join('-');
+                    const match = stringifiedValue.includes(id) || stringLauncher.includes(id)
+                    filterMatches.push(match);
                 } else if (Array.isArray(valueToCheck)) {
                     const isValid = valueToCheck.find(value => value === id)
                     filterMatches.push(!!isValid);

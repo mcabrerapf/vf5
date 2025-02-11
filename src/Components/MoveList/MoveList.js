@@ -11,7 +11,7 @@ import {
     SELECTED_COMBOS_FILTERS_KEY,
     STRINGS,
 } from '../../constants';
-import { sortMovelist, filterMovelist, getLaunchers } from './helpers';
+import { sortMovelist, filterMovelist } from './helpers';
 import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
@@ -20,6 +20,7 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Modal from '../Modals/Modal';
 import SortModal from '../Modals/SortModal';
 import MoveModal from '../Modals/MoveModal';
+import { getPseudoLaunchers } from '../../helpers';
 
 
 const Movelist = ({
@@ -55,7 +56,7 @@ const Movelist = ({
     useEffect(() => {
         const localCustomMoves = getCustomMoves(selectedCharacter)
         const localCombos = getCombos(selectedCharacter);
-        const newLaunchers = getLaunchers(localCombos);
+        const newLaunchers = getPseudoLaunchers(localCombos);
         
         setCustomMoves(localCustomMoves);
         setComboLaunchers(newLaunchers);

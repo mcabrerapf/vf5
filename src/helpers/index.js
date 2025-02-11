@@ -2,6 +2,7 @@ import calculateWinRate from "./calculateWinrate";
 import capitalizeFirstLetter from "./capitalizeFirstLetter";
 import copyToClipboard from "./copyToClipboard";
 import generateId from "./generateId";
+import getPseudoLaunchers from "./get-pseudo-launchers";
 import getFromLocal from "./getFromLocal";
 import getLauncher from './getLauncher';
 import getLocalStorageSize from './getLocalStorageSize';
@@ -13,6 +14,7 @@ import stringNotationSpliter from "./stringNotationSpliter";
 import stringToNotation from "./stringToNotation";
 import validateImportData from "./validateImportData";
 
+
 export {
     calculateWinRate,
     capitalizeFirstLetter,
@@ -22,6 +24,7 @@ export {
     getLauncher,
     getLocalStorageSize,
     getNumberColor,
+    getPseudoLaunchers,
     initiLocal,
     setLocalStorage,
     stringNotationSpliter,
