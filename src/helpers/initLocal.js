@@ -1,5 +1,6 @@
 import {
     CHARACTERS_DATA_KEY,
+    LIST_VIEW_KEY,
     MOVELIST_SORT_OPTIONS,
     SELECTED_CHARACTER_KEY,
     SELECTED_CHARACTER_VIEW_KEY,
@@ -53,15 +54,7 @@ const validateCharactersData = () => {
                 combos: [],
                 custom_moves: [],
                 notes: [],
-                matchups: CHARACTERS.map(mCharp => ({
-                    id: mCharp.id,
-                    name: mCharp.name,
-                    wins: 0,
-                    loses: 0,
-                    total: 0,
-                    win_rate: 0,
-                    note: ''
-                }))
+                matchups: CHARACTERS.map(mCharp => validateMatchup(mCharp))
             }
         })
         localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(initData));
@@ -121,7 +114,6 @@ const validateSelectedCharacter = () => {
     } catch (error) {
         console.log(error);
         localStorage.setItem(SELECTED_CHARACTER_KEY, CHARACTERS[0].id);
-        window.location.reload();
     }
 }
 
@@ -135,7 +127,6 @@ const validateSelectedCharacterView = () => {
     } catch (error) {
         console.log(error);
         setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, MOVELIST);
-        window.location.reload();
     }
 }
 
@@ -152,19 +143,18 @@ const validateCharacterMoveCategory = () => {
     } catch (error) {
         console.log(error)
         localStorage.setItem(SELECTED_MOVE_CATEGORY_KEY, ALL_MOVES);
-        window.location.reload();
     }
 }
 
 const validateMatchups = () => {
     try {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
-        const parsedCharacters = JSON.parse(allCharactersData);
+        const parsedCharacters =  JSON.parse(allCharactersData);
         const updatedChars = {};
 
         Object.keys(parsedCharacters).forEach(charId => {
             updatedChars[charId] = parsedCharacters[charId];
-            
+
             const matchups = parsedCharacters[charId].matchups.map(matchup => {
                 return validateMatchup(matchup);
             })
@@ -174,7 +164,7 @@ const validateMatchups = () => {
             const customMoves = parsedCharacters[charId].custom_moves.map(custom_move => {
                 return validateCustomMove(custom_move)
             })
-            
+
             updatedChars[charId].matchups = matchups;
             updatedChars[charId].combos = combos;
             updatedChars[charId].custom_moves = customMoves;
@@ -186,15 +176,37 @@ const validateMatchups = () => {
 
 }
 
+const validateListView = () => {
+    try {
+        const localListView = localStorage.getItem(LIST_VIEW_KEY)
+        
+        if (
+            !localListView ||
+            typeof localListView !== 'string' ||
+            !['S', 'F'].includes(localListView)
+        ) {
+            localStorage.setItem(
+                LIST_VIEW_KEY,
+                'F'
+            );
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const initLocal = () => {
+    validateCharactersData();
     validateSelectedCharacter();
     validateMatchups();
     validateSelectedCharacterView();
     validateCharacterMoveCategory();
     validateFilters();
     validateSorts();
-    // validateCharactersData();
+    validateListView()
     
+
 }
 
 export default initLocal;
