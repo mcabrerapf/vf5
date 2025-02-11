@@ -104,7 +104,7 @@ const Character = () => {
                     onClick={handleViewChange}
                 />
             </div>
-            {characterView === STRINGS.MOVELIST && <Movelist />}
+            {characterView === STRINGS.MOVELIST && <Movelist setCharacterView={setCharacterView} />}
             {characterView === STRINGS.COMBOS && <Combos />}
             {characterView === STRINGS.NOTES && <Notes />}
             {characterView === STRINGS.MATCHUPS && <Matchups />}

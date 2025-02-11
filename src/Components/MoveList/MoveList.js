@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Movelist.scss'
-import { deleteCustomMove, getCustomMoves, updateCustomMoves } from '../../services';
+import { deleteCustomMove, getCombos, getCustomMoves, updateCustomMoves } from '../../services';
 import { useMainContext } from '../../Contexts/MainContext';
 import MovelistHeader from './MovelistHeader';
 import Move from '../Move';
@@ -8,8 +8,10 @@ import {
     SELECTED_MOVE_CATEGORY_KEY,
     SELECTED_MOVELIST_SORT_KEY,
     SELECTED_MOVELIST_FILTERS_KEY,
+    SELECTED_COMBOS_FILTERS_KEY,
+    STRINGS,
 } from '../../constants';
-import { sortMovelist, filterMovelist } from './helpers';
+import { sortMovelist, filterMovelist, getLaunchers } from './helpers';
 import ActiveFiltersList from '../ActiveFiltersList';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
@@ -20,7 +22,9 @@ import SortModal from '../Modals/SortModal';
 import MoveModal from '../Modals/MoveModal';
 
 
-const Movelist = () => {
+const Movelist = ({
+    setCharacterView
+}) => {
     const listRef = useRef(null);
     const {
         selectedCharacter,
@@ -34,6 +38,7 @@ const Movelist = () => {
     })
 
     const [customMoves, setCustomMoves] = useState(null);
+    const [comboLaunchers, setComboLaunchers] = useState([]);
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
@@ -49,7 +54,11 @@ const Movelist = () => {
 
     useEffect(() => {
         const localCustomMoves = getCustomMoves(selectedCharacter)
+        const localCombos = getCombos(selectedCharacter);
+        const newLaunchers = getLaunchers(localCombos);
+        
         setCustomMoves(localCustomMoves);
+        setComboLaunchers(newLaunchers);
     },
         [selectedCharacter]
     )
@@ -73,7 +82,7 @@ const Movelist = () => {
     const onFavouriteClick = (moveId) => {
         const moveMatch = customMoves.find(fMove => fMove.id === moveId);
         let updatedCustomMoves;
-        
+
         if (!!moveMatch?.favourite && !moveMatch?.note) {
             updatedCustomMoves = deleteCustomMove(selectedCharacter, moveId);
         } else {
@@ -192,6 +201,11 @@ const Movelist = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    const onCombosClick = (launcherFilter) => {
+        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify([launcherFilter]));
+        setCharacterView(STRINGS.COMBOS);
+    }
+
     if (!selectedMoveset) return null;
     const filteredMovelist = filterMovelist(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortMovelist(filteredMovelist, selectedMovelistSort);
@@ -263,6 +277,7 @@ const Movelist = () => {
                                     selectedMoveCategory={selectedMoveCategory}
                                     selectedFilters={selectedFilters}
                                     showSimpleView={showSimpleView}
+                                    comboLaunchers={comboLaunchers}
                                     handleFiltersChange={handleFiltersChange}
                                     onMoveClick={onMoveClick}
                                     handleSortChange={handleSortChange}
@@ -271,6 +286,7 @@ const Movelist = () => {
                                     onCommandClick={onCommandClick}
                                     onMoveCategoryClick={onMoveCategoryClick}
                                     onMoveTypeClick={onMoveTypeClick}
+                                    onCombosClick={onCombosClick}
                                 />
                             </li>
                         )

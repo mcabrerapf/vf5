@@ -18,6 +18,7 @@ const Move = ({
     customMoves = [],
     modifier = "",
     selectedFilters = [],
+    comboLaunchers = [],
     hideEditButton = false,
     hideNote = false,
     showSimpleView = false,
@@ -28,7 +29,8 @@ const Move = ({
     handleSortDirChange = () => { },
     onFavouriteClick = () => { },
     onCommandClick = () => { },
-    onMoveTypeClick = () => { }
+    onMoveTypeClick = () => { },
+    onCombosClick = () => { }
 }) => {
     if (!move) return null;
     const {
@@ -59,6 +61,7 @@ const Move = ({
     const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
     const isFavourite = !!customMatch.favourite;
     const extraNote = customMatch.note;
+    const stringCommand = command.join('-');
 
     const handleOnClick = (e) => {
         e.preventDefault()
@@ -127,6 +130,16 @@ const Move = ({
         handleFiltersChange(updatedFilters);
     }
 
+    const handleCombosClick = (e) => {
+        e.stopPropagation();
+        const launcherFilter = {
+            id: stringCommand,
+            name: stringCommand,
+            prefix: 'launcher'
+        }
+        onCombosClick(launcherFilter);
+    }
+
     const favouriteModifier = isFavourite ? 'favourite' : '';
     const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
     const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
@@ -145,6 +158,7 @@ const Move = ({
         selectedSort.id !== 'dodge_direction' &&
         selectedSort.id !== 'notes'
     const singlePropLabel = getSinglePropLabel(selectedSort.id);
+    const hasCombos = comboLaunchers.includes(stringCommand);
 
     return (
         <div
@@ -188,14 +202,12 @@ const Move = ({
                     />
                 }
                 {showSimpleView &&
-                    <div className='move__move-attack-level'>
-                        <MoveTypeBadge
-                            modifier={parsedLevel}
-                            value={parsedLevel}
-                            moveType={attack_level}
-                            onClick={handleOnMoveTypeClick}
-                        />
-                    </div>
+                    <MoveTypeBadge
+                        modifier={parsedLevel}
+                        value={parsedLevel}
+                        moveType={attack_level}
+                        onClick={handleOnMoveTypeClick}
+                    />
                 }
                 {showSimpleView && showSingleProp &&
                     <SortableProp
@@ -204,6 +216,14 @@ const Move = ({
                         activeSortId={selectedSort.id}
                         value={move[selectedSort.id]}
                         onClick={onSortablePropClick}
+                    />
+                }
+                {showSimpleView && hasCombos &&
+                    <MoveTypeBadge
+                        modifier={'not-selected'}
+                        value={parsedLevel}
+                        moveType={'Combos'}
+                        onClick={handleCombosClick}
                     />
                 }
             </div>
@@ -269,6 +289,14 @@ const Move = ({
                         moveType={attack_level}
                         onClick={handleOnMoveTypeClick}
                     />
+                    {!showSimpleView && hasCombos &&
+                        <MoveTypeBadge
+                            modifier={'not-selected'}
+                            value={parsedLevel}
+                            moveType={'Combos'}
+                            onClick={handleCombosClick}
+                        />
+                    }
                 </div>
             }
             {!hideNote &&

@@ -95,9 +95,15 @@
             }
         }
     }
+    
+    &__move-attack-level {
+        display: flex;
+        gap: 0.5rem;
+    }
 
     &__notes {
         font-size: 1.2rem;
+        white-space: pre-wrap;
         .move-command {
             border: none;
             padding: 0.2rem 0;

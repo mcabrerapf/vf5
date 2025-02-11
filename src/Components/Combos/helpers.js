@@ -40,7 +40,7 @@ const filterCombos = (list, filters) => {
                 if (valueToCheck === 'string') {
                 } else if (prefix === 'launcher') {
                     const stringifiedValue = valueToCheck.join('-');
-                    filterMatches.push(stringifiedValue === id);
+                    filterMatches.push(stringifiedValue.includes(id));
                 } else if (prefix === 'command') {
                     const stringifiedValue = valueToCheck.join('-');
                     filterMatches.push(stringifiedValue.includes(id));
