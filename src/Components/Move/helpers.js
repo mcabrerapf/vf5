@@ -15,7 +15,19 @@ const getDodgeValue = (value) => {
             return value;
     }
 }
+
+const getSinglePropLabel = (porpId) => {
+    switch (porpId) {
+        case 'gd':
+            return 'block';
+        case 'c_hit':
+            return 'counter';
+        default:
+            return porpId;
+    }
+}
 export {
     getDodgeValue,
-    getMovePropText
+    getMovePropText,
+    getSinglePropLabel
 }

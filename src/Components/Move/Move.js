@@ -6,7 +6,7 @@ import MoveTypeBadge from '../MoveTypeBadge';
 import TextWithCommand from '../TextWithCommand';
 import Button from '../Button';
 import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
-import { getDodgeValue } from './helpers';
+import { getDodgeValue, getSinglePropLabel } from './helpers';
 import { EditIcon } from '../Icon';
 import { stringNotationParser } from '../../helpers';
 
@@ -137,6 +137,15 @@ const Move = ({
         .join(' ');
 
     const parsedNote = stringNotationParser(extraNote || notes);
+    const showSingleProp =
+        selectedSort.id !== 'move_name' &&
+        selectedSort.id !== 'default' &&
+        selectedSort.id !== 'attack_level' &&
+        selectedSort.id !== 'command' &&
+        selectedSort.id !== 'dodge_direction' &&
+        selectedSort.id !== 'notes'
+    const singlePropLabel = getSinglePropLabel(selectedSort.id);
+
     return (
         <div
             className={className}
@@ -164,7 +173,6 @@ const Move = ({
                         </Button>
                     }
                 </div>
-
             </div>
             <div className='move__category'>
                 <Button
@@ -172,11 +180,32 @@ const Move = ({
                     text={dodgeValue}
                     onClick={onDodgeClick}
                 />
-                <MoveTypeBadge
-                    modifier={selectedMoveCategory === category ? 'active' : 'not-selected'}
-                    moveType={categoryName}
-                    onClick={handleOnCategoryClick}
-                />
+                {!showSimpleView &&
+                    <MoveTypeBadge
+                        modifier={selectedMoveCategory === category ? 'active' : 'not-selected'}
+                        moveType={categoryName}
+                        onClick={handleOnCategoryClick}
+                    />
+                }
+                {showSimpleView &&
+                    <div className='move__move-attack-level'>
+                        <MoveTypeBadge
+                            modifier={parsedLevel}
+                            value={parsedLevel}
+                            moveType={attack_level}
+                            onClick={handleOnMoveTypeClick}
+                        />
+                    </div>
+                }
+                {showSimpleView && showSingleProp &&
+                    <SortableProp
+                        propKey={selectedSort.id}
+                        text={singlePropLabel}
+                        activeSortId={selectedSort.id}
+                        value={move[selectedSort.id]}
+                        onClick={onSortablePropClick}
+                    />
+                }
             </div>
             {!showSimpleView &&
                 <div className='move__props other'>
@@ -202,7 +231,6 @@ const Move = ({
             }
             {!showSimpleView &&
                 <div className='move__props frame-data'>
-
                     <SortableProp
                         propKey={'hit'}
                         activeSortId={selectedSort.id}
@@ -233,14 +261,16 @@ const Move = ({
                 onClick={handleOnCommandClick}
                 command={command}
             />
-            <div className='move__move-attack-level'>
-                <MoveTypeBadge
-                    modifier={parsedLevel}
-                    value={parsedLevel}
-                    moveType={attack_level}
-                    onClick={handleOnMoveTypeClick}
-                />
-            </div>
+            {!showSimpleView &&
+                <div className='move__move-attack-level'>
+                    <MoveTypeBadge
+                        modifier={parsedLevel}
+                        value={parsedLevel}
+                        moveType={attack_level}
+                        onClick={handleOnMoveTypeClick}
+                    />
+                </div>
+            }
             {!hideNote &&
                 <div className='move__notes'>
                     <TextWithCommand
