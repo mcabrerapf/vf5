@@ -3,9 +3,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    gap: 1rem;
+    gap: 0rem;
     
-    &__separator {
+    &__space-bar {
         border: 1px solid white;
         height: 5rem;
     }

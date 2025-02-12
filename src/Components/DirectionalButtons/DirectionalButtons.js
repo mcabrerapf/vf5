@@ -41,8 +41,8 @@ const DirectionalButtons = ({
                     />
                 </Button>
                 <Button
-                    text={isShiftActive ? '★' : '⊙'}
-                    onClick={() => onClick(isShiftActive ? "★" : "⊙")}
+                    text={'★'}
+                    onClick={() => onClick("★")}
                 >
                 </Button>
                 <Button

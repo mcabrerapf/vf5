@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './NotationButtons.scss'
 import DirectionalButtons from '../DirectionalButtons';
 import OtherButtons from '../OtherButtons';
+import Button from '../Button';
 
 const NotationButtons = ({
     hideSeparator,
@@ -35,9 +36,12 @@ const NotationButtons = ({
                 isShiftActive={isShiftActive}
                 onClick={handleDirectionalButtonClick}
             />
-            {!hideSeparator &&
-                <div className='notation-buttons__separator' />
-            }
+            <Button
+                className='notation-buttons__space-bar'
+                onClick={() => onDirectionalButtonClick("⊙")}
+                text={'SPACE'}
+            />
+
             <OtherButtons
                 isShiftActive={isShiftActive}
                 onClick={handleOtherButtonClick}
