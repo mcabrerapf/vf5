@@ -1,14 +1,13 @@
-import './TagsView.scss';
 import React, { useState } from 'react';
 import { CHARACTERS } from '../../../../constants';
 import MoveTypeBadge from '../../../MoveTypeBadge';
 import Button from '../../../Button';
-import { COMBO_FILTER_OPTIONS } from '../../../../constants/CHARACTERS';
 import { capitalizeFirstLetter } from '../../../../helpers';
 
 const TagsView = ({
     selectedCharacterTags,
     selectedTags,
+    combosFilterOptions,
     setSelectedTags,
     setSelectedCharacterTags
 }) => {
@@ -50,10 +49,11 @@ const TagsView = ({
         }
         setSelectedTags(updatedTags);
     }
-    const otherTags = COMBO_FILTER_OPTIONS.filter(option => option.prefix !== 'character_tags');
-    const characterTags = COMBO_FILTER_OPTIONS
-        .filter(option => option.prefix === 'character_tags')
-        .sort((a, b) => a.weight_id - b.weight_id);
+    console.log(combosFilterOptions)
+    const otherTags = [];
+    // const otherTags = combosFilterOptions.filter(option => option.key === 'tags');
+    const characterTags = combosFilterOptions
+        .filter(option => option.key === 'character_tags')
 
     return (
         <div className='tags-view'>
@@ -73,13 +73,13 @@ const TagsView = ({
                 {tagsView === 'characters' &&
                     <div className='tags-view__content__characters'>
                         {characterTags.map(character => {
-                            const weightModifier = character.weight_name.toLocaleLowerCase().replace(' ', '-');
+                            const { short_name, weight_short_name } = character;
                             return (
                                 <MoveTypeBadge
                                     key={character.id}
-                                    moveType={capitalizeFirstLetter(character.id)}
-                                    value={character.id}
-                                    modifier={selectedCharacterTags.find(sTag => sTag === character.id) ? weightModifier : 'not-selected'}
+                                    moveType={short_name}
+                                    value={character.value}
+                                    modifier={selectedCharacterTags.find(sTag => sTag === character.value) ? weight_short_name : 'not-selected'}
                                     onClick={handleCharacterTagClick}
                                 />
                             )
@@ -97,9 +97,9 @@ const TagsView = ({
                         {otherTags.map(tag =>
                             <MoveTypeBadge
                                 key={tag.id}
-                                value={tag.id}
+                                value={tag.value}
                                 moveType={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.id) ? tag.id : 'not-selected'}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? tag.short_name : 'not-selected'}
                                 onClick={handleTagClick}
                             />
                         )}

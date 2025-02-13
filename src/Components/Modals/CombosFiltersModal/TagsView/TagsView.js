@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './TagsView.scss';
-import { COMBO_FILTER_OPTIONS } from "../../../../constants";
 import MoveTypeBadge from "../../../MoveTypeBadge";
 import Button from "../../../Button";
 import { capitalizeFirstLetter } from "../../../../helpers";
@@ -14,7 +13,8 @@ const TagsView = ({
     handleOtherTagClick
 }) => {
     const [tagsView, setTagsView] = useState('characters');
-    const otherTags = COMBO_FILTER_OPTIONS.filter(filter => filter.prefix === 'tags');
+    // COMBO_FILTER_OPTIONS
+    const otherTags = [].filter(filter => filter.key === 'tags');
 
 
     return (

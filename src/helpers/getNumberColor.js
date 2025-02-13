@@ -12,7 +12,6 @@ const getNumberColor = (number, doFrameCheck) => {
     if(number > 16 && number < 18) return ' launch-punishable';
     if(number > 17) return ' ded';
     return '';
-    
 }
 
 export default getNumberColor;

@@ -11,7 +11,7 @@ const SortModal = ({
     const [selectedSort, setSelectedSort] = useState(_selectedSort || sortOptions[0])
 
     const handleSortClick = (sort) => {
-        setSelectedSort({ ...selectedSort, id: sort.id, name: sort.name });
+        setSelectedSort(sort);
     }
 
     const handleDirectionClick = (e) => {

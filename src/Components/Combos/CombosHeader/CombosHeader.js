@@ -28,7 +28,7 @@ const CombosHeader = ({
         } else {
             updatedFilters = [
                 ...selectedFilters.map(filter => filter),
-                { id: 'fav', name: 'fav', prefix: 'fav' }
+                { id: 'fav/true', name: 'Fav', key: 'fav' }
             ];
         }
         handleFiltersChange(updatedFilters);

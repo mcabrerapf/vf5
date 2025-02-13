@@ -138,4 +138,29 @@
     &.reset {
         width: auto!important;
     }
+
+    &.SLW{
+        color: white;
+        background-color: var(--super-lightweight);
+    }
+
+    &.LW {
+        color: white;
+        background-color: var(--lightweight);
+    }
+
+    &.MW {
+        color: white;
+        background-color: var(--midweight);
+    }
+
+    &.HW {
+        color: white;
+        background-color: var(--heavyweight);
+    }
+
+    &.SHW {
+        color: white;
+        background-color: var(--super-heavyweight);
+    }
 }

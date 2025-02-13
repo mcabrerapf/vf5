@@ -2,7 +2,7 @@ import { CHARACTERS, STRINGS } from "../../constants";
 import { getLauncher } from "../../helpers";
 
 const validateCombo = (combo) => {
-    
+
     const { id,
         name,
         damage,
@@ -11,7 +11,8 @@ const validateCombo = (combo) => {
         command = [],
         character_tags,
         characterTags,
-        tags = []
+        tags = [],
+        note = ''
     } = combo;
     const characterTagsToCheck = character_tags || characterTags || [];
     let validatedLauncher = launcher;
@@ -31,7 +32,8 @@ const validateCombo = (combo) => {
         command: validatedCommand,
         character_tags: !!characterTagsToCheck.length ?
             characterTagsToCheck : [CHARACTERS[0].id],
-        tags: tags || []
+        tags: tags || [],
+        note: note || ''
 
     };
 }

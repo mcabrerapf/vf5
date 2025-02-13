@@ -3,8 +3,9 @@ import './Combos.scss'
 import {
     SELECTED_COMBOS_FILTERS_KEY,
     SELECTED_COMBOS_SORT_KEY,
-    COMBO_FILTER_OPTIONS,
-    COMBOS_SORT_OPTIONS
+    COMBOS_SORT_OPTIONS,
+    CHARACTERS_JSON,
+    STRINGS
 } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
@@ -13,16 +14,18 @@ import Combo from '../Combo';
 import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
 import DeleteModal from '../Modals/DeleteModal';
-import CombosHeader from './CombosHeader';
 import ActiveFiltersList from '../ActiveFiltersList';
-import { getFromLocal, setLocalStorage } from '../../helpers';
-import { filterCombos, sortCombos } from './helpers';
+import { filterList, getFromLocal, setLocalStorage, sortList } from '../../helpers';
 import SortModal from '../Modals/SortModal';
 import { deleteCombo, getCombos, updateCombos } from '../../services';
+import ListHeader from '../ListHeader';
 
 const Combos = () => {
     const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
+    const {
+        combos_filter_options: combosFilterOptions,
+    } = CHARACTERS_JSON[selectedCharacter];
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
     const localSelectedSort = getFromLocal(SELECTED_COMBOS_SORT_KEY);
 
@@ -44,13 +47,18 @@ const Combos = () => {
 
     if (!combos) return null;
 
-    const handleFiltersChange = (newFilters) => {
-        if (newFilters) {
-            scrollToTop();
-            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(newFilters));
-            setSelectedFilters(newFilters);
-        }
+    const handleSortChange = (sort) => {
+        if (!sort) return;
+        scrollToTop();
+        setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(sort));
+        setSelectedSort(sort);
+    }
 
+    const handleFiltersChange = (newFilters) => {
+        if (!newFilters) return;
+        scrollToTop();
+        setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(newFilters));
+        setSelectedFilters(newFilters);
     }
 
     const handleCloseModal = (newCombo) => {
@@ -75,7 +83,6 @@ const Combos = () => {
         setShowComboBuilderModal(!showComboBuilderModal);
     }
 
-
     const handleDeleteCombo = (shouldDelete) => {
         if (shouldDelete) {
             const updatedCombos = deleteCombo(selectedCharacter, selectedCombo.id);
@@ -96,21 +103,19 @@ const Combos = () => {
 
     const handleCharacterClick = ({ target: { value } }) => {
         if (value === 'ALL') {
-            const updatedFilters = selectedFilters.filter(filter => filter.prefix !== 'character_tags');
-            setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(updatedFilters));
-            setSelectedFilters(updatedFilters);
+            const updatedFilters = selectedFilters.filter(filter => filter.key !== 'character_tags');
+            handleFiltersChange(updatedFilters);
         } else {
             if (selectedFilters.find(sFilter => sFilter.name === value)) return;
-            const newFilter = COMBO_FILTER_OPTIONS.find(option => option.id === value.toLocaleLowerCase());
+            const newFilter = combosFilterOptions.find(option => option.id === value.toLocaleLowerCase());
             const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
             handleFiltersChange(updatedFilters);
         }
-
     }
 
     const handleTagClick = ({ target: { value } }) => {
         if (selectedFilters.find(sFilter => sFilter.id === value)) return;
-        const newFilter = COMBO_FILTER_OPTIONS.find(option => option.id === value);
+        const newFilter = combosFilterOptions.find(option => option.id === value);
         const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
         handleFiltersChange(updatedFilters);
     }
@@ -125,12 +130,10 @@ const Combos = () => {
         const stringLauncher = value.join('-');
         const newFilters = [
             ...selectedFilters,
-            { id: stringLauncher, name: stringLauncher, prefix: 'launcher' }
+            { id: stringLauncher, name: stringLauncher, key: 'launcher' }
 
         ]
-        scrollToTop();
         handleFiltersChange(newFilters);
-
     }
 
     const onFavouriteClick = (comboId) => {
@@ -145,21 +148,12 @@ const Combos = () => {
             ...selectedSort,
             dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc'
         }
-        scrollToTop();
-        setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(newSort));
-        setSelectedSort(newSort);
+        handleSortChange(newSort);
     }
 
     const handleSortModalClose = (sort) => {
         handleSortChange(sort)
         toggleSortModal();
-    }
-
-    const handleSortChange = (sort) => {
-        if (!sort) return;
-        scrollToTop();
-        setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(sort));
-        setSelectedSort(sort);
     }
 
     const toggleSortModal = () => {
@@ -170,13 +164,13 @@ const Combos = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    const filteredCombos = filterCombos(combos, selectedFilters);
-    const sortedCombos = sortCombos(filteredCombos, selectedSort);
+    const filteredCombos = filterList(combos, selectedFilters);
+    const sortedCombos = sortList(filteredCombos, selectedSort);
     const showSimpleView = listView === 'S';
 
-    const characterFilterOptions = COMBO_FILTER_OPTIONS
-        .filter(option => option.prefix === 'character_tags')
-        .sort((a, b) => a.weight_id - b.weight_id);
+    const characterFilterOptions = combosFilterOptions
+        .filter(option => option.key === 'character_tags')
+
     return (
         <div className='combos'>
             <ModalContextWrapper
@@ -199,6 +193,7 @@ const Combos = () => {
                     <ComboBuilderModal
                         selectedCombo={selectedCombo}
                         combos={combos}
+                        combosFilterOptions={combosFilterOptions}
                         handleDeleteClick={handleDeleteClick}
                     />
                 </Modal>
@@ -213,9 +208,12 @@ const Combos = () => {
                     />
                 </Modal>
             </ModalContextWrapper>
-            <CombosHeader
-                combos={combos}
+            <ListHeader
+                listType={STRINGS.COMBOS}
                 selectedFilters={selectedFilters}
+                filterOptions={combosFilterOptions}
+                numerOfItems={sortedCombos.length}
+                selectedMovelistSort={selectedSort}
                 handleFiltersChange={handleFiltersChange}
             />
             <ActiveFiltersList
@@ -238,6 +236,7 @@ const Combos = () => {
                             <Combo
                                 combo={combo}
                                 selectedSort={selectedSort}
+                                selectedFilters={selectedFilters}
                                 showSimpleView={showSimpleView}
                                 characterFilterOptions={characterFilterOptions}
                                 handleSortChange={handleSortChange}
@@ -245,6 +244,7 @@ const Combos = () => {
                                 onLauncherClick={handleLauncherClick}
                                 onFavouriteClick={onFavouriteClick}
                                 onTagClick={handleTagClick}
+                                handleFiltersChange={handleFiltersChange}
                                 onCharacterClick={handleCharacterClick}
                             />
 

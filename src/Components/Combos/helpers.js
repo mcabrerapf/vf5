@@ -37,17 +37,17 @@ const filterCombos = (list, filters) => {
             const filterMatches = [];
 
             otherFilters.forEach(filter => {
-                const { prefix, id } = filter;
-                const valueToCheck = listItem[prefix];
+                const { key, id } = filter;
+                const valueToCheck = listItem[key];
                 if (valueToCheck === 'string') {
-                } else if (prefix === 'launcher') {
+                } else if (key === 'launcher') {
                     const stringifiedValue = valueToCheck.join('-');
                     filterMatches.push(stringifiedValue === id);
-                } else if (prefix === 'pseudo-launcher') {
+                } else if (key === 'pseudo-launcher') {
                     const pseudoLauncher = getPseudoLaunchers([listItem]);
                     const stringifiedValue = pseudoLauncher.join('-');
                     filterMatches.push(stringifiedValue === id);
-                } else if (prefix === 'command') {
+                } else if (key === 'command') {
                     const stringifiedValue = valueToCheck.join('-');
                     const stringLauncher = listItem.launcher.join('-');
                     const match = stringifiedValue.includes(id) || stringLauncher.includes(id)

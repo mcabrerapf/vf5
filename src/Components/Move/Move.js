@@ -5,92 +5,111 @@ import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
 import TextWithCommand from '../TextWithCommand';
 import Button from '../Button';
-import { ATTACK_LEVELS_NAME_TO_ID, MOVELIST_SORT_OPTIONS } from '../../constants';
-import { getDodgeValue, getSinglePropLabel } from './helpers';
+import { MOVELIST_SORT_OPTIONS } from '../../constants';
+import { getDodgeValue } from './helpers';
 import { EditIcon } from '../Icon';
 import { stringNotationParser } from '../../helpers';
 
 const Move = ({
     move,
+    customMove,
     selectedSort = {},
     moveCategories = [],
     selectedMoveCategory = '',
-    customMoves = [],
     modifier = "",
     selectedFilters = [],
     comboLaunchers = [],
     hideEditButton = false,
     hideNote = false,
     showSimpleView = false,
+    attackLevelOptions = [],
     handleFiltersChange = () => { },
     handleSortChange = () => { },
     onMoveClick = () => { },
     onMoveCategoryClick = () => { },
     handleSortDirChange = () => { },
-    onFavouriteClick = () => { },
-    onCommandClick = () => { },
-    onMoveTypeClick = () => { },
-    onCombosClick = () => { }
+    onMoveFavouriteClick = () => { },
+    onMoveCommandClick = () => { },
+    onMoveAttackLevelClick = () => { },
+    onMoveCombosClick = () => { }
 }) => {
     if (!move) return null;
     const {
         id,
-        // active,
-        // total,
-        // recovery_c
-        // crouch_c_hit
-        // crouch_hit
+        name,
         command,
         category,
-        c_hit,
-        damage,
         dodge_direction,
-        startup,
-        gd,
         attack_level,
-        move_name,
-        hit,
         notes = '',
-        sober,
     } = move;
-
-    const dodgeFilter = selectedFilters.find(filter => filter.prefix === 'dodge');
-    const isCommandFilterActive = !!selectedFilters.find(filter => filter.prefix === 'command');
-    const dodgeValue = getDodgeValue(dodge_direction);
-    const isSelectedDodge = dodgeFilter && dodgeFilter.id === dodge_direction;
-    const customMatch = customMoves.find(fMove => fMove.id === move.id) || {};
-    const isFavourite = !!customMatch.favourite;
-    const extraNote = customMatch.note;
+    const dodgeFilter = selectedFilters.find(filter => filter.key === 'dodge_direction');
+    const isCommandFilterActive = !!selectedFilters.find(filter => filter.key === 'command');
+    const isDodgeSelected = dodgeFilter?.value === dodge_direction;
+    const isFavourite = !!customMove.favourite;
+    const extraNote = customMove.note;
     const stringCommand = command.join('-');
+    const dodgeValue = getDodgeValue(dodge_direction);
 
     const handleOnClick = (e) => {
         e.preventDefault()
         onMoveClick(move)
     }
 
-    const handleOnMoveTypeClick = (e) => {
+    const handleOnMoveAttackLevelClick = (e) => {
         e.stopPropagation();
-        onMoveTypeClick(move.attack_level);
+        onMoveAttackLevelClick(`attack_level/${attack_level}`);
     }
 
     const handleOnCategoryClick = (e) => {
         e.stopPropagation();
-        onMoveCategoryClick(e);
+        onMoveCategoryClick(categoryName);
+    }
+
+    const onDodgeClick = (e) => {
+        e.stopPropagation();
+
+        const newDodgeFilter = {
+            id: `dodge_direction/${dodge_direction}`,
+            key: 'dodge_direction',
+            value: dodge_direction,
+            name: `Dodge (${dodgeValue})`,
+            short_name: `D(${dodgeValue})`
+        };
+        let updatedFilters;
+        if (dodgeFilter) {
+            updatedFilters = isDodgeSelected ?
+                selectedFilters.filter(fOption => fOption.key !== 'dodge_direction')
+                :
+                selectedFilters.map(fOption => {
+                    if (fOption.key === 'dodge_direction') return newDodgeFilter;
+                    return fOption;
+                })
+        } else {
+            updatedFilters = [
+                ...selectedFilters,
+                newDodgeFilter
+            ]
+        }
+        handleFiltersChange(updatedFilters);
     }
 
     const handleOnCommandClick = (e) => {
         e.stopPropagation();
-        onCommandClick(command.join('-'))
-
+        const stringCommand = command.join('-');
+        const moveFilter = {
+            id: `command/${stringCommand}`,
+            key: 'command',
+            value: stringCommand,
+            name: 'Command',
+            short_name: 'Cmd'
+        }
+        onMoveCommandClick(moveFilter)
     }
 
-    const handleFavouriteClick = (e) => {
-        e.stopPropagation();
-        onFavouriteClick(id);
-    }
     const onNameClick = (e) => {
         e.stopPropagation();
-        onSortablePropClick('move_name')
+        onSortablePropClick('name')
     }
 
     const onSortablePropClick = (newSort) => {
@@ -105,61 +124,90 @@ const Move = ({
         handleSortChange(newSortValue);
     }
 
-    const onDodgeClick = (e) => {
+    const handleFavouriteClick = (e) => {
         e.stopPropagation();
-        let updatedFilters
-        const newDodgeFilter = {
-            id: dodge_direction,
-            prefix: 'dodge',
-            name: `Dodge (${dodgeValue})`
-        };
-        if (dodgeFilter) {
-            updatedFilters = isSelectedDodge ?
-                selectedFilters.filter(fOption => fOption.prefix !== 'dodge')
-                :
-                selectedFilters.map(fOption => {
-                    if (fOption.prefix === 'dodge') return newDodgeFilter;
-                    return fOption;
-                })
-        } else {
-            updatedFilters = [
-                ...selectedFilters,
-                newDodgeFilter
-            ]
-        }
-        handleFiltersChange(updatedFilters);
+        onMoveFavouriteClick(id);
     }
 
     const handleCombosClick = (e) => {
         e.stopPropagation();
         const launcherFilter = {
-            id: stringCommand,
+            id: `pseudo-launcher/${stringCommand}`,
+            key: 'pseudo-launcher',
+            value: stringCommand,
             name: stringCommand,
-            prefix: 'pseudo-launcher'
+            short_name: stringCommand
+
         }
-        onCombosClick(launcherFilter);
+        onMoveCombosClick(launcherFilter);
     }
 
     const favouriteModifier = isFavourite ? 'favourite' : '';
-    const className = ['move', modifier, favouriteModifier].filter(Boolean).join(' ');
-    const parsedLevel = ATTACK_LEVELS_NAME_TO_ID[attack_level] || attack_level;
+    const mainClassName = showSimpleView ? 'move-simple' : 'move';
+    const className = [mainClassName, modifier, favouriteModifier].filter(Boolean).join(' ');
     const { name: categoryName } = moveCategories.find(cat => cat.id === category) || '';
-    const nameModifier = selectedSort.id === 'move_name' && 'sort-selected';
+    const nameModifier = selectedSort.id === 'name' && 'sort-selected';
     const nameClassName = ['move__main__name', nameModifier, favouriteModifier]
         .filter(Boolean)
         .join(' ');
 
     const parsedNote = stringNotationParser(extraNote || notes);
-    const showSingleProp =
-        selectedSort.id !== 'move_name' &&
-        selectedSort.id !== 'default' &&
-        selectedSort.id !== 'attack_level' &&
-        selectedSort.id !== 'command' &&
-        selectedSort.id !== 'dodge_direction' &&
-        selectedSort.id !== 'notes'
-    const singlePropLabel = getSinglePropLabel(selectedSort.id);
     const hasCombos = comboLaunchers.includes(stringCommand);
+    const { name: attackLevelName, short_name } = attackLevelOptions.find(alOption => alOption.value === attack_level);
+    const sortablePropsKeys = ['damage', 'sober', 'startup', 'active', 'total', 'hit', 'c_hit', 'crouch_hit', 'crouch_c_hit', 'block', 'crouch_recovery'];
+    const sortableProps = sortablePropsKeys
+        .map(sOption => MOVELIST_SORT_OPTIONS.find(msOption => msOption.key === sOption));
 
+    if (showSimpleView) return (
+        <div
+            className={className}
+            onClick={handleOnClick}
+        >
+            <div
+                className='move-simple__top'
+                onClick={handleOnClick}
+            >
+                <MoveTypeBadge
+                    modifier={attack_level}
+                    value={attack_level}
+                    moveType={short_name}
+                    onClick={handleOnMoveAttackLevelClick}
+                />
+                <Button
+                    modifier={isDodgeSelected ? 'active' : ''}
+                    text={dodgeValue}
+                    onClick={onDodgeClick}
+                />
+
+                <MoveCommand
+                    modifier={isCommandFilterActive ? 'active' : ''}
+                    command={command}
+                />
+            </div>
+            <div
+                className='move-simple__bot'
+            >
+                <div
+                    className='move-simple__bot__scrollable-props'
+                >
+                    {sortableProps
+                        .map(sKey => {
+                            const isSelectedSort = selectedSort.key === sKey.key;
+                            const punish = move[`is_punishable_on_${sKey.key}`] || move[`guarantees_on_${sKey.key}`];
+                            return (
+                                <SortableProp
+                                    sortableProp={sKey}
+                                    isSelectedSort={isSelectedSort}
+                                    value={move[sKey.key]}
+                                    punish={punish}
+                                    onClick={onSortablePropClick}
+                                />
+                            )
+                        })}
+                </div>
+            </div>
+        </div>
+    )
     return (
         <div
             className={className}
@@ -171,9 +219,16 @@ const Move = ({
                     onClick={onNameClick}
                     role='button'
                 >
-                    {move_name}
+                    {name}
                 </div>
                 <div className='move__main__badges'>
+                    {hasCombos &&
+                        <Button
+                            modifier={'not-selected'}
+                            text={'C'}
+                            onClick={handleCombosClick}
+                        />
+                    }
                     <Button
                         onClick={handleFavouriteClick}
                         modifier={isFavourite ? ' favourite' : ''}
@@ -189,117 +244,52 @@ const Move = ({
                 </div>
             </div>
             <div className='move__category'>
+                <MoveTypeBadge
+                    modifier={attack_level}
+                    value={attack_level}
+                    moveType={attackLevelName}
+                    onClick={handleOnMoveAttackLevelClick}
+                />
                 <Button
-                    modifier={isSelectedDodge ? 'active dodge' : 'not-selected dodge'}
+                    modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
                     text={dodgeValue}
                     onClick={onDodgeClick}
                 />
-                {!showSimpleView &&
-                    <MoveTypeBadge
-                        modifier={selectedMoveCategory === category ? 'active' : 'not-selected'}
-                        moveType={categoryName}
-                        onClick={handleOnCategoryClick}
-                    />
-                }
-                {showSimpleView &&
-                    <MoveTypeBadge
-                        modifier={parsedLevel}
-                        value={parsedLevel}
-                        moveType={attack_level}
-                        onClick={handleOnMoveTypeClick}
-                    />
-                }
-                {showSimpleView && showSingleProp &&
-                    <SortableProp
-                        propKey={selectedSort.id}
-                        text={singlePropLabel}
-                        activeSortId={selectedSort.id}
-                        value={move[selectedSort.id]}
-                        onClick={onSortablePropClick}
-                    />
-                }
+                <MoveTypeBadge
+                    modifier={selectedMoveCategory === category ? 'active' : 'not-selected'}
+                    moveType={categoryName}
+                    onClick={handleOnCategoryClick}
+                />
                 {showSimpleView && hasCombos &&
                     <MoveTypeBadge
                         modifier={'not-selected'}
-                        value={parsedLevel}
+                        value={attack_level}
                         moveType={'Combos'}
                         onClick={handleCombosClick}
                     />
                 }
             </div>
-            {!showSimpleView &&
-                <div className='move__props other'>
-                    <SortableProp
-                        propKey={'damage'}
-                        activeSortId={selectedSort.id}
-                        value={damage}
-                        onClick={onSortablePropClick}
-                    />
-                    <SortableProp
-                        propKey={'startup'}
-                        activeSortId={selectedSort.id}
-                        value={startup}
-                        onClick={onSortablePropClick}
-                    />
-                    <SortableProp
-                        propKey={'sober'}
-                        activeSortId={selectedSort.id}
-                        value={sober}
-                        onClick={onSortablePropClick}
-                    />
-                </div>
-            }
-            {!showSimpleView &&
-                <div className='move__props frame-data'>
-                    <SortableProp
-                        propKey={'hit'}
-                        activeSortId={selectedSort.id}
-                        value={hit}
-                        doFrameCheck
-                        onClick={onSortablePropClick}
-                    />
-                    <SortableProp
-                        propKey={'c_hit'}
-                        text={"counter"}
-                        activeSortId={selectedSort.id}
-                        value={c_hit}
-                        doFrameCheck
-                        onClick={onSortablePropClick}
-                    />
-                    <SortableProp
-                        propKey={'gd'}
-                        text={'block'}
-                        activeSortId={selectedSort.id}
-                        value={gd}
-                        doFrameCheck
-                        onClick={onSortablePropClick}
-                    />
-                </div>
-            }
             <MoveCommand
                 modifier={isCommandFilterActive ? 'active' : ''}
                 onClick={handleOnCommandClick}
                 command={command}
             />
-            {!showSimpleView &&
-                <div className='move__move-attack-level'>
-                    <MoveTypeBadge
-                        modifier={parsedLevel}
-                        value={parsedLevel}
-                        moveType={attack_level}
-                        onClick={handleOnMoveTypeClick}
-                    />
-                    {!showSimpleView && hasCombos &&
-                        <MoveTypeBadge
-                            modifier={'not-selected'}
-                            value={parsedLevel}
-                            moveType={'Combos'}
-                            onClick={handleCombosClick}
+            <div className='move__props'>
+                {sortableProps.map(sKey => {
+                    const isSelectedSort = selectedSort.key === sKey.key;
+                    const punish = move[`is_punishable_on_${sKey.key}`] || move[`guarantees_on_${sKey.key}`];
+                    return (
+                        <SortableProp
+                            sortableProp={sKey}
+                            isSelectedSort={isSelectedSort}
+                            value={move[sKey.key]}
+                            punish={punish}
+                            onClick={onSortablePropClick}
                         />
-                    }
-                </div>
-            }
-            {!hideNote &&
+                    )
+                })}
+            </div>
+            {!hideNote && parsedNote &&
                 <div className='move__notes'>
                     <TextWithCommand
                         content={parsedNote}

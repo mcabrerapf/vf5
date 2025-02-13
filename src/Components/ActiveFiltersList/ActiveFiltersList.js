@@ -4,7 +4,6 @@ import MoveTypeBadge from '../MoveTypeBadge';
 import MoveCommand from '../MoveCommand';
 import Button from '../Button';
 import { capitalizeFirstLetter } from '../../helpers';
-import { WEIGHT_CLASES } from '../../constants';
 
 const ActiveFiltersList = ({
     selectedFilters = [],
@@ -17,30 +16,25 @@ const ActiveFiltersList = ({
         <div className='active-filters-list'>
             <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
-                    const { id, name, prefix } = selectedFilter
-                    const weightModifier = prefix === 'character_tags' ?
-                        WEIGHT_CLASES.find(wClass => wClass.characters.includes(id)).name?.toLocaleLowerCase().replace(' ', '-')
-                        :
-                        '';
-
+                    const { id, name, short_name, value, key, weight_short_name } = selectedFilter
                     return (
                         <>
-                            {prefix === 'command' &&
+                            {key === 'command' &&
                                 <MoveCommand
                                     key={id}
-                                    command={name.split('-')}
+                                    command={value.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'launcher' &&
+                            {key === 'launcher' &&
                                 <MoveCommand
                                     key={id}
                                     modifier={"launcher"}
-                                    command={name.split('-')}
+                                    command={value.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'pseudo-launcher' &&
+                            {key === 'pseudo-launcher' &&
                                 <MoveCommand
                                     key={id}
                                     modifier={"pseudo-launcher"}
@@ -48,7 +42,25 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'attack_level' &&
+                            {key === 'attack_level' &&
+                                <MoveTypeBadge
+                                    key={id}
+                                    modifier={value}
+                                    moveType={name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            }
+                            {key === 'character_tags' &&
+                                <MoveTypeBadge
+                                    key={id}
+                                    modifier={weight_short_name}
+                                    moveType={short_name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            }
+                            {key === 'tags' &&
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={id}
@@ -57,25 +69,7 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'character_tags' &&
-                                <MoveTypeBadge
-                                    key={id}
-                                    modifier={weightModifier}
-                                    moveType={capitalizeFirstLetter(id)}
-                                    value={selectedFilter}
-                                    onClick={() => onFilterClick(selectedFilter)}
-                                />
-                            }
-                            {prefix === 'tags' &&
-                                <MoveTypeBadge
-                                    key={id}
-                                    modifier={id}
-                                    moveType={name}
-                                    value={selectedFilter}
-                                    onClick={() => onFilterClick(selectedFilter)}
-                                />
-                            }
-                            {prefix === 'dodge' &&
+                            {key === 'dodge_direction' &&
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={'not-selected'}
@@ -84,7 +78,7 @@ const ActiveFiltersList = ({
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             }
-                            {prefix === 'text_search' &&
+                            {key === 'text_search' &&
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={'not-selected'}

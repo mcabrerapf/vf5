@@ -2,8 +2,8 @@ import React from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS } from '../../constants';
-import { capitalizeFirstLetter, stringNotationParser } from '../../helpers';
+import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
+import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
 import { EditIcon } from '../Icon';
@@ -11,6 +11,7 @@ import { EditIcon } from '../Icon';
 const Combo = ({
     combo = {},
     selectedSort = {},
+    selectedFilters = [],
     showSimpleView = false,
     hideEditButton = false,
     characterFilterOptions = [],
@@ -18,7 +19,7 @@ const Combo = ({
     handleSortChange = () => { },
     onLauncherClick = () => { },
     onFavouriteClick = () => { },
-    onCharacterClick = () => { },
+    handleFiltersChange = () => { },
     onTagClick = () => { }
 }) => {
     const {
@@ -45,14 +46,41 @@ const Combo = ({
         onTagClick(e);
     }
 
-    const handleCharacterClick = (e) => {
+    const handleCharacterClick = (characterFilter) => {
+        const filteredFilters = selectedFilters
+            .filter(sFilter => sFilter.id !== characterFilter.id)
+        if (filteredFilters.length === selectedFilters.length) {
+            handleFiltersChange([...selectedFilters, characterFilter])
+        } else {
+            handleFiltersChange(filteredFilters);
+        }
+    }
+
+    const handleAllClick = (e) => {
         e.stopPropagation();
-        onCharacterClick(e)
+        const filteredFilters = selectedFilters
+            .filter(sFilter => sFilter.key !== 'character_tags')
+        handleFiltersChange(filteredFilters)
     }
 
     const handleLauncherClick = (e) => {
         e.stopPropagation();
-        onLauncherClick({ target: { value: launcher } })
+        const stringLauncher = launcher.join('-');
+        const launcherId = `launcher/${stringLauncher}`;
+        const filteredFilters = selectedFilters
+            .filter(sFilter => sFilter.id !== launcherId)
+        if (filteredFilters.length === selectedFilters.length) {
+            const launcherFIlter = {
+                id: launcherId,
+                key: 'launcher',
+                value: stringLauncher,
+                name: 'Launcher',
+                short_name: 'Lch'
+            }
+            handleFiltersChange([...selectedFilters, launcherFIlter]);
+        } else {
+            handleFiltersChange(filteredFilters);
+        }
     }
 
     const handleFavouriteClick = (e) => {
@@ -64,7 +92,7 @@ const Combo = ({
         e.stopPropagation();
         const updatedSort = isDamageSortSelected ?
             { ...selectedSort, dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc' } :
-            { id: 'damage', name: 'Damage', dir: 'asc' }
+            COMBOS_SORT_OPTIONS.find(sOption => sOption.key === 'damage');
         handleSortChange(updatedSort);
     }
 
@@ -72,7 +100,7 @@ const Combo = ({
         e.stopPropagation();
         const updatedSort = isNameSortSelected ?
             { ...selectedSort, dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc' } :
-            { id: 'name', name: 'Name', dir: 'asc' }
+            COMBOS_SORT_OPTIONS.find(sOption => sOption.key === 'name');
         handleSortChange(updatedSort);
     }
 
@@ -80,7 +108,7 @@ const Combo = ({
         e.stopPropagation();
         const updatedSort = isCommandSortSelected ?
             { ...selectedSort, dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc' } :
-            { id: 'command', name: 'Command', dir: 'asc' }
+            COMBOS_SORT_OPTIONS.find(sOption => sOption.key === 'command');
         handleSortChange(updatedSort);
     }
     const parsedNote = stringNotationParser(note);
@@ -149,18 +177,20 @@ const Combo = ({
                         <MoveTypeBadge
                             modifier={"character"}
                             moveType={'ALL'}
-                            onClick={handleCharacterClick}
+                            onClick={handleAllClick}
                         />
                     }
                     {!hasAllCharacters && characterFilterOptions.map(cOption => {
-                        const weightModifier = cOption.weight_name.toLocaleLowerCase().replace(' ', '-');
                         return (
                             <MoveTypeBadge
                                 key={cOption.id}
-                                disabled={!character_tags.find(cTag => cTag === cOption.id)}
-                                modifier={weightModifier}
-                                moveType={capitalizeFirstLetter(cOption.id)}
-                                onClick={handleCharacterClick}
+                                disabled={!character_tags.find(cTag => cTag === cOption.value)}
+                                modifier={cOption.weight_short_name}
+                                moveType={cOption.short_name}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleCharacterClick(cOption);
+                                }}
                             />
                         )
                     }

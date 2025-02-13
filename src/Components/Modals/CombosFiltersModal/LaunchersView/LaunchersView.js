@@ -8,7 +8,7 @@ const LaunchersView = ({
     onLauncherClick = () => { }
 }) => {
     const launcherFilters = selectedFilters
-        .filter(filter => filter.prefix ==='launcher')
+        .filter(filter => filter.key ==='launcher')
 
     return (
         <div className='launchers-view'>

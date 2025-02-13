@@ -9,8 +9,8 @@ const TextSearchModal = ({
 }) => {
     const inputRef = useRef();
     const { closeModal } = useModalContext();
-    const currentTextFilter = selectedFilters.find(filter => filter.prefix === 'text_search');
-    const [textFilter, setTextFilter] = useState(currentTextFilter?.id || '')
+    const currentTextFilter = selectedFilters.find(filter => filter.key === 'text_search');
+    const [textFilter, setTextFilter] = useState(currentTextFilter?.value || '')
 
     useEffect(() => {
         if (inputRef.current) {
@@ -23,18 +23,18 @@ const TextSearchModal = ({
             return closeModal();
         }
         if (!textFilter) {
-            const updatedFilters = selectedFilters.filter(oFilter => oFilter.prefix !== 'text_search');
+            const updatedFilters = selectedFilters.filter(oFilter => oFilter.key !== 'text_search');
             return closeModal(updatedFilters);
         }
         const lowerCaseText = textFilter.toLocaleLowerCase();
-        const newText = {
-            id: lowerCaseText, prefix: 'text_search', name: textFilter
+        const newTextFilter = {
+            id: `text_search/${lowerCaseText}`, key: 'text_search', value: lowerCaseText, name: textFilter, short_name: 'Txt'
         };
         const updatedFilters = !!currentTextFilter ?
             selectedFilters.map(oFilter => {
-                if (oFilter.prefix === 'text_search') return newText;
+                if (oFilter.key === 'text_search') return newTextFilter;
                 return oFilter;
-            }) : [...selectedFilters, newText];
+            }) : [...selectedFilters, newTextFilter];
         closeModal(updatedFilters);
     }
 
@@ -45,7 +45,7 @@ const TextSearchModal = ({
     };
 
     const onResetClick = () => {
-        const updatedFilters = selectedFilters.filter(oFilter => oFilter.prefix !== 'text_search')
+        const updatedFilters = selectedFilters.filter(oFilter => oFilter.key !== 'text_search')
         closeModal(updatedFilters);
     }
 

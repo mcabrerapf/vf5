@@ -1,4 +1,4 @@
-import { CHARACTERS, COMBO_FILTER_OPTIONS, STRINGS } from "../../../constants";
+import { CHARACTERS, STRINGS } from "../../../constants";
 
 const getLauncherData = (launcher, character) => {
     const stringLauncher = launcher.join('');
@@ -10,12 +10,13 @@ const getLauncherData = (launcher, character) => {
         .find(move => move.command.join('') === cleanLauncher);
 
     if (!moveMatch) return {};
-    const { attack_level, move_name } = moveMatch;
+    const { attack_level, name } = moveMatch;
 
-    const { id: validatedLauncerType } = COMBO_FILTER_OPTIONS
+    // COMBO_FILTER_OPTIONS
+    const { id: validatedLauncerType } = []
         .find(option => option.name === attack_level) || {};
 
-    return { attackLevel: validatedLauncerType, name: move_name };
+    return { attackLevel: validatedLauncerType, name: name };
 }
 
 const getExtraTags = (command) => {

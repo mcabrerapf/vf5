@@ -20,6 +20,20 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+
+        &__options {
+            width: 100%;
+            height: 100%;
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+
+            .button {
+                // flex-grow: 0;
+                // width: fit-content;
+            }
+        }
     }
 
     .modal-footer {

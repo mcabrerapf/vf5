@@ -11,7 +11,8 @@ const MoveModal = ({
     moveCategories,
     selectedSort,
     customMoves,
-    onFavouriteClick
+    attackLevelOptions,
+    onMoveFavouriteClick
 }) => {
     const [noteValue, setNoteValue] = useState(move.notes || '')
     const { closeModal } = useModalContext();
@@ -23,7 +24,8 @@ const MoveModal = ({
     const onChange = ({ target: { value } }) => {
         setNoteValue(value);
     }
-
+    const customMove = customMoves.find(cMove => cMove.id === move.id) || {};
+    
     return (
         <div className='move-modal'>
             <div className='move-modal__content'>
@@ -31,10 +33,11 @@ const MoveModal = ({
                     move={move}
                     moveCategories={moveCategories}
                     selectedSort={selectedSort}
-                    customMoves={customMoves}
+                    customMove={customMove}
+                    attackLevelOptions={attackLevelOptions}
                     hideNote
                     hideEditButton
-                    onFavouriteClick={onFavouriteClick}
+                    onMoveFavouriteClick={onMoveFavouriteClick}
                 />
                 <div className='move-modal__content__textarea-container'>
                     <textarea

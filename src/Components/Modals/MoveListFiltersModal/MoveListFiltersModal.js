@@ -2,35 +2,36 @@ import React, { useState } from 'react';
 import './MoveListFiltersModal.scss'
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import TagsView from './TagsView';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { STRINGS } from '../../../constants';
 import CommandView from './CommandView';
+import MoveTypeBadge from '../../MoveTypeBadge';
 
 
 const MoveListFiltersModal = ({
     selectedFilters,
+    filterOptions,
 }) => {
     const { closeModal } = useModalContext();
     const [selectedTypeFilters, setSelectedTypeFilters] = useState(selectedFilters);
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS)
     const [commandFilter, setCommandFilter] = useState([])
-    
+
     const handleFilterSave = () => {
         const stringCommand = commandFilter.join('-');
-        const isRepeat = selectedFilters.find(selected => selected.id === stringCommand);
+        const isRepeat = selectedFilters.find(selected => selected.value === stringCommand);
         if (!stringCommand || isRepeat) {
             closeModal(selectedTypeFilters);
             return;
         }
-
-        const finalCommandFilters = {
-            id: stringCommand,
-            prefix: 'command',
-            name: stringCommand
+        const newCommand = {
+            id: `command/${stringCommand}`,
+            key: 'command',
+            value: stringCommand,
+            name: 'Command',
+            short_name: 'Cmd'
         }
-
-        const withCommand = [...selectedTypeFilters, finalCommandFilters];
+        const withCommand = [...selectedTypeFilters, newCommand];
         closeModal(withCommand);
     }
 
@@ -50,22 +51,7 @@ const MoveListFiltersModal = ({
     const handleFiltersReset = () => {
         setSelectedTypeFilters([]);
     }
-
-    const handleFavoriteClick = () => {
-
-        let newTypeFilters;
-        if (!!selectedTypeFilters.find(sFilter => sFilter.id === 'fav')) {
-            newTypeFilters = selectedTypeFilters.filter(value => value.id !== 'fav');
-        } else {
-            newTypeFilters = [
-                ...selectedTypeFilters.map(val => val),
-                { id: 'fav', name: "fav", prefix: 'fav' }
-            ];
-        }
-
-        setSelectedTypeFilters(newTypeFilters);
-    }
-
+  
     return (
         <div className='movelist-filters-modal'>
             <div className='movelist-filters-modal__sub-header'>
@@ -83,11 +69,24 @@ const MoveListFiltersModal = ({
             </div>
             <div className='movelist-filters-modal__content'>
                 {filtersView === STRINGS.TAGS &&
-                    <TagsView
-                        selectedTypeFilters={selectedTypeFilters}
-                        handleFilterClick={handleFilterClick}
-                        handleFavoriteClick={handleFavoriteClick}
-                    />
+                    <div
+                        className='movelist-filters-modal__content__options'
+                    >
+                        {filterOptions.map(fOption => {
+                            if (fOption.key !== 'attack_level') return null;
+                            const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
+                            const modifier = isSelected ? fOption.value : 'not-selected';
+                            return (
+                                <MoveTypeBadge
+                                    key={fOption.id}
+                                    modifier={modifier}
+                                    value={fOption.id}
+                                    moveType={fOption.name}
+                                    onClick={() => handleFilterClick(fOption)}
+                                />
+                            )
+                        })}
+                    </div>
                 }
                 {filtersView === STRINGS.COMMAND &&
                     <CommandView

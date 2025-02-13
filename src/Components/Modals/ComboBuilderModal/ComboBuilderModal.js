@@ -15,6 +15,7 @@ import { getLauncher } from '../../../helpers';
 const ComboBuilderModal = ({
     selectedCombo,
     combos,
+    combosFilterOptions,
     handleDeleteClick
 }) => {
     const { selectedCharacter } = useMainContext();
@@ -110,6 +111,7 @@ const ComboBuilderModal = ({
                     <TagsView
                         selectedCharacterTags={selectedCharacterTags}
                         selectedTags={selectedTags}
+                        combosFilterOptions={combosFilterOptions}
                         setSelectedTags={setSelectedTags}
                         setSelectedCharacterTags={setSelectedCharacterTags}
                     />
