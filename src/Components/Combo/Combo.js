@@ -15,6 +15,7 @@ const Combo = ({
     showSimpleView = false,
     hideEditButton = false,
     characterFilterOptions = [],
+    combosFilterOptions = [],
     onClick = () => { },
     handleSortChange = () => { },
     onLauncherClick = () => { },
@@ -200,12 +201,16 @@ const Combo = ({
             {!showSimpleView &&
                 <div className='combo__tags'>
                     {tags.map(tag => {
+                        const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
+                        const modifier =
+                            tagMatch.id.includes('attack_level/') || tagMatch.id.includes('other/') ?
+                                tagMatch.value : "not-selected";
                         return (
                             <MoveTypeBadge
                                 key={tag}
-                                modifier={tag}
+                                modifier={modifier}
                                 value={tag}
-                                moveType={ATTACK_LEVELS_ID_TO_NAME[tag] || tag}
+                                moveType={tagMatch.name}
                                 onClick={handleTagClick}
                             />
                         )

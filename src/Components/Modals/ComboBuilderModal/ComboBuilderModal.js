@@ -104,7 +104,6 @@ const ComboBuilderModal = ({
                         setComboNotation={setComboNotation}
                         setComboDamage={setComboDamage}
                         setComboName={setComboName}
-
                     />
                 }
                 {comboView === 'tags' &&

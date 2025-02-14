@@ -11,12 +11,14 @@ import { SearchIcon } from '../Icon';
 import TextSearchModal from '../Modals/TextSearchModal';
 import CombosFiltersModal from '../Modals/CombosFiltersModal';
 const { MOVELIST } = STRINGS;
+
 const ListHeader = ({
     listType = MOVELIST,
     moveCategories = [],
     selectedMoveCategory = '',
     selectedFilters = [],
     filterOptions = [],
+    listItems=[],
     numerOfItems,
     handleFiltersChange = () => { },
     setSelectedMoveCategory = () => { },
@@ -109,6 +111,7 @@ const ListHeader = ({
                     <FilterModal
                         selectedFilters={selectedFilters}
                         filterOptions={filterOptions}
+                        listItems={listItems}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -140,7 +143,6 @@ const ListHeader = ({
                     <SearchIcon />
                 </Button>
                 <Button
-                    disabled={listType === STRINGS.COMBOS}
                     modifier={filtersButtonModifier}
                     text={'Filters'}
                     onClick={toggleFiltersModal}

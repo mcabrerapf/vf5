@@ -3,7 +3,6 @@ import './ActiveFiltersList.scss'
 import MoveTypeBadge from '../MoveTypeBadge';
 import MoveCommand from '../MoveCommand';
 import Button from '../Button';
-import { capitalizeFirstLetter } from '../../helpers';
 
 const ActiveFiltersList = ({
     selectedFilters = [],
@@ -17,32 +16,35 @@ const ActiveFiltersList = ({
             <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
                     const { id, name, short_name, value, key, weight_short_name } = selectedFilter
-                    return (
-                        <>
-                            {key === 'command' &&
+                    switch (key) {
+                        case 'command':
+                            return (
                                 <MoveCommand
                                     key={id}
                                     command={value.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                            {key === 'launcher' &&
+                            )
+                        case 'launcher':
+                            return (
                                 <MoveCommand
                                     key={id}
                                     modifier={"launcher"}
                                     command={value.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                            {key === 'pseudo-launcher' &&
+                            )
+                        case 'pseudo-launcher':
+                            return (
                                 <MoveCommand
                                     key={id}
                                     modifier={"pseudo-launcher"}
                                     command={name.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                            {key === 'attack_level' &&
+                            )
+                        case 'attack_level':
+                            return (
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={value}
@@ -50,8 +52,9 @@ const ActiveFiltersList = ({
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                            {key === 'character_tags' &&
+                            )
+                        case 'character_tags':
+                            return (
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={weight_short_name}
@@ -59,17 +62,9 @@ const ActiveFiltersList = ({
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                            {key === 'tags' &&
-                                <MoveTypeBadge
-                                    key={id}
-                                    modifier={id}
-                                    moveType={name}
-                                    value={selectedFilter}
-                                    onClick={() => onFilterClick(selectedFilter)}
-                                />
-                            }
-                            {key === 'dodge_direction' &&
+                            )
+                        case 'dodge_direction':
+                            return (
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={'not-selected'}
@@ -77,8 +72,9 @@ const ActiveFiltersList = ({
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                            {key === 'text_search' &&
+                            )
+                        case 'text_search':
+                            return (
                                 <MoveTypeBadge
                                     key={id}
                                     modifier={'not-selected'}
@@ -86,11 +82,21 @@ const ActiveFiltersList = ({
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
-                            }
-                        </>
-                    )
-                }
-                )}
+                            )
+                        default:
+                            const modifier = id.includes('attack_level/')  ||id.includes('other/') ?
+                                value: 'not-selected';
+                            return (
+                                <MoveTypeBadge
+                                    key={id}
+                                    modifier={modifier}
+                                    moveType={name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            )
+                    }
+                })}
             </div>
             {selectedSort.id &&
                 <div className='active-filters-list__sort'>

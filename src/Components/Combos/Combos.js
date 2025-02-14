@@ -114,8 +114,8 @@ const Combos = () => {
     }
 
     const handleTagClick = ({ target: { value } }) => {
-        if (selectedFilters.find(sFilter => sFilter.id === value)) return;
-        const newFilter = combosFilterOptions.find(option => option.id === value);
+        if (selectedFilters.find(sFilter => sFilter.value === value)) return;
+        const newFilter = combosFilterOptions.find(option => option.value === value);
         const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
         handleFiltersChange(updatedFilters);
     }
@@ -213,7 +213,7 @@ const Combos = () => {
                 selectedFilters={selectedFilters}
                 filterOptions={combosFilterOptions}
                 numerOfItems={sortedCombos.length}
-                selectedMovelistSort={selectedSort}
+                listItems={combos}
                 handleFiltersChange={handleFiltersChange}
             />
             <ActiveFiltersList
@@ -239,6 +239,7 @@ const Combos = () => {
                                 selectedFilters={selectedFilters}
                                 showSimpleView={showSimpleView}
                                 characterFilterOptions={characterFilterOptions}
+                                combosFilterOptions={combosFilterOptions}
                                 handleSortChange={handleSortChange}
                                 onClick={() => handleComboClick(combo)}
                                 onLauncherClick={handleLauncherClick}

@@ -8,13 +8,13 @@ const LaunchersView = ({
     onLauncherClick = () => { }
 }) => {
     const launcherFilters = selectedFilters
-        .filter(filter => filter.key ==='launcher')
+        .filter(filter => filter.id.includes('launcher/'))
 
     return (
         <div className='launchers-view'>
             {launchers.map(launcher => {
-                const isSelected = !!launcherFilters.find(lFilter=>lFilter.id ===launcher.join('-'))
-                
+                const isSelected = !!launcherFilters.find(lFilter => lFilter.value === launcher.join('-'))
+
                 return (
                     <MoveCommand
                         modifier={isSelected ? 'selected' : ''}

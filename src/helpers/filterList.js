@@ -15,7 +15,6 @@ const filterList = (list, filters, customMoves = []) => {
             otherFilters.push(filter);
         }
     });
-    console.log(hasFavFilter, textFilter, otherFilters)
     return list.filter(listItem => {
         
         const filterMatches = otherFilters.map(fOption => {

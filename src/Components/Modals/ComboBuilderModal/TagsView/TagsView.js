@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { CHARACTERS } from '../../../../constants';
 import MoveTypeBadge from '../../../MoveTypeBadge';
 import Button from '../../../Button';
-import { capitalizeFirstLetter } from '../../../../helpers';
 
 const TagsView = ({
     selectedCharacterTags,
@@ -49,11 +48,19 @@ const TagsView = ({
         }
         setSelectedTags(updatedTags);
     }
-    console.log(combosFilterOptions)
+
+    
+    const characterTags = [];
+    const attackLevelTags = [];
+    const moveCategoryTags = [];
     const otherTags = [];
-    // const otherTags = combosFilterOptions.filter(option => option.key === 'tags');
-    const characterTags = combosFilterOptions
-        .filter(option => option.key === 'character_tags')
+    combosFilterOptions
+        .forEach(option => {
+            if(option.id.includes('character_tags/')) characterTags.push(option);
+            if(option.id.includes("attack_level/")) attackLevelTags.push(option);
+            if(option.id.includes("move_category/")) moveCategoryTags.push(option);
+            if(option.id.includes("other/")) otherTags.push(option);
+        })
 
     return (
         <div className='tags-view'>
@@ -62,6 +69,16 @@ const TagsView = ({
                     modifier={tagsView === 'characters' ? 'active center' : 'center'}
                     text="Characters"
                     onClick={() => setTagsView('characters')}
+                />
+                <Button
+                    modifier={tagsView === 'attack_levels' ? 'active center' : 'center'}
+                    text="Attack Levels"
+                    onClick={() => setTagsView('attack_levels')}
+                />
+                 <Button
+                    modifier={tagsView === 'move_categories' ? 'active center' : 'center'}
+                    text="Move Categories"
+                    onClick={() => setTagsView('move_categories')}
                 />
                 <Button
                     modifier={tagsView === 'other' ? 'active center' : 'center'}
@@ -92,6 +109,32 @@ const TagsView = ({
                         />
                     </div>
                 }
+                {tagsView === 'attack_levels' &&
+                    <div className='tags-view__content__other-tags'>
+                        {attackLevelTags.map(tag =>
+                            <MoveTypeBadge
+                                key={tag.id}
+                                value={tag.value}
+                                moveType={tag.name}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? tag.value : 'not-selected'}
+                                onClick={handleTagClick}
+                            />
+                        )}
+                    </div>
+                }
+                {tagsView === 'move_categories' &&
+                    <div className='tags-view__content__other-tags'>
+                        {moveCategoryTags.map(tag =>
+                            <MoveTypeBadge
+                                key={tag.id}
+                                value={tag.value}
+                                moveType={tag.name}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? 'active' : 'not-selected'}
+                                onClick={handleTagClick}
+                            />
+                        )}
+                    </div>
+                }
                 {tagsView === 'other' &&
                     <div className='tags-view__content__other-tags'>
                         {otherTags.map(tag =>
@@ -99,15 +142,13 @@ const TagsView = ({
                                 key={tag.id}
                                 value={tag.value}
                                 moveType={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.value) ? tag.short_name : 'not-selected'}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? 'active' : 'not-selected'}
                                 onClick={handleTagClick}
                             />
                         )}
                     </div>
                 }
             </div>
-
-
         </div>
     )
 }
