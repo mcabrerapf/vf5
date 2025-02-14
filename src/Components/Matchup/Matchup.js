@@ -9,6 +9,7 @@ const Matchup = ({
     matchup = {},
     hideNote = false,
     disableButtons = false,
+    onClick = () => { },
     handleMatchupUpdate = () => { },
     onNameClick = () => { },
     onVsClick = () => { },
@@ -42,10 +43,16 @@ const Matchup = ({
         onVsClick(matchup);
     }
 
+    const handleOnClick = ()=> {
+        onClick(matchup);
+    }
+
     const parsedNote = stringNotationParser(note);
 
     return (
-        <div className='matchup'
+        <div
+            className='matchup'
+            onClick={handleOnClick}
         >
             <div className='matchup__content'
             >

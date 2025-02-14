@@ -5,11 +5,10 @@ import { useMainContext } from '../../Contexts/MainContext'
 import Matchup from '../Matchup';
 import ActiveFiltersList from '../ActiveFiltersList';
 import Modal from '../Modals/Modal';
-import MatchupModal from '../Modals/MatchupModal';
 import SortModal from '../Modals/SortModal';
 import CharacterMatchupView from './CharacterMatchupView';
 import { CHARACTER_ID_TO_NAME, MATHCHUPS_SORT_OPTIONS, SELECTED_MATCHUPS_SORT_KEY, } from '../../constants'
-import { getMatchups, updateMatchups } from '../../services';
+import { getMatchups } from '../../services';
 import { getFromLocal, setLocalStorage } from '../../helpers';
 import { sortMatchups } from './helpers';
 
@@ -21,43 +20,19 @@ const Matchups = () => {
     const [matchups, setMatchups] = useState(null);
     const [matchupsView, setMatchupsView] = useState('ALL');
     const [selectedSort, setSelectedSort] = useState(localSelectedSort);
-    const [selectedMatchup, setSelectedMatchup] = useState(null);
-    const [showMatchupModal, setShowMatchupModal] = useState(false);
     const [showSortModal, setShowSortModal] = useState(false);
 
     useEffect(() => {
         const localMatchups = getMatchups(selectedCharacter);
         setMatchups(localMatchups);
+        setMatchupsView('ALL');
     },
         [selectedCharacter]
     )
     if (!matchups) return null;
 
-
-
-    const onVsClick = (matchup) => {
-        setSelectedMatchup(matchup);
-        toggleMatchupModal();
-    }
-
-    const onNameClick = (matchup) => {
-        setSelectedMatchup(matchup);
+    const onMatchupClick = (matchup) => {
         setMatchupsView(matchup.id)
-    }
-
-    const handleMatchupUpdate = (newMatchup) => {
-        const updatedMatchups = updateMatchups(selectedCharacter, newMatchup);
-        setMatchups(updatedMatchups);
-    }
-
-    const onMatchupModalClose = (newMatchup) => {
-        if (newMatchup) handleMatchupUpdate(newMatchup);
-        setSelectedMatchup(null);
-        toggleMatchupModal();
-    }
-
-    const toggleMatchupModal = () => {
-        setShowMatchupModal(!showMatchupModal);
     }
 
     const onSortClick = () => {
@@ -96,28 +71,20 @@ const Matchups = () => {
 
 
     const sortedMatchups = sortMatchups(matchups, selectedSort);
+    const matchupForView = matchups.find(matchup => matchup.id === matchupsView);
+
     if (matchupsView !== 'ALL') {
         return (
             <CharacterMatchupView
-                matchup={selectedMatchup}
+                matchup={matchupForView}
+                setMatchups={setMatchups}
                 setMatchupsView={setMatchupsView}
             />
         )
     }
+
     return (
         <div className='matchups'>
-            <ModalContextWrapper
-                showModal={showMatchupModal}
-                closeModal={onMatchupModalClose}
-                closeOnBgClick={false}
-            >
-                <Modal>
-                    <MatchupModal
-                        matchup={selectedMatchup}
-                        selectedCharacterName={selectedCharacterName}
-                    />
-                </Modal>
-            </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showSortModal}
                 closeModal={handleSortModalClose}
@@ -145,9 +112,7 @@ const Matchups = () => {
                             matchup={matchup}
                             disableButtons
                             selectedCharacterName={selectedCharacterName}
-                            handleMatchupUpdate={handleMatchupUpdate}
-                            onNameClick={onNameClick}
-                            onVsClick={onVsClick}
+                            onClick={onMatchupClick}
                         />
                     )
                 })}
