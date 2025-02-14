@@ -16,6 +16,7 @@ const ActiveFiltersList = ({
             <div className='active-filters-list__filters'>
                 {selectedFilters.map(selectedFilter => {
                     const { id, name, short_name, value, key, weight_short_name } = selectedFilter
+                    if (key === 'favourite') return null;
                     switch (key) {
                         case 'command':
                             return (
@@ -84,8 +85,8 @@ const ActiveFiltersList = ({
                                 />
                             )
                         default:
-                            const modifier = id.includes('attack_level/')  ||id.includes('other/') ?
-                                value: 'not-selected';
+                            const modifier = id.includes('attack_level/') || id.includes('other/') ?
+                                value : 'not-selected';
                             return (
                                 <MoveTypeBadge
                                     key={id}

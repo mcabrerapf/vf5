@@ -97,33 +97,35 @@ const CharacterMatchupView = ({
                         >
                             {short_name}
                         </span>
-                        <span
-                            className='character-matchup__header__left__name__wins'
-                        >
-                            {matchup.wins}
-                        </span>
-                        -
-                        <span
-                            className='character-matchup__header__left__name__loses'
-                        >
-                            {matchup.loses}
-                        </span>
-                        -
-                        <span
-                            className='character-matchup__header__left__name__win-rate'
-                        >
-                            {matchup.win_rate}%({matchup.total})
-                        </span>
                     </div>
                 </div>
-
-                <Button
-                    modifier={"edit-button"}
-                    onClick={toggleMatchupModal}
+                <div
+                    className='character-matchup__header__right'
                 >
-                    <EditIcon />
-                </Button>
-
+                    <span
+                        className='character-matchup__header__right__wins'
+                    >
+                        {matchup.wins}
+                    </span>
+                    -
+                    <span
+                        className='character-matchup__header__right__loses'
+                    >
+                        {matchup.loses}
+                    </span>
+                    -
+                    <span
+                        className='character-matchup__header__right__win-rate'
+                    >
+                        {matchup.win_rate}%({matchup.total})
+                    </span>
+                    <Button
+                        modifier={"edit-button"}
+                        onClick={toggleMatchupModal}
+                    >
+                        <EditIcon />
+                    </Button>
+                </div>
             </div>
             <div
                 className='character-matchup__content'
@@ -175,7 +177,7 @@ const CharacterMatchupView = ({
                                                 text={combo.damage}
                                             />
                                         </div>
-                                  
+
                                     </div>
                                 )
                             })

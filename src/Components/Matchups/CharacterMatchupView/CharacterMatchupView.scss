@@ -32,28 +32,31 @@
                 padding-left: 2rem;
                 text-align: center;
                 color: black;
+                font-size: 2rem;
 
-                &__name {
-                    font-size: 2rem;
-                    padding-right: 1rem;
-                }
+            }
+        }
 
-                &__loses {  
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                    color: var(--ex-high);
-                }
+        &__right {
+            display: flex;
+            align-items: center;
 
-                &__wins {
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                    color: var(--mid);
-                }
+            &__loses {  
+                font-size: 1.4rem;
+                font-weight: bold;
+                color: var(--ex-high);
+            }
 
-                &__win-rate {
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                }
+            &__wins {
+                font-size: 1.4rem;
+                font-weight: bold;
+                color: var(--mid);
+            }
+
+            &__win-rate {
+                font-size: 1.4rem;
+                font-weight: bold;
+                color: black;
             }
         }
 
