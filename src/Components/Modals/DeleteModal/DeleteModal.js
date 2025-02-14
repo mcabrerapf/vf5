@@ -7,7 +7,8 @@ import ModalFooter from '../ModalFooter';
 import Note from '../../Note';
 
 const DeleteModal = ({
-    data = {}
+    data = {},
+    combosFilterOptions
 }) => {
     const { closeModal } = useModalContext();
     const { command, content } = data;
@@ -15,13 +16,14 @@ const DeleteModal = ({
     const handleClose = (shouldDelete) => {
         closeModal(shouldDelete);
     }
-
+    console.log(data);
     return (
         <div className='delete-modal'>
             <div className='delete-modal__content'>
                 {!!command &&
                     <Combo
                         combo={data}
+                        combosFilterOptions={combosFilterOptions}
                         hideEditButton
                     />
                 }

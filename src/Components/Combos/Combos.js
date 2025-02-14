@@ -94,7 +94,7 @@ const Combos = () => {
 
     const handleDeleteClick = (combo) => {
         setSelectedCombo(combo);
-        toggleDeleteModal()
+        toggleDeleteModal();
     }
 
     const toggleDeleteModal = () => {
@@ -205,6 +205,7 @@ const Combos = () => {
                 <Modal>
                     <DeleteModal
                         data={selectedCombo}
+                        combosFilterOptions={combosFilterOptions}
                     />
                 </Modal>
             </ModalContextWrapper>

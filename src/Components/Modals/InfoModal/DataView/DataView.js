@@ -120,11 +120,11 @@ const DataView = () => {
                             text="Copy Data to Clipboard"
                             onClick={onCopyClick}
                         />
-                        {/* <Button
+                        <Button
                             disabled={isImporting}
                             text="Import Data"
                             onClick={onImportClick}
-                        /> */}
+                        />
                     </div>
                 </div>
             }

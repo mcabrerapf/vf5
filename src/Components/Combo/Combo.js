@@ -2,7 +2,7 @@ import React from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
-import { ATTACK_LEVELS_ID_TO_NAME, CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
+import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
@@ -18,7 +18,6 @@ const Combo = ({
     combosFilterOptions = [],
     onClick = () => { },
     handleSortChange = () => { },
-    onLauncherClick = () => { },
     onFavouriteClick = () => { },
     handleFiltersChange = () => { },
     onTagClick = () => { }
