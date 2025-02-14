@@ -44,6 +44,7 @@ const ListHeader = ({
     }
 
     const toggleMoveTypeSelectModal = () => {
+        if(listType === 'combos') return;
         setShowMoveCategorySelectModal(!showMoveCategoryModal);
     }
 

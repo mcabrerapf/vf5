@@ -124,40 +124,56 @@ const Combo = ({
             className={`combo${favourite ? ' favourite' : ''}`}
             onClick={handleComboClick}
         >
-            <div className='combo__main'>
-                <div
-                    role='button'
-                    className={nameClassName}
-                    onClick={handleNameClick}
-                >
-                    {name}
-                </div>
-                <div className='combo__main__other'>
-                    <Button
-                        onClick={handleDamageClick}
-                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
-                        text={damage}
-                    />
-                    <Button
-                        onClick={handleFavouriteClick}
-                        modifier={favourite ? 'small favourite' : 'small'}
-                        text={'★'}
-                    />
-                    {!hideEditButton &&
+            {!showSimpleView &&
+                <div className='combo__main'>
+                    <div
+                        role='button'
+                        className={nameClassName}
+                        onClick={handleNameClick}
+                    >
+                        {name}
+                    </div>
+                    <div className='combo__main__other'>
                         <Button
-                            onClick={handleComboClick}
-                        >
-                            <EditIcon />
-                        </Button>
+                            onClick={handleDamageClick}
+                            modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                            text={damage}
+                        />
+                        <Button
+                            onClick={handleFavouriteClick}
+                            modifier={favourite ? 'small favourite' : 'small'}
+                            text={'★'}
+                        />
+                        {!hideEditButton &&
+                            <Button
+                                onClick={handleComboClick}
+                            >
+                                <EditIcon />
+                            </Button>
+                        }
+                    </div>
+                </div>
+            }
+            <div
+                className='combo__command'
+            >
+                <div
+                    className='combo__command__launcher'
+                >
+                    <MoveCommand
+                        onClick={handleLauncherClick}
+                        modifier={"launcher"}
+                        command={launcher}
+                    />
+                    {showSimpleView &&
+                        <Button
+                            onClick={handleDamageClick}
+                            modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                            text={damage}
+                        />
                     }
                 </div>
-            </div>
-            <div className='combo__command'>
-                <MoveCommand
-                    onClick={handleLauncherClick}
-                    modifier={"launcher"}
-                    command={launcher}
-                />
+
                 {!!command.length &&
                     <MoveCommand
                         onClick={handleCommandClick}

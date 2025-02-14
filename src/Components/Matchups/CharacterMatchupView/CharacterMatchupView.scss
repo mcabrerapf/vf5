@@ -127,8 +127,12 @@
                     flex-direction: column;
                     gap: 0.3rem;
                     border-bottom: 1px solid white;
-                    padding: 1rem 0.2rem;
-                    // margin: 0.5rem 0.2rem;
+                    padding: 1rem 0.5rem;
+                    
+                    &__launcher {
+                        display: flex;
+                        justify-content: space-between;
+                    }
 
                     .move-command {
                         border: 1px solid white;

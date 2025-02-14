@@ -10,6 +10,26 @@
     width: 100%;
     user-select: none;
 
+    .damage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        width: 3rem;
+        font-weight: 700;
+        border: 1px solid;
+        border-radius: 0.5rem;
+
+        &.sort-selected {
+            border: 1px solid var(--side);
+            background-color: var(--side);
+            border-radius: 0.5rem;
+            color: black !important;
+        }
+    }
+
     &.favourite {
         border: 1px solid gold;
     }
@@ -52,26 +72,6 @@
             display: flex;
             gap: 0.5rem;
 
-            .damage {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.2rem;
-                min-width: 2.5rem;
-                height: 2.5rem;
-                width: 3rem;
-                font-weight: 700;
-                border: 1px solid;
-                border-radius: 0.5rem;
-
-                &.sort-selected {
-                    border: 1px solid var(--side);
-                    background-color: var(--side);
-                    border-radius: 0.5rem;
-                    color: black !important;
-                }
-            }
-
             .favourite {
                 color: black;
                 background-color: gold;
@@ -83,6 +83,12 @@
     &__command {
         display: flex;
         flex-direction: column;
+
+        &__launcher {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     &__note {

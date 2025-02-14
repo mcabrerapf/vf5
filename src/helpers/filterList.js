@@ -16,9 +16,12 @@ const filterList = (list, filters, customMoves = []) => {
         }
     });
     return list.filter(listItem => {
-        
         const filterMatches = otherFilters.map(fOption => {
             const moveValue = listItem[fOption.key];
+            if (fOption.key === 'launcher') {
+                const stringifiedValue = moveValue.join('-');
+                return stringifiedValue ===  fOption.value;
+            }
             if (fOption.key === 'pseudo-launcher') {
                 const pseudoLauncher = getPseudoLaunchers([listItem]);
                 const stringifiedValue = pseudoLauncher.join('-');

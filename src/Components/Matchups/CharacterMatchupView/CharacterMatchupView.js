@@ -85,9 +85,10 @@ const CharacterMatchupView = ({
                         <MoveLeft />
                         <VsIcon />
                     </Button>
-                    
+
                     <div
                         className='character-matchup__header__left__name'
+                        onClick={() => setMatchupsView('ALL')}
                     >
                         {matchup.name}
                     </div>
@@ -162,10 +163,17 @@ const CharacterMatchupView = ({
                                         key={combo.id}
                                         className='character-matchup__content__combos-notes__list__combo'
                                     >
-                                        <MoveCommand
-                                            modifier={"launcher"}
-                                            command={combo.launcher}
-                                        />
+                                        <div
+                                            className='character-matchup__content__combos-notes__list__combo__launcher'
+                                        >
+                                            <MoveCommand
+                                                modifier={"launcher"}
+                                                command={combo.launcher}
+                                            />
+                                            <Button
+                                                text={combo.damage}
+                                            />
+                                        </div>
                                         <MoveCommand
                                             command={combo.command}
                                         />
