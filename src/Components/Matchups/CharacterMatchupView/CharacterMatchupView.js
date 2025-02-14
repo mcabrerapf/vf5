@@ -3,7 +3,7 @@ import './CharacterMatchupView.scss'
 import { useMainContext } from '../../../Contexts/MainContext';
 import { getCombos, updateMatchups } from '../../../services';
 import Button from '../../Button';
-import { EditIcon, MoveLeft } from '../../Icon';
+import { EditIcon, MoveLeft, VsIcon } from '../../Icon';
 import TextWithCommand from '../../TextWithCommand';
 import { sortList, stringNotationParser } from '../../../helpers';
 import MoveCommand from '../../MoveCommand';
@@ -83,7 +83,9 @@ const CharacterMatchupView = ({
                         onClick={() => setMatchupsView('ALL')}
                     >
                         <MoveLeft />
+                        <VsIcon />
                     </Button>
+                    
                     <div
                         className='character-matchup__header__left__name'
                     >
