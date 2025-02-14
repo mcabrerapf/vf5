@@ -26,11 +26,34 @@
             }
 
             &__name {
-                font-size: 2rem;
+                display: inline-flex;
+                align-items: center;
                 font-weight: 700;
                 padding-left: 2rem;
                 text-align: center;
                 color: black;
+
+                &__name {
+                    font-size: 2rem;
+                    padding-right: 1rem;
+                }
+
+                &__loses {  
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: var(--ex-high);
+                }
+
+                &__wins {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: var(--mid);
+                }
+
+                &__win-rate {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                }
             }
         }
 
@@ -53,44 +76,6 @@
         width: 100%;
         height: 100%;
 
-        &__stats {
-            display: flex;
-            height: 3rem;
-            width: 100%;
-
-            &__loses {
-                width: 33%;
-                font-size: 1.5rem;
-                font-weight: bold;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: var(--ex-high);
-            }
-
-            &__wins {
-                width: 33%;
-                font-size: 1.5rem;
-                font-weight: bold;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: var(--mid);
-            }
-
-            &__total {
-                width: 34%;
-                box-sizing: border-box;
-                border: 1px dashed white;
-                border-top: none;
-                font-size: 1.5rem;
-                font-weight: bold;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-
         &__combos-notes {
             width: 100%;
             height: 100%;
@@ -107,7 +92,7 @@
 
             &__list {
                 width: 100%;
-                height: calc(100% - 19rem);
+                height: calc(100% - 14rem);
                 overflow-y: auto;
 
                 &__note {
@@ -128,7 +113,7 @@
                     gap: 0.3rem;
                     border-bottom: 1px solid white;
                     padding: 1rem 0.5rem;
-                    
+
                     &__launcher {
                         display: flex;
                         justify-content: space-between;

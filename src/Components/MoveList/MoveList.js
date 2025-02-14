@@ -24,7 +24,7 @@ import { filterList, getPseudoLaunchers, sortList } from '../../helpers';
 
 
 const Movelist = ({
-    setCharacterView
+    setCharacterView,
 }) => {
     const listRef = useRef(null);
     const {

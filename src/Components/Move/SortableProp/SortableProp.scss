@@ -2,31 +2,22 @@
     border: 1px solid white;
     flex-grow: 0;
     flex-shrink: 0;
-    border-radius: 0.5rem;
-    width: 3.2rem;
-
-    &.selected-sort{
-        border: 1px solid var(--side);
-    }
 
     &__label {
         text-align: center;
         font-weight: bold;
-        padding: 0.2rem 0.1rem 0.2rem 0.1rem;
-        border-bottom: 1px solid white;
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
+        padding: 0.2rem 0.2rem;
+        // border-bottom: 1px solid white;
 
-        &.selected-sort{
+        &.selected-sort {
             background-color: var(--side);
-            border-bottom: 1px solid var(--side);
             color: black;
         }
     }
 
     &__value {
         text-align: center;
-        padding: 0.2rem 0.1rem 0.2rem 0.1rem;
+        padding: 0.2rem 0.3rem;
 
         &.throw-punish {
             color: var(--throw-attempt);

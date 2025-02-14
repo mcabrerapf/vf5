@@ -14,7 +14,7 @@ import { sortMatchups } from './helpers';
 
 const Matchups = () => {
     const listRef = useRef(null);
-    const { selectedCharacter } = useMainContext();
+    const { selectedCharacter, listView } = useMainContext();
     const localSelectedSort = getFromLocal(SELECTED_MATCHUPS_SORT_KEY);
     const selectedCharacterName = CHARACTER_ID_TO_NAME[selectedCharacter]
     const [matchups, setMatchups] = useState(null);
@@ -111,6 +111,7 @@ const Matchups = () => {
                             key={matchup.id}
                             matchup={matchup}
                             disableButtons
+                            hideNote={listView === 'S'}
                             selectedCharacterName={selectedCharacterName}
                             onClick={onMatchupClick}
                         />

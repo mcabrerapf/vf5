@@ -10,6 +10,7 @@ import MoveCommand from '../../MoveCommand';
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import Modal from '../../Modals/Modal';
 import MatchupModal from '../../Modals/MatchupModal';
+import { CHARACTERS_JSON } from '../../../constants';
 
 const CharacterMatchupView = ({
     matchup = {},
@@ -17,6 +18,7 @@ const CharacterMatchupView = ({
     setMatchupsView = () => { }
 }) => {
     const { id: matchupId, note } = matchup
+    const { short_name } = CHARACTERS_JSON[matchupId];
     const [matchupView, setMatchupView] = useState('combos');
     const [showMatchupModal, setShowMatchupModal] = useState(false);
     const { selectedCharacter } = useMainContext();
@@ -90,7 +92,28 @@ const CharacterMatchupView = ({
                         className='character-matchup__header__left__name'
                         onClick={() => setMatchupsView('ALL')}
                     >
-                        {matchup.name}
+                        <span
+                            className='character-matchup__header__left__name__name'
+                        >
+                            {short_name}
+                        </span>
+                        <span
+                            className='character-matchup__header__left__name__wins'
+                        >
+                            {matchup.wins}
+                        </span>
+                        -
+                        <span
+                            className='character-matchup__header__left__name__loses'
+                        >
+                            {matchup.loses}
+                        </span>
+                        -
+                        <span
+                            className='character-matchup__header__left__name__win-rate'
+                        >
+                            {matchup.win_rate}%({matchup.total})
+                        </span>
                     </div>
                 </div>
 
@@ -105,27 +128,6 @@ const CharacterMatchupView = ({
             <div
                 className='character-matchup__content'
             >
-                <div
-                    className='character-matchup__content__stats'
-                >
-                    <div
-                        className='character-matchup__content__stats__loses'
-                    >
-                        {matchup.loses}
-                    </div>
-                    <div
-                        className='character-matchup__content__stats__wins'
-                    >
-                        {matchup.wins}
-                    </div>
-                    <div
-                        className='character-matchup__content__stats__total'
-                    >
-                        {matchup.win_rate}%({matchup.total})
-                    </div>
-
-                </div>
-
                 <div
                     className='character-matchup__content__combos-notes'
                 >

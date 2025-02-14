@@ -1,5 +1,5 @@
 .matchup {
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
 
     &__note {
         width: 100%;
@@ -20,7 +20,7 @@
 
     &__content {
         width: 100%;
-        height: 6rem;
+        height: 5rem;
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
@@ -73,7 +73,7 @@
                 box-sizing: border-box;
                 justify-content: center;
                 align-items: center;
-                font-size: 1.8rem;
+                font-size: 1.5rem;
                 font-weight: 700;
                 text-align: center;
                 padding: 0.2rem 0.3rem;

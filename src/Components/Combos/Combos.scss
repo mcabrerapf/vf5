@@ -2,9 +2,12 @@
     height: 100%;
     width: 100%;
 
+    .active-filters-list {
+        padding-bottom: 0;
+    }
     &__list-container {
         box-sizing: border-box;
-        height: calc(100% - 21rem);
+        height: calc(100% - 17rem);
         padding: 0rem 1rem;
 
         &__list {
@@ -30,7 +33,7 @@
         height: 4rem;
         width: 5rem;
         margin-left: 50%;
-        bottom: 0.5rem;
+        bottom: 0rem;
 
         .button {
             width: 4rem;
