@@ -10,7 +10,8 @@ const Matchup = ({
     hideNote = false,
     disableButtons = false,
     handleMatchupUpdate = () => { },
-    onNameClick = () => { }
+    onNameClick = () => { },
+    onVsClick = () => { },
 }) => {
     const { name, loses, wins, total, win_rate, note } = matchup;
     const [showNote, setShowNote] = useState(true);
@@ -37,8 +38,8 @@ const Matchup = ({
         onNameClick(matchup);
     }
 
-    const toggleShowNote = () => {
-        setShowNote(!showNote);
+    const handleVsClick = () => {
+        onVsClick(matchup);
     }
 
     const parsedNote = stringNotationParser(note);
@@ -58,7 +59,7 @@ const Matchup = ({
                         text={loses}
                     />
                     <Button
-                         onClick={() => disableButtons ? handleNameClick() : onPlayerClick()}
+                        onClick={() => disableButtons ? handleNameClick() : onPlayerClick()}
                         modifier={'wins'}
                         text={wins}
                     />
@@ -66,7 +67,7 @@ const Matchup = ({
                 <div
                     role='button'
                     className='matchup__content__vs'
-                    onClick={toggleShowNote}
+                    onClick={handleVsClick}
 
                 >
                     <div

@@ -12,7 +12,7 @@ const getLauncherData = (launcher, character) => {
     if (!moveMatch) return {};
     const { attack_level, name } = moveMatch;
 
-    // COMBO_FILTER_OPTIONS
+    //TODO COMBO_FILTER_OPTIONS
     const { id: validatedLauncerType } = []
         .find(option => option.name === attack_level) || {};
 

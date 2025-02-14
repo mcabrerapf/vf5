@@ -84,15 +84,15 @@ function ErrorBoundry({ error, resetErrorBoundary }) {
                 </Button>
                 <Button
                     disabled={isImporting}
-                    onClick={copyData}
+                    onClick={onRemoveClick}
                 >
-                    Copy characters data to clipboard
+                    Reset non esential data and Reload
                 </Button>
                 <Button
                     disabled={isImporting}
-                    onClick={onRemoveClick}
+                    onClick={copyData}
                 >
-                    Reset non esential data
+                    Copy characters data to clipboard
                 </Button>
                 <Button
                     disabled={isImporting}
