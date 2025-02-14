@@ -243,7 +243,13 @@ const Move = ({
                     }
                 </div>
             </div>
-            <div className='move__category'>
+          
+            <MoveCommand
+                modifier={isCommandFilterActive ? 'active' : ''}
+                onClick={handleOnCommandClick}
+                command={command}
+            />
+              <div className='move__category'>
                 <MoveTypeBadge
                     modifier={attack_level}
                     value={attack_level}
@@ -269,11 +275,6 @@ const Move = ({
                     />
                 }
             </div>
-            <MoveCommand
-                modifier={isCommandFilterActive ? 'active' : ''}
-                onClick={handleOnCommandClick}
-                command={command}
-            />
             <div className='move__props'>
                 {sortableProps.map(sKey => {
                     const isSelectedSort = selectedSort.key === sKey.key;

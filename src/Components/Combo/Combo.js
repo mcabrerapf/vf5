@@ -156,27 +156,16 @@ const Combo = ({
             <div
                 className='combo__command'
             >
-                <div
-                    className='combo__command__launcher'
-                >
-                    <MoveCommand
-                        onClick={handleLauncherClick}
-                        modifier={"launcher"}
-                        command={launcher}
-                    />
-                    {showSimpleView &&
-                        <Button
-                            onClick={handleDamageClick}
-                            modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
-                            text={damage}
-                        />
-                    }
-                </div>
-
-                {!!command.length &&
-                    <MoveCommand
-                        onClick={handleCommandClick}
-                        command={command}
+                <MoveCommand
+                    onClick={handleLauncherClick}
+                    modifier={"launcher"}
+                    command={[...launcher, "⊙", ...command]}
+                />
+                {showSimpleView &&
+                    <Button
+                        onClick={handleDamageClick}
+                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                        text={damage}
                     />
                 }
             </div>
@@ -202,7 +191,7 @@ const Combo = ({
                                 key={cOption.id}
                                 disabled={!character_tags.find(cTag => cTag === cOption.value)}
                                 modifier={cOption.weight_short_name}
-                                moveType={cOption.short_name}
+                                moveType={cOption.initials}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     handleCharacterClick(cOption);
@@ -211,10 +200,6 @@ const Combo = ({
                         )
                     }
                     )}
-                </div>
-            }
-            {!showSimpleView &&
-                <div className='combo__tags'>
                     {tags.map(tag => {
                         const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
                         const modifier =
@@ -225,11 +210,16 @@ const Combo = ({
                                 key={tag}
                                 modifier={modifier}
                                 value={tag}
-                                moveType={tagMatch.name}
+                                moveType={tagMatch.short_name}
                                 onClick={handleTagClick}
                             />
                         )
                     })}
+                </div>
+            }
+            {!showSimpleView &&
+                <div className='combo__tags'>
+
                 </div>
             }
         </div>

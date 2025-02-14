@@ -169,16 +169,13 @@ const CharacterMatchupView = ({
                                             className='character-matchup__content__combos-notes__list__combo__launcher'
                                         >
                                             <MoveCommand
-                                                modifier={"launcher"}
-                                                command={combo.launcher}
+                                                command={[...combo.launcher, "⊙", ...combo.command]}
                                             />
                                             <Button
                                                 text={combo.damage}
                                             />
                                         </div>
-                                        <MoveCommand
-                                            command={combo.command}
-                                        />
+                                  
                                     </div>
                                 )
                             })

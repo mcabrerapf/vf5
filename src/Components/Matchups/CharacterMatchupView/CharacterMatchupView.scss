@@ -117,15 +117,12 @@
                     &__launcher {
                         display: flex;
                         justify-content: space-between;
-                    }
 
-                    .move-command {
-                        border: 1px solid white;
-
-                        &.launcher {
-                            border: 1px solid gold;
+                        .button {
+                            height: 2.5rem;
                         }
                     }
+
                 }
             }
 

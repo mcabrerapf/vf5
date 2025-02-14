@@ -98,6 +98,7 @@ const Notes = () => {
                             handleNoteClick={handleNoteClick}
                         />
                     )}
+                    <div className='bottom-separator'>.</div>
                 </ul>
             </div>
             <footer className='notes__footer'>

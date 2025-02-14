@@ -252,6 +252,7 @@ const Combos = () => {
 
                         </li>
                     )}
+                    <div className='bottom-separator'>.</div>
                 </ul>
             </div>
             <footer className='combos__footer'>

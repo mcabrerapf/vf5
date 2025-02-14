@@ -34,15 +34,6 @@
         border: 1px solid gold;
     }
 
-    .move-command {
-        border: 1px solid white;
-
-        &.launcher {
-            border: 1px solid gold;
-            margin-bottom: 0.5rem;
-        }
-    }
-
     &__main {
         display: flex;
         flex-direction: row;
@@ -82,13 +73,7 @@
 
     &__command {
         display: flex;
-        flex-direction: column;
-
-        &__launcher {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        justify-content: space-between;
     }
 
     &__note {

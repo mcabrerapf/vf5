@@ -75,12 +75,9 @@
 
     .move-command {
         box-sizing: border-box;
-        border: 1px solid white;
 
         &.active {
             background-color: white;
-            
-            
             .notation {
                 color: black;
                 .icon {
