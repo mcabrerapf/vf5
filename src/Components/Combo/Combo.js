@@ -64,6 +64,7 @@ const Combo = ({
     }
 
     const handleLauncherClick = (e) => {
+        if(showSimpleView) return;
         e.stopPropagation();
         const stringLauncher = launcher.join('-');
         const launcherId = `launcher/${stringLauncher}`;

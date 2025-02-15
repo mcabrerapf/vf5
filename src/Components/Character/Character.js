@@ -74,6 +74,7 @@ const Character = () => {
                     text={characterName}
                 />
                 <Hamburger
+                    characterView={characterView}
                     toggleInfoModal={toggleInfoModal}
                     handleViewChange={handleViewChange}
                 />
