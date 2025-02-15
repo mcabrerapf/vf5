@@ -43,7 +43,7 @@ const Matchup = ({
         onVsClick(matchup);
     }
 
-    const handleOnClick = ()=> {
+    const handleOnClick = () => {
         onClick(matchup);
     }
 
@@ -61,14 +61,14 @@ const Matchup = ({
                     className='matchup__content__buttons'
                 >
                     <Button
-                        onClick={() => disableButtons ? handleNameClick() : onOponentClick()}
-                        modifier={'loses'}
-                        text={loses}
-                    />
-                    <Button
                         onClick={() => disableButtons ? handleNameClick() : onPlayerClick()}
                         modifier={'wins'}
                         text={wins}
+                    />
+                    <Button
+                        onClick={() => disableButtons ? handleNameClick() : onOponentClick()}
+                        modifier={'loses'}
+                        text={loses}
                     />
                 </div>
                 <div
