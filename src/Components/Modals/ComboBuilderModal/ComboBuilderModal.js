@@ -141,7 +141,7 @@ const ComboBuilderModal = ({
                     className='modal-footer__main-buttons'
                 >
                     <Button
-                        text='X'
+                        text='CANCEL'
                         onClick={() => closeModal()}
                     />
                     <Button
@@ -149,7 +149,7 @@ const ComboBuilderModal = ({
                         disabled={!canSave}
                         onClick={handleSaveCombo}
                     >
-                        <SaveIcon />
+                        SAVE
                     </Button>
                 </div>
             </ModalFooter>

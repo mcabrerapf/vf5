@@ -19,9 +19,11 @@
 
         &__main-buttons {
             display: flex;
-            flex-direction: row;
-            gap: 3rem;
+            gap: 1.5rem;
 
+            .button {
+                width: fit-content;
+            }
             .save-button {
                 color: var(--mid);
             }

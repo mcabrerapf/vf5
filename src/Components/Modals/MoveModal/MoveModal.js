@@ -49,14 +49,14 @@ const MoveModal = ({
             <ModalFooter modifier={"align-right"}>
 
                 <Button
-                    text='X'
+                    text='CANCEL'
                     onClick={() => closeModal()}
                 />
                 <Button
                     modifier={'save-button'}
                     onClick={onSave}
                 >
-                    <SaveIcon />
+                    SAVE
                 </Button>
 
             </ModalFooter>

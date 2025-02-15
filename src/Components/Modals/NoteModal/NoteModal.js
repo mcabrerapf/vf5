@@ -52,7 +52,7 @@ const NoteModal = ({
                     className='modal-footer__main-buttons'
                 >
                     <Button
-                        text='X'
+                        text='CANCEL'
                         onClick={() => closeModal()}
                     />
                     <Button
@@ -60,7 +60,7 @@ const NoteModal = ({
                         disabled={!canSave}
                         onClick={handleSaveNote}
                     >
-                        <SaveIcon />
+                        SAVE
                     </Button>
                 </div>
             </ModalFooter>

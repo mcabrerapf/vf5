@@ -105,14 +105,14 @@ const MatchupModal = ({
 					className='modal-footer__main-buttons'
 				>
 					<Button
-						text='X'
+						text='CANCEL'
 						onClick={() => closeModal()}
 					/>
 					<Button
 						modifier={'save-button'}
 						onClick={onSaveClick}
 					>
-						<SaveIcon />
+						SAVE
 					</Button>
 				</div>
 			</ModalFooter>

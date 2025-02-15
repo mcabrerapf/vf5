@@ -101,6 +101,7 @@ const CharacterMatchupView = ({
                 </div>
                 <div
                     className='character-matchup__header__right'
+                    onClick={toggleMatchupModal}
                 >
                     <span
                         className='character-matchup__header__right__wins'
@@ -121,7 +122,6 @@ const CharacterMatchupView = ({
                     </span>
                     <Button
                         modifier={"edit-button"}
-                        onClick={toggleMatchupModal}
                     >
                         <EditIcon />
                     </Button>
@@ -148,7 +148,7 @@ const CharacterMatchupView = ({
                         <Button
                             modifier={matchupView === 'combos' ? 'active center' : 'center'}
                             text={"Combos"}
-                            onClick={() => setMatchupView('combos')}
+                            // onClick={() => setMatchupView('combos')}
                         />
                     </div>
                     <div
