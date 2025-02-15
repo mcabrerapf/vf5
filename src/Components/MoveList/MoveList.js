@@ -53,6 +53,10 @@ const Movelist = ({
     const [showMoveModal, setShowMoveModal] = useState(false);
     const selectedMoveset = selectedCharacterMoveset[selectedMoveCategory];
 
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     useEffect(() => {
         const localCustomMoves = getCustomMoves(selectedCharacter)
         const localCombos = getCombos(selectedCharacter);
@@ -64,16 +68,13 @@ const Movelist = ({
         setComboLaunchers(newLaunchers);
         setSelectedFilters(verifiedFilters);
         setSelectedMoveCategory('all_moves');
+        scrollToTop();
     },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [selectedCharacter]
     )
 
     if (!customMoves) return null;
-
-    const scrollToTop = () => {
-        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
-    }
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
@@ -160,9 +161,7 @@ const Movelist = ({
         if (!categoryId) return;
         const newMoveCategory = categoryId === selectedMoveCategory ?
             moveCategories[0].id : categoryId;
-        setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, newMoveCategory);
-        setSelectedMoveCategory(newMoveCategory);
-        scrollToTop();
+        handleCategoryChange(newMoveCategory);
     }
 
     const onMoveCommandClick = (newFilter) => {
@@ -209,6 +208,16 @@ const Movelist = ({
         setShowMoveModal(!showMoveModal);
     }
 
+    const handleCategoryChange = (newCategory) => {
+        if (newCategory) {
+            setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, newCategory);
+            setSelectedMoveCategory(newCategory);
+            scrollToTop();
+        }
+    }
+
+
+
     if (!selectedMoveset) return null;
     const filteredMovelist = filterList(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortList(filteredMovelist, selectedMovelistSort);
@@ -252,7 +261,7 @@ const Movelist = ({
                 numerOfItems={numerOfMoves}
                 selectedMovelistSort={selectedMovelistSort}
                 handleFiltersChange={handleFiltersChange}
-                setSelectedMoveCategory={setSelectedMoveCategory}
+                handleCategoryChange={handleCategoryChange}
             />
             <ActiveFiltersList
                 selectedFilters={selectedFilters}

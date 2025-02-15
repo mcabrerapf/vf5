@@ -170,7 +170,7 @@ const Combo = ({
                     />
                 }
             </div>
-            {note &&
+            {parsedNote &&
                 <div className='combo__note'>
                     <TextWithCommand
                         content={parsedNote}
@@ -216,11 +216,6 @@ const Combo = ({
                             />
                         )
                     })}
-                </div>
-            }
-            {!showSimpleView &&
-                <div className='combo__tags'>
-
                 </div>
             }
         </div>

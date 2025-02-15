@@ -133,6 +133,15 @@ const CharacterMatchupView = ({
                 <div
                     className='character-matchup__content__combos-notes'
                 >
+                    {parsedNote &&
+                        <div
+                            className='character-matchup__content__combos-notes__list__note'
+                        >
+                            <TextWithCommand
+                                content={parsedNote}
+                            />
+                        </div>
+                    }
                     <div
                         className='character-matchup__content__combos-notes__header'
                     >
@@ -141,27 +150,14 @@ const CharacterMatchupView = ({
                             text={"Combos"}
                             onClick={() => setMatchupView('combos')}
                         />
-                        <Button
-                            modifier={matchupView === 'notes' ? 'active center' : 'center'}
-                            onClick={() => setMatchupView('notes')}
-                            text={"Notes"}
-                        />
                     </div>
                     <div
                         className='character-matchup__content__combos-notes__list'
                     >
-                        {matchupView === 'notes' && parsedNote &&
-                            <div
-                                className='character-matchup__content__combos-notes__list__note'
-                            >
-                                <TextWithCommand
-                                    content={parsedNote}
-                                />
-                            </div>
-                        }
                         {Object.keys(combosByLauncher).map(key => {
                             if (matchupView === 'notes') return null;
                             return combosByLauncher[key].map(combo => {
+                                const parsedComboNote = stringNotationParser(combo.note);
                                 return (
                                     <div
                                         key={combo.id}
@@ -178,11 +174,20 @@ const CharacterMatchupView = ({
                                                 text={combo.damage}
                                             />
                                         </div>
-
+                                        {parsedComboNote &&
+                                            <div
+                                                className='character-matchup__content__combos-notes__list__combo__note'
+                                            >
+                                                <TextWithCommand
+                                                    content={parsedComboNote}
+                                                />
+                                            </div>
+                                        }
                                     </div>
                                 )
                             })
                         })}
+                        <div className='bottom-separator s'>.</div>
                     </div>
                 </div>
             </div>

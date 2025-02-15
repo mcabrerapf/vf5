@@ -21,7 +21,7 @@ const ListHeader = ({
     listItems=[],
     numerOfItems,
     handleFiltersChange = () => { },
-    setSelectedMoveCategory = () => { },
+    handleCategoryChange = () => { },
 }) => {
     const [showMoveCategoryModal, setShowMoveCategorySelectModal] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
@@ -30,11 +30,8 @@ const ListHeader = ({
     const hasFav = !!selectedFilters.find(sFilter => sFilter.key === 'favourite');
     const hasTextSearch = !!selectedFilters.find(sFilter => sFilter.prefix === 'text_search');
 
-    const handleCategorySelectModalClose = (type) => {
-        if (type) {
-            setLocalStorage(SELECTED_MOVE_CATEGORY_KEY, type);
-            setSelectedMoveCategory(type);
-        }
+    const handleCategorySelectModalClose = (newCategory) => {
+        handleCategoryChange(newCategory);
         toggleMoveTypeSelectModal();
     }
 

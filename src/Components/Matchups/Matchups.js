@@ -117,6 +117,7 @@ const Matchups = () => {
                         />
                     )
                 })}
+                <div className='bottom-separator s'>.</div>
             </div>
         </div>
     )

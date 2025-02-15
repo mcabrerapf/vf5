@@ -206,6 +206,13 @@ const Move = ({
                         })}
                 </div>
             </div>
+            {!hideNote && parsedNote &&
+                <div className='move__notes'>
+                    <TextWithCommand
+                        content={parsedNote}
+                    />
+                </div>
+            }
         </div>
     )
     return (
@@ -243,13 +250,13 @@ const Move = ({
                     }
                 </div>
             </div>
-          
+
             <MoveCommand
                 modifier={isCommandFilterActive ? 'active' : ''}
                 onClick={handleOnCommandClick}
                 command={command}
             />
-              <div className='move__category'>
+            <div className='move__category'>
                 <MoveTypeBadge
                     modifier={attack_level}
                     value={attack_level}
