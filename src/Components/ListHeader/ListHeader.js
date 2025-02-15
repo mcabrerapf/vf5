@@ -87,10 +87,12 @@ const ListHeader = ({
         .find(cat => cat.id === selectedMoveCategory) || {};
     const truncatedMoveCategory = selectedMoveCategoryText.length > 20 ?
         `${selectedMoveCategoryText.substr(0, 20)}...` : selectedMoveCategoryText;
-    const moveButtonText = selectedMoveCategory === 'all_moves' ?
+    const movelistButtonText = selectedMoveCategory === 'all_moves' ?
         `All Moves (${numerOfItems})` :
         `${truncatedMoveCategory} (${numerOfItems})`;
+        const moveButtonText = listType ===MOVELIST?  movelistButtonText :  `Combos (${numerOfItems})`
     const FilterModal = listType === MOVELIST ? MoveListFiltersModal : CombosFiltersModal;
+    
     return (
         <header className='list-header'>
             <ModalContextWrapper

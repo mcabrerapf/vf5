@@ -16,7 +16,7 @@ const DeleteModal = ({
     const handleClose = (shouldDelete) => {
         closeModal(shouldDelete);
     }
-    console.log(data);
+    
     return (
         <div className='delete-modal'>
             <div className='delete-modal__content'>

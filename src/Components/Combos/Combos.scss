@@ -5,9 +5,10 @@
     .active-filters-list {
         padding-bottom: 0;
     }
+
     &__list-container {
-        box-sizing: border-box;
-        height: calc(100% - 15rem);
+        // box-sizing: border-box;
+        height: calc(100% - 12rem);
         padding: 0rem 1rem;
 
         &__list {
@@ -21,9 +22,9 @@
             gap: 0.5rem;
             overflow-y: auto;
             scrollbar-color: var(--white-color) var(--white-color);
-
-            &__combo {
-                width: 100%;
+            
+            &.simple {
+                gap: 0;
             }
         }
     }

@@ -1,0 +1,19 @@
+.hamburger {
+    &__options {
+        position: absolute;
+        right: 0rem;
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+        width: 15rem;
+
+        &__option {
+            // height: 3rem;
+            padding: 1rem;
+            font-size: 1.6rem;
+            font-weight: bold;
+            background-color: white;
+            border-bottom: 1px solid black;
+        }
+    }
+}

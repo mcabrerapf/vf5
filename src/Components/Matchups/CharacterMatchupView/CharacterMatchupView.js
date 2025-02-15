@@ -165,7 +165,7 @@ const CharacterMatchupView = ({
                                 return (
                                     <div
                                         key={combo.id}
-                                        className='character-matchup__content__combos-notes__list__combo'
+                                        className={`character-matchup__content__combos-notes__list__combo${combo.favourite ? ' favourite' : ''}`}
                                     >
                                         <div
                                             className='character-matchup__content__combos-notes__list__combo__launcher'
@@ -174,6 +174,7 @@ const CharacterMatchupView = ({
                                                 command={[...combo.launcher, "⊙", ...combo.command]}
                                             />
                                             <Button
+                                                modifier={'damage'}
                                                 text={combo.damage}
                                             />
                                         </div>

@@ -227,30 +227,24 @@ const Combos = () => {
             <div className='combos__list-container'>
                 <ul
                     ref={listRef}
-                    className='combos__list-container__list'
+                    className={`combos__list-container__list${showSimpleView ? ' simple' : ''}`}
                 >
                     {sortedCombos.map((combo) =>
-                        <li
-                            key={combo.id}
-                            className='combos__list-container__list__combo'
-                        >
-                            <Combo
-                                combo={combo}
-                                selectedSort={selectedSort}
-                                selectedFilters={selectedFilters}
-                                showSimpleView={showSimpleView}
-                                characterFilterOptions={characterFilterOptions}
-                                combosFilterOptions={combosFilterOptions}
-                                handleSortChange={handleSortChange}
-                                onClick={() => handleComboClick(combo)}
-                                onLauncherClick={handleLauncherClick}
-                                onFavouriteClick={onFavouriteClick}
-                                onTagClick={handleTagClick}
-                                handleFiltersChange={handleFiltersChange}
-                                onCharacterClick={handleCharacterClick}
-                            />
-
-                        </li>
+                        <Combo
+                            combo={combo}
+                            selectedSort={selectedSort}
+                            selectedFilters={selectedFilters}
+                            showSimpleView={showSimpleView}
+                            characterFilterOptions={characterFilterOptions}
+                            combosFilterOptions={combosFilterOptions}
+                            handleSortChange={handleSortChange}
+                            onClick={() => handleComboClick(combo)}
+                            onLauncherClick={handleLauncherClick}
+                            onFavouriteClick={onFavouriteClick}
+                            onTagClick={handleTagClick}
+                            handleFiltersChange={handleFiltersChange}
+                            onCharacterClick={handleCharacterClick}
+                        />
                     )}
                     <div className='bottom-separator'>.</div>
                 </ul>

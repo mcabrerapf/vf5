@@ -2,8 +2,9 @@ import { CHARACTERS, STRINGS } from "../../constants";
 import { getLauncher } from "../../helpers";
 
 const validateCombo = (combo) => {
-
-    const { id,
+    if (!combo) return null;
+    const {
+        id,
         name,
         damage,
         favourite,

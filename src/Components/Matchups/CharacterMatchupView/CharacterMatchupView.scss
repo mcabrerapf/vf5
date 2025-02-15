@@ -95,7 +95,7 @@
 
             &__list {
                 width: 100%;
-                height: calc(100% - 14rem);
+                height: calc(100% - 11rem);
                 overflow-y: auto;
 
                 &__note {
@@ -117,12 +117,17 @@
                     border-bottom: 1px solid white;
                     padding: 1rem 0.5rem;
 
+                    &.favourite {
+                        background-color: rgba(255, 215, 0, 0.2);
+                    }
+                    
                     &__launcher {
                         display: flex;
                         justify-content: space-between;
 
-                        .button {
+                        .damage {
                             height: 2.5rem;
+                            color: var(--ex-high);
                         }
                     }
 

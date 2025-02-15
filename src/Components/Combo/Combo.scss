@@ -10,6 +10,25 @@
     width: 100%;
     user-select: none;
 
+    &.simple {
+        border: none;
+        border-radius: 0rem;
+        border: 1px solid white;
+
+        &.favourite {
+            border: none;
+            border-radius: 0rem;
+            background-color: rgba(255, 215, 0, 0.2);
+            border: 1px dotted gold;
+        }
+    }
+
+    &.favourite {
+        border: 1px solid gold;
+        background-color: rgba(255, 215, 0, 0.2);
+    }
+
+
     .damage {
         display: flex;
         align-items: center;
@@ -21,17 +40,13 @@
         font-weight: 700;
         border: 1px solid;
         border-radius: 0.5rem;
+        color: var(--ex-high);
 
         &.sort-selected {
             border: 1px solid var(--side);
-            background-color: var(--side);
             border-radius: 0.5rem;
-            color: black !important;
+            color: var(--ex-high);
         }
-    }
-
-    &.favourite {
-        border: 1px solid gold;
     }
 
     &__main {

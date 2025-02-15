@@ -58,8 +58,8 @@ const Movelist = ({
         const localCombos = getCombos(selectedCharacter);
         const newLaunchers = getPseudoLaunchers(localCombos);
         const verifiedFilters = selectedFilters
-        .filter(lFilter => !!movelistFilterOptions
-            .find(fOption => fOption.id === lFilter.id));
+            .filter(lFilter => !!movelistFilterOptions
+                .find(fOption => fOption.id === lFilter.id));
         setCustomMoves(localCustomMoves);
         setComboLaunchers(newLaunchers);
         setSelectedFilters(verifiedFilters);
@@ -264,7 +264,7 @@ const Movelist = ({
             <div className='movelist__list-container'>
                 <ul
                     ref={listRef}
-                    className='movelist__list-container__list'
+                    className={`movelist__list-container__list${showSimpleView ? ' simple' : ""}`}
                 >
                     {sortedMovelist.map((move) => {
                         const customMove = customMoves.find(cMove => cMove.id === move.id) || {};
@@ -292,6 +292,7 @@ const Movelist = ({
                             />
                         )
                     })}
+                    <div className='bottom-separator'>.</div>
                 </ul>
             </div>
         </div>

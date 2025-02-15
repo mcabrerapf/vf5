@@ -120,7 +120,7 @@ const Combo = ({
 
     return (
         <div
-            className={`combo${favourite ? ' favourite' : ''}`}
+            className={`combo${favourite ? ' favourite' : ''}${showSimpleView ? ' simple' : ''}`}
             onClick={handleComboClick}
         >
             {!showSimpleView &&

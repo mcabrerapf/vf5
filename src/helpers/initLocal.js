@@ -14,7 +14,7 @@ import {
 import CHARACTERS, { CHARACTERS_JSON, COMBOS_SORT_OPTIONS } from "../constants/CHARACTERS";
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
-import { validateCombo, validateCustomMove, validateMatchup } from "../services/utils";
+import { validateMatchup } from "../services/utils";
 
 const {
     ALL_MOVES,
@@ -40,11 +40,8 @@ const validateCharactersData = () => {
         ) {
             throw new Error("Invalid characters data");
         };
-        const [isDataValid] = validateImportData(parsedData);
-
-        if (!isDataValid && typeof parsedData !== 'object') {
-            throw new Error("Invalid characters data");
-        }
+        const [,validatedData] = validateImportData(parsedData);
+        localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(validatedData));
         return;
     } catch (error) {
         console.log(error);
@@ -146,35 +143,6 @@ const validateCharacterMoveCategory = () => {
     }
 }
 
-const validateMatchups = () => {
-    try {
-        const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
-        const parsedCharacters =  JSON.parse(allCharactersData);
-        const updatedChars = {};
-
-        Object.keys(parsedCharacters).forEach(charId => {
-            updatedChars[charId] = parsedCharacters[charId];
-
-            const matchups = parsedCharacters[charId].matchups.map(matchup => {
-                return validateMatchup(matchup);
-            })
-            const combos = parsedCharacters[charId].combos.map(combo => {
-                return validateCombo(combo)
-            })
-            const customMoves = parsedCharacters[charId].custom_moves.map(custom_move => {
-                return validateCustomMove(custom_move)
-            })
-
-            updatedChars[charId].matchups = matchups;
-            updatedChars[charId].combos = combos;
-            updatedChars[charId].custom_moves = customMoves;
-            localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(updatedChars))
-        })
-    } catch (error) {
-        console.log(error)
-    }
-
-}
 
 const validateListView = () => {
     try {
@@ -199,7 +167,6 @@ const validateListView = () => {
 const initLocal = () => {
     validateCharactersData();
     validateSelectedCharacter();
-    validateMatchups();
     validateSelectedCharacterView();
     validateCharacterMoveCategory();
     validateFilters();
