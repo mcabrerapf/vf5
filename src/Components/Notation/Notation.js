@@ -1,6 +1,6 @@
 import React from 'react';
 import './Notation.scss'
-import { NOTATION_TO_ICON } from '../../constants';
+import { NOTATION_STRINGS, NOTATION_TO_ICON } from '../../constants';
 import Icon from '../Icon';
 
 const Notation = ({
@@ -14,7 +14,8 @@ const Notation = ({
     const iconName = NOTATION_TO_ICON[notation];
     const iconColor = notation.includes('_') ? 'red' : 'white';
     const parsedCommand = notation.replace(/[[\]]/g, "");
-    const commandClassName = parsedCommand.toLocaleLowerCase();
+    const commandClassName = NOTATION_STRINGS.includes(parsedCommand) ?
+        parsedCommand.toLocaleLowerCase() : "";
     const className = ['notation', modifier].filter(Boolean).join(' ')
 
     const handleOnClick = () => {
