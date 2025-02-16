@@ -11,6 +11,7 @@ import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import Modal from '../../Modals/Modal';
 import MatchupModal from '../../Modals/MatchupModal';
 import { CHARACTERS_JSON } from '../../../constants';
+import CharacterSelectModal from '../../Modals/CharacterSelectModal';
 
 const CharacterMatchupView = ({
     matchup = {},
@@ -19,7 +20,7 @@ const CharacterMatchupView = ({
 }) => {
     const { id: matchupId, note } = matchup
     const { short_name } = CHARACTERS_JSON[matchupId];
-    const [matchupView, setMatchupView] = useState('combos');
+    const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showMatchupModal, setShowMatchupModal] = useState(false);
     const { selectedCharacter } = useMainContext();
     const combos = getCombos(selectedCharacter);
@@ -45,6 +46,9 @@ const CharacterMatchupView = ({
         })
     })
 
+    const handleMatchupChange = (character) => {
+        setMatchupsView(character.id);
+    }
     const handleMatchupUpdate = (newMatchup) => {
         const updatedMatchups = updateMatchups(selectedCharacter, newMatchup);
         setMatchups(updatedMatchups);
@@ -59,10 +63,25 @@ const CharacterMatchupView = ({
         setShowMatchupModal(!showMatchupModal);
     }
 
+    const toggleCharacterSelectModal = () => {
+        setShowCharacterSelectModal(!showCharacterSelectModal);
+    }
+
     return (
         <div
             className='character-matchup'
         >
+            <ModalContextWrapper
+                showModal={showCharacterSelectModal}
+                closeModal={toggleCharacterSelectModal}
+            >
+                <Modal>
+                    <CharacterSelectModal
+                    characterOverride={matchupId}
+                        overrideSelect={handleMatchupChange}
+                    />
+                </Modal>
+            </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showMatchupModal}
                 closeModal={onMatchupModalClose}
@@ -90,7 +109,7 @@ const CharacterMatchupView = ({
 
                     <div
                         className='character-matchup__header__left__name'
-                        onClick={() => setMatchupsView('ALL')}
+                        onClick={toggleCharacterSelectModal}
                     >
                         <span
                             className='character-matchup__header__left__name__name'
@@ -108,13 +127,13 @@ const CharacterMatchupView = ({
                     >
                         {matchup.wins}
                     </span>
-                    -
+                    --
                     <span
                         className='character-matchup__header__right__loses'
                     >
                         {matchup.loses}
                     </span>
-                    -
+                    --
                     <span
                         className='character-matchup__header__right__win-rate'
                     >
@@ -146,16 +165,14 @@ const CharacterMatchupView = ({
                         className='character-matchup__content__combos-notes__header'
                     >
                         <Button
-                            modifier={matchupView === 'combos' ? 'active center' : 'center'}
+                            modifier={'active center'}
                             text={"Combos"}
-                            // onClick={() => setMatchupView('combos')}
                         />
                     </div>
                     <div
                         className='character-matchup__content__combos-notes__list'
                     >
                         {Object.keys(combosByLauncher).map(key => {
-                            if (matchupView === 'notes') return null;
                             return combosByLauncher[key].map(combo => {
                                 const parsedComboNote = stringNotationParser(combo.note);
                                 return (

@@ -17,7 +17,8 @@ const Matchup = ({
     const { name, loses, wins, total, win_rate, note } = matchup;
     const [showNote, setShowNote] = useState(true);
 
-    const onOponentClick = () => {
+    const onOponentClick = (e) => {
+        e.stopPropagation();
         handleMatchupUpdate({
             ...matchup,
             loses: loses + 1,
@@ -26,7 +27,8 @@ const Matchup = ({
         })
     }
 
-    const onPlayerClick = () => {
+    const onPlayerClick = (e) => {
+        e.stopPropagation();
         handleMatchupUpdate({
             ...matchup,
             wins: wins + 1,
@@ -61,12 +63,12 @@ const Matchup = ({
                     className='matchup__content__buttons'
                 >
                     <Button
-                        onClick={() => disableButtons ? handleNameClick() : onPlayerClick()}
+                        onClick={(e) => disableButtons ? handleNameClick() : onPlayerClick(e)}
                         modifier={'wins'}
                         text={wins}
                     />
                     <Button
-                        onClick={() => disableButtons ? handleNameClick() : onOponentClick()}
+                        onClick={(e) => disableButtons ? handleNameClick() : onOponentClick(e)}
                         modifier={'loses'}
                         text={loses}
                     />

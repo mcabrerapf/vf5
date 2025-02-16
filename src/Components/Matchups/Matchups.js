@@ -8,7 +8,7 @@ import Modal from '../Modals/Modal';
 import SortModal from '../Modals/SortModal';
 import CharacterMatchupView from './CharacterMatchupView';
 import { CHARACTER_ID_TO_NAME, MATHCHUPS_SORT_OPTIONS, SELECTED_MATCHUPS_SORT_KEY, } from '../../constants'
-import { getMatchups } from '../../services';
+import { getMatchups, updateMatchups } from '../../services';
 import { getFromLocal, setLocalStorage } from '../../helpers';
 import { sortMatchups } from './helpers';
 
@@ -30,6 +30,11 @@ const Matchups = () => {
         [selectedCharacter]
     )
     if (!matchups) return null;
+
+    const handleMatchupUpdate = (newMatchup) => {
+        const updatedMatchups = updateMatchups(selectedCharacter, newMatchup);
+        setMatchups(updatedMatchups);
+    }
 
     const onMatchupClick = (matchup) => {
         setMatchupsView(matchup.id)
@@ -110,8 +115,8 @@ const Matchups = () => {
                         <Matchup
                             key={matchup.id}
                             matchup={matchup}
-                            disableButtons
                             hideNote={listView === 'S'}
+                            handleMatchupUpdate={handleMatchupUpdate}
                             selectedCharacterName={selectedCharacterName}
                             onClick={onMatchupClick}
                         />

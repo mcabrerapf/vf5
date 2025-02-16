@@ -70,13 +70,13 @@ const MatchupModal = ({
 						className="matchup-modal__content__top__buttons"
 					>
 						<Button
-							disabled={loses < 1}
-							onClick={handleLosesClick}
+							disabled={wins < 1}
+							onClick={handleWinsClick}
 							text={"-"}
 						/>
 						<Button
-							disabled={wins < 1}
-							onClick={handleWinsClick}
+							disabled={loses < 1}
+							onClick={handleLosesClick}
 							text={"-"}
 						/>
 					</div>

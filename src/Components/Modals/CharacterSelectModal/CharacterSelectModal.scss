@@ -1,4 +1,10 @@
 .character-select-modal {
+    &__vs {
+        padding-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-self: center;
+    }
     &__content {
         box-sizing: border-box;
         display: flex;
