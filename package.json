@@ -1,8 +1,7 @@
 {
   "name": "vf5",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://mcabrerapf.github.io/vf5",
+  "private": false,
   "dependencies": {
     "cra-template": "1.2.0",
     "lodash.debounce": "^4.0.8",
@@ -37,8 +36,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.3.0"
   }
 }
