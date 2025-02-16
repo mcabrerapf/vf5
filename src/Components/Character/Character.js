@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import Hamburger from '../Hamburger';
-import Movelist from '../Movelist';
+import Movelist from '../MoveList';
 import Button from '../Button';
 import Combos from '../Combos';
 import Notes from '../Notes';
