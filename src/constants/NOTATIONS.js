@@ -19,6 +19,10 @@ const NOTATION_CHARACTERS = [
     '[+]',
 ];
 
+const NOTATION_STRINGS = [
+    'P', 'K', 'G', '⊙', 'ch', 'hit', 'w', 'wb', 'or', 'sd',
+];
+
 const NOTATION_TO_ICON = {
     [NOTATION_CHARACTERS[0]]: 'upRight',
     [NOTATION_CHARACTERS[1]]: 'up',
@@ -42,11 +46,13 @@ const INVALID_LAUNCHER_NOTATIONS = [
 const NOTATIONS = {
     NOTATION_CHARACTERS,
     NOTATION_TO_ICON,
+    NOTATION_STRINGS,
     INVALID_LAUNCHER_NOTATIONS
 }
 export {
     INVALID_LAUNCHER_NOTATIONS,
     NOTATION_CHARACTERS,
+    NOTATION_STRINGS,
     NOTATION_TO_ICON,
 }
 export default NOTATIONS
