@@ -10,7 +10,7 @@ import Notes from '../Notes';
 import Modal from '../Modals/Modal';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
 import InfoModal from '../Modals/InfoModal';
-import { SELECTED_CHARACTER_VIEW_KEY, STRINGS } from '../../constants';
+import { SELECTED_CHARACTER_VIEW_KEY, SELECTED_MATCHUPS_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 import { CHARACTERS_JSON } from '../../constants/CHARACTERS';
@@ -30,6 +30,7 @@ const Character = () => {
 
     const handleViewChange = (newView) => {
         setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, newView);
+        setLocalStorage(SELECTED_MATCHUPS_VIEW_KEY, 'ALL');
         setCharacterView(newView);
     }
 
