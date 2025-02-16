@@ -18,7 +18,7 @@ import Matchups from '../Matchups/Matchups';
 
 
 const Character = () => {
-    const { selectedCharacter, listView, setListView } = useMainContext();
+    const { selectedCharacter, listView, setSelectedCharacter, setListView } = useMainContext();
     const localSelectedView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
@@ -31,6 +31,11 @@ const Character = () => {
     const handleViewChange = (newView) => {
         setLocalStorage(SELECTED_CHARACTER_VIEW_KEY, newView);
         setCharacterView(newView);
+    }
+
+    const handleCharacterChange = (character) => {
+        setSelectedCharacter(character);
+
     }
 
     const toggleInfoModal = () => {
@@ -50,7 +55,10 @@ const Character = () => {
                 closeModal={toggleCharacterSelectModal}
             >
                 <Modal>
-                    <CharacterSelectModal />
+                    <CharacterSelectModal
+                        selectedCharacter={selectedCharacter}
+                        handleCharacterSelect={handleCharacterChange}
+                    />
                 </Modal>
             </ModalContextWrapper>
             <ModalContextWrapper

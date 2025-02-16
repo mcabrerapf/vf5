@@ -1,7 +1,7 @@
 import './ErrorBoundry.scss';
 import React, { use, useState } from "react";
 import { copyToClipboard, getFromLocal, setLocalStorage, validateImportData } from "../../helpers";
-import { CHARACTERS_DATA_KEY, SELECTED_CHARACTER_KEY, SELECTED_CHARACTER_VIEW_KEY, SELECTED_COMBOS_FILTERS_KEY, SELECTED_COMBOS_SORT_KEY, SELECTED_MOVE_CATEGORY_KEY, SELECTED_MOVELIST_FILTERS_KEY, SELECTED_MOVELIST_SORT_KEY, STRINGS } from '../../constants';
+import { CHARACTERS_DATA_KEY, SELECTED_CHARACTER_KEY, SELECTED_CHARACTER_VIEW_KEY, SELECTED_COMBOS_FILTERS_KEY, SELECTED_COMBOS_SORT_KEY, SELECTED_MATCHUPS_SORT_KEY, SELECTED_MATCHUPS_VIEW_KEY, SELECTED_MOVE_CATEGORY_KEY, SELECTED_MOVELIST_FILTERS_KEY, SELECTED_MOVELIST_SORT_KEY, STRINGS } from '../../constants';
 import Button from '../Button';
 
 function ErrorBoundry({ error, resetErrorBoundary }) {
@@ -19,10 +19,12 @@ function ErrorBoundry({ error, resetErrorBoundary }) {
         localStorage.removeItem(SELECTED_CHARACTER_KEY);
         localStorage.removeItem(SELECTED_CHARACTER_VIEW_KEY);
         localStorage.removeItem(SELECTED_MOVE_CATEGORY_KEY);
-        localStorage.removeItem(SELECTED_COMBOS_FILTERS_KEY);
         localStorage.removeItem(SELECTED_MOVELIST_FILTERS_KEY);
-        localStorage.removeItem(SELECTED_COMBOS_SORT_KEY);
         localStorage.removeItem(SELECTED_MOVELIST_SORT_KEY);
+        localStorage.removeItem(SELECTED_COMBOS_FILTERS_KEY);
+        localStorage.removeItem(SELECTED_COMBOS_SORT_KEY);
+        localStorage.removeItem(SELECTED_MATCHUPS_SORT_KEY)
+        localStorage.removeItem(SELECTED_MATCHUPS_VIEW_KEY);
         window.location.reload();
     }
 

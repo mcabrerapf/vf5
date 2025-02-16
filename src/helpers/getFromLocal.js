@@ -12,7 +12,8 @@ import {
     LIST_VIEW_KEY,
     COMBOS_SORT_OPTIONS,
     SELECTED_MATCHUPS_SORT_KEY,
-    MATHCHUPS_SORT_OPTIONS
+    MATHCHUPS_SORT_OPTIONS,
+    SELECTED_MATCHUPS_VIEW_KEY
 } from "../constants"
 
 const {
@@ -71,11 +72,11 @@ const getFromLocal = (localKey, character, characterKey) => {
         case CHARACTERS_DATA_KEY:
             const selectedData = getCharacterData(localValue, character, characterKey);
             return selectedData;
+        case SELECTED_MATCHUPS_VIEW_KEY:
+            return localValue || 'ALL';
         default:
-            break;
+            return localValue;
     }
-
-    return '';
 }
 
 export default getFromLocal

@@ -16,7 +16,7 @@ import CharacterSelectModal from '../../Modals/CharacterSelectModal';
 const CharacterMatchupView = ({
     matchup = {},
     setMatchups = () => { },
-    setMatchupsView = () => { }
+    handleMatchupChange = () => { }
 }) => {
     const { id: matchupId, note } = matchup
     const { short_name } = CHARACTERS_JSON[matchupId];
@@ -46,9 +46,10 @@ const CharacterMatchupView = ({
         })
     })
 
-    const handleMatchupChange = (character) => {
-        setMatchupsView(character.id);
+    const onMatchupChange = (character) => {
+        handleMatchupChange(character.id);
     }
+
     const handleMatchupUpdate = (newMatchup) => {
         const updatedMatchups = updateMatchups(selectedCharacter, newMatchup);
         setMatchups(updatedMatchups);
@@ -77,8 +78,9 @@ const CharacterMatchupView = ({
             >
                 <Modal>
                     <CharacterSelectModal
-                    characterOverride={matchupId}
-                        overrideSelect={handleMatchupChange}
+                        selectedCharacter={matchupId}
+                        showVs
+                        handleCharacterSelect={onMatchupChange}
                     />
                 </Modal>
             </ModalContextWrapper>
@@ -101,7 +103,7 @@ const CharacterMatchupView = ({
                 >
                     <Button
                         modifier={"back-button"}
-                        onClick={() => setMatchupsView('ALL')}
+                        onClick={() => handleMatchupChange('ALL')}
                     >
                         <MoveLeft />
                         <VsIcon />

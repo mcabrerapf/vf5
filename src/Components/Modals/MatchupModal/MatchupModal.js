@@ -1,15 +1,16 @@
 import './MatchupModal.scss';
 import React, { useState } from 'react';
 import ModalFooter from '../ModalFooter';
-import Matchup from '../../Matchup';
 import Button from '../../Button';
+import VsIcon from '../../Icon/VsIcon';
+import { useMainContext } from '../../../Contexts/MainContext';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { calculateWinRate } from '../../../helpers';
-import { SaveIcon } from '../../Icon';
+import { calculateWinRate, characterIdToName } from '../../../helpers';
 
 const MatchupModal = ({
 	matchup = {},
 }) => {
+	const { selectedCharacter } = useMainContext();
 	const { closeModal } = useModalContext();
 	const { name, note: _note, wins: _wins, loses: _loses } = matchup
 	const [note, setNote] = useState(_note || '')
@@ -28,27 +29,30 @@ const MatchupModal = ({
 		});
 	}
 
-	const updateMatchups = (newMatchup) => {
-		setWins(newMatchup.wins);
-		setLoses(newMatchup.loses);
-	}
-
 	const onResetClick = () => {
 		setWins(0);
 		setLoses(0);
 	}
 
-	const handleLosesClick = () => {
-		if (loses < 1) return;
-		setLoses(loses - 1)
+	const handleLosesClick = (increase) => {
+		if (!increase && loses < 1) return;
+		if (increase) {
+			setLoses(loses + 1)
+		} else {
+			setLoses(loses - 1)
+		}
 	}
 
-	const handleWinsClick = () => {
-		if (wins < 1) return;
-		setWins(wins - 1)
+	const handleWinsClick = (increase) => {
+		if (!increase && wins < 1) return;
+		if (increase) {
+			setWins(wins + 1)
+		} else {
+			setWins(wins - 1)
+		}
 	}
+
 	const winRate = calculateWinRate(loses, wins);
-	const newMatchup = { wins, loses, name, total: wins + loses, win_rate: winRate };
 
 	return (
 		<div
@@ -61,24 +65,60 @@ const MatchupModal = ({
 				<div
 					className="matchup-modal__content__top"
 				>
-					<Matchup
-						matchup={newMatchup}
-						hideNote
-						handleMatchupUpdate={updateMatchups}
-					/>
 					<div
-						className="matchup-modal__content__top__buttons"
+						className="matchup-modal__content__top__vs"
 					>
-						<Button
-							disabled={wins < 1}
-							onClick={handleWinsClick}
-							text={"-"}
-						/>
-						<Button
-							disabled={loses < 1}
-							onClick={handleLosesClick}
-							text={"-"}
-						/>
+						<div
+							className="matchup-modal__content__top__vs__player"
+						>
+							<div
+								className="matchup-modal__content__top__vs__player__name"
+							>
+								{characterIdToName(selectedCharacter)}
+							</div>
+							<div
+								className="matchup-modal__content__top__vs__player__buttons"
+							>
+								<Button
+									onClick={() => handleWinsClick()}
+									text={'-'}
+								/>
+								<span>{wins}</span>
+								<Button
+									onClick={() => handleWinsClick(true)}
+									text={'+'}
+								/>
+							</div>
+						</div>
+						<div
+							className='matchup-modal__content__top__vs__icon'
+						>
+							<VsIcon />
+							<span>{winRate}%({wins + loses})</span>
+						</div>
+
+						<div
+							className='matchup-modal__content__top__vs__oponent'
+						>
+							<div
+								className="matchup-modal__content__top__vs__oponent__name"
+							>
+								{name}
+							</div>
+							<div
+								className="matchup-modal__content__top__vs__oponent__buttons"
+							>
+								<Button
+									onClick={() => handleLosesClick()}
+									text={'-'}
+								/>
+								<span>{loses}</span>
+								<Button
+									onClick={() => handleLosesClick(true)}
+									text={'+'}
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div

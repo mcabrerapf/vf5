@@ -1,5 +1,6 @@
 import calculateWinRate from "./calculateWinrate";
 import capitalizeFirstLetter from "./capitalizeFirstLetter";
+import characterIdToName from "./characterIdToName";
 import copyToClipboard from "./copyToClipboard";
 import filterList from "./filterList";
 import generateId from "./generateId";
@@ -19,6 +20,7 @@ import validateImportData from "./validateImportData";
 export {
     calculateWinRate,
     capitalizeFirstLetter,
+    characterIdToName,
     copyToClipboard,
     filterList,
     generateId,

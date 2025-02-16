@@ -7,7 +7,7 @@ import ActiveFiltersList from '../ActiveFiltersList';
 import Modal from '../Modals/Modal';
 import SortModal from '../Modals/SortModal';
 import CharacterMatchupView from './CharacterMatchupView';
-import { CHARACTER_ID_TO_NAME, MATHCHUPS_SORT_OPTIONS, SELECTED_MATCHUPS_SORT_KEY, } from '../../constants'
+import { CHARACTER_ID_TO_NAME, MATHCHUPS_SORT_OPTIONS, SELECTED_MATCHUPS_SORT_KEY, SELECTED_MATCHUPS_VIEW_KEY, } from '../../constants'
 import { getMatchups, updateMatchups } from '../../services';
 import { getFromLocal, setLocalStorage } from '../../helpers';
 import { sortMatchups } from './helpers';
@@ -15,29 +15,37 @@ import { sortMatchups } from './helpers';
 const Matchups = () => {
     const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
-    const localSelectedSort = getFromLocal(SELECTED_MATCHUPS_SORT_KEY);
+
     const selectedCharacterName = CHARACTER_ID_TO_NAME[selectedCharacter]
     const [matchups, setMatchups] = useState(null);
     const [matchupsView, setMatchupsView] = useState('ALL');
-    const [selectedSort, setSelectedSort] = useState(localSelectedSort);
+    const [selectedSort, setSelectedSort] = useState({});
     const [showSortModal, setShowSortModal] = useState(false);
+    console.log({ matchupsView })
 
     useEffect(() => {
         const localMatchups = getMatchups(selectedCharacter);
+        const localMatchupsView = getFromLocal(SELECTED_MATCHUPS_VIEW_KEY);
+        const localSelectedSort = getFromLocal(SELECTED_MATCHUPS_SORT_KEY);
+        setSelectedSort(localSelectedSort)
         setMatchups(localMatchups);
-        setMatchupsView('ALL');
+        setMatchupsView(localMatchupsView);
     },
         [selectedCharacter]
     )
     if (!matchups) return null;
 
+    const handleMatchupChange = (newMatchupId) => {
+        setLocalStorage(SELECTED_MATCHUPS_VIEW_KEY, newMatchupId);
+        setMatchupsView(newMatchupId)
+    }
     const handleMatchupUpdate = (newMatchup) => {
         const updatedMatchups = updateMatchups(selectedCharacter, newMatchup);
         setMatchups(updatedMatchups);
     }
 
     const onMatchupClick = (matchup) => {
-        setMatchupsView(matchup.id)
+        handleMatchupChange(matchup.id)
     }
 
     const onSortClick = () => {
@@ -83,7 +91,7 @@ const Matchups = () => {
             <CharacterMatchupView
                 matchup={matchupForView}
                 setMatchups={setMatchups}
-                setMatchupsView={setMatchupsView}
+                handleMatchupChange={handleMatchupChange}
             />
         )
     }
