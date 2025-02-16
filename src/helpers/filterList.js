@@ -15,9 +15,10 @@ const filterList = (list, filters, customMoves = []) => {
             otherFilters.push(filter);
         }
     });
-
+    
     return list.filter(listItem => {
         const filterMatches = otherFilters.map(fOption => {
+            console.log(fOption.key);
             const moveValue = listItem[fOption.key];
             if (fOption.key === 'launcher') {
                 const stringifiedValue = moveValue.join('-');
@@ -47,7 +48,7 @@ const filterList = (list, filters, customMoves = []) => {
                 listItem.note?.toLocaleLowerCase().includes(textFilter.value);
         }
 
-        const hasFiltersMatch = !filterMatches.includes(false);
+        const hasFiltersMatch = filterMatches.includes(true);
         return hasFavMatch && hasTextMatch && hasFiltersMatch;
     })
 }

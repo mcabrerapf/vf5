@@ -21,7 +21,6 @@ const Matchups = () => {
     const [matchupsView, setMatchupsView] = useState('ALL');
     const [selectedSort, setSelectedSort] = useState({});
     const [showSortModal, setShowSortModal] = useState(false);
-    console.log({ matchupsView })
 
     useEffect(() => {
         const localMatchups = getMatchups(selectedCharacter);
