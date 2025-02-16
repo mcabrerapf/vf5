@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './Movelist.scss'
+import './MoveList.scss'
 import { deleteCustomMove, getCombos, getCustomMoves, updateCustomMoves } from '../../services';
 import { useMainContext } from '../../Contexts/MainContext';
 import ListHeader from '../ListHeader';

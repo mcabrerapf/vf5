@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext'
 import Hamburger from '../Hamburger';
-import Movelist from '../MoveList';
+import MoveList from '../MoveList';
 import Button from '../Button';
 import Combos from '../Combos';
 import Notes from '../Notes';
@@ -88,7 +88,7 @@ const Character = () => {
                     handleViewChange={handleViewChange}
                 />
             </header>
-            {characterView === STRINGS.MOVELIST && <Movelist setCharacterView={setCharacterView} />}
+            {characterView === STRINGS.MOVELIST && <MoveList setCharacterView={setCharacterView} />}
             {characterView === STRINGS.COMBOS && <Combos />}
             {characterView === STRINGS.NOTES && <Notes />}
             {characterView === STRINGS.MATCHUPS && <Matchups />}
