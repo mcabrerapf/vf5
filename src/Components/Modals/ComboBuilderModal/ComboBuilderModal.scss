@@ -10,7 +10,13 @@
 
     &__content {
         width: 32rem;
-        height: 28rem;
+        height: 30rem;
+
+        &__help {
+            padding-left: 1rem;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
     }
 
     .modal-footer {

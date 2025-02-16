@@ -9,7 +9,6 @@ import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import { getCommandData, getUniqueComboName } from './helpers';
 import { CHARACTERS, STRINGS } from '../../../constants';
-import { SaveIcon } from '../../Icon';
 import { getLauncher } from '../../../helpers';
 
 const ComboBuilderModal = ({
@@ -43,7 +42,7 @@ const ComboBuilderModal = ({
             launcherName,
             combos
         );
-        
+
         closeModal({
             id: id,
             name: nameToUse,
@@ -69,7 +68,9 @@ const ComboBuilderModal = ({
         handleDeleteClick(selectedCombo)
         closeModal();
     }
-    const canSave = !!comboNotation.length && !!selectedCharacterTags.length;
+    const canSave = !!comboNotation.length &&
+        !!comboNotation.includes('⊙') &&
+        !!selectedCharacterTags.length;
 
     return (
         <div className='combo-builder-modal'>
@@ -95,16 +96,19 @@ const ComboBuilderModal = ({
             </div>
             <div className='combo-builder-modal__content'>
                 {comboView === 'commands' &&
-                    <CommandView
-                        comboDamage={comboDamage}
-                        comboName={comboName}
-                        comboNotation={comboNotation}
-                        isFavourite={isFavourite}
-                        setFavourite={setFavourite}
-                        setComboNotation={setComboNotation}
-                        setComboDamage={setComboDamage}
-                        setComboName={setComboName}
-                    />
+                    <>
+                        <CommandView
+                            comboDamage={comboDamage}
+                            comboName={comboName}
+                            comboNotation={comboNotation}
+                            isFavourite={isFavourite}
+                            setFavourite={setFavourite}
+                            setComboNotation={setComboNotation}
+                            setComboDamage={setComboDamage}
+                            setComboName={setComboName}
+                        />
+                        <span className='combo-builder-modal__content__help'>*Use space to separate moves</span>
+                    </>
                 }
                 {comboView === 'tags' &&
                     <TagsView
@@ -125,6 +129,7 @@ const ComboBuilderModal = ({
                 }
             </div>
             <ModalFooter>
+
                 <div
                     className='modal-footer__delete-button'
                 >
