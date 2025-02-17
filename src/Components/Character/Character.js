@@ -94,7 +94,7 @@ const Character = () => {
             </header>
             {characterView === STRINGS.MOVELIST && <Movelist setCharacterView={setCharacterView} />}
             {characterView === STRINGS.COMBOS && <Combos handleComboSearchButtonClick={handleComboSearchButtonClick} />}
-            {characterView === STRINGS.COMBOS_SEARCH && <CombosSearch />}
+            {characterView === STRINGS.COMBOS_SEARCH && <CombosSearch handleViewChange={handleViewChange} />}
             {characterView === STRINGS.NOTES && <Notes />}
             {characterView === STRINGS.MATCHUPS && <Matchups />}
         </div>

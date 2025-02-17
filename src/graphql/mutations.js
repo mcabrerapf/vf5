@@ -19,4 +19,25 @@ mutation createCombo($input: CreateComboInput!) {
 }
 `;
 
-export { CREATE_COMBO };
+const UPDATE_COMBO = `
+mutation updateCombo($input: updateComboInput!) {
+  updateCombo(input: $input) {
+      id
+      lId
+      characterId
+      name
+      character_tags
+      command
+      createdAt
+      damage
+      dislikes
+      favourite
+      launcher
+      likes
+      note
+      tags
+  }
+}
+`;
+
+export { CREATE_COMBO, UPDATE_COMBO };

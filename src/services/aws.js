@@ -2,13 +2,13 @@ import { generateClient } from 'aws-amplify/api';
 import {
     GET_ALL_COMBOS,
 } from '../graphql/queries';
-import { CREATE_COMBO } from '../graphql/mutations';
+import { CREATE_COMBO, UPDATE_COMBO } from '../graphql/mutations';
 const client = generateClient();
 
 const buildFilters = (characterId, orOptions = []) => {
-    const orFilters = orOptions.map(charId => {
-        if (!charId) return null;
-        return { character_tags: { contains: charId } };
+    const orFilters = orOptions.map(char => {
+        if (!char.value) return null;
+        return { character_tags: { contains: char.value } };
     })
         .filter(Boolean)
     if (!orFilters.length) return {
@@ -83,9 +83,41 @@ const createCombo = async ({
             return err;
         });
 
+const updateCombo = async ({
+    combo
+}) =>
+    client
+        .graphql({
+            query: UPDATE_COMBO,
+            variables: {
+                input: {
+                    id: combo.oId,
+                    name: combo.name,
+                    damage: combo.damage,
+                    character_tags: combo.character_tags,
+                    tags: combo.tags,
+                    launcher: combo.launcher,
+                    command: combo.command,
+                    note: combo.note,
+                }
+            }
+        })
+        .then((res) => {
+            const {
+                data
+            } = res;
+            console.log(data);
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+
 
 
 export {
     getAllCombos,
-    createCombo
+    createCombo,
+    updateCombo
 };

@@ -1,0 +1,28 @@
+.combos-search-filters-modal {
+    &__sub-header {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        
+        .button {
+            flex:1
+        }
+    }
+
+    &__content {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        width: 30rem;
+        height: 25rem;
+    }
+
+    .modal-footer {
+        justify-content: space-between;
+        align-items: end;
+
+        .button {
+            height: 3px;
+        }
+    }
+}

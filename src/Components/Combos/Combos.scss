@@ -4,7 +4,6 @@
 
     &__list-container {
         height: calc(100% - 11rem);
-        padding: 0rem 1rem;
 
         &__list {
             display: flex;
@@ -15,10 +14,9 @@
             margin: 0;
             height: 100%;
             width: 100%;
-            gap: 0.5rem;
             overflow-y: auto;
             scrollbar-color: var(--white-color) var(--white-color);
-            
+
             &.simple {
                 gap: 0;
             }
@@ -29,9 +27,13 @@
         position: absolute;
         display: flex;
         height: 4rem;
-        margin-left: 50%;
+        width: 100%;
         bottom: 0.3rem;
-
+        justify-content: space-between;
+        
+        &__empty {
+            width: 4rem;
+        }
         .button {
             width: 4rem;
             height: 4rem;
@@ -39,13 +41,12 @@
             border: 2px solid white;
             font-size: 2rem;
             font-weight: 800;
-            
+
             &.online-search-button {
-                margin-left: 8rem;
                 border-radius: 0.5rem;
 
             }
         }
     }
-    
+
 }

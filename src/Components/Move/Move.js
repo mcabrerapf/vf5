@@ -12,7 +12,7 @@ import { stringNotationParser } from '../../helpers';
 
 const Move = ({
     move,
-    customMove,
+    customMove = {},
     selectedSort = {},
     moveCategories = [],
     selectedMoveCategory = '',

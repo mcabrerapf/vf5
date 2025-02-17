@@ -108,29 +108,6 @@
                         padding: 0.2rem 0;
                     }
                 }
-
-                &__combo {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.3rem;
-                    border-bottom: 1px solid white;
-                    padding: 1rem 0.5rem;
-
-                    &.favourite {
-                        background-color: rgba(255, 215, 0, 0.2);
-                    }
-                    
-                    &__launcher {
-                        display: flex;
-                        justify-content: space-between;
-
-                        .damage {
-                            height: 2.5rem;
-                            color: var(--ex-high);
-                        }
-                    }
-
-                }
             }
 
         }

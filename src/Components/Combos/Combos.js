@@ -257,6 +257,7 @@ const Combos = ({
                 </ul>
             </div>
             <footer className='combos__footer'>
+                <div className='combos__footer__empty'></div>
                 <Button
                     text={"+"}
                     onClick={handleNewComboClick}

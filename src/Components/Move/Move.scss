@@ -3,13 +3,11 @@
     flex-direction: column;
     box-sizing: border-box;
     gap: 0.5rem;
-    border: 1px solid;
-    border-radius: 0.5rem;
+    border-bottom: 1px solid;
     padding: 0.5rem 0.5rem;
     cursor: pointer;
 
     &.favourite {
-        border: 1px solid gold;
         background-color: rgba(255, 215, 0, 0.2);
     }
 
@@ -113,7 +111,7 @@
     flex-direction: column;
     box-sizing: border-box;
     gap: 0.5rem;
-    border: 1px solid white;
+    border-bottom: 1px solid white;
     padding: 0.5rem 0.5rem;
     cursor: pointer;
 

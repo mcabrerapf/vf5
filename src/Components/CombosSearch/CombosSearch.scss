@@ -1,3 +1,14 @@
 .combos-search {
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0.5rem;
+
+        &__left {
+            display: flex;
+            gap: 0.5rem;
+        }
+    }
     
 }
