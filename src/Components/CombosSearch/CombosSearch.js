@@ -92,7 +92,7 @@ const CombosSearch = ({
                         <Button
                             modifier={'active'}
                         >
-                            Combos ({comboResults.length})
+                            Combos ({comboResults.length || 0})
                         </Button>
                     }
                 </div>
