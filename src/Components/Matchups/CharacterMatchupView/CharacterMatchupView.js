@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CharacterMatchupView.scss'
 import { useMainContext } from '../../../Contexts/MainContext';
 import { getCombos, updateMatchups } from '../../../services';
@@ -18,11 +18,20 @@ const CharacterMatchupView = ({
     setMatchups = () => { },
     handleMatchupChange = () => { }
 }) => {
-    const { id: matchupId, note } = matchup
-    const { short_name } = CHARACTERS_JSON[matchupId];
+    const listRef = useRef(null);
+    const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showMatchupModal, setShowMatchupModal] = useState(false);
-    const { selectedCharacter } = useMainContext();
+
+    useEffect(
+        () => {
+            scrollToTop();
+        },
+        [selectedCharacter, matchup]
+    );
+
+    const { id: matchupId, note } = matchup
+    const { short_name } = CHARACTERS_JSON[matchupId];
     const combos = getCombos(selectedCharacter);
     const matchupCombos = combos
         .filter(combo => !!combo.character_tags.includes(matchupId))
@@ -45,6 +54,10 @@ const CharacterMatchupView = ({
             type: "array",
         })
     })
+
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     const onMatchupChange = (character) => {
         handleMatchupChange(character.id);
@@ -152,6 +165,7 @@ const CharacterMatchupView = ({
                 className='character-matchup__content'
             >
                 <div
+                    ref={listRef}
                     className='character-matchup__content__combos-notes'
                 >
                     {parsedNote &&

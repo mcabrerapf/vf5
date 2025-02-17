@@ -17,6 +17,8 @@
 
             &__option {
                 // height: 3rem;
+                cursor: pointer;
+                user-select: none;
                 padding: 1rem;
                 font-size: 1.6rem;
                 font-weight: bold;
