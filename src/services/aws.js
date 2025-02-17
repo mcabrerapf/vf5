@@ -105,6 +105,33 @@ const updateCombo = async ({
             return combo;
         });
 
+const updateLikes = async ({
+    combo,
+}) =>
+    client
+        .graphql({
+            query: UPDATE_COMBO,
+            variables: {
+                input: {
+                    id: combo.id,
+                    likes: combo.likes,
+                    dislikes: combo.dislikes,
+                }
+            }
+        })
+        .then((res) => {
+            const {
+                data: {
+                    updateCombo
+                }
+            } = res;
+            return updateCombo;
+        })
+        .catch((err) => {
+            console.log(err);
+            return combo;
+        });
+
 const deleteAwsCombo = async ({
     combo,
 }) =>
@@ -188,5 +215,6 @@ export {
     getAllCombos,
     createCombo,
     updateCombo,
+    updateLikes,
     deleteAwsCombo
 };

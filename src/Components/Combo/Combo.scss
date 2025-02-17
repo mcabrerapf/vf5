@@ -106,4 +106,27 @@
         flex-wrap: wrap;
         gap: 0.5rem;
     }
+
+    &__thumb-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: end;
+
+        &__dislikes {
+            font-weight: bold;
+            color: red;
+            text-align: end;
+            font-size: 1.3rem;
+            min-width: 3rem;
+        }
+
+        &__likes {
+            font-weight: bold;
+            color: lightgreen;
+            text-align: end;
+            font-size: 1.3rem;
+            min-width: 3rem;
+        }      
+    }
 }

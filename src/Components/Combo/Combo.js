@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
 import MoveTypeBadge from '../MoveTypeBadge';
@@ -6,7 +6,8 @@ import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
-import { EditIcon, SaveIcon } from '../Icon';
+import { DownloadIcon, EditIcon, SaveIcon, ThumbsDownIcon, ThumbsUpIcon } from '../Icon';
+import { updateLikes } from '../../services/aws';
 
 const Combo = ({
     combo = {},
@@ -16,6 +17,8 @@ const Combo = ({
     showSaveButton = false,
     hideFavouriteButton = false,
     hideEditButton = false,
+    showLikes = false,
+    disabledSaveButton = false,
     characterFilterOptions = [],
     combosFilterOptions = [],
     onClick = () => { },
@@ -23,8 +26,11 @@ const Combo = ({
     onFavouriteClick = () => { },
     handleFiltersChange = () => { },
     onTagClick = () => { },
-    onSaveButtonClick = () => { }
+    onSaveButtonClick = () => { },
 }) => {
+    const [likes, setLikes] = useState(combo?.likes || 0);
+    const [dislikes, setDislikes] = useState(combo?.dislikes || 0);
+    const [debouncedData, setDebouncedData] = useState({ likes, dislikes });
     const {
         name,
         tags,
@@ -39,6 +45,16 @@ const Combo = ({
     const isDamageSortSelected = selectedSort.id === 'damage';
     const isNameSortSelected = selectedSort.id === 'name';
     const isCommandSortSelected = selectedSort.id === 'command';
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            if (likes !== debouncedData.likes || dislikes !== debouncedData.dislikes) {
+                setDebouncedData({ likes, dislikes });
+                updateLikes({ combo: { id: combo.id, likes, dislikes } });
+            }
+        }, 500);
+        return () => clearTimeout(handler);
+    }, [likes, dislikes, debouncedData.likes, debouncedData.dislikes, combo.id]);
 
     const handleComboClick = (e) => {
         onClick(e);
@@ -108,11 +124,12 @@ const Combo = ({
         handleSortChange(updatedSort);
     }
 
-    const handleSaveButtonClick =(e)=> {
+    const handleSaveButtonClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         onSaveButtonClick(combo);
     }
+
     const handleCommandClick = (e) => {
         e.stopPropagation();
         const updatedSort = isCommandSortSelected ?
@@ -120,6 +137,10 @@ const Combo = ({
             COMBOS_SORT_OPTIONS.find(sOption => sOption.key === 'command');
         handleSortChange(updatedSort);
     }
+
+    const handleLike = () => setLikes((prev) => prev + 1);
+    const handleDislike = () => setDislikes((prev) => prev + 1);
+
     const parsedNote = stringNotationParser(note);
     const favouriteModifier = favourite ? ' favourite' : '';
     const nameModifier = isNameSortSelected && 'sort-selected';
@@ -163,9 +184,10 @@ const Combo = ({
                         }
                         {showSaveButton &&
                             <Button
+                                disabled={disabledSaveButton}
                                 onClick={handleSaveButtonClick}
                             >
-                                <SaveIcon />
+                                <DownloadIcon />
                             </Button>
                         }
                     </div>
@@ -233,6 +255,34 @@ const Combo = ({
                             />
                         )
                     })}
+                </div>
+            }
+            {showLikes &&
+                <div
+                    className='combo__thumb-buttons'
+                >
+                    <span
+                        className='combo__thumb-buttons__dislikes'
+                    >
+                        {dislikes}
+                    </span>
+                    <Button
+                        onClick={handleDislike}
+                    >
+                        <ThumbsDownIcon />
+                    </Button>
+
+                    <span
+                        className='combo__thumb-buttons__likes'
+                    >
+                        {likes}
+                    </span>
+                    <Button
+                        onClick={handleLike}
+                    >
+                        <ThumbsUpIcon />
+                    </Button>
+
                 </div>
             }
         </div>

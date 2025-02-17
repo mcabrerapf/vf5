@@ -5,8 +5,7 @@ import Main from './Components/Main';
 import { MainContextWrapper } from './Contexts/MainContext'
 import initLocal from './helpers/initLocal';
 import ErrorBoundry from './Components/ErrorBoundry';
-console.log('AAAAAA', process.env)
-console.log('AAAAAA', process.env.REACT_APP_AK)
+
 Amplify.configure({
   "aws_project_region": process.env.REACT_APP_REGION,
   "aws_appsync_graphqlEndpoint": process.env.REACT_APP_EP,

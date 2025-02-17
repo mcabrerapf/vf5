@@ -18,7 +18,7 @@ import DeleteModal from '../Modals/DeleteModal';
 import ActiveFiltersList from '../ActiveFiltersList';
 import { filterList, generateId, getFromLocal, setLocalStorage, sortList } from '../../helpers';
 import SortModal from '../Modals/SortModal';
-import { deleteCombo, deleteCustomMove, getCombos, updateCombos } from '../../services';
+import { deleteCombo, getCombos, updateCombos } from '../../services';
 import ListHeader from '../ListHeader';
 import CloudIcon from '../Icon/CloudIcon';
 import { createCombo, deleteAwsCombo, updateCombo } from '../../services/aws';
@@ -74,21 +74,31 @@ const Combos = ({
                 { ...newCombo, id: generateId(), game_version: GAME_VERSION };
 
             if (!newCombo.id) {
-                const withOid = await createCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } });
-                const [updatedCombos] = updateCombos(
-                    selectedCharacter,
-                    validateCombo({ ...withOid, oId: withOid.id, id: comboWithLid.id })
-                );
-                setCombos(updatedCombos);
-            } else {
-                const updatedCombo = await updateCombo({ combo: newCombo });
-                const [updatedCombos] = updateCombos(
-                    selectedCharacter,
-                    validateCombo({ ...updatedCombo, oId: updatedCombo.id, id: comboWithLid.id })
-                );
-                setCombos(updatedCombos);
-            }
+                await createCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } })
+                    .then(res => {
+                        const [updatedCombos] = updateCombos(
+                            selectedCharacter,
+                            validateCombo({ ...res, oId: res.id, id: comboWithLid.id })
+                        );
+                        setCombos(updatedCombos);
+                    })
+                    .catch(() => {
 
+                    });
+
+            } else {
+                await updateCombo({ combo: newCombo })
+                    .then(res => {
+                        const [updatedCombos] = updateCombos(
+                            selectedCharacter,
+                            validateCombo({ ...res, oId: res.id, id: comboWithLid.id })
+                        );
+                        setCombos(updatedCombos);
+                    })
+                    .catch(() => {
+
+                    });
+            }
         }
         toggleComboBuilderModal();
     }

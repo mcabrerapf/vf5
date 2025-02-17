@@ -9,10 +9,10 @@ import Button from '../Button';
 import Modal from '../Modals/Modal';
 import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
 import { CHARACTERS_JSON, STRINGS } from '../../constants';
-import { updateCombos } from '../../services';
+import { getCombos, updateCombos } from '../../services';
 import { validateCombo } from '../../services/utils';
 import { generateId } from '../../helpers';
-// import ActiveFiltersList from '../ActiveFiltersList';
+import ActiveFiltersList from '../ActiveFiltersList';
 
 const CombosSearch = ({
     handleViewChange
@@ -21,20 +21,29 @@ const CombosSearch = ({
     const {
         combos_filter_options: combosFilterOptions,
     } = CHARACTERS_JSON[selectedCharacter];
+    const initialLocalCombos = getCombos(selectedCharacter);
 
     const [comboResults, setComboResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [localCombos, setLocalCombos] = useState(initialLocalCombos);
 
     useEffect(() => {
         async function fetchCombos() {
             setIsLoading(true);
-            const results = await getAllCombos({
+            await getAllCombos({
                 characterId: selectedCharacter
-            });
-            setIsLoading(false);
-            setComboResults(results);
+            })
+                .then(res => {
+                    setIsLoading(false);
+                    setComboResults(res);
+                })
+                .catch(() => {
+                    setIsLoading(false);
+                    setComboResults([]);
+                });
+
         }
         fetchCombos();
     }, [selectedCharacter])
@@ -43,19 +52,28 @@ const CombosSearch = ({
     const onSaveButtonClick = (combo) => {
         const withId = { ...combo, oId: combo.id, id: generateId() };
         const validatedCombo = validateCombo(withId);
-        updateCombos(selectedCharacter, validatedCombo);
+        const [newCombos] = updateCombos(selectedCharacter, validatedCombo);
+        setLocalCombos(newCombos)
     }
 
     const handleFiltersModalClose = async (newFilters) => {
         setShowFiltersModal(!showFiltersModal);
         setIsLoading(true);
-        const results = await getAllCombos({
+        await getAllCombos({
             characterId: selectedCharacter,
             characterFilters: newFilters
-        });
-        setIsLoading(false);
-        setComboResults(results);
-        setSelectedFilters(newFilters);
+        })
+            .then(res => {
+                setIsLoading(false);
+                setComboResults(res);
+                setSelectedFilters(newFilters);
+            })
+            .catch(() => {
+                setIsLoading(false);
+                setComboResults([]);
+                setSelectedFilters(newFilters);
+            });
+
     }
 
     const characterFilterOptions = combosFilterOptions
@@ -103,14 +121,20 @@ const CombosSearch = ({
                     <SearchIcon />
                 </Button>
             </div>
-            {/* <ActiveFiltersList
-                selectedFilters={[]}
+            <ActiveFiltersList
+                selectedFilters={selectedFilters}
                 selectedSort={{}}
             // onSortClick={toggleSortModal}
             // onSortDirClick={handleSortDirChange}
             // onFilterClick={handleActiveFilterClick}
-            /> */}
-            {isLoading && <div>LOADING</div>}
+            />
+            {isLoading &&
+                <div
+                    className='combos-search__loading'
+                >
+                    LOADING
+                </div>
+            }
             {!isLoading && !comboResults.length &&
                 <div
                     className='combos-search__no-results'
@@ -122,14 +146,16 @@ const CombosSearch = ({
                 <div
                     className='combos-search__results'
                 >
-
                     {comboResults.map(combo => {
+                        const disabledSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
                         return (
                             <Combo
                                 combo={combo}
                                 showSaveButton
                                 hideEditButton
                                 hideFavouriteButton
+                                showLikes
+                                disabledSaveButton={disabledSaveButton}
                                 showSimpleView={listView === 'S'}
                                 characterFilterOptions={characterFilterOptions}
                                 combosFilterOptions={combosFilterOptions}
@@ -137,6 +163,7 @@ const CombosSearch = ({
                             />
                         )
                     })}
+                    <div className='bottom-separator s'>.</div>
                 </div>
             }
         </div>
