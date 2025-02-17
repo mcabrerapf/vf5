@@ -9,6 +9,7 @@ const STRINGS = {
     MATCHUPS:'matchups',
     MOVELIST: 'movelist',
     COMBOS: 'combos',
+    COMBOS_SEARCH: 'combos_search',
     COMMAND: 'command',
     NOTE: 'note',
     NOTES: 'notes',

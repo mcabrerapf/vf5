@@ -27,8 +27,8 @@
 
     &__footer {
         position: absolute;
+        display: flex;
         height: 4rem;
-        width: 5rem;
         margin-left: 50%;
         bottom: 0.3rem;
 
@@ -39,6 +39,12 @@
             border: 2px solid white;
             font-size: 2rem;
             font-weight: 800;
+            
+            &.online-search-button {
+                margin-left: 8rem;
+                border-radius: 0.5rem;
+
+            }
         }
     }
     

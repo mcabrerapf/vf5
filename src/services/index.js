@@ -18,8 +18,6 @@ import {
     deleteNote
 } from "./notes";
 
-
-
 export {
     getCustomMoves,
     deleteCustomMove,

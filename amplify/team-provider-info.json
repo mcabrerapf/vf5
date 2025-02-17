@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-vf5-dev-215948-authRole",
+      "UnauthRoleArn": "arn:aws:iam::252618512867:role/amplify-vf5-dev-215948-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::252618512867:role/amplify-vf5-dev-215948-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-vf5-dev-215948-deployment",
+      "UnauthRoleName": "amplify-vf5-dev-215948-unauthRole",
+      "StackName": "amplify-vf5-dev-215948",
+      "StackId": "arn:aws:cloudformation:eu-west-2:252618512867:stack/amplify-vf5-dev-215948/f6138530-eca8-11ef-9c31-02c086203a87",
+      "AmplifyAppId": "d3uwc1sfkrr3bt"
+    },
+    "categories": {
+      "api": {
+        "vf5": {}
+      }
+    }
+  }
+}

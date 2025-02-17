@@ -19,8 +19,12 @@ import { filterList, getFromLocal, setLocalStorage, sortList } from '../../helpe
 import SortModal from '../Modals/SortModal';
 import { deleteCombo, getCombos, updateCombos } from '../../services';
 import ListHeader from '../ListHeader';
+import CloudIcon from '../Icon/CloudIcon';
+import { createCombo } from '../../services/aws';
 
-const Combos = () => {
+const Combos = ({
+    handleComboSearchButtonClick
+}) => {
     const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
     const {
@@ -63,7 +67,10 @@ const Combos = () => {
 
     const handleCloseModal = (newCombo) => {
         if (newCombo) {
-            const updatedCombos = updateCombos(selectedCharacter, newCombo);
+            const [updatedCombos, comboWithId] = updateCombos(selectedCharacter, newCombo);
+            if (!newCombo.id) {
+                createCombo({ combo: { ...comboWithId, characterId: selectedCharacter } });
+            }
             setCombos(updatedCombos);
         }
         toggleComboBuilderModal();
@@ -139,7 +146,7 @@ const Combos = () => {
     const onFavouriteClick = (comboId) => {
         const comboMatch = combos.find(combo => combo.id === comboId)
         const updatedCombo = { ...comboMatch, favourite: !comboMatch.favourite };
-        const updatedCombos = updateCombos(selectedCharacter, updatedCombo);
+        const [updatedCombos] = updateCombos(selectedCharacter, updatedCombo);
         setCombos(updatedCombos);
     }
 
@@ -254,6 +261,12 @@ const Combos = () => {
                     text={"+"}
                     onClick={handleNewComboClick}
                 />
+                <Button
+                    modifier={'online-search-button'}
+                    onClick={handleComboSearchButtonClick}
+                >
+                    <CloudIcon />
+                </Button>
             </footer>
         </div>
     )

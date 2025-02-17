@@ -15,7 +15,7 @@ import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 import { CHARACTERS_JSON } from '../../constants/CHARACTERS';
 import Matchups from '../Matchups/Matchups';
-
+import CombosSearch from '../CombosSearch';
 
 const Character = () => {
     const { selectedCharacter, listView, setSelectedCharacter, setListView } = useMainContext();
@@ -37,6 +37,10 @@ const Character = () => {
     const handleCharacterChange = (character) => {
         setSelectedCharacter(character);
 
+    }
+
+    const handleComboSearchButtonClick = () => {
+        handleViewChange(STRINGS.COMBOS_SEARCH);
     }
 
     const toggleInfoModal = () => {
@@ -89,7 +93,8 @@ const Character = () => {
                 />
             </header>
             {characterView === STRINGS.MOVELIST && <Movelist setCharacterView={setCharacterView} />}
-            {characterView === STRINGS.COMBOS && <Combos />}
+            {characterView === STRINGS.COMBOS && <Combos handleComboSearchButtonClick={handleComboSearchButtonClick} />}
+            {characterView === STRINGS.COMBOS_SEARCH && <CombosSearch />}
             {characterView === STRINGS.NOTES && <Notes />}
             {characterView === STRINGS.MATCHUPS && <Matchups />}
         </div>

@@ -21,7 +21,8 @@ const {
     COMBOS,
     MOVELIST,
     MATCHUPS,
-    NOTES
+    NOTES,
+    COMBOS_SEARCH
 } = STRINGS;
 
 const validateCharactersData = () => {
@@ -117,7 +118,7 @@ const validateSelectedCharacter = () => {
 const validateSelectedCharacterView = () => {
     try {
         const selectedCharacterView = localStorage.getItem(SELECTED_CHARACTER_VIEW_KEY);
-        if (![COMBOS, MOVELIST, NOTES, MATCHUPS].includes(selectedCharacterView)) {
+        if (![COMBOS, MOVELIST, NOTES, MATCHUPS, COMBOS_SEARCH].includes(selectedCharacterView)) {
             throw new Error("Not valid character view");
 
         }

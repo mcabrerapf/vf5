@@ -19,14 +19,14 @@ const updateCombos = (characterId, combo) => {
         const parsedAllCharacters = JSON.parse(allCharactersData);
         const characterData = parsedAllCharacters[characterId];
         const isNew = !combo.id;
-
+        const comboWithId = isNew ? { ...combo, id: generateId() } : combo;
         const updatedCombos = !isNew ?
             characterData.combos
                 .map(oCombo => {
                     if (oCombo.id === combo.id) return combo;
                     return oCombo;
                 }) :
-            [...characterData.combos, { ...combo, id: generateId() }];
+            [...characterData.combos, comboWithId];
 
         characterData.combos = updatedCombos;
         parsedAllCharacters[characterId] = characterData;
@@ -34,7 +34,7 @@ const updateCombos = (characterId, combo) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        return updatedCombos;
+        return [updatedCombos, comboWithId];
     } catch (error) {
         console.log(error);
         return [];

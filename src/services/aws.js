@@ -1,0 +1,91 @@
+import { generateClient } from 'aws-amplify/api';
+import {
+    GET_ALL_COMBOS,
+} from '../graphql/queries';
+import { CREATE_COMBO } from '../graphql/mutations';
+const client = generateClient();
+
+const buildFilters = (characterId, orOptions = []) => {
+    const orFilters = orOptions.map(charId => {
+        if (!charId) return null;
+        return { character_tags: { contains: charId } };
+    })
+        .filter(Boolean)
+    if (!orFilters.length) return {
+        characterId: { eq: characterId },
+    }
+    return {
+        // filter by saved ids as well
+        characterId: { eq: characterId },
+        or: orFilters
+    }
+}
+
+
+const getAllCombos = async ({
+    characterId,
+    characterFilters = []
+}) =>
+    client
+        .graphql({
+            query: GET_ALL_COMBOS,
+            variables: {
+                filter: buildFilters(characterId, characterFilters)
+            }
+        })
+        .then((res) => {
+            const {
+                data: {
+                    listCombos: {
+                        items
+                    }
+                }
+            } = res;
+            return items;
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+
+const createCombo = async ({
+    combo
+}) =>
+    client
+        .graphql({
+            query: CREATE_COMBO,
+            variables: {
+                input: {
+                    lId: combo.id,
+                    characterId: combo.characterId,
+                    favourite: false,
+                    name: combo.name,
+                    damage: combo.damage,
+                    character_tags: combo.character_tags,
+                    tags: combo.tags,
+                    launcher: combo.launcher,
+                    command: combo.command,
+                    note: combo.note,
+                    likes: 0,
+                    dislikes: 0
+                }
+            }
+        })
+        .then((res) => {
+            const {
+                data
+            } = res;
+            console.log(data);
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+
+
+
+export {
+    getAllCombos,
+    createCombo
+};

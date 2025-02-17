@@ -6,13 +6,15 @@ import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
-import { EditIcon } from '../Icon';
+import { EditIcon, SaveIcon } from '../Icon';
 
 const Combo = ({
     combo = {},
     selectedSort = {},
     selectedFilters = [],
     showSimpleView = false,
+    showSaveButton = false,
+    hideFavouriteButton = false,
     hideEditButton = false,
     characterFilterOptions = [],
     combosFilterOptions = [],
@@ -20,7 +22,8 @@ const Combo = ({
     handleSortChange = () => { },
     onFavouriteClick = () => { },
     handleFiltersChange = () => { },
-    onTagClick = () => { }
+    onTagClick = () => { },
+    onSaveButtonClick = () => { }
 }) => {
     const {
         name,
@@ -64,7 +67,7 @@ const Combo = ({
     }
 
     const handleLauncherClick = (e) => {
-        if(showSimpleView) return;
+        if (showSimpleView) return;
         e.stopPropagation();
         const stringLauncher = launcher.join('-');
         const launcherId = `launcher/${stringLauncher}`;
@@ -105,6 +108,11 @@ const Combo = ({
         handleSortChange(updatedSort);
     }
 
+    const handleSaveButtonClick =(e)=> {
+        e.preventDefault();
+        e.stopPropagation();
+        onSaveButtonClick(combo);
+    }
     const handleCommandClick = (e) => {
         e.stopPropagation();
         const updatedSort = isCommandSortSelected ?
@@ -139,16 +147,25 @@ const Combo = ({
                             modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
                             text={damage}
                         />
-                        <Button
-                            onClick={handleFavouriteClick}
-                            modifier={favourite ? 'small favourite' : 'small'}
-                            text={'★'}
-                        />
+                        {!hideFavouriteButton &&
+                            <Button
+                                onClick={handleFavouriteClick}
+                                modifier={favourite ? 'small favourite' : 'small'}
+                                text={'★'}
+                            />
+                        }
                         {!hideEditButton &&
                             <Button
                                 onClick={handleComboClick}
                             >
                                 <EditIcon />
+                            </Button>
+                        }
+                        {showSaveButton &&
+                            <Button
+                                onClick={handleSaveButtonClick}
+                            >
+                                <SaveIcon />
                             </Button>
                         }
                     </div>
