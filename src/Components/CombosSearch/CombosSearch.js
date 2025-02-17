@@ -57,6 +57,7 @@ const CombosSearch = ({
     }
 
     const handleFiltersModalClose = async (newFilters) => {
+        if(!newFilters) return;
         setShowFiltersModal(!showFiltersModal);
         setIsLoading(true);
         await getAllCombos({
@@ -79,7 +80,7 @@ const CombosSearch = ({
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
 
-
+console.log(localCombos, comboResults)
     return (
         <div
             className='combos-search'
@@ -148,13 +149,16 @@ const CombosSearch = ({
                 >
                     {comboResults.map(combo => {
                         const disabledSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
+                        const disabledLikes = !!localCombos.find(lCombo => lCombo.oId === combo.id && lCombo.id === combo.lId);
+
                         return (
                             <Combo
-                                combo={combo}
+                                combo={{...combo, favourite: false}}
                                 showSaveButton
                                 hideEditButton
                                 hideFavouriteButton
                                 showLikes
+                                disabledLikes={disabledLikes}
                                 disabledSaveButton={disabledSaveButton}
                                 showSimpleView={listView === 'S'}
                                 characterFilterOptions={characterFilterOptions}

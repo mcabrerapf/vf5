@@ -6,7 +6,7 @@ import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
-import { DownloadIcon, EditIcon, SaveIcon, ThumbsDownIcon, ThumbsUpIcon } from '../Icon';
+import { DownloadIcon, EditIcon, ThumbsDownIcon, ThumbsUpIcon } from '../Icon';
 import { updateLikes } from '../../services/aws';
 
 const Combo = ({
@@ -19,6 +19,7 @@ const Combo = ({
     hideEditButton = false,
     showLikes = false,
     disabledSaveButton = false,
+    disabledLikes = false,
     characterFilterOptions = [],
     combosFilterOptions = [],
     onClick = () => { },
@@ -267,6 +268,7 @@ const Combo = ({
                         {dislikes}
                     </span>
                     <Button
+                        disabled={disabledLikes}
                         onClick={handleDislike}
                     >
                         <ThumbsDownIcon />
@@ -278,6 +280,7 @@ const Combo = ({
                         {likes}
                     </span>
                     <Button
+                        disabled={disabledLikes}
                         onClick={handleLike}
                     >
                         <ThumbsUpIcon />

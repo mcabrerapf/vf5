@@ -203,8 +203,8 @@ const CharacterMatchupView = ({
                             modifier={'active center'}
                             onClick={() => setShowMoves(!showMoves)}
                         >
-                            MOVES
-                            {showMoves ? <ChevronUp /> : <ChevronDown />}
+                            <span>MOVES</span>
+                            {showMoves ? <ChevronDown /> : <ChevronUp />}
                         </Button>
 
                     </div>
@@ -231,8 +231,8 @@ const CharacterMatchupView = ({
                             modifier={'active center'}
                             onClick={() => setShowCombos(!showCombos)}
                         >
-                            COMBOS
-                            {showCombos ? <ChevronUp /> : <ChevronDown />}
+                            <span>COMBOS</span>
+                            {showCombos ? <ChevronDown /> : <ChevronUp />}
                         </Button>
                     </div>
                     <div

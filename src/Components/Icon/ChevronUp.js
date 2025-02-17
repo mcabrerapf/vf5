@@ -10,12 +10,12 @@ const ChevronUp = (props) => (
   >
     <g id="layer1">
       <path
+
         d="M 10 5.2929688 L 1.2929688 14 L 2 14.707031 L 10 6.7070312 L 18 14.707031 L 18.707031 14 L 10 5.2929688 z "
         style={{
-          fill: "#222222",
-          fillOpacity: 1,
-          stroke: "none",
-          strokeWidth: 0,
+          fill: "black",
+          stroke: "black",
+          strokeWidth: 1,
         }}
       />
     </g>

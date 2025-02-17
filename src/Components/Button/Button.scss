@@ -21,7 +21,7 @@
 
     &:not(:disabled) {
         &:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
             background-color: var(white);
         }
 
@@ -54,7 +54,7 @@
                     transform: none !important;
                     background-color: var(--disabled-color);
                 }
-    
+
             }
         }
 
@@ -69,7 +69,7 @@
                     transform: none !important;
                     background-color: var(--disabled-color);
                 }
-    
+
             }
         }
     }
@@ -79,7 +79,7 @@
         border-bottom-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
-        border-right: 0!important;
+        border-right: 0 !important;
         border-left: 1px solid white !important;
     }
 
@@ -93,7 +93,7 @@
         border-bottom-left-radius: 0 !important;
         border-top-right-radius: 0.5rem !important;
         border-bottom-right-radius: 0 !important;
-        border-left: 0!important;
+        border-left: 0 !important;
         border-right: 1px solid white !important;
     }
 
@@ -117,11 +117,24 @@
 
     &.disabled {
         border: 1px dashed var(--disabled-color);
-        color: var(--disabled-color)!important;
-        background-color: black!important;
+        color: var(--disabled-color) !important;
+        background-color: black !important;
+
         svg {
+            fill: var(--disabled-color);
+
             path {
                 fill: var(--disabled-color);
+            }
+
+            line {
+                fill: var(--disabled-color);
+                stroke: var(--disabled-color);
+            }
+
+            polyline {
+                fill: var(--disabled-color);
+                stroke: var(--disabled-color);
             }
         }
     }
@@ -136,10 +149,10 @@
     }
 
     &.reset {
-        width: auto!important;
+        width: auto !important;
     }
 
-    &.SLW{
+    &.SLW {
         color: white;
         background-color: var(--super-lightweight);
     }
