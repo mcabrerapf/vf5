@@ -1,12 +1,18 @@
 import './App.scss';
-import awsExports from './aws-exports';
 import { Amplify } from 'aws-amplify';
 import { ErrorBoundary } from "react-error-boundary";
 import Main from './Components/Main';
 import { MainContextWrapper } from './Contexts/MainContext'
 import initLocal from './helpers/initLocal';
 import ErrorBoundry from './Components/ErrorBoundry';
-Amplify.configure({ ...awsExports});
+
+Amplify.configure({
+  "aws_project_region": process.env.REACT_APP_REGION,
+  "aws_appsync_graphqlEndpoint": process.env.REACT_APP_EP,
+  "aws_appsync_region": process.env.REACT_APP_REGION_SYNC,
+  "aws_appsync_authenticationType": process.env.REACT_APP_AT,
+  "aws_appsync_apiKey": process.env.REACT_APP_AK
+});
 
 function App() {
   initLocal();

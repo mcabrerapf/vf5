@@ -15,6 +15,7 @@ mutation createCombo($input: CreateComboInput!) {
       likes
       note
       tags
+      game_version
   }
 }
 `;
@@ -36,6 +37,7 @@ mutation updateCombo($input: UpdateComboInput!) {
       likes
       note
       tags
+      game_version
   }
 }
 `;
@@ -45,6 +47,7 @@ mutation deleteCombo($input: DeleteComboInput!) {
   deleteCombo(input: $input) {
     id
     lId
+    game_version
   }
 }
 

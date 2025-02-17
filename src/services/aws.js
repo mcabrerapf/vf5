@@ -86,7 +86,8 @@ const updateCombo = async ({
                             command: combo.command,
                             note: combo.note,
                             likes: comboMatch.likes,
-                            dislikes: comboMatch.dislikes
+                            dislikes: comboMatch.dislikes,
+                            game_version: combo.game_version
                         }
                     }
                 })
@@ -165,7 +166,8 @@ const createCombo = async ({
                     command: combo.command,
                     note: combo.note,
                     likes: 0,
-                    dislikes: 0
+                    dislikes: 0,
+                    game_version: combo.game_version
                 }
             }
         })

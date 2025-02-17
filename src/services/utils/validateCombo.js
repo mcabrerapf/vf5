@@ -1,10 +1,11 @@
-import { CHARACTERS, STRINGS } from "../../constants";
+import { CHARACTERS, GAME_VERSION, STRINGS } from "../../constants";
 import { getLauncher } from "../../helpers";
 
 const validateCombo = (combo) => {
     if (!combo) return null;
     const {
         id,
+        game_version = GAME_VERSION,
         oId = null,
         name = '',
         damage = 1,
@@ -36,7 +37,8 @@ const validateCombo = (combo) => {
         character_tags: !!characterTagsToCheck.length ?
             characterTagsToCheck : [CHARACTERS[0].id],
         tags: tags || [],
-        note: note || ''
+        note: note || '',
+        game_version
     };
 }
 

@@ -5,7 +5,8 @@ import {
     SELECTED_COMBOS_SORT_KEY,
     COMBOS_SORT_OPTIONS,
     CHARACTERS_JSON,
-    STRINGS
+    STRINGS,
+    GAME_VERSION
 } from '../../constants';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
@@ -68,7 +69,10 @@ const Combos = ({
 
     const handleCloseModal = async (newCombo) => {
         if (newCombo) {
-            const comboWithLid = newCombo.id ? newCombo : { ...newCombo, id: generateId() };
+            const comboWithLid = newCombo.id ?
+                newCombo :
+                { ...newCombo, id: generateId(), game_version: GAME_VERSION };
+
             if (!newCombo.id) {
                 const withOid = await createCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } });
                 const [updatedCombos] = updateCombos(

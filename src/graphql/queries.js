@@ -17,6 +17,7 @@ query getAllCombos($filter: ModelComboFilterInput) {
       likes
       note
       tags
+      game_version
     }
   }
 }
@@ -37,6 +38,7 @@ query getCombo($id: ID!) {
     name
     note
     tags
+    game_version
   }
 }
 `

@@ -36,7 +36,12 @@ import NOTATIONS, {
 import OTHER from './OTHER';
 import STRINGS from "./STRINGS";
 
+
+const GAME_VERSION = 1.01;
+
 export {
+    GAME_VERSION,
+    // 
     ATTACK_LEVELS,
     ATTACK_LEVEL_IDS,
     ATTACK_LEVELS_ID_TO_NAME,
