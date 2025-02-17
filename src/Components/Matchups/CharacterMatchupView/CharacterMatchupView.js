@@ -5,15 +5,14 @@ import { getCombos, getCustomMoves, updateMatchups } from '../../../services';
 import Button from '../../Button';
 import { EditIcon, ChevronDown, MoveLeft, VsIcon, ChevronUp } from '../../Icon';
 import TextWithCommand from '../../TextWithCommand';
+import CharacterSelectModal from '../../Modals/CharacterSelectModal';
+import Move from '../../Move';
+import Combo from '../../Combo';
 import { sortList, stringNotationParser } from '../../../helpers';
-import MoveCommand from '../../MoveCommand';
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import Modal from '../../Modals/Modal';
 import MatchupModal from '../../Modals/MatchupModal';
 import { CHARACTERS_JSON } from '../../../constants';
-import CharacterSelectModal from '../../Modals/CharacterSelectModal';
-import Move from '../../Move';
-import Combo from '../../Combo';
 
 const CharacterMatchupView = ({
     matchup = {},
@@ -37,10 +36,12 @@ const CharacterMatchupView = ({
     const { id: matchupId, note } = matchup
     const {
         short_name,
+    } = CHARACTERS_JSON[matchupId];
+    const {
         movelist,
         move_categories: moveCategories,
         movelist_filter_options: movelistFilterOptions,
-    } = CHARACTERS_JSON[matchupId];
+    } = CHARACTERS_JSON[selectedCharacter];
     const combos = getCombos(selectedCharacter);
     const customMoves = getCustomMoves(selectedCharacter);
     const matchupCombos = combos
