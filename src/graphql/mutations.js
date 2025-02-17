@@ -20,7 +20,7 @@ mutation createCombo($input: CreateComboInput!) {
 `;
 
 const UPDATE_COMBO = `
-mutation updateCombo($input: updateComboInput!) {
+mutation updateCombo($input: UpdateComboInput!) {
   updateCombo(input: $input) {
       id
       lId
@@ -40,4 +40,13 @@ mutation updateCombo($input: updateComboInput!) {
 }
 `;
 
-export { CREATE_COMBO, UPDATE_COMBO };
+const DELETE_COMBO = `
+mutation deleteCombo($input: DeleteComboInput!) {
+  deleteCombo(input: $input) {
+    id
+    lId
+  }
+}
+
+`
+export { CREATE_COMBO, UPDATE_COMBO, DELETE_COMBO };

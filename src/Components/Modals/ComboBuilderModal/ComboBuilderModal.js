@@ -30,6 +30,7 @@ const ComboBuilderModal = ({
     const [comboName, setComboName] = useState(name || STRINGS.DEFAULT_COMBO_NAME);
     const [comboNote, setComboNote] = useState(note || '');
     const [isFavourite, setIsFavourite] = useState(!!favourite);
+    const [isSaving, setIsSaving] = useState(false);
 
     const handleSaveCombo = () => {
         const [comboLauncher, restOfCombo] = getLauncher(comboNotation);
@@ -42,7 +43,7 @@ const ComboBuilderModal = ({
             launcherName,
             combos
         );
-
+        setIsSaving(true);
         closeModal({
             id: id,
             name: nameToUse,
@@ -53,6 +54,7 @@ const ComboBuilderModal = ({
             tags: finalTags,
             damage: Number(comboDamage),
             note: comboNote,
+            oId: selectedCombo?.oId,
         });
     }
 
@@ -137,7 +139,7 @@ const ComboBuilderModal = ({
                         <Button
                             modifier={'danger'}
                             text='DEL'
-                            disabled={!canSave}
+                            disabled={!canSave || isSaving}
                             onClick={onDeleteClose}
                         />
                     }
@@ -147,11 +149,12 @@ const ComboBuilderModal = ({
                 >
                     <Button
                         text='CANCEL'
+                        disabled={isSaving}
                         onClick={() => closeModal()}
                     />
                     <Button
                         modifier={'save-button'}
-                        disabled={!canSave}
+                        disabled={!canSave || isSaving}
                         onClick={handleSaveCombo}
                     >
                         SAVE

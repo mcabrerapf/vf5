@@ -1,5 +1,4 @@
 import { CHARACTERS_DATA_KEY } from "../constants";
-import { generateId } from "../helpers";
 
 const getCombos = (characterId) => {
     try {
@@ -18,15 +17,15 @@ const updateCombos = (characterId, combo) => {
         const allCharactersData = localStorage.getItem(CHARACTERS_DATA_KEY);
         const parsedAllCharacters = JSON.parse(allCharactersData);
         const characterData = parsedAllCharacters[characterId];
-        const isNew = !combo.id;
-        const comboWithId = isNew ? { ...combo, id: generateId() } : combo;
-        const updatedCombos = !isNew ?
+        const comboMatch = characterData.combos
+            .find(oCombo => oCombo.id === combo.id);
+        const updatedCombos = !!comboMatch ?
             characterData.combos
                 .map(oCombo => {
                     if (oCombo.id === combo.id) return combo;
                     return oCombo;
                 }) :
-            [...characterData.combos, comboWithId];
+            [...characterData.combos, combo];
 
         characterData.combos = updatedCombos;
         parsedAllCharacters[characterId] = characterData;
@@ -34,7 +33,7 @@ const updateCombos = (characterId, combo) => {
             CHARACTERS_DATA_KEY,
             JSON.stringify(parsedAllCharacters)
         );
-        return [updatedCombos, comboWithId];
+        return [updatedCombos, combo];
     } catch (error) {
         console.log(error);
         return [];

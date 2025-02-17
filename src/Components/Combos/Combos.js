@@ -15,12 +15,13 @@ import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
 import DeleteModal from '../Modals/DeleteModal';
 import ActiveFiltersList from '../ActiveFiltersList';
-import { filterList, getFromLocal, setLocalStorage, sortList } from '../../helpers';
+import { filterList, generateId, getFromLocal, setLocalStorage, sortList } from '../../helpers';
 import SortModal from '../Modals/SortModal';
-import { deleteCombo, getCombos, updateCombos } from '../../services';
+import { deleteCombo, deleteCustomMove, getCombos, updateCombos } from '../../services';
 import ListHeader from '../ListHeader';
 import CloudIcon from '../Icon/CloudIcon';
-import { createCombo } from '../../services/aws';
+import { createCombo, deleteAwsCombo, updateCombo } from '../../services/aws';
+import { validateCombo } from '../../services/utils';
 
 const Combos = ({
     handleComboSearchButtonClick
@@ -65,13 +66,25 @@ const Combos = ({
         setSelectedFilters(newFilters);
     }
 
-    const handleCloseModal = (newCombo) => {
+    const handleCloseModal = async (newCombo) => {
         if (newCombo) {
-            const [updatedCombos, comboWithId] = updateCombos(selectedCharacter, newCombo);
+            const comboWithLid = newCombo.id ? newCombo : { ...newCombo, id: generateId() };
             if (!newCombo.id) {
-                createCombo({ combo: { ...comboWithId, characterId: selectedCharacter } });
+                const withOid = await createCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } });
+                const [updatedCombos] = updateCombos(
+                    selectedCharacter,
+                    validateCombo({ ...withOid, oId: withOid.id, id: comboWithLid.id })
+                );
+                setCombos(updatedCombos);
+            } else {
+                const updatedCombo = await updateCombo({ combo: newCombo });
+                const [updatedCombos] = updateCombos(
+                    selectedCharacter,
+                    validateCombo({ ...updatedCombo, oId: updatedCombo.id, id: comboWithLid.id })
+                );
+                setCombos(updatedCombos);
             }
-            setCombos(updatedCombos);
+
         }
         toggleComboBuilderModal();
     }
@@ -93,6 +106,7 @@ const Combos = ({
     const handleDeleteCombo = (shouldDelete) => {
         if (shouldDelete) {
             const updatedCombos = deleteCombo(selectedCharacter, selectedCombo.id);
+            deleteAwsCombo({ combo: selectedCombo });
             setCombos(updatedCombos);
         }
         setSelectedCombo(null);

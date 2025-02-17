@@ -5,9 +5,10 @@ const validateCombo = (combo) => {
     if (!combo) return null;
     const {
         id,
-        name,
-        damage,
-        favourite,
+        oId = null,
+        name = '',
+        damage = 1,
+        favourite = false,
         launcher = [],
         command = [],
         character_tags,
@@ -26,6 +27,7 @@ const validateCombo = (combo) => {
 
     return {
         id,
+        oId,
         name: name || STRINGS.DEFAULT_COMBO_NAME,
         damage: damage || 1,
         favourite: favourite || false,
@@ -35,7 +37,6 @@ const validateCombo = (combo) => {
             characterTagsToCheck : [CHARACTERS[0].id],
         tags: tags || [],
         note: note || ''
-
     };
 }
 

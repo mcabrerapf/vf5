@@ -22,4 +22,23 @@ query getAllCombos($filter: ModelComboFilterInput) {
 }
 `;
 
-export { GET_ALL_COMBOS };
+const GET_COMBO = `
+query getCombo($id: ID!) {
+  getCombo(id: $id) {
+    characterId
+    character_tags
+    command
+    createdAt
+    damage
+    favourite
+    id
+    lId
+    launcher
+    name
+    note
+    tags
+  }
+}
+`
+
+export { GET_ALL_COMBOS, GET_COMBO };

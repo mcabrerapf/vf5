@@ -11,6 +11,7 @@ import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
 import { CHARACTERS_JSON, STRINGS } from '../../constants';
 import { updateCombos } from '../../services';
 import { validateCombo } from '../../services/utils';
+import { generateId } from '../../helpers';
 // import ActiveFiltersList from '../ActiveFiltersList';
 
 const CombosSearch = ({
@@ -40,8 +41,8 @@ const CombosSearch = ({
 
 
     const onSaveButtonClick = (combo) => {
-        const validatedCombo = validateCombo(combo);
-        delete validatedCombo.id;
+        const withId = { ...combo, oId: combo.id, id: generateId() };
+        const validatedCombo = validateCombo(withId);
         updateCombos(selectedCharacter, validatedCombo);
     }
 
@@ -55,7 +56,6 @@ const CombosSearch = ({
         setIsLoading(false);
         setComboResults(results);
         setSelectedFilters(newFilters);
-
     }
 
     const characterFilterOptions = combosFilterOptions
