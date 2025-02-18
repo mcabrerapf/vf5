@@ -22,7 +22,7 @@ const MainContextWrapper = ({
     listView: localListView
   });
 
-  const { selectedCharacter, listView } = contextData;
+  const { listView } = contextData;
 
 
   const setSelectedCharacter = (character) => {

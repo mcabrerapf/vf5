@@ -1,3 +1,4 @@
+import buildClassName from "./buildClassName";
 import calculateWinRate from "./calculateWinrate";
 import capitalizeFirstLetter from "./capitalizeFirstLetter";
 import characterIdToName from "./characterIdToName";
@@ -18,6 +19,7 @@ import stringToNotation from "./stringToNotation";
 import validateImportData from "./validateImportData";
 
 export {
+    buildClassName,
     calculateWinRate,
     capitalizeFirstLetter,
     characterIdToName,

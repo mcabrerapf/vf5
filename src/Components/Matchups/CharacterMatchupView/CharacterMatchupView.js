@@ -10,7 +10,6 @@ import Move from '../../Move';
 import Combo from '../../Combo';
 import { sortList, stringNotationParser } from '../../../helpers';
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
-import Modal from '../../Modals/Modal';
 import MatchupModal from '../../Modals/MatchupModal';
 import { CHARACTERS_JSON } from '../../../constants';
 
@@ -108,24 +107,20 @@ const CharacterMatchupView = ({
                 showModal={showCharacterSelectModal}
                 closeModal={toggleCharacterSelectModal}
             >
-                <Modal>
-                    <CharacterSelectModal
-                        selectedCharacter={matchupId}
-                        showVs
-                        handleCharacterSelect={onMatchupChange}
-                    />
-                </Modal>
+                <CharacterSelectModal
+                    selectedCharacter={matchupId}
+                    showVs
+                    handleCharacterSelect={onMatchupChange}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showMatchupModal}
                 closeModal={onMatchupModalClose}
                 closeOnBgClick={false}
             >
-                <Modal>
-                    <MatchupModal
-                        matchup={matchup}
-                    />
-                </Modal>
+                <MatchupModal
+                    matchup={matchup}
+                />
             </ModalContextWrapper>
             <div
                 className='character-matchup__header'
@@ -217,6 +212,8 @@ const CharacterMatchupView = ({
                                     key={move.id}
                                     move={move}
                                     showSimpleView
+                                    hideEditButton
+                                    hideFavouriteButton
                                     moveCategories={moveCategories}
                                     attackLevelOptions={attackLevelOptions}
                                 />
@@ -248,6 +245,8 @@ const CharacterMatchupView = ({
                                     >
                                         <Combo
                                             showSimpleView
+                                            hideEditButton
+                                            hideFavouriteButton
                                             combo={combo}
                                         />
                                     </div>

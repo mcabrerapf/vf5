@@ -15,14 +15,12 @@ import CHARACTERS, { CHARACTERS_JSON, COMBOS_SORT_OPTIONS } from "../constants/C
 import validateImportData from './validateImportData';
 import setLocalStorage from "./setLocalStorage";
 import { validateMatchup } from "../services/utils";
-
 const {
     ALL_MOVES,
     COMBOS,
     MOVELIST,
     MATCHUPS,
     NOTES,
-    COMBOS_SEARCH
 } = STRINGS;
 
 const validateCharactersData = () => {
@@ -41,7 +39,7 @@ const validateCharactersData = () => {
         ) {
             throw new Error("Invalid characters data");
         };
-        const [,validatedData] = validateImportData(parsedData);
+        const [, validatedData] = validateImportData(parsedData);
         localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(validatedData));
         return;
     } catch (error) {
@@ -56,8 +54,6 @@ const validateCharactersData = () => {
             }
         })
         localStorage.setItem(CHARACTERS_DATA_KEY, JSON.stringify(initData));
-        window.location.reload();
-        return;
     }
 }
 const validateSorts = () => {
@@ -81,8 +77,6 @@ const validateSorts = () => {
         console.log(error);
         localStorage.setItem(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(MOVELIST_SORT_OPTIONS[0]));
         localStorage.setItem(SELECTED_COMBOS_SORT_KEY, JSON.stringify(COMBOS_SORT_OPTIONS[0]));
-        window.location.reload();
-        return;
     }
 }
 
@@ -92,23 +86,28 @@ const validateFilters = () => {
         const movelisFilters = localStorage.getItem(SELECTED_MOVELIST_FILTERS_KEY)
         const parsedComboFilters = JSON.parse(comboFilters)
         const parsedMovelisFilters = JSON.parse(movelisFilters)
-        if (!Array.isArray(parsedComboFilters) || !Array.isArray(parsedMovelisFilters)) throw new Error("Not array value in filters");
-
-
+        if (
+            !Array.isArray(parsedComboFilters) || 
+            !Array.isArray(parsedMovelisFilters)
+        ){
+            throw new Error("Not array value in filters");
+        }
     } catch (error) {
         console.log(error);
         localStorage.setItem(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify([]));
         localStorage.setItem(SELECTED_MOVELIST_FILTERS_KEY, JSON.stringify([]));
-        window.location.reload();
-        return;
     }
 }
 
 const validateSelectedCharacter = () => {
     try {
         const selectedCharacter = localStorage.getItem(SELECTED_CHARACTER_KEY)
-        if (!selectedCharacter || !CHARACTERS_JSON[selectedCharacter]) throw new Error("Invalid selected character");
-
+        if (
+            !selectedCharacter ||
+            typeof selectedCharacter !== 'string' ||
+            !CHARACTERS_JSON[selectedCharacter]) {
+            throw new Error("Invalid selected character");
+        }
     } catch (error) {
         console.log(error);
         localStorage.setItem(SELECTED_CHARACTER_KEY, CHARACTERS[0].id);
@@ -118,7 +117,7 @@ const validateSelectedCharacter = () => {
 const validateSelectedCharacterView = () => {
     try {
         const selectedCharacterView = localStorage.getItem(SELECTED_CHARACTER_VIEW_KEY);
-        if (![COMBOS, MOVELIST, NOTES, MATCHUPS, COMBOS_SEARCH].includes(selectedCharacterView)) {
+        if (![COMBOS, MOVELIST, NOTES, MATCHUPS].includes(selectedCharacterView)) {
             throw new Error("Not valid character view");
 
         }
@@ -148,20 +147,21 @@ const validateCharacterMoveCategory = () => {
 const validateListView = () => {
     try {
         const localListView = localStorage.getItem(LIST_VIEW_KEY)
-        
+
         if (
             !localListView ||
             typeof localListView !== 'string' ||
             !['S', 'F'].includes(localListView)
         ) {
-            localStorage.setItem(
-                LIST_VIEW_KEY,
-                'F'
-            );
+            throw new Error("Invalid list view");
         }
 
     } catch (error) {
         console.log(error);
+        localStorage.setItem(
+            LIST_VIEW_KEY,
+            'F'
+        );
     }
 }
 
@@ -173,8 +173,6 @@ const initLocal = () => {
     validateFilters();
     validateSorts();
     validateListView()
-    
-
 }
 
 export default initLocal;

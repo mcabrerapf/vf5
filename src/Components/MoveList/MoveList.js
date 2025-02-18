@@ -1,9 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
 import './MoveList.scss'
+import React, { useState, useRef, useEffect } from 'react';
 import { deleteCustomMove, getCombos, getCustomMoves, updateCustomMoves } from '../../services';
+import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import { useMainContext } from '../../Contexts/MainContext';
+import SortModal from '../Modals/SortModal';
+import MoveModal from '../Modals/MoveModal';
 import ListHeader from '../ListHeader';
 import Move from '../Move';
+import ActiveFiltersList from '../ActiveFiltersList';
+import getFromLocal from '../../helpers/getFromLocal';
+import setLocalStorage from '../../helpers/setLocalStorage';
+import { filterList, getPseudoLaunchers, sortList } from '../../helpers';
 import {
     CHARACTERS_JSON,
     MOVELIST_SORT_OPTIONS,
@@ -13,15 +20,6 @@ import {
     SELECTED_COMBOS_FILTERS_KEY,
     STRINGS,
 } from '../../constants';
-import ActiveFiltersList from '../ActiveFiltersList';
-import getFromLocal from '../../helpers/getFromLocal';
-import setLocalStorage from '../../helpers/setLocalStorage';
-import { ModalContextWrapper } from '../../Contexts/ModalContext';
-import Modal from '../Modals/Modal';
-import SortModal from '../Modals/SortModal';
-import MoveModal from '../Modals/MoveModal';
-import { filterList, getPseudoLaunchers, sortList } from '../../helpers';
-
 
 const Movelist = ({
     setCharacterView,
@@ -40,41 +38,34 @@ const Movelist = ({
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
     const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
-    const verifiedLocalFilters = localFilters
-        .filter(lFilter => !!movelistFilterOptions
-            .find(fOption => fOption.id === lFilter.id));
+
     const [customMoves, setCustomMoves] = useState(null);
     const [comboLaunchers, setComboLaunchers] = useState([]);
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
     const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
-    const [selectedFilters, setSelectedFilters] = useState(verifiedLocalFilters);
-    const [showSortModal, setShowSortModal] = useState(false);
+    const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [selectedMove, setSelectedMove] = useState(null);
+    const [showSortModal, setShowSortModal] = useState(false);
     const [showMoveModal, setShowMoveModal] = useState(false);
     const selectedMoveset = selectedCharacterMoveset[selectedMoveCategory];
-
-    const scrollToTop = () => {
-        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
-    }
 
     useEffect(() => {
         const localCustomMoves = getCustomMoves(selectedCharacter)
         const localCombos = getCombos(selectedCharacter);
         const newLaunchers = getPseudoLaunchers(localCombos);
-        const verifiedFilters = selectedFilters
-            .filter(lFilter => !!movelistFilterOptions
-                .find(fOption => fOption.id === lFilter.id));
+
         setCustomMoves(localCustomMoves);
         setComboLaunchers(newLaunchers);
-        setSelectedFilters(verifiedFilters);
-        setSelectedMoveCategory('all_moves');
-        scrollToTop();
+        setSelectedMoveCategory(STRINGS.ALL_MOVES);
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [selectedCharacter]
     )
 
-    if (!customMoves) return null;
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     const handleFiltersChange = (newFilters) => {
         if (newFilters) {
@@ -84,12 +75,20 @@ const Movelist = ({
         }
     }
 
-    const hadleSortChange = (newSort) => {
+    const handleSortChange = (newSort) => {
         if (newSort) {
             setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(newSort));
             setSelectedMovelistSort(newSort);
             scrollToTop();
         }
+    }
+
+    const handleSortDirChange = () => {
+        const newSort = {
+            ...selectedMovelistSort,
+            dir: selectedMovelistSort.dir === 'asc' ? 'dsc' : 'asc'
+        }
+        handleSortChange(newSort);
     }
 
     const onMoveClick = (move) => {
@@ -120,19 +119,19 @@ const Movelist = ({
         setCharacterView(STRINGS.COMBOS);
     }
 
-    const handleMoveModalClose = (note, moveId) => {
+    const handleMoveModalClose = (note) => {
         if (note === undefined) {
             toggleMoveModal();
             return;
         }
-        const moveMatch = customMoves.find(fMove => fMove.id === moveId);
+        const moveMatch = customMoves.find(fMove => fMove.id === selectedMove.id);
         let updatedCustomMoves;
         if (!moveMatch?.favourite && !note) {
-            updatedCustomMoves = deleteCustomMove(selectedCharacter, moveId);
+            updatedCustomMoves = deleteCustomMove(selectedCharacter, selectedMove.id);
         } else {
             const newMove = {
                 ...moveMatch,
-                id: moveId,
+                id: selectedMove.id,
                 note: note
             };
             updatedCustomMoves = updateCustomMoves(selectedCharacter, newMove, !moveMatch);
@@ -142,39 +141,39 @@ const Movelist = ({
         toggleMoveModal();
     }
 
-    const onMoveAttackLevelClick = (attackLevelFilterId) => {
-        let updatedFilters;
-        if (!!selectedFilters.find(sFilter => sFilter.id === attackLevelFilterId)) {
-            updatedFilters = selectedFilters.filter(sFilter => sFilter.id !== attackLevelFilterId)
-        } else {
-            const newFilter = movelistFilterOptions.find(fOption => fOption.id === attackLevelFilterId);
-            updatedFilters = [
-                ...selectedFilters.map(filter => filter),
-                newFilter
-            ]
-        };
-        handleFiltersChange(updatedFilters);
-    }
-
-    const onMoveCategoryClick = (categoryName) => {
-        const { id: categoryId } = moveCategories.find(cat => cat.name === categoryName) || '';
-        if (!categoryId) return;
-        const newMoveCategory = categoryId === selectedMoveCategory ?
-            moveCategories[0].id : categoryId;
-        handleCategoryChange(newMoveCategory);
-    }
-
-    const onMoveCommandClick = (newFilter) => {
-        let newFilters;
-        if (!!selectedFilters.find(filter => filter.value === newFilter.value)) {
-            newFilters = selectedFilters.filter(filter => filter.value !== newFilter.value);
-        } else {
-            newFilters = [
-                ...selectedFilters.map(filter => filter),
-                newFilter
-            ]
+    const onMoveFilterPropClick = (propKey, propValue) => {
+        const filterOptionMatch = movelistFilterOptions.find(fOption => {
+            if (propKey === STRINGS.COMMAND) return fOption.key === propKey;
+            return fOption.value === propValue;
+        });
+        if (!filterOptionMatch) return;
+        const newFilter = { ...filterOptionMatch };
+        newFilter.value = propValue;
+        newFilter.id = `${propKey}/${propValue}`;
+        if (propKey === STRINGS.COMMAND) {
+            newFilter.name = 'Command';
+            newFilter.short_name = 'Cmd';
         }
-        handleFiltersChange(newFilters);
+        const filteredFilters = selectedFilters
+            .filter(sFilter => sFilter.id !== `${propKey}/${propValue}`);
+        if (filteredFilters.length !== selectedFilters.length) {
+            handleFiltersChange(filteredFilters);
+        } else {
+            handleFiltersChange([...filteredFilters, newFilter]);
+        }
+    }
+
+    const onMoveSortablePropClick = (newSortKey) => {
+        if (newSortKey === selectedMovelistSort.key) {
+            handleSortDirChange();
+
+        } else {
+            const newSortValue = MOVELIST_SORT_OPTIONS
+                .find(sOption => sOption.key === newSortKey);
+
+            if (!newSortValue) return;
+            handleSortChange(newSortValue);
+        }
     }
 
     const handleActiveFilterClick = (filter) => {
@@ -187,26 +186,11 @@ const Movelist = ({
         toggleSortModal();
     }
 
-    const handleSortDirChange = () => {
-        const newSort = {
-            ...selectedMovelistSort,
-            dir: selectedMovelistSort.dir === 'asc' ? 'dsc' : 'asc'
-        }
-        hadleSortChange(newSort);
-    }
 
-    const handleSortChange = (sort) => {
-        if (!sort) return;
-        hadleSortChange(sort);
-    }
 
-    const toggleSortModal = () => {
-        setShowSortModal(!showSortModal);
-    }
+    const toggleSortModal = () => setShowSortModal(!showSortModal);
 
-    const toggleMoveModal = () => {
-        setShowMoveModal(!showMoveModal);
-    }
+    const toggleMoveModal = () => setShowMoveModal(!showMoveModal);
 
     const handleCategoryChange = (newCategory) => {
         if (newCategory) {
@@ -216,42 +200,38 @@ const Movelist = ({
         }
     }
 
+    if (!customMoves || !selectedMoveset) return null;
 
-
-    if (!selectedMoveset) return null;
     const filteredMovelist = filterList(selectedMoveset, selectedFilters, customMoves);
     const sortedMovelist = sortList(filteredMovelist, selectedMovelistSort);
     const numerOfMoves = sortedMovelist.length;
     const showSimpleView = listView === 'S';
-    const attackLevelOptions = movelistFilterOptions.filter(fOption => fOption.key === 'attack_level');
-
+    const attackLevelOptions = movelistFilterOptions.filter(fOption => fOption.key === STRINGS.ATTACK_LEVEL);
+    
     return (
         <div className='movelist'>
             <ModalContextWrapper
                 showModal={showSortModal}
                 closeModal={handleSortModalClose}
             >
-                <Modal>
-                    <SortModal
-                        selectedSort={selectedMovelistSort}
-                        sortOptions={MOVELIST_SORT_OPTIONS}
-                    />
-                </Modal>
+                <SortModal
+                    selectedSort={selectedMovelistSort}
+                    sortOptions={MOVELIST_SORT_OPTIONS}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showMoveModal}
                 closeModal={handleMoveModalClose}
                 closeOnBgClick={false}
             >
-                <Modal>
-                    <MoveModal
-                        move={selectedMove}
-                        moveCategories={moveCategories}
-                        customMoves={customMoves}
-                        attackLevelOptions={attackLevelOptions}
-                        onMoveFavouriteClick={onMoveFavouriteClick}
-                    />
-                </Modal>
+                <MoveModal
+                    move={selectedMove}
+                    customMove={customMoves.find(cMove => cMove.id === selectedMove?.id) || {}}
+                    moveCategories={moveCategories}
+                    customMoves={customMoves}
+                    attackLevelOptions={attackLevelOptions}
+                    onMoveFavouriteClick={onMoveFavouriteClick}
+                />
             </ModalContextWrapper>
             <ListHeader
                 moveCategories={moveCategories}
@@ -282,8 +262,6 @@ const Movelist = ({
                                 key={move.id}
                                 move={move}
                                 customMove={customMove}
-                                moveCategories={moveCategories}
-                                selectedMoveCategory={selectedMoveCategory}
                                 selectedFilters={selectedFilters}
                                 selectedSort={selectedMovelistSort}
                                 showSimpleView={showSimpleView}
@@ -291,13 +269,10 @@ const Movelist = ({
                                 attackLevelOptions={attackLevelOptions}
                                 handleFiltersChange={handleFiltersChange}
                                 onMoveClick={onMoveClick}
-                                handleSortChange={handleSortChange}
-                                handleSortDirChange={handleSortDirChange}
+                                onMoveSortablePropClick={onMoveSortablePropClick}
                                 onMoveFavouriteClick={onMoveFavouriteClick}
-                                onMoveCommandClick={onMoveCommandClick}
-                                onMoveCategoryClick={onMoveCategoryClick}
-                                onMoveAttackLevelClick={onMoveAttackLevelClick}
                                 onMoveCombosClick={onMoveCombosClick}
+                                onMoveFilterPropClick={onMoveFilterPropClick}
                             />
                         )
                     })}

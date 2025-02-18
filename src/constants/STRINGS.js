@@ -1,12 +1,17 @@
 const STRINGS = {
+    ALL: 'ALL',
     ASC: 'asc',
     DSC: 'dsc',
+    // 
     ALL_MOVES: 'all_moves',
+    ATTACK_LEVEL: 'attack_level',
+    DODE_DIRECTION: 'dodge_direction',
     CUSTOM_MOVES: 'custom_moves',
-    DEFAULT_COMBO_NAME:'Combo Name',
+    // 
+    DEFAULT_COMBO_NAME: 'Combo Name',
     LAUNCHERS: 'launchers',
     MOVES: 'moves',
-    MATCHUPS:'matchups',
+    MATCHUPS: 'matchups',
     MOVELIST: 'movelist',
     COMBOS: 'combos',
     COMBOS_SEARCH: 'combos_search',
@@ -15,6 +20,11 @@ const STRINGS = {
     NOTES: 'notes',
     TAGS: 'tags',
     RESET_LOCAL_DATA: 'RESET_LOCAL_DATA',
+    'combos_search': 'Combo Search',
+    'movelist': 'Movelist',
+    'combos': 'Combos',
+    'matchups': 'Matchups',
+    'notes': 'Notes'
 }
 
 export default STRINGS;

@@ -1,9 +1,8 @@
-import { CHARACTERS } from "../constants";
+import { CHARACTERS_JSON } from "../constants";
 
 const characterIdToName = (characterId, returnShortName) => {
     if (!characterId) return '';
-    const characterMatch = CHARACTERS
-        .find(character => character.id === characterId);
+    const characterMatch = CHARACTERS_JSON[characterId];
     return returnShortName ? characterMatch?.short_name : characterMatch?.name;
 }
 

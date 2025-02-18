@@ -40,18 +40,13 @@
         &__badges {
             display: flex;
             flex-direction: row;
-            gap: 0.5rem;
+            gap: 0.3rem;
 
             .button {
                 min-width: 2.5rem;
                 min-height: 2.5rem;
                 width: 2.5rem;
                 height: 2.5rem;
-            }
-
-            .favourite {
-                color: black;
-                background-color: gold;
             }
         }
 
@@ -129,17 +124,22 @@
     &__top {
         display: flex;
         gap: 0.5rem;
-
-        .button {
-            font-size: 0.9rem !important;
-            min-width: 2.5rem !important;
-            width: 2.5rem !important;
-            min-height: 2.5rem !important;
-            height: 2.5rem !important;
-        }
+        justify-content: space-between;
 
         .move-command {
             padding: 0;
+        }
+
+        &__buttons {
+            display: flex;
+            gap: 0.3rem;
+
+            .button {
+                min-width: 2.5rem;
+                min-height: 2.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+            }
         }
     }
 

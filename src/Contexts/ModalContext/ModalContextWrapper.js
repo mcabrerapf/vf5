@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import './ModalContextWrapper.scss';
 import { ModalContextProvider } from './ModalContext';
+import Modal from '../../Components/Modals/Modal';
 
 function ModalContextWrapper({
   children,
   showModal,
   closeOnBgClick = true,
-  closeModal
+  closeModal = () => { }
 }) {
   const backgroundRef = useRef(null);
   const wrapperRef = useRef(null);
-
 
   useEffect(() => {
     function handleClickOutside({ target }) {
@@ -45,10 +45,11 @@ function ModalContextWrapper({
             closeModal,
           }}
         >
-          {children}
+          <Modal>
+            {children}
+          </Modal>
         </ModalContextProvider>
       </div>
-
     </div>
   );
 }

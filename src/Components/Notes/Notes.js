@@ -3,7 +3,6 @@ import './Notes.scss'
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
-import Modal from '../Modals/Modal';
 import NoteModal from '../Modals/NoteModal';
 import DeleteModal from '../Modals/DeleteModal';
 import Note from '../Note';
@@ -24,7 +23,7 @@ const Notes = () => {
         [selectedCharacter]
     )
 
-    if(!notes) return null;
+    if (!notes) return null;
 
     const handleCloseModal = (newNote) => {
         if (newNote) {
@@ -73,20 +72,16 @@ const Notes = () => {
                 closeModal={handleCloseModal}
                 closeOnBgClick={false}
             >
-                <Modal>
-                    <NoteModal
-                        selectedNote={selectedNote}
-                        handleDeleteNoteClick={handleDeleteNoteClick}
-                    />
-                </Modal>
+                <NoteModal
+                    selectedNote={selectedNote}
+                    handleDeleteNoteClick={handleDeleteNoteClick}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showDeleteNoteModal}
                 closeModal={handleDeleteNote}
             >
-                <Modal>
-                    <DeleteModal data={selectedNote} />
-                </Modal>
+                <DeleteModal data={selectedNote} />
             </ModalContextWrapper>
             <div className='notes__list-container'>
                 <ul

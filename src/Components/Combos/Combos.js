@@ -12,7 +12,6 @@ import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Button from '../Button';
 import Combo from '../Combo';
-import Modal from '../Modals/Modal';
 import ComboBuilderModal from '../Modals/ComboBuilderModal';
 import DeleteModal from '../Modals/DeleteModal';
 import ActiveFiltersList from '../ActiveFiltersList';
@@ -212,37 +211,31 @@ const Combos = ({
                 showModal={showSortModal}
                 closeModal={handleSortModalClose}
             >
-                <Modal>
-                    <SortModal
-                        selectedSort={selectedSort}
-                        sortOptions={COMBOS_SORT_OPTIONS}
-                    />
-                </Modal>
+                <SortModal
+                    selectedSort={selectedSort}
+                    sortOptions={COMBOS_SORT_OPTIONS}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showComboBuilderModal}
                 closeModal={handleCloseModal}
                 closeOnBgClick={false}
             >
-                <Modal>
-                    <ComboBuilderModal
-                        selectedCombo={selectedCombo}
-                        combos={combos}
-                        combosFilterOptions={combosFilterOptions}
-                        handleDeleteClick={handleDeleteClick}
-                    />
-                </Modal>
+                <ComboBuilderModal
+                    selectedCombo={selectedCombo}
+                    combos={combos}
+                    combosFilterOptions={combosFilterOptions}
+                    handleDeleteClick={handleDeleteClick}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showDeleteModal}
                 closeModal={handleDeleteCombo}
             >
-                <Modal>
-                    <DeleteModal
-                        data={selectedCombo}
-                        combosFilterOptions={combosFilterOptions}
-                    />
-                </Modal>
+                <DeleteModal
+                    data={selectedCombo}
+                    combosFilterOptions={combosFilterOptions}
+                />
             </ModalContextWrapper>
             <ListHeader
                 listType={STRINGS.COMBOS}

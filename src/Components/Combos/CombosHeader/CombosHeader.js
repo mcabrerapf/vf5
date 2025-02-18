@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './CombosHeader.scss'
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
-import Modal from '../../Modals/Modal';
 import Button from '../../Button';
 import CombosFiltersModal from '../../Modals/CombosFiltersModal';
 
@@ -43,12 +42,10 @@ const CombosHeader = ({
                 showModal={showFiltersModal}
                 closeModal={handleFiltersModalClose}
             >
-                <Modal>
-                    <CombosFiltersModal
-                        combos={combos}
-                        selectedFilters={selectedFilters}
-                    />
-                </Modal>
+                <CombosFiltersModal
+                    combos={combos}
+                    selectedFilters={selectedFilters}
+                />
             </ModalContextWrapper>
             <div className='combos-header__filter-buttons'>
                 <Button

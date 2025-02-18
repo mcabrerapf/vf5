@@ -6,7 +6,6 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import { SearchIcon } from '../Icon';
 import Combo from '../Combo';
 import Button from '../Button';
-import Modal from '../Modals/Modal';
 import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
 import { CHARACTERS_JSON, STRINGS } from '../../constants';
 import { getCombos, updateCombos } from '../../services';
@@ -57,7 +56,7 @@ const CombosSearch = ({
     }
 
     const handleFiltersModalClose = async (newFilters) => {
-        if(!newFilters) return;
+        if (!newFilters) return;
         setShowFiltersModal(!showFiltersModal);
         setIsLoading(true);
         await getAllCombos({
@@ -89,12 +88,10 @@ const CombosSearch = ({
                 showModal={showFiltersModal}
                 closeModal={handleFiltersModalClose}
             >
-                <Modal>
-                    <CombosSearchFiltersModal
-                        selectedFilters={selectedFilters}
-                        filterOptions={characterFilterOptions}
-                    />
-                </Modal>
+                <CombosSearchFiltersModal
+                    selectedFilters={selectedFilters}
+                    filterOptions={characterFilterOptions}
+                />
             </ModalContextWrapper>
             <div
                 className='combos-search__header'
@@ -153,7 +150,7 @@ const CombosSearch = ({
 
                         return (
                             <Combo
-                                combo={{...combo, favourite: false}}
+                                combo={{ ...combo, favourite: false }}
                                 showSaveButton
                                 hideEditButton
                                 hideFavouriteButton

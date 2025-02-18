@@ -176,4 +176,13 @@
         color: white;
         background-color: var(--super-heavyweight);
     }
+
+    &.save {
+        color: var(--mid);
+    }
+
+    &.favourite {
+        color: black;
+        background-color: gold;
+    }
 }

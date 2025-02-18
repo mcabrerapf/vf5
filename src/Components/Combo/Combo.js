@@ -202,13 +202,33 @@ const Combo = ({
                     modifier={"launcher"}
                     command={[...launcher, "⊙", ...command]}
                 />
-                {showSimpleView &&
-                    <Button
-                        onClick={handleDamageClick}
-                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
-                        text={damage}
-                    />
-                }
+                <div
+                    className='combo__command__buttons'
+                >
+                    {showSimpleView &&
+                        <>
+                            <Button
+                                onClick={handleDamageClick}
+                                modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                                text={damage}
+                            />
+                            {!hideFavouriteButton &&
+                                <Button
+                                    onClick={handleFavouriteClick}
+                                    modifier={favourite ? 'small favourite' : 'small'}
+                                    text={'★'}
+                                />
+                            }
+                            {!hideEditButton &&
+                                <Button
+                                    onClick={handleComboClick}
+                                >
+                                    <EditIcon />
+                                </Button>
+                            }
+                        </>
+                    }
+                </div>
             </div>
             {parsedNote &&
                 <div className='combo__note'>

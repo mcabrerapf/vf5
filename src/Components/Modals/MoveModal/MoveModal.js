@@ -1,42 +1,36 @@
-import React, { useState } from 'react';
 import './MoveModal.scss'
+import React, { useState } from 'react';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import Move from '../../Move';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
-import { SaveIcon } from '../../Icon';
 
 const MoveModal = ({
-    move,
+    move = {},
+    customMove = {},
     moveCategories,
     selectedSort,
-    customMoves,
     attackLevelOptions,
-    onMoveFavouriteClick
+    onMoveFavouriteClick = () => { }
 }) => {
     const [noteValue, setNoteValue] = useState(move.notes || '')
     const { closeModal } = useModalContext();
 
-    const onSave = () => {
-        closeModal(noteValue, move.id);
-    }
+    const onSave = () => closeModal(noteValue, move.id);
 
-    const onChange = ({ target: { value } }) => {
-        setNoteValue(value);
-    }
-    const customMove = customMoves.find(cMove => cMove.id === move.id) || {};
-    
+    const onChange = ({ target: { value } }) => setNoteValue(value);
+
     return (
         <div className='move-modal'>
             <div className='move-modal__content'>
                 <Move
+                    hideNote
+                    hideEditButton
                     move={move}
                     moveCategories={moveCategories}
                     selectedSort={selectedSort}
                     customMove={customMove}
                     attackLevelOptions={attackLevelOptions}
-                    hideNote
-                    hideEditButton
                     onMoveFavouriteClick={onMoveFavouriteClick}
                 />
                 <div className='move-modal__content__textarea-container'>
@@ -47,18 +41,15 @@ const MoveModal = ({
                 </div>
             </div>
             <ModalFooter modifier={"align-right"}>
-
                 <Button
                     text='CANCEL'
                     onClick={() => closeModal()}
                 />
                 <Button
-                    modifier={'save-button'}
+                    modifier={'save'}
                     onClick={onSave}
-                >
-                    SAVE
-                </Button>
-
+                    text='SAVE'
+                />
             </ModalFooter>
         </div>
     )

@@ -1,12 +1,10 @@
 import './ListHeader.scss'
 import React, { useState } from 'react';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
-import Modal from '../Modals/Modal';
 import MoveCategorySelectModal from '../Modals/MoveCategorySelectModal';
 import MoveListFiltersModal from '../Modals/MoveListFiltersModal';
 import Button from '../Button';
-import { SELECTED_MOVE_CATEGORY_KEY, STRINGS } from '../../constants';
-import { setLocalStorage } from '../../helpers';
+import { STRINGS } from '../../constants';
 import { SearchIcon } from '../Icon';
 import TextSearchModal from '../Modals/TextSearchModal';
 import CombosFiltersModal from '../Modals/CombosFiltersModal';
@@ -14,11 +12,11 @@ const { MOVELIST } = STRINGS;
 
 const ListHeader = ({
     listType = MOVELIST,
-    moveCategories = [],
     selectedMoveCategory = '',
+    moveCategories = [],
     selectedFilters = [],
     filterOptions = [],
-    listItems=[],
+    listItems = [],
     numerOfItems,
     handleFiltersChange = () => { },
     handleCategoryChange = () => { },
@@ -41,7 +39,7 @@ const ListHeader = ({
     }
 
     const toggleMoveTypeSelectModal = () => {
-        if(listType === 'combos') return;
+        if (listType === 'combos') return;
         setShowMoveCategorySelectModal(!showMoveCategoryModal);
     }
 
@@ -87,43 +85,37 @@ const ListHeader = ({
     const movelistButtonText = selectedMoveCategory === 'all_moves' ?
         `All Moves (${numerOfItems})` :
         `${truncatedMoveCategory} (${numerOfItems})`;
-        const moveButtonText = listType ===MOVELIST?  movelistButtonText :  `Combos (${numerOfItems})`
+    const moveButtonText = listType === MOVELIST ? movelistButtonText : `Combos (${numerOfItems})`
     const FilterModal = listType === MOVELIST ? MoveListFiltersModal : CombosFiltersModal;
-    
+
     return (
         <header className='list-header'>
             <ModalContextWrapper
                 showModal={showMoveCategoryModal}
                 closeModal={handleCategorySelectModalClose}
             >
-                <Modal>
-                    <MoveCategorySelectModal
-                        selectedMoveCategory={selectedMoveCategory}
-                        moveCategories={moveCategories}
-                    />
-                </Modal>
+                <MoveCategorySelectModal
+                    selectedMoveCategory={selectedMoveCategory}
+                    moveCategories={moveCategories}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showFiltersModal}
                 closeModal={handleFiltersModalClose}
             >
-                <Modal>
-                    <FilterModal
-                        selectedFilters={selectedFilters}
-                        filterOptions={filterOptions}
-                        listItems={listItems}
-                    />
-                </Modal>
+                <FilterModal
+                    selectedFilters={selectedFilters}
+                    filterOptions={filterOptions}
+                    listItems={listItems}
+                />
             </ModalContextWrapper>
             <ModalContextWrapper
                 showModal={showTextSearchModal}
                 closeModal={handleTextSearchModalClose}
             >
-                <Modal>
-                    <TextSearchModal
-                        selectedFilters={selectedFilters}
-                    />
-                </Modal>
+                <TextSearchModal
+                    selectedFilters={selectedFilters}
+                />
             </ModalContextWrapper>
             <Button
                 modifier={'active'}

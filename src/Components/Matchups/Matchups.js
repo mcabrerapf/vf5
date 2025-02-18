@@ -4,7 +4,6 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import { useMainContext } from '../../Contexts/MainContext'
 import Matchup from '../Matchup';
 import ActiveFiltersList from '../ActiveFiltersList';
-import Modal from '../Modals/Modal';
 import SortModal from '../Modals/SortModal';
 import CharacterMatchupView from './CharacterMatchupView';
 import { CHARACTER_ID_TO_NAME, MATHCHUPS_SORT_OPTIONS, SELECTED_MATCHUPS_SORT_KEY, SELECTED_MATCHUPS_VIEW_KEY, } from '../../constants'
@@ -101,12 +100,10 @@ const Matchups = () => {
                 showModal={showSortModal}
                 closeModal={handleSortModalClose}
             >
-                <Modal>
-                    <SortModal
-                        selectedSort={selectedSort}
-                        sortOptions={MATHCHUPS_SORT_OPTIONS}
-                    />
-                </Modal>
+                <SortModal
+                    selectedSort={selectedSort}
+                    sortOptions={MATHCHUPS_SORT_OPTIONS}
+                />
             </ModalContextWrapper>
             <ActiveFiltersList
                 onSortClick={onSortClick}
