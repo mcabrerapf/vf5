@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharacterMatchupView.scss'
 import { useMainContext } from '../../../Contexts/MainContext';
-import { getCombos, getCustomMoves, updateMatchups } from '../../../services';
+import { updateMatchups } from '../../../services';
+import MatchupCombos from './MatchupCombos';
+import MatchupMoves from './MatchupMoves';
 import Button from '../../Button';
-import { EditIcon, ChevronDown, MoveLeft, VsIcon, ChevronUp } from '../../Icon';
+import { EditIcon, MoveLeft, VsIcon } from '../../Icon';
 import TextWithCommand from '../../TextWithCommand';
 import CharacterSelectModal from '../../Modals/CharacterSelectModal';
-import Move from '../../Move';
-import Combo from '../../Combo';
-import { sortList, stringNotationParser } from '../../../helpers';
+import { stringNotationParser } from '../../../helpers';
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import MatchupModal from '../../Modals/MatchupModal';
 import { CHARACTERS_JSON } from '../../../constants';
@@ -22,8 +22,6 @@ const CharacterMatchupView = ({
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showMatchupModal, setShowMatchupModal] = useState(false);
-    const [showMoves, setShowMoves] = useState(true);
-    const [showCombos, setShowCombos] = useState(true);
 
     useEffect(
         () => {
@@ -36,43 +34,8 @@ const CharacterMatchupView = ({
     const {
         short_name,
     } = CHARACTERS_JSON[matchupId];
-    const {
-        movelist,
-        move_categories: moveCategories,
-        combos_filter_options: combosFilterOptions,
-        movelist_filter_options: movelistFilterOptions,
-    } = CHARACTERS_JSON[selectedCharacter];
-    const combos = getCombos(selectedCharacter);
-    const customMoves = getCustomMoves(selectedCharacter);
-    const matchupCombos = combos
-        .filter(combo => !!combo.character_tags.includes(matchupId))
-    const parsedNote = stringNotationParser(note);
-    const combosByLauncher = {};
-    [...matchupCombos]
-        .sort((a, b) => a.launcher.length - b.launcher.length)
-        .forEach(combo => {
-            const stringLauncher = combo.launcher.join('-');
-            if (!combosByLauncher[stringLauncher]) {
-                combosByLauncher[stringLauncher] = [combo];
-            } else {
-                combosByLauncher[stringLauncher].push(combo);
-            }
-        });
-    Object.keys(combosByLauncher).forEach(key => {
-        combosByLauncher[key] = sortList(combosByLauncher[key], {
-            key: 'launcher',
-            dir: 'dsc',
-            type: "array",
-        })
-    })
 
-    const favouriteMoves = customMoves.map(cMove => {
-        if (!cMove.favourite) return null;
-        const moveMatch = movelist.all_moves.find(move => move.id === cMove.id);
-        if (!moveMatch) return null;
-        return { ...moveMatch, note: cMove.note || moveMatch.note };
-    }).filter(Boolean)
-    const attackLevelOptions = movelistFilterOptions.filter(fOption => fOption.key === 'attack_level');
+    const parsedNote = stringNotationParser(note);
 
     const scrollToTop = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -181,83 +144,24 @@ const CharacterMatchupView = ({
             >
                 <div
                     ref={listRef}
-                    className='character-matchup__content__combos-notes'
+                    className='character-matchup__content__scrollable'
                 >
                     {parsedNote &&
                         <div
-                            className='character-matchup__content__combos-notes__list__note'
+                            className='character-matchup__content__scrollable__note'
                         >
                             <TextWithCommand
                                 content={parsedNote}
                             />
                         </div>
                     }
-                    <div
-                        className='character-matchup__content__combos-notes__header'
-                    >
-                        <Button
-                            modifier={'active center'}
-                            onClick={() => setShowMoves(!showMoves)}
-                        >
-                            <span>MOVES</span>
-                            {showMoves ? <ChevronDown /> : <ChevronUp />}
-                        </Button>
-
-                    </div>
-                    <div
-                        className='character-matchup__content__combos-notes__list'
-                    >
-                        {showMoves && favouriteMoves.map(move => {
-                            return (
-                                <Move
-                                    key={move.id}
-                                    move={move}
-                                    showSimpleView
-                                    hideEditButton
-                                    hideFavouriteButton
-                                    moveCategories={moveCategories}
-                                    attackLevelOptions={attackLevelOptions}
-                                />
-                            )
-
-                        })}
-                    </div>
-                    <div
-                        className='character-matchup__content__combos-notes__header'
-                    >
-                        <Button
-                            modifier={'active center'}
-                            onClick={() => setShowCombos(!showCombos)}
-                        >
-                            <span>COMBOS</span>
-                            {showCombos ? <ChevronDown /> : <ChevronUp />}
-                        </Button>
-                    </div>
-                    <div
-                        className='character-matchup__content__combos-notes__list'
-                    >
-                        {showCombos && Object.keys(combosByLauncher).map(key => {
-                            return combosByLauncher[key].map(combo => {
-
-                                return (
-                                    <div
-                                        key={combo.id}
-                                        className={`character-matchup__content__combos-notes__list__combo${combo.favourite ? ' favourite' : ''}`}
-                                    >
-                                        <Combo
-                                            showSimpleView
-                                            hideEditButton
-                                            hideFavouriteButton
-                                            showOtherTags
-                                            combo={combo}
-                                            combosFilterOptions={combosFilterOptions}
-                                        />
-                                    </div>
-                                )
-                            })
-                        })}
-                        <div className='bottom-separator s'>.</div>
-                    </div>
+                    <MatchupMoves
+                        selectedCharacter={selectedCharacter}
+                    />
+                    <MatchupCombos
+                        selectedCharacter={selectedCharacter}
+                        matchupId={matchupId}
+                    />
                 </div>
             </div>
         </div>

@@ -127,10 +127,11 @@ const CombosSearch = ({
                 </div>
 
                 <Button
+                    modifier={selectedFilters.length ? 'active' : ''}
+                    text={'Filters'}
                     onClick={() => setShowFiltersModal(true)}
-                >
-                    <SearchIcon />
-                </Button>
+                />
+
             </div>
             <ActiveFiltersList
                 selectedFilters={selectedFilters}

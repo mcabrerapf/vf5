@@ -1,0 +1,19 @@
+.matchup-moves {
+    &__header {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        .button {
+            flex: 1;
+
+            span {
+                padding-right: 1rem;
+            }
+        }
+    }
+
+    &__list {
+        width: 100%;
+    }
+}

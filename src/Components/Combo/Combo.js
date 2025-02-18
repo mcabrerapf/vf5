@@ -213,6 +213,14 @@ const Combo = ({
                                 modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
                                 text={damage}
                             />
+                            {showSaveButton &&
+                                <Button
+                                    disabled={disabledSaveButton}
+                                    onClick={handleSaveButtonClick}
+                                >
+                                    <DownloadIcon />
+                                </Button>
+                            }
                             {!hideFavouriteButton &&
                                 <Button
                                     onClick={handleFavouriteClick}
@@ -281,13 +289,6 @@ const Combo = ({
             }
             {showSimpleView && showOtherTags &&
                 <div className='combo__tags'>
-                    {hasAllCharacters &&
-                        <MoveTypeBadge
-                            modifier={"character"}
-                            moveType={'ALL'}
-                            onClick={handleAllClick}
-                        />
-                    }
                     {tags.map(tag => {
                         const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
                         const modifier =
