@@ -1,9 +1,9 @@
 .combos {
-    height: 100%;
+    height: calc(100% - 4rem);
     width: 100%;
 
     &__list-container {
-        height: calc(100% - 11rem);
+        height: calc(100% - 10rem);
 
         &__list {
             display: flex;
@@ -26,12 +26,14 @@
     &__footer {
         position: absolute;
         display: flex;
+        box-sizing: border-box;
         background-color: rgba(0, 0, 0, 0.8);
         box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.9);
         height: 4rem;
         width: 100%;
-        bottom: 0rem;
-        padding-bottom: 0.5rem;
+        bottom: 0.5rem;
+        padding: 0rem 0.5rem;
+        // padding-bottom: 0.5rem;
         justify-content: space-between;
         
         &__empty {
