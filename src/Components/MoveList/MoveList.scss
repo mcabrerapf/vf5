@@ -1,10 +1,10 @@
 .movelist {
-    height: 100%;
+    height: calc(100% - 4rem);
     width: 100%;
     
     &__list-container {
         box-sizing: border-box;
-        height: calc(100% - 10rem);
+        height: calc(100% - 8rem);
 
         &__list {
             display: flex;

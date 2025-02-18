@@ -1,6 +1,6 @@
 .character-matchup {
-    height: 100%;
-
+    height: calc(100% - 4rem);
+    width: 100%;
     &__header {
         display: flex;
         height: 4rem;
@@ -81,7 +81,7 @@
 
         &__combos-notes {
             width: 100%;
-            height: calc(100% - 8rem);
+            height: calc(100% - 4rem);
             overflow-y: auto;
 
             &__header {
