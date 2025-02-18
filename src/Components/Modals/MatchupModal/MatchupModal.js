@@ -149,11 +149,10 @@ const MatchupModal = ({
 						onClick={() => closeModal()}
 					/>
 					<Button
-						modifier={'save-button'}
+						modifier={'save'}
+						text='SAVE'
 						onClick={onSaveClick}
-					>
-						SAVE
-					</Button>
+					/>
 				</div>
 			</ModalFooter>
 		</div>

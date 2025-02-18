@@ -153,12 +153,11 @@ const ComboBuilderModal = ({
                         onClick={() => closeModal()}
                     />
                     <Button
-                        modifier={'save-button'}
+                        modifier={'save'}
+                        text='SAVE'
                         disabled={!canSave || isSaving}
                         onClick={handleSaveCombo}
-                    >
-                        SAVE
-                    </Button>
+                    />
                 </div>
             </ModalFooter>
         </div>

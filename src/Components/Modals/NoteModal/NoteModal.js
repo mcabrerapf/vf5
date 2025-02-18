@@ -56,12 +56,11 @@ const NoteModal = ({
                         onClick={() => closeModal()}
                     />
                     <Button
-                        modifier={'save-button'}
+                        modifier={'save'}
+                        text='SAVE'
                         disabled={!canSave}
                         onClick={handleSaveNote}
-                    >
-                        SAVE
-                    </Button>
+                    />
                 </div>
             </ModalFooter>
         </div>

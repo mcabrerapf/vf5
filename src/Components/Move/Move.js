@@ -32,6 +32,7 @@ const Move = ({
     const {
         id,
         name,
+        damage,
         command,
         dodge_direction,
         attack_level,
@@ -39,6 +40,7 @@ const Move = ({
     } = move;
     const isCommandFilterActive = !!selectedFilters.find(filter => filter.key === STRINGS.COMMAND);
     const isDodgeSelected = selectedFilters.find(filter => filter.key === STRINGS.DODE_DIRECTION && filter.value === dodge_direction);
+    const isDamageSortSelected = selectedSort.key === STRINGS.DAMAGE;
     const isFavourite = !!customMove.favourite;
     const extraNote = customMove.note;
     const stringCommand = command.join('-');
@@ -78,13 +80,18 @@ const Move = ({
         onMoveCombosClick(launcherFilter);
     }
 
-    const onNameClick = (e) => {
-        e.stopPropagation();
-        onSortablePropClick('name')
-    }
-
     const onSortablePropClick = (newSort) => {
         onMoveSortablePropClick(newSort);
+    }
+
+    const onNameClick = (e) => {
+        e.stopPropagation();
+        onSortablePropClick(STRINGS.NAME)
+    }
+
+    const onDamageClick = (e)=> {
+        e.stopPropagation();
+        onSortablePropClick(STRINGS.DAMAGE)
     }
 
     const handleFavouriteClick = (e) => {
@@ -100,7 +107,7 @@ const Move = ({
     const parsedNote = stringNotationParser(extraNote || notes);
     const hasCombos = comboLaunchers.includes(stringCommand);
     const { short_name } = attackLevelOptions.find(alOption => alOption.value === attack_level) || {};
-    const sortablePropsKeys = ['damage', 'sober', 'startup', 'active', 'total', 'hit', 'c_hit', 'crouch_hit', 'crouch_c_hit', 'block', 'crouch_recovery'];
+    const sortablePropsKeys = ['startup', 'active', 'total', 'hit', 'c_hit', 'crouch_hit', 'crouch_c_hit', 'block', 'crouch_recovery', 'sober',];
     const sortableProps = sortablePropsKeys
         .map(sOption => MOVELIST_SORT_OPTIONS.find(msOption => msOption.key === sOption));
 
@@ -127,6 +134,11 @@ const Move = ({
                             onClick={handleCombosClick}
                         />
                     }
+                    <Button
+                        onClick={onDamageClick}
+                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                        text={damage}
+                    />
                     <MoveTypeBadge
                         modifier={attack_level}
                         value={attack_level}
@@ -185,6 +197,7 @@ const Move = ({
             }
         </div>
     )
+
     return (
         <div
             className={className}
@@ -206,6 +219,11 @@ const Move = ({
                             onClick={handleCombosClick}
                         />
                     }
+                    <Button
+                        onClick={onDamageClick}
+                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                        text={damage}
+                    />
                     <MoveTypeBadge
                         modifier={attack_level}
                         value={attack_level}

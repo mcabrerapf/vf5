@@ -8,6 +8,8 @@ const STRINGS = {
     DODE_DIRECTION: 'dodge_direction',
     CUSTOM_MOVES: 'custom_moves',
     // 
+    DAMAGE: 'damage',
+    NAME: 'name',
     DEFAULT_COMBO_NAME: 'Combo Name',
     LAUNCHERS: 'launchers',
     MOVES: 'moves',

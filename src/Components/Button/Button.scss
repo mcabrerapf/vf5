@@ -179,10 +179,20 @@
 
     &.save {
         color: var(--mid);
+        border: 1px solid var(--mid);
     }
 
     &.favourite {
         color: black;
-        background-color: gold;
+        background-color: var(--favourite);
+        border: 1px solid var(--favourite);
+    }
+
+    &.damage {
+        color: var(--ex-high);
+    }
+
+    &.sort-selected {
+        border: 1px solid var(--side);
     }
 }
