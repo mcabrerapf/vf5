@@ -236,6 +236,17 @@ const Move = ({
                             onClick={handleCombosClick}
                         />
                     }
+                    <MoveTypeBadge
+                        modifier={attack_level}
+                        value={attack_level}
+                        moveType={short_name}
+                        onClick={handleOnMoveAttackLevelClick}
+                    />
+                    <Button
+                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
+                        text={dodgeValue}
+                        onClick={onDodgeClick}
+                    />
                     <Button
                         onClick={handleFavouriteClick}
                         modifier={isFavourite ? ' favourite' : ''}
@@ -257,7 +268,7 @@ const Move = ({
                 command={command}
             />
             <div className='move__category'>
-                <MoveTypeBadge
+                {/* <MoveTypeBadge
                     modifier={attack_level}
                     value={attack_level}
                     moveType={attackLevelName}
@@ -267,12 +278,12 @@ const Move = ({
                     modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
                     text={dodgeValue}
                     onClick={onDodgeClick}
-                />
-                <MoveTypeBadge
+                /> */}
+                {/* <MoveTypeBadge
                     modifier={selectedMoveCategory === category ? 'active' : 'not-selected'}
                     moveType={categoryName}
                     onClick={handleOnCategoryClick}
-                />
+                /> */}
                 {showSimpleView && hasCombos &&
                     <MoveTypeBadge
                         modifier={'not-selected'}
