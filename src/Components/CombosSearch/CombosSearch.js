@@ -80,7 +80,7 @@ const CombosSearch = ({
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
 
-console.log(localCombos, comboResults)
+
     return (
         <div
             className='combos-search'

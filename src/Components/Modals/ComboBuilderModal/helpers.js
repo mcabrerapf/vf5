@@ -1,9 +1,8 @@
 import { CHARACTERS, STRINGS } from "../../../constants";
 
-const getLauncherData = (launcher, character) => {
+const getLauncherData = (launcher, character, combosFilterOptions) => {
     const stringLauncher = launcher.join('');
-    const cleanLauncher = stringLauncher.replace(/\b(⊙|or|ch|side|wb|w|hit)\b/g, "");
-
+    const cleanLauncher = stringLauncher.replace(/\b(⊙|or|ch|side|wb|w|hit)\b/g, "").replace('[]', '');
     const characterMoves = CHARACTERS
         .find(char => char.id === character).movelist['all_moves'];
     const moveMatch = characterMoves
@@ -11,30 +10,25 @@ const getLauncherData = (launcher, character) => {
 
     if (!moveMatch) return {};
     const { attack_level, name } = moveMatch;
-
-    //TODO COMBO_FILTER_OPTIONS
-    const { id: validatedLauncerType } = []
-        .find(option => option.name === attack_level) || {};
-
-    return { attackLevel: validatedLauncerType, name: name };
+    return { attackLevel: attack_level, name: name };
 }
 
 const getExtraTags = (command) => {
     const extraTags = [];
     command.forEach(notation => {
-        if (notation === 'ch') extraTags.push(notation);
-        if (notation === 'side') extraTags.push(notation);
-        if (notation === 'wb') extraTags.push('wall')
-        if (notation === 'w') extraTags.push('wall')
+        if (notation === '[ch]') extraTags.push('ch');
+        if (notation === '[side]') extraTags.push('side');
+        if (notation === '[wb]') extraTags.push('wall')
+        if (notation === '[w]') extraTags.push('wall')
     })
 
     return extraTags;
 }
 
-const getCommandData = (launcher, comboNotation, character, tags) => {
-    const { attackLevel, name } = getLauncherData(launcher, character);
+const getCommandData = (launcher, comboNotation, character, tags, combosFilterOptions) => {
+    const { attackLevel, name } = getLauncherData(launcher, character, combosFilterOptions);
     const extraTags = getExtraTags(comboNotation);
-    const finalTags = [...tags, ...extraTags, attackLevel].filter(Boolean);
+    const finalTags = [...tags, attackLevel, ...extraTags,].filter(Boolean);
     return [[...new Set(finalTags)], name];
 }
 

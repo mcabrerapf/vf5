@@ -56,7 +56,6 @@ const CommandView = ({
                         type='number'
                         value={comboDamage}
                         onKeyDown={handleNameEnterKey}
-                        onFocus={() => setComboDamage('')}
                         onChange={handleDamageChange}
                         onBlur={handleDamageBlur}
                     />
