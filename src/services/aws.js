@@ -6,32 +6,40 @@ import {
 import { CREATE_COMBO, DELETE_COMBO, UPDATE_COMBO } from '../graphql/mutations';
 const client = generateClient();
 
-const buildFilters = (characterId, orOptions = []) => {
+const buildFilters = (characterId, orOptions = [], localIds = [], oIds = []) => {
+    const filters = {
+        characterId: { eq: characterId },
+    };
     const orFilters = orOptions.map(char => {
         if (!char.value) return null;
         return { character_tags: { contains: char.value } };
     })
         .filter(Boolean)
-    if (!orFilters.length) return {
-        characterId: { eq: characterId },
-    }
-    return {
-        // filter by saved ids as well
-        characterId: { eq: characterId },
-        or: orFilters
-    }
+    const andFilters = localIds.map(lId => {
+        if (!lId) return null;
+        return { lId: { ne: lId } };
+    })
+        .filter(Boolean)
+    oIds.forEach(oId => {
+        if (!oId) return null;
+        andFilters.push({ id: { ne: oId } });
+    })
+    if (!!orFilters.length) filters.or = orFilters;
+    if (!!andFilters.length) filters.and = andFilters;
+    return filters;
 }
-
 
 const getAllCombos = async ({
     characterId,
-    characterFilters = []
+    characterFilters = [],
+    lIds = [],
+    oIds
 }) =>
     client
         .graphql({
             query: GET_ALL_COMBOS,
             variables: {
-                filter: buildFilters(characterId, characterFilters)
+                filter: buildFilters(characterId, characterFilters, lIds, oIds)
             }
         })
         .then((res) => {

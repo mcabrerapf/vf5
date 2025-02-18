@@ -27,12 +27,23 @@ const CombosSearch = ({
     const [showFiltersModal, setShowFiltersModal] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [localCombos, setLocalCombos] = useState(initialLocalCombos);
+    const lIds = [];
+    const oIds = [];
 
+    localCombos.forEach(lCombo => {
+        lIds.push(lCombo.id)
+        oIds.push(lCombo.oId)
+    });
+
+    console.log(localCombos)
     useEffect(() => {
         async function fetchCombos() {
             setIsLoading(true);
+
             await getAllCombos({
-                characterId: selectedCharacter
+                characterId: selectedCharacter,
+                lIds,
+                oIds
             })
                 .then(res => {
                     setIsLoading(false);
@@ -61,7 +72,9 @@ const CombosSearch = ({
         setIsLoading(true);
         await getAllCombos({
             characterId: selectedCharacter,
-            characterFilters: newFilters
+            characterFilters: newFilters,
+            lIds,
+            oIds
         })
             .then(res => {
                 setIsLoading(false);
@@ -146,7 +159,6 @@ const CombosSearch = ({
                 >
                     {comboResults.map(combo => {
                         const disabledSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
-                        const disabledLikes = !!localCombos.find(lCombo => lCombo.oId === combo.id && lCombo.id === combo.lId);
 
                         return (
                             <Combo
@@ -155,7 +167,6 @@ const CombosSearch = ({
                                 hideEditButton
                                 hideFavouriteButton
                                 showLikes
-                                disabledLikes={disabledLikes}
                                 disabledSaveButton={disabledSaveButton}
                                 showSimpleView={listView === 'S'}
                                 characterFilterOptions={characterFilterOptions}
