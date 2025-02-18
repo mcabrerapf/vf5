@@ -172,7 +172,7 @@ const Movelist = ({
                 .find(sOption => sOption.key === newSortKey);
 
             if (!newSortValue) return;
-            handleSortChange(newSortValue);
+            handleSortChange({...newSortValue, dir: 'dsc'});
         }
     }
 

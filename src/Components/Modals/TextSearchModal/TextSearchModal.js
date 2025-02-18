@@ -19,16 +19,18 @@ const TextSearchModal = ({
     }, [inputRef])
 
     const onConfirmClick = () => {
-        if (!textFilter && !currentTextFilter) {
-            return closeModal();
-        }
+        if (!textFilter && !currentTextFilter) return closeModal();
         if (!textFilter) {
             const updatedFilters = selectedFilters.filter(oFilter => oFilter.key !== 'text_search');
             return closeModal(updatedFilters);
         }
         const lowerCaseText = textFilter.toLocaleLowerCase();
         const newTextFilter = {
-            id: `text_search/${lowerCaseText}`, key: 'text_search', value: lowerCaseText, name: textFilter, short_name: 'Txt'
+            id: `text_search/${lowerCaseText}`,
+            key: 'text_search',
+            value: lowerCaseText,
+            name: `Text: ${textFilter}`,
+            short_name: 'Txt'
         };
         const updatedFilters = !!currentTextFilter ?
             selectedFilters.map(oFilter => {

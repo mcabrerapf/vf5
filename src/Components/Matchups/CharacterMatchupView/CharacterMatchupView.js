@@ -39,6 +39,7 @@ const CharacterMatchupView = ({
     const {
         movelist,
         move_categories: moveCategories,
+        combos_filter_options: combosFilterOptions,
         movelist_filter_options: movelistFilterOptions,
     } = CHARACTERS_JSON[selectedCharacter];
     const combos = getCombos(selectedCharacter);
@@ -247,7 +248,9 @@ const CharacterMatchupView = ({
                                             showSimpleView
                                             hideEditButton
                                             hideFavouriteButton
+                                            showOtherTags
                                             combo={combo}
+                                            combosFilterOptions={combosFilterOptions}
                                         />
                                     </div>
                                 )

@@ -15,21 +15,30 @@ const filterList = (list, filters, customMoves = []) => {
             otherFilters.push(filter);
         }
     });
-    
+
     return list.filter(listItem => {
-        const filterMatches = otherFilters.map(fOption => {
-            const moveValue = listItem[fOption.key];
-            if (fOption.key === 'launcher') {
+        const filterMatchesObj = {};
+        otherFilters.forEach(fOption => {
+            const { key: fKey, value: fValue } = fOption;
+            if (!filterMatchesObj[fKey]) filterMatchesObj[fKey] = [];
+            const moveValue = listItem[fKey];
+            if (fKey === 'launcher') {
                 const stringifiedValue = moveValue.join('-');
-                return stringifiedValue === fOption.value;
+                filterMatchesObj[fKey].push(stringifiedValue === fValue);
+                return;
             }
-            if (fOption.key === 'pseudo-launcher') {
+            if (fKey === 'pseudo-launcher') {
                 const pseudoLauncher = getPseudoLaunchers([listItem]);
                 const stringifiedValue = pseudoLauncher.join('-');
-                return stringifiedValue === fOption.value;
+                filterMatchesObj[fKey].push(stringifiedValue === fValue);
+                return;
             }
-            if (Array.isArray(moveValue)) return moveValue.join('-').includes(fOption.value);
-            return moveValue === fOption.value;
+            if (Array.isArray(moveValue)) {
+                filterMatchesObj[fKey].push(moveValue.join('-').includes(fValue));
+                return;
+            }
+            filterMatchesObj[fKey].push(moveValue === fValue);
+            return;
         });
 
         const stringCommand = listItem.command.join('-')
@@ -46,8 +55,10 @@ const filterList = (list, filters, customMoves = []) => {
                 listItem.notes?.toLocaleLowerCase().includes(textFilter.value) ||
                 listItem.note?.toLocaleLowerCase().includes(textFilter.value);
         }
-
-        const hasFiltersMatch = !!filterMatches.length ? filterMatches.includes(true) : true;
+        const otherFiltersMatches = Object.keys(filterMatchesObj).map(key => {
+            return filterMatchesObj[key].includes(true);
+        })
+        const hasFiltersMatch = !!otherFilters.length ? !otherFiltersMatches.includes(false) : true;
         return hasFavMatch && hasTextMatch && hasFiltersMatch;
     })
 }

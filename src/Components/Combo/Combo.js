@@ -20,6 +20,7 @@ const Combo = ({
     showLikes = false,
     disabledSaveButton = false,
     disabledLikes = false,
+    showOtherTags = false,
     characterFilterOptions = [],
     combosFilterOptions = [],
     onClick = () => { },
@@ -261,6 +262,32 @@ const Combo = ({
                         )
                     }
                     )}
+                    {tags.map(tag => {
+                        const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
+                        const modifier =
+                            tagMatch.id.includes('attack_level/') || tagMatch.id.includes('other/') ?
+                                tagMatch.value : "not-selected";
+                        return (
+                            <MoveTypeBadge
+                                key={tag}
+                                modifier={modifier}
+                                value={tag}
+                                moveType={tagMatch.short_name}
+                                onClick={handleTagClick}
+                            />
+                        )
+                    })}
+                </div>
+            }
+            {showSimpleView && showOtherTags &&
+                <div className='combo__tags'>
+                    {hasAllCharacters &&
+                        <MoveTypeBadge
+                            modifier={"character"}
+                            moveType={'ALL'}
+                            onClick={handleAllClick}
+                        />
+                    }
                     {tags.map(tag => {
                         const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
                         const modifier =

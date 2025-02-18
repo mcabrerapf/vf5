@@ -259,6 +259,7 @@ const Combos = ({
                 >
                     {sortedCombos.map((combo) =>
                         <Combo
+                            showOtherTags
                             combo={combo}
                             selectedSort={selectedSort}
                             selectedFilters={selectedFilters}

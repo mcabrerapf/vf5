@@ -89,7 +89,7 @@ const Move = ({
         onSortablePropClick(STRINGS.NAME)
     }
 
-    const onDamageClick = (e)=> {
+    const onDamageClick = (e) => {
         e.stopPropagation();
         onSortablePropClick(STRINGS.DAMAGE)
     }
@@ -139,16 +139,16 @@ const Move = ({
                         modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
                         text={damage}
                     />
+                    <Button
+                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
+                        text={dodgeValue}
+                        onClick={onDodgeClick}
+                    />
                     <MoveTypeBadge
                         modifier={attack_level}
                         value={attack_level}
                         moveType={short_name}
                         onClick={handleOnMoveAttackLevelClick}
-                    />
-                    <Button
-                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
-                        text={dodgeValue}
-                        onClick={onDodgeClick}
                     />
                     {!hideFavouriteButton &&
                         <Button
@@ -224,16 +224,16 @@ const Move = ({
                         modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
                         text={damage}
                     />
+                    <Button
+                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
+                        text={dodgeValue}
+                        onClick={onDodgeClick}
+                    />
                     <MoveTypeBadge
                         modifier={attack_level}
                         value={attack_level}
                         moveType={short_name}
                         onClick={handleOnMoveAttackLevelClick}
-                    />
-                    <Button
-                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
-                        text={dodgeValue}
-                        onClick={onDodgeClick}
                     />
                     {!hideFavouriteButton &&
                         <Button
