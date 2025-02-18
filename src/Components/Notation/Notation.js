@@ -7,8 +7,8 @@ const Notation = ({
     notation = '',
     modifier,
     notationIndex,
-    isCombiStart,
-    isCombiEnd,
+    // isCombiStart,
+    // isCombiEnd,
     onClick = () => { }
 }) => {
     const iconName = NOTATION_TO_ICON[notation];
@@ -24,13 +24,13 @@ const Notation = ({
 
     return (
         <>
-            {isCombiStart &&
+            {/* {isCombiStart &&
                 <span
                     className="notation combi"
                 >
                     {"["}
                 </span>
-            }
+            } */}
             <span
                 className={`${className} ${parsedCommand === '+' ? 'and' : commandClassName}`}
                 onClick={handleOnClick}
@@ -38,13 +38,13 @@ const Notation = ({
                 {iconName && <Icon icon={iconName} color={iconColor} />}
                 {!iconName && parsedCommand}
             </span>
-            {isCombiEnd &&
+            {/* {isCombiEnd &&
                 <span
                     className="notation combi"
                 >
                     {"]"}
                 </span>
-            }
+            } */}
         </>
     )
 }
