@@ -10,7 +10,7 @@ import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
 import { CHARACTERS_JSON, COMBOS_SORT_OPTIONS, STRINGS } from '../../constants';
 import { getCombos, updateCombos } from '../../services';
 import { validateCombo } from '../../services/utils';
-import { generateId, sortList } from '../../helpers';
+import { filterList, generateId, sortList } from '../../helpers';
 import SortModal from '../Modals/SortModal';
 
 const CombosSearch = ({
@@ -89,41 +89,7 @@ const CombosSearch = ({
     const handleFiltersModalClose = async (newFilters) => {
         if (!newFilters) return;
         setShowFiltersModal(!showFiltersModal);
-        setIsLoading(true);
-        const lIds = [];
-        const oIds = [];
-        localCombos.forEach(lCombo => {
-            lIds.push(lCombo.id)
-            oIds.push(lCombo.oId)
-        });
-        let allCombos;
-        await getAllCombos({
-            characterId: selectedCharacter,
-            // characterFilters: newFilters,
-            lIds,
-            oIds
-        })
-            .then(res => {
-                allCombos = res;
-                return getMyCombos({
-                    characterId: selectedCharacter,
-                    // characterFilters: newFilters,
-                    lIds,
-                })
-            })
-            .then(res => {
-                setIsLoading(false);
-                setComboResults(allCombos);
-                setMyCombos(res);
-                setSelectedFilters(newFilters);
-            })
-            .catch(() => {
-                setIsLoading(false);
-                setComboResults([]);
-                setMyCombos(false);
-                setSelectedFilters(newFilters);
-            });
-
+        setSelectedFilters(newFilters);
     }
 
     const handleSortClick = () => {
@@ -141,10 +107,16 @@ const CombosSearch = ({
         toggleSortModal();
     }
 
+    const handleFilterClick = (filter) => {
+        const newFilters = selectedFilters.filter(sFilter => sFilter.id !== filter.id);
+        setSelectedFilters(newFilters);
+    }
+
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
-    const sortedResults = sortList(combosToUse, selectedSort);
+    const filteredResults = filterList(combosToUse, selectedFilters);
+    const sortedResults = sortList(filteredResults, selectedSort);
 
     return (
         <div
@@ -175,16 +147,10 @@ const CombosSearch = ({
                     className='combos-search__header__left'
                 >
                     <Button
-                        modifier={selectedCombosSearchView === 'online' ? 'active' : ''}
-                        onClick={() => setSelectedCombosSearchView('online')}
+                        modifier={'active'}
+                        onClick={() => setSelectedCombosSearchView(selectedCombosSearchView === 'online' ? 'mine' : 'online')}
                     >
-                        Combos ({comboResults.length || 0})
-                    </Button>
-                    <Button
-                        modifier={selectedCombosSearchView === 'mine' ? 'active' : ''}
-                        onClick={() => setSelectedCombosSearchView('mine')}
-                    >
-                        My Combos ({myCombos.length || 0})
+                        {selectedCombosSearchView === 'online' ? 'Combos' : 'My Combos'} ({sortedResults.length || 0})
                     </Button>
                 </div>
 
@@ -200,7 +166,7 @@ const CombosSearch = ({
                 selectedSort={selectedSort}
                 onSortClick={toggleSortModal}
                 onSortDirClick={handleSortClick}
-            // onFilterClick={handleActiveFilterClick}
+                onFilterClick={handleFilterClick}
             />
             {isLoading &&
                 <div
@@ -209,7 +175,7 @@ const CombosSearch = ({
                     LOADING
                 </div>
             }
-            {!isLoading && !comboResults.length &&
+            {!isLoading && !sortedResults.length &&
                 <div
                     className='combos-search__no-results'
                 >
