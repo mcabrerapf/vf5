@@ -25,13 +25,14 @@ const MoveListFiltersModal = ({
         if (fKey === 'attack_level') attackLevelFilters.push(fOption);
         if (fKey === 'dodge_direction') dodgeFilters.push(fOption);
         if (fId.includes("is_plus_on") ||
-            fId.includes("is_punishable_on") ||
-            fId.includes("guarantees_on") ||
+            fId.includes("is_minus_on_") ||
+            fId.includes("is_punishable_on_") ||
+            fId.includes("guarantees_on_") ||
             fId.includes("launches_on") ||
             fId.includes("staggers_on")) {
-            const [s] = fId.split('/');
-            if (!frameDatFilters[s]) frameDatFilters[s] = [];
-            frameDatFilters[s].push(fOption)
+            const [objKey] = fId.split('_on');
+            if (!frameDatFilters[objKey]) frameDatFilters[objKey] = [];
+            frameDatFilters[objKey].push(fOption)
         };
     })
 
@@ -62,7 +63,6 @@ const MoveListFiltersModal = ({
         } else {
             newTypeFilters = [...selectedTypeFilters.map(val => val), filter];
         }
-
         setSelectedTypeFilters(newTypeFilters);
     }
 
@@ -122,7 +122,7 @@ const MoveListFiltersModal = ({
                         {Object.keys(frameDatFilters).map(fdFilterKey => {
 
                             const header = capitalizeFirstLetter(fdFilterKey.split('_').join(' '));
-                            console.log({ fdFilterKey, header })
+
                             const fDFilter = frameDatFilters[fdFilterKey];
                             return (
                                 <div
