@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './TagsView.scss';
-import MoveTypeBadge from "../../../MoveTypeBadge";
 import Button from "../../../Button";
 
 const TagsView = ({
@@ -52,22 +51,23 @@ const TagsView = ({
                 {tagsView === 'characters' &&
                     <div className='tags-view__content__characters'>
                         {characterTags.map(character => {
+                            
                             const isSelected = selectedFilters.find(sFilter => sFilter.value === character.value);
-                            const modifier = isSelected ? character.weight_short_name : 'not-selected';
+                            const modifier = isSelected ? character.weight_short_name : '';
 
                             return (
-                                <MoveTypeBadge
+                                <Button
                                     key={character.id}
                                     modifier={modifier}
                                     value={character.value}
-                                    moveType={character.short_name}
+                                    text={character.short_name}
                                     onClick={handleCharacterClick}
                                 />
                             )
                         })}
-                        <MoveTypeBadge
-                            modifier={allCharactersSelected ? 'character' : 'not-selected'}
-                            moveType={'ALL'}
+                        <Button
+                            modifier={allCharactersSelected ? 'character' : ''}
+                            text={'ALL'}
                             onClick={handleAllClick}
                         />
                     </div>
@@ -75,11 +75,11 @@ const TagsView = ({
                 {tagsView === 'attack_levels' &&
                     <div className='tags-view__content__other-tags'>
                         {attackLevelTags.map(tag =>
-                            <MoveTypeBadge
+                            <Button
                                 key={tag.id}
                                 value={tag.value}
-                                moveType={tag.name}
-                                modifier={selectedFilters.find(sTag => sTag.value === tag.value) ? tag.value : 'not-selected'}
+                                text={tag.name}
+                                modifier={selectedFilters.find(sTag => sTag.value === tag.value) ? `move-type ${tag.value }`: ''}
                                 onClick={handleOtherTagClick}
                             />
                         )}
@@ -88,11 +88,11 @@ const TagsView = ({
                 {tagsView === 'move_categories' &&
                     <div className='tags-view__content__other-tags'>
                         {moveCategoryTags.map(tag =>
-                            <MoveTypeBadge
+                            <Button
                                 key={tag.id}
                                 value={tag.value}
-                                moveType={tag.name}
-                                modifier={selectedFilters.find(sTag =>  sTag.value === tag.value) ? 'active' : 'not-selected'}
+                                text={tag.name}
+                                modifier={selectedFilters.find(sTag =>  sTag.value === tag.value) ? 'active' : ''}
                                 onClick={handleOtherTagClick}
                             />
                         )}
@@ -101,11 +101,11 @@ const TagsView = ({
                 {tagsView === 'other' &&
                     <div className='tags-view__content__other-tags'>
                         {otherTags.map(tag =>
-                            <MoveTypeBadge
+                            <Button
                                 key={tag.id}
-                                moveType={tag.name}
+                                text={tag.name}
                                 value={tag.value}
-                                modifier={selectedFilters.find(sTag => sTag.value === tag.value) ? tag.value : 'not-selected'}
+                                modifier={selectedFilters.find(sTag => sTag.value === tag.value) ? `move-type ${tag.value }`: ''}
                                 onClick={handleOtherTagClick}
                             />
                         )}

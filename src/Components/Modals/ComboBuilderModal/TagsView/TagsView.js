@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CHARACTERS } from '../../../../constants';
-import MoveTypeBadge from '../../../MoveTypeBadge';
 import Button from '../../../Button';
 
 const TagsView = ({
@@ -12,25 +11,24 @@ const TagsView = ({
 }) => {
     const [tagsView, setTagsView] = useState('characters');
 
-    const handleCharacterTagClick = ({ target: { value, className } }) => {
+    const handleCharacterTagClick = ({ target: { value } }) => {
         let updatedTags;
-
-        if (className.includes('not-selected')) {
+        const filteredTags = selectedCharacterTags.filter(sChar => sChar !== value);
+        if (filteredTags.length === selectedCharacterTags.length) {
             updatedTags = [
-                ...selectedCharacterTags.map(tag => tag),
+                ...selectedCharacterTags,
                 value
             ];
 
         } else {
-            updatedTags = selectedCharacterTags.filter(tag => tag !== value);
+            updatedTags = filteredTags;
         }
         setSelectedCharacterTags(updatedTags);
     }
 
-    const handleAllClick = ({ target: { className } }) => {
+    const handleAllClick = () => {
         let updatedTags;
-
-        if (className.includes('not-selected')) {
+        if (selectedCharacterTags.length !== CHARACTERS.length) {
             updatedTags = CHARACTERS.map(character => character.id);
         } else {
             updatedTags = [];
@@ -38,28 +36,32 @@ const TagsView = ({
         setSelectedCharacterTags(updatedTags);
     }
 
-    const handleTagClick = ({ target: { value, className } }) => {
+    const handleTagClick = ({ target: { value } }) => {
         let updatedTags;
+        const filteredTags = selectedTags.filter(sChar => sChar !== value);
+        if (filteredTags.length === selectedTags.length) {
+            updatedTags = [
+                ...selectedTags,
+                value
+            ];
 
-        if (className.includes('not-selected')) {
-            updatedTags = [...selectedTags.map(tag => tag), value];
         } else {
-            updatedTags = selectedTags.filter(tag => tag !== value);
+            updatedTags = filteredTags;
         }
         setSelectedTags(updatedTags);
     }
 
-    
+
     const characterTags = [];
     const attackLevelTags = [];
     const moveCategoryTags = [];
     const otherTags = [];
     combosFilterOptions
         .forEach(option => {
-            if(option.id.includes('character_tags/')) characterTags.push(option);
-            if(option.id.includes("attack_level/")) attackLevelTags.push(option);
-            if(option.id.includes("move_category/")) moveCategoryTags.push(option);
-            if(option.id.includes("other/")) otherTags.push(option);
+            if (option.id.includes('character_tags/')) characterTags.push(option);
+            if (option.id.includes("attack_level/")) attackLevelTags.push(option);
+            if (option.id.includes("move_category/")) moveCategoryTags.push(option);
+            if (option.id.includes("other/")) otherTags.push(option);
         })
 
     return (
@@ -75,7 +77,7 @@ const TagsView = ({
                     text="Attack Levels"
                     onClick={() => setTagsView('attack_levels')}
                 />
-                 <Button
+                <Button
                     modifier={tagsView === 'move_categories' ? 'active center' : 'center'}
                     text="Move Categories"
                     onClick={() => setTagsView('move_categories')}
@@ -92,19 +94,19 @@ const TagsView = ({
                         {characterTags.map(character => {
                             const { short_name, weight_short_name } = character;
                             return (
-                                <MoveTypeBadge
+                                <Button
                                     key={character.id}
-                                    moveType={short_name}
+                                    text={short_name}
                                     value={character.value}
-                                    modifier={selectedCharacterTags.find(sTag => sTag === character.value) ? weight_short_name : 'not-selected'}
+                                    modifier={selectedCharacterTags.find(sTag => sTag === character.value) ? weight_short_name : ''}
                                     onClick={handleCharacterTagClick}
                                 />
                             )
                         }
                         )}
-                        <MoveTypeBadge
-                            moveType="ALL"
-                            modifier={selectedCharacterTags.length === CHARACTERS.length ? 'character' : 'not-selected'}
+                        <Button
+                            text="ALL"
+                            modifier={selectedCharacterTags.length === CHARACTERS.length ? 'character' : ''}
                             onClick={handleAllClick}
                         />
                     </div>
@@ -112,11 +114,11 @@ const TagsView = ({
                 {tagsView === 'attack_levels' &&
                     <div className='tags-view__content__other-tags'>
                         {attackLevelTags.map(tag =>
-                            <MoveTypeBadge
+                            <Button
                                 key={tag.id}
                                 value={tag.value}
-                                moveType={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.value) ? tag.value : 'not-selected'}
+                                text={tag.name}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? `move-type ${tag.value}` : 'not-selected'}
                                 onClick={handleTagClick}
                             />
                         )}
@@ -125,11 +127,11 @@ const TagsView = ({
                 {tagsView === 'move_categories' &&
                     <div className='tags-view__content__other-tags'>
                         {moveCategoryTags.map(tag =>
-                            <MoveTypeBadge
+                            <Button
                                 key={tag.id}
                                 value={tag.value}
-                                moveType={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.value) ? 'active' : 'not-selected'}
+                                text={tag.name}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? 'active' : ''}
                                 onClick={handleTagClick}
                             />
                         )}
@@ -138,11 +140,11 @@ const TagsView = ({
                 {tagsView === 'other' &&
                     <div className='tags-view__content__other-tags'>
                         {otherTags.map(tag =>
-                            <MoveTypeBadge
+                            <Button
                                 key={tag.id}
                                 value={tag.value}
-                                moveType={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.value) ? 'active' : 'not-selected'}
+                                text={tag.name}
+                                modifier={selectedTags.find(sTag => sTag === tag.value) ? `move-type ${tag.value}` : ''}
                                 onClick={handleTagClick}
                             />
                         )}

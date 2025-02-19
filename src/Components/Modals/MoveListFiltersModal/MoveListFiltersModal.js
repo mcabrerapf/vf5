@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
 import './MoveListFiltersModal.scss'
+import React, { useState } from 'react';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
+import CommandView from './CommandView';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { STRINGS } from '../../../constants';
-import CommandView from './CommandView';
-import MoveTypeBadge from '../../MoveTypeBadge';
-
 
 const MoveListFiltersModal = ({
     selectedFilters,
@@ -51,7 +49,7 @@ const MoveListFiltersModal = ({
     const handleFiltersReset = () => {
         setSelectedTypeFilters([]);
     }
-  
+
     return (
         <div className='movelist-filters-modal'>
             <div className='movelist-filters-modal__sub-header'>
@@ -75,13 +73,13 @@ const MoveListFiltersModal = ({
                         {filterOptions.map(fOption => {
                             if (fOption.key !== 'attack_level') return null;
                             const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
-                            const modifier = isSelected ? fOption.value : 'not-selected';
+                            const modifier = isSelected ? `move-type ${fOption.value}` : '';
                             return (
-                                <MoveTypeBadge
+                                <Button
                                     key={fOption.id}
                                     modifier={modifier}
                                     value={fOption.id}
-                                    moveType={fOption.name}
+                                    text={fOption.name}
                                     onClick={() => handleFilterClick(fOption)}
                                 />
                             )

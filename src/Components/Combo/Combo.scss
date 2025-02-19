@@ -32,22 +32,13 @@
 
             &.sort-selected {
                 border: 1px solid var(--side);
-                background-color: var(--side);
                 border-radius: 0.5rem;
-                color: black;
             }
         }
 
         &__other {
             display: flex;
             gap: 0.3rem;
-
-            .button {
-                min-width: 2.5rem;
-                min-height: 2.5rem;
-                width: 2.5rem;
-                height: 2.5rem;
-            }
         }
 
     }
@@ -59,13 +50,6 @@
         &__buttons {
             display: flex;
             gap: 0.3rem;
-
-            .button {
-                min-width: 2.5rem;
-                min-height: 2.5rem;
-                width: 2.5rem;
-                height: 2.5rem;
-            }
         }
     }
 
@@ -92,13 +76,6 @@
         gap: 0.5rem;
         align-items: center;
         justify-content: end;
-
-        .button {
-            min-width: 2.5rem;
-            min-height: 2.5rem;
-            width: 2.5rem;
-            height: 2.5rem;
-        }
 
         &__dislikes {
             font-weight: bold;

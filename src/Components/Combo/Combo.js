@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
-import MoveTypeBadge from '../MoveTypeBadge';
 import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
@@ -167,18 +166,19 @@ const Combo = ({
                     <div className='combo__main__other'>
                         <Button
                             onClick={handleDamageClick}
-                            modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                            modifier={isDamageSortSelected ? 's sort-selected damage' : 's damage'}
                             text={damage}
                         />
                         {!hideFavouriteButton &&
                             <Button
                                 onClick={handleFavouriteClick}
-                                modifier={favourite ? 'small favourite' : 'small'}
+                                modifier={favourite ? 's favourite' : 's'}
                                 text={'★'}
                             />
                         }
                         {!hideEditButton &&
                             <Button
+                                modifier={'s'}
                                 onClick={handleComboClick}
                             >
                                 <EditIcon />
@@ -186,6 +186,7 @@ const Combo = ({
                         }
                         {showSaveButton &&
                             <Button
+                                modifier={'s'}
                                 disabled={disabledSaveButton}
                                 onClick={handleSaveButtonClick}
                             >
@@ -210,11 +211,12 @@ const Combo = ({
                         <>
                             <Button
                                 onClick={handleDamageClick}
-                                modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                                modifier={isDamageSortSelected ? 's sort-selected damage' : 's damage'}
                                 text={damage}
                             />
                             {showSaveButton &&
                                 <Button
+                                    modifier={'s'}
                                     disabled={disabledSaveButton}
                                     onClick={handleSaveButtonClick}
                                 >
@@ -224,12 +226,13 @@ const Combo = ({
                             {!hideFavouriteButton &&
                                 <Button
                                     onClick={handleFavouriteClick}
-                                    modifier={favourite ? 'small favourite' : 'small'}
+                                    modifier={favourite ? 's favourite' : 's'}
                                     text={'★'}
                                 />
                             }
                             {!hideEditButton &&
                                 <Button
+                                    modifier={'s'}
                                     onClick={handleComboClick}
                                 >
                                     <EditIcon />
@@ -249,19 +252,19 @@ const Combo = ({
             {!showSimpleView &&
                 <div className='combo__tags'>
                     {hasAllCharacters &&
-                        <MoveTypeBadge
-                            modifier={"character"}
-                            moveType={'ALL'}
+                        <Button
+                            modifier={"s character"}
+                            text={'ALL'}
                             onClick={handleAllClick}
                         />
                     }
                     {!hasAllCharacters && characterFilterOptions.map(cOption => {
                         return (
-                            <MoveTypeBadge
+                            <Button
                                 key={cOption.id}
                                 disabled={!character_tags.find(cTag => cTag === cOption.value)}
-                                modifier={cOption.weight_short_name}
-                                moveType={cOption.initials}
+                                modifier={`s ${cOption.weight_short_name}`}
+                                text={cOption.initials}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     handleCharacterClick(cOption);
@@ -273,14 +276,14 @@ const Combo = ({
                     {tags.map(tag => {
                         const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
                         const modifier =
-                            tagMatch.id.includes('attack_level/') || tagMatch.id.includes('other/') ?
-                                tagMatch.value : "not-selected";
+                            tagMatch?.id.includes('attack_level/') || tagMatch?.id.includes('other/') ?
+                                `s move-type ${tagMatch.value}` : "s";
                         return (
-                            <MoveTypeBadge
+                            <Button
                                 key={tag}
                                 modifier={modifier}
                                 value={tag}
-                                moveType={tagMatch.short_name}
+                                text={tagMatch?.short_name || tag}
                                 onClick={handleTagClick}
                             />
                         )
@@ -290,16 +293,17 @@ const Combo = ({
             {showSimpleView && showOtherTags &&
                 <div className='combo__tags'>
                     {tags.map(tag => {
+
                         const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
                         const modifier =
-                            tagMatch.id.includes('attack_level/') || tagMatch.id.includes('other/') ?
-                                tagMatch.value : "not-selected";
+                            tagMatch?.id.includes('attack_level/') || tagMatch?.id.includes('other/') ?
+                                `s move-type ${tagMatch.value}` : "s";
                         return (
-                            <MoveTypeBadge
+                            <Button
                                 key={tag}
                                 modifier={modifier}
                                 value={tag}
-                                moveType={tagMatch.short_name}
+                                text={tagMatch?.short_name || tag}
                                 onClick={handleTagClick}
                             />
                         )
@@ -316,18 +320,19 @@ const Combo = ({
                         {dislikes}
                     </span>
                     <Button
+                        modifier={'s'}
                         disabled={disabledLikes}
                         onClick={handleDislike}
                     >
                         <ThumbsDownIcon />
                     </Button>
-
                     <span
                         className='combo__thumb-buttons__likes'
                     >
                         {likes}
                     </span>
                     <Button
+                        modifier={'s'}
                         disabled={disabledLikes}
                         onClick={handleLike}
                     >

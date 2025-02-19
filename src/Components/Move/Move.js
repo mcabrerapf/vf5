@@ -2,7 +2,6 @@ import './Move.scss'
 import React from 'react';
 import SortableProp from './SortableProp';
 import MoveCommand from '../MoveCommand';
-import MoveTypeBadge from '../MoveTypeBadge';
 import TextWithCommand from '../TextWithCommand';
 import Button from '../Button';
 import { MOVELIST_SORT_OPTIONS, STRINGS } from '../../constants';
@@ -129,36 +128,37 @@ const Move = ({
                 >
                     {hasCombos &&
                         <Button
-                            modifier={'not-selected'}
+                            modifier={'s'}
                             text={'C'}
                             onClick={handleCombosClick}
                         />
                     }
                     <Button
                         onClick={onDamageClick}
-                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                        modifier={isDamageSortSelected ? 's sort-selected damage' : 's damage'}
                         text={damage}
                     />
                     <Button
-                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
+                        modifier={isDodgeSelected ? 's active dodge' : 's dodge'}
                         text={dodgeValue}
                         onClick={onDodgeClick}
                     />
-                    <MoveTypeBadge
-                        modifier={attack_level}
+                    <Button
+                        modifier={`s move-type ${attack_level}`}
                         value={attack_level}
-                        moveType={short_name}
+                        text={short_name}
                         onClick={handleOnMoveAttackLevelClick}
                     />
                     {!hideFavouriteButton &&
                         <Button
                             onClick={handleFavouriteClick}
-                            modifier={isFavourite ? ' favourite' : ''}
+                            modifier={isFavourite ? 's favourite' : 's'}
                             text={'★'}
                         />
                     }
                     {!hideEditButton &&
                         <Button
+                            modifier={'s'}
                             onClick={onMoveClick}
                         >
                             <EditIcon />
@@ -214,36 +214,37 @@ const Move = ({
                 <div className='move__main__badges'>
                     {hasCombos &&
                         <Button
-                            modifier={'not-selected'}
+                            modifier={'s'}
                             text={'C'}
                             onClick={handleCombosClick}
                         />
                     }
                     <Button
                         onClick={onDamageClick}
-                        modifier={isDamageSortSelected ? 'sort-selected damage' : 'damage'}
+                        modifier={isDamageSortSelected ? 's sort-selected damage' : 's damage'}
                         text={damage}
                     />
                     <Button
-                        modifier={isDodgeSelected ? 'active dodge' : 'dodge'}
+                        modifier={isDodgeSelected ? 's active dodge' : 's dodge'}
                         text={dodgeValue}
                         onClick={onDodgeClick}
                     />
-                    <MoveTypeBadge
-                        modifier={attack_level}
+                    <Button
+                        modifier={`s move-type ${attack_level}`}
                         value={attack_level}
-                        moveType={short_name}
+                        text={short_name}
                         onClick={handleOnMoveAttackLevelClick}
                     />
                     {!hideFavouriteButton &&
                         <Button
                             onClick={handleFavouriteClick}
-                            modifier={isFavourite ? ' favourite' : ''}
+                            modifier={isFavourite ? 's favourite' : 's'}
                             text={'★'}
                         />
                     }
                     {!hideEditButton &&
                         <Button
+                            modifier={'s'}
                             onClick={onMoveClick}
                         >
                             <EditIcon />

@@ -18,10 +18,11 @@ const CombosFiltersModal = ({
     const [selectedFilters, setSelectedFilters] = useState(_selectedFilters);
     const [commandFilter, setCommandFilter] = useState([])
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS);
-    const characterFilters = selectedFilters.filter(filter => filter.key === 'character_tags');
-    const allCharactersSelected = characterFilters.length === CHARACTERS.length;
+    const selectedCharacterFilters = selectedFilters.filter(filter => filter.key === 'character_tags');
+    const allCharactersSelected = selectedCharacterFilters.length === CHARACTERS.length;
     const characterOptions = filterOptions
         .filter(cOption => cOption.key === 'character_tags')
+    const launchers = getLaunchers(listItems);
 
     const handleFiltersReset = () => {
         setSelectedFilters([]);
@@ -45,31 +46,35 @@ const CombosFiltersModal = ({
         closeModal(withCommand);
     }
 
-    const handleCharacterClick = ({ target: { value, className } }) => {
-        let newCharacterFilters;
-        const cFilter = filterOptions.find(option => option.value === value);
+    const handleCharacterClick = ({ target: { value } }) => {
+        let updatedTags;
+        const filteredTags = selectedFilters.filter(sFilter => sFilter !== value);
 
-        if (className.includes('not-selected')) {
-            newCharacterFilters = [
-                ...selectedFilters.map(val => val),
-                cFilter
+        if (filteredTags.length === selectedFilters.length) {
+            updatedTags = [
+                ...selectedFilters,
+                filterOptions.find(fOption => fOption.value === value)
             ];
         } else {
-            newCharacterFilters = selectedFilters.filter(sFilter => sFilter.value !== value);
+            updatedTags = filteredTags;
         }
-        setSelectedFilters(newCharacterFilters);
+        setSelectedFilters(updatedTags);
     }
 
     const handleAllClick = () => {
-        const nonCharacterFilters = selectedFilters.filter(filter => filter.key !== 'character_tags');
-        const updatedCharacterFilters = allCharactersSelected ? [] : characterOptions;
-        const updatedFilters = [...nonCharacterFilters, ...updatedCharacterFilters];
+        const nonCharFiltes = selectedFilters.filter(sFilter => sFilter.key !== 'character_tags')
+        if (allCharactersSelected) {
+            setSelectedFilters(nonCharFiltes);
+            return;
+        }
+        const updatedFilters = [...nonCharFiltes, ...characterOptions];
         setSelectedFilters(updatedFilters);
     }
 
-    const handleOtherTagClick = ({ target: { value, className } }) => {
+    const handleOtherTagClick = ({ target: { value } }) => {
         let newTypeFilters;
-        if (className.includes('not-selected')) {
+        const filteredTags = selectedFilters.filter(sFilter => sFilter.value !== value);
+        if (filteredTags.length === selectedFilters.length) {
             const newFilter = filterOptions.find(option => option.value === value);
             newTypeFilters = [
                 ...selectedFilters,
@@ -101,8 +106,6 @@ const CombosFiltersModal = ({
             setSelectedFilters(updatedFilters);
         }
     }
-
-    const launchers = getLaunchers(listItems);
 
     return (
         <div className='combos-filters-modal'>

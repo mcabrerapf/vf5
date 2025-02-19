@@ -1,6 +1,5 @@
 import React from 'react';
 import './ActiveFiltersList.scss'
-import MoveTypeBadge from '../MoveTypeBadge';
 import MoveCommand from '../MoveCommand';
 import Button from '../Button';
 
@@ -17,6 +16,7 @@ const ActiveFiltersList = ({
                 {selectedFilters.map(selectedFilter => {
                     const { id, name, short_name, value, key, weight_short_name } = selectedFilter
                     if (key === 'favourite') return null;
+
                     switch (key) {
                         case 'command':
                             return (
@@ -46,52 +46,32 @@ const ActiveFiltersList = ({
                             )
                         case 'attack_level':
                             return (
-                                <MoveTypeBadge
+                                <Button
                                     key={id}
-                                    modifier={value}
-                                    moveType={name}
+                                    modifier={`move-type ${value}`}
+                                    text={name}
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             )
                         case 'character_tags':
                             return (
-                                <MoveTypeBadge
+                                <Button
                                     key={id}
                                     modifier={weight_short_name}
-                                    moveType={short_name}
-                                    value={selectedFilter}
-                                    onClick={() => onFilterClick(selectedFilter)}
-                                />
-                            )
-                        case 'dodge_direction':
-                            return (
-                                <MoveTypeBadge
-                                    key={id}
-                                    modifier={'not-selected'}
-                                    moveType={name}
-                                    value={selectedFilter}
-                                    onClick={() => onFilterClick(selectedFilter)}
-                                />
-                            )
-                        case 'text_search':
-                            return (
-                                <MoveTypeBadge
-                                    key={id}
-                                    modifier={'not-selected'}
-                                    moveType={name}
+                                    text={short_name}
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
                             )
                         default:
                             const modifier = id.includes('attack_level/') || id.includes('other/') ?
-                                value : 'not-selected';
+                                `move-type ${value}` : '';
                             return (
-                                <MoveTypeBadge
+                                <Button
                                     key={id}
                                     modifier={modifier}
-                                    moveType={name}
+                                    text={name}
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
@@ -99,7 +79,7 @@ const ActiveFiltersList = ({
                     }
                 })}
             </div>
-            {selectedSort.id &&
+            {selectedSort?.id &&
                 <div className='active-filters-list__sort'>
                     <Button
                         modifier='active'
