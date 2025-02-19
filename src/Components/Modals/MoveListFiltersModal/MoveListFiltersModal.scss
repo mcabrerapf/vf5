@@ -44,15 +44,24 @@
             
             &__option {
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
+                width: 100%;
+                gap: 0.5rem;
+
                 &__header {
-                    font-size: 1.1rem;
+                    display: flex;
+                    justify-content: start;
+                    font-size: 1.2rem;
                     font-weight: bold;
+                    width: 100%;
                 }
 
                 &__options {
                     display: flex;
+                    justify-content: space-around;
+                    width: 100%;
                     gap: 0.2rem;
                 }
             }

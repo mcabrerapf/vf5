@@ -10,6 +10,7 @@ import { capitalizeFirstLetter } from '.././../../helpers'
 const MoveListFiltersModal = ({
     selectedFilters,
     filterOptions,
+    movesProperties
 }) => {
     const { closeModal } = useModalContext();
     const [selectedTypeFilters, setSelectedTypeFilters] = useState(selectedFilters);
@@ -131,7 +132,7 @@ const MoveListFiltersModal = ({
                                     <div
                                         className='movelist-filters-modal__content__fd-options__option__header'
                                     >
-                                        {header}:
+                                        {header} on:
                                     </div>
                                     <div
                                         className='movelist-filters-modal__content__fd-options__option__options'
@@ -139,15 +140,16 @@ const MoveListFiltersModal = ({
                                         {
                                             fDFilter.map(fOption => {
                                                 const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
-                                                const modifier = isSelected ? 'active' : '';
+                                                const modifier = isSelected ? 's active' : 's';
                                                 const [, text] = fOption.name.split('on')
-
+                                                const buttonText = `${text} (${movesProperties[fOption.key]})`
                                                 return (
                                                     <Button
                                                         key={fOption.id}
+                                                        disabled={!movesProperties[fOption.key]}
                                                         modifier={modifier}
                                                         value={fOption.id}
-                                                        text={text}
+                                                        text={buttonText}
                                                         onClick={() => handleFilterClick(fOption)}
                                                     />
                                                 )

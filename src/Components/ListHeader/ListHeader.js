@@ -13,11 +13,12 @@ const { MOVELIST } = STRINGS;
 const ListHeader = ({
     listType = MOVELIST,
     selectedMoveCategory = '',
+    movesProperties = {},
     moveCategories = [],
     selectedFilters = [],
     filterOptions = [],
     listItems = [],
-    numerOfItems,
+    numerOfItems = 0,
     handleFiltersChange = () => { },
     handleCategoryChange = () => { },
 }) => {
@@ -107,6 +108,7 @@ const ListHeader = ({
                     selectedFilters={selectedFilters}
                     filterOptions={filterOptions}
                     listItems={listItems}
+                    movesProperties={movesProperties}
                 />
             </ModalContextWrapper>
             <ModalContextWrapper

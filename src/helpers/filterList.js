@@ -26,6 +26,10 @@ const filterList = (list, filters, customMoves = []) => {
                 filterMatchesObj[fKey].push(!!moveValue);
                 return;
             }
+            if(fKey.includes('is_punishable_on_')) {
+                filterMatchesObj[fKey].push(!!moveValue);
+                return;
+            }
             if (fKey === 'launcher') {
                 const stringifiedValue = moveValue.join('-');
                 filterMatchesObj[fKey].push(stringifiedValue === fValue);

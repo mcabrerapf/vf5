@@ -31,6 +31,7 @@ const Movelist = ({
     } = useMainContext();
     const {
         move_categories: moveCategories,
+        moves_properties: movesProperties,
         movelist_filter_options: movelistFilterOptions,
         movelist: selectedCharacterMoveset
     } = CHARACTERS_JSON[selectedCharacter];
@@ -240,6 +241,7 @@ const Movelist = ({
                 filterOptions={movelistFilterOptions}
                 numerOfItems={numerOfMoves}
                 selectedMovelistSort={selectedMovelistSort}
+                movesProperties={movesProperties}
                 handleFiltersChange={handleFiltersChange}
                 handleCategoryChange={handleCategoryChange}
             />
