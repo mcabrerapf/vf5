@@ -3,7 +3,6 @@ import './CombosSearch.scss'
 import { getAllCombos } from '../../services/aws';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
-import { SearchIcon } from '../Icon';
 import Combo from '../Combo';
 import Button from '../Button';
 import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
@@ -27,18 +26,17 @@ const CombosSearch = ({
     const [showFiltersModal, setShowFiltersModal] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [localCombos, setLocalCombos] = useState(initialLocalCombos);
-    const lIds = [];
-    const oIds = [];
 
-    localCombos.forEach(lCombo => {
-        lIds.push(lCombo.id)
-        oIds.push(lCombo.oId)
-    });
-
-    console.log(localCombos)
     useEffect(() => {
         async function fetchCombos() {
             setIsLoading(true);
+            const newLocalCombos = getCombos(selectedCharacter);
+            const lIds = [];
+            const oIds = [];
+            newLocalCombos.forEach(lCombo => {
+                lIds.push(lCombo.id)
+                oIds.push(lCombo.oId)
+            });
 
             await getAllCombos({
                 characterId: selectedCharacter,
@@ -46,6 +44,8 @@ const CombosSearch = ({
                 oIds
             })
                 .then(res => {
+
+                    setLocalCombos(newLocalCombos);
                     setIsLoading(false);
                     setComboResults(res);
                 })
@@ -70,6 +70,12 @@ const CombosSearch = ({
         if (!newFilters) return;
         setShowFiltersModal(!showFiltersModal);
         setIsLoading(true);
+        const lIds = [];
+        const oIds = [];
+        localCombos.forEach(lCombo => {
+            lIds.push(lCombo.id)
+            oIds.push(lCombo.oId)
+        });
         await getAllCombos({
             characterId: selectedCharacter,
             characterFilters: newFilters,

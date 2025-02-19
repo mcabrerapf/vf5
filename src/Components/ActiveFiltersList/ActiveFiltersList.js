@@ -20,11 +20,14 @@ const ActiveFiltersList = ({
                     switch (key) {
                         case 'command':
                             return (
-                                <MoveCommand
-                                    key={id}
-                                    command={value.split('-')}
+                                <Button
                                     onClick={() => onFilterClick(selectedFilter)}
-                                />
+                                >
+                                    <MoveCommand
+                                        key={id}
+                                        command={value.split('-')}
+                                    />
+                                </Button>
                             )
                         case 'launcher':
                             return (

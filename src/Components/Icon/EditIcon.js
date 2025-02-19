@@ -4,8 +4,8 @@ const EditIcon = () => {
     return (
         <svg
             fill="#000000"
-            width="2rem"
-            height="2rem"
+            width="1.3rem"
+            height="1.3rem"
             viewBox="0 0 24 24"
             id="edit"
             data-name="Flat Color"

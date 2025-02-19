@@ -1,6 +1,6 @@
 import './SortableProp.scss';
 import React from 'react';
-import { getMovePropText } from '../helpers';
+import { getDodgeValue, getMovePropText } from '../helpers';
 
 const SortableProp = ({
     sortableProp,
@@ -16,7 +16,7 @@ const SortableProp = ({
         key !== 'total' &&
         key !== 'startup' &&
         key !== 'active';
-    const parsedValue = getMovePropText(value, doFrameCheck);
+
     const numberClassname = `sortable-prop__value ${punish ? punish : ''}`
 
     const handlePropClick = (e) => {
@@ -24,7 +24,10 @@ const SortableProp = ({
         e.stopPropagation();
         onClick(key);
     }
-
+    const parsedValue = getMovePropText(value, doFrameCheck);
+    const dodgeValue = getDodgeValue(value);
+    const valueTouse = key === 'dodge_direction' ? dodgeValue : parsedValue;
+    
     return (
         <div
             className={`sortable-prop${isSelectedSort ? ' selected-sort' : ''}`}
@@ -38,7 +41,7 @@ const SortableProp = ({
             <div
                 className={numberClassname}
             >
-                {parsedValue}
+                {valueTouse}
             </div>
         </div>
     )
