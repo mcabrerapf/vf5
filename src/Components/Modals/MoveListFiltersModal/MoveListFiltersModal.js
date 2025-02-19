@@ -17,11 +17,13 @@ const MoveListFiltersModal = ({
     const [commandFilter, setCommandFilter] = useState([])
 
     const attackLevelFilters = [];
+    const dodgeFilters = [];
     const frameDatFilters = {};
 
     filterOptions.forEach(fOption => {
         const { id: fId, key: fKey } = fOption;
         if (fKey === 'attack_level') attackLevelFilters.push(fOption);
+        if (fKey === 'dodge_direction') dodgeFilters.push(fOption);
         if (fId.includes("is_plus_on") ||
             fId.includes("is_punishable_on") ||
             fId.includes("guarantees_on") ||
@@ -73,13 +75,18 @@ const MoveListFiltersModal = ({
             <div className='movelist-filters-modal__sub-header'>
                 <Button
                     modifier={filtersView === STRINGS.TAGS ? 'active left' : 'left'}
-                    text='Tags'
+                    text='Attack Level'
                     onClick={() => setFiltersView(STRINGS.TAGS)}
                 />
                 <Button
                     modifier={filtersView === STRINGS.FRAME_DATA ? 'active center' : 'center'}
                     text='Frame Data'
                     onClick={() => setFiltersView(STRINGS.FRAME_DATA)}
+                />
+                <Button
+                    modifier={filtersView === STRINGS.DODE_DIRECTION ? 'active center' : 'center'}
+                    text='Dodge'
+                    onClick={() => setFiltersView(STRINGS.DODE_DIRECTION)}
                 />
                 <Button
                     modifier={filtersView === STRINGS.COMMAND ? 'active right' : 'right'}
@@ -151,6 +158,25 @@ const MoveListFiltersModal = ({
                             // )
                         })
                         }
+                    </div>
+                }
+                {filtersView === STRINGS.DODE_DIRECTION &&
+                    <div
+                        className='movelist-filters-modal__content__options'
+                    >
+                        {dodgeFilters.map(fOption => {
+                            const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
+                            const modifier = isSelected ? 'active' : '';
+                            return (
+                                <Button
+                                    key={fOption.id}
+                                    modifier={modifier}
+                                    value={fOption.id}
+                                    text={fOption.name}
+                                    onClick={() => handleFilterClick(fOption)}
+                                />
+                            )
+                        })}
                     </div>
                 }
                 {filtersView === STRINGS.COMMAND &&
