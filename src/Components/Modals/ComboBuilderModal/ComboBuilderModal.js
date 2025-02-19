@@ -35,7 +35,7 @@ const ComboBuilderModal = ({
     const handleSaveCombo = () => {
         const [comboLauncher, restOfCombo] = getLauncher(comboNotation);
         const [finalTags, launcherName] = !id ?
-            getCommandData(comboLauncher, comboNotation, selectedCharacter, selectedTags, combosFilterOptions) :
+            getCommandData(comboLauncher, comboNotation, selectedCharacter, selectedTags) :
             [selectedTags];
         const nameToUse = getUniqueComboName(
             id,

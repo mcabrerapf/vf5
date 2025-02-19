@@ -1,6 +1,6 @@
 import { CHARACTERS, STRINGS } from "../../../constants";
 
-const getLauncherData = (launcher, character, combosFilterOptions) => {
+const getLauncherData = (launcher, character) => {
     const stringLauncher = launcher.join('');
     const cleanLauncher = stringLauncher.replace(/\b(⊙|or|ch|side|wb|w|hit)\b/g, "").replace('[]', '');
     const characterMoves = CHARACTERS
@@ -9,8 +9,8 @@ const getLauncherData = (launcher, character, combosFilterOptions) => {
         .find(move => move.command.join('') === cleanLauncher);
 
     if (!moveMatch) return {};
-    const { attack_level, name } = moveMatch;
-    return { attackLevel: attack_level, name: name };
+    const { attack_level, name, category } = moveMatch;
+    return { attackLevel: attack_level, name: name, category };
 }
 
 const getExtraTags = (command) => {
@@ -25,10 +25,10 @@ const getExtraTags = (command) => {
     return extraTags;
 }
 
-const getCommandData = (launcher, comboNotation, character, tags, combosFilterOptions) => {
-    const { attackLevel, name } = getLauncherData(launcher, character, combosFilterOptions);
+const getCommandData = (launcher, comboNotation, character, tags) => {
+    const { attackLevel, name, category } = getLauncherData(launcher, character);
     const extraTags = getExtraTags(comboNotation);
-    const finalTags = [...tags, attackLevel, ...extraTags,].filter(Boolean);
+    const finalTags = [...tags, attackLevel, ...extraTags, category].filter(Boolean);
     return [[...new Set(finalTags)], name];
 }
 
