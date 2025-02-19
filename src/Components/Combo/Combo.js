@@ -148,6 +148,15 @@ const Combo = ({
     const nameClassName = ['combo__main__name', nameModifier, favouriteModifier]
         .filter(Boolean)
         .join(' ');
+    const attackLevelTags = [];
+    const otherTags = [];
+    const moveCategoryTags = [];
+    tags.forEach(tag => {
+        const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
+        if (tagMatch?.id.includes('attack_level/')) attackLevelTags.push(tagMatch);
+        if (tagMatch?.id.includes('other/')) otherTags.push(tagMatch);
+        if (tagMatch?.id.includes('move_category/')) moveCategoryTags.push(tagMatch);
+    })
 
     return (
         <div
@@ -273,17 +282,35 @@ const Combo = ({
                         )
                     }
                     )}
-                    {tags.map(tag => {
-                        const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
-                        const modifier =
-                            tagMatch?.id.includes('attack_level/') || tagMatch?.id.includes('other/') ?
-                                `s move-type ${tagMatch.value}` : "s";
+                    {attackLevelTags.map(tag => {
                         return (
                             <Button
-                                key={tag}
-                                modifier={modifier}
-                                value={tag}
-                                text={tagMatch?.short_name || tag}
+                                key={tag.id}
+                                modifier={`s move-type ${tag.value}`}
+                                value={tag.value}
+                                text={tag?.short_name || tag.value}
+                                onClick={handleTagClick}
+                            />
+                        )
+                    })}
+                    {otherTags.map(tag => {
+                        return (
+                            <Button
+                                key={tag.id}
+                                modifier={`s move-type ${tag.value}`}
+                                value={tag.value}
+                                text={tag?.short_name || tag.value}
+                                onClick={handleTagClick}
+                            />
+                        )
+                    })}
+                    {moveCategoryTags.map(tag => {
+                        return (
+                            <Button
+                                key={tag.id}
+                                modifier={'s'}
+                                value={tag.value}
+                                text={tag?.short_name || tag.value}
                                 onClick={handleTagClick}
                             />
                         )
@@ -292,18 +319,35 @@ const Combo = ({
             }
             {showSimpleView && showOtherTags &&
                 <div className='combo__tags'>
-                    {tags.map(tag => {
-
-                        const tagMatch = combosFilterOptions.find(cOption => cOption.value === tag);
-                        const modifier =
-                            tagMatch?.id.includes('attack_level/') || tagMatch?.id.includes('other/') ?
-                                `s move-type ${tagMatch.value}` : "s";
+                    {attackLevelTags.map(tag => {
                         return (
                             <Button
-                                key={tag}
-                                modifier={modifier}
-                                value={tag}
-                                text={tagMatch?.short_name || tag}
+                                key={tag.id}
+                                modifier={`s move-type ${tag.value}`}
+                                value={tag.value}
+                                text={tag?.short_name || tag.value}
+                                onClick={handleTagClick}
+                            />
+                        )
+                    })}
+                    {otherTags.map(tag => {
+                        return (
+                            <Button
+                                key={tag.id}
+                                modifier={`s move-type ${tag.value}`}
+                                value={tag.value}
+                                text={tag?.short_name || tag.value}
+                                onClick={handleTagClick}
+                            />
+                        )
+                    })}
+                    {moveCategoryTags.map(tag => {
+                        return (
+                            <Button
+                                key={tag.id}
+                                modifier={'s'}
+                                value={tag.value}
+                                text={tag?.short_name || tag.value}
                                 onClick={handleTagClick}
                             />
                         )
