@@ -5,6 +5,8 @@ import {
 } from "./custom_moves";
 import {
     getCombos,
+    getLikedCombos,
+    updateLikedCombos,
     deleteCombo,
     updateCombos
 } from "./combos";
@@ -24,6 +26,8 @@ export {
     updateCustomMoves,
     // 
     getCombos,
+    getLikedCombos,
+    updateLikedCombos,
     deleteCombo,
     updateCombos,
     // 

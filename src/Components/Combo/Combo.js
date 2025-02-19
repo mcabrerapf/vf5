@@ -5,8 +5,9 @@ import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
-import { DownloadIcon, EditIcon, ThumbsDownIcon, ThumbsUpIcon } from '../Icon';
+import { DownloadIcon, EditIcon, ThumbsUpIcon } from '../Icon';
 import { updateLikes } from '../../services/aws';
+import { getLikedCombos, updateLikedCombos } from '../../services';
 
 const Combo = ({
     combo = {},
@@ -17,8 +18,8 @@ const Combo = ({
     hideFavouriteButton = false,
     hideEditButton = false,
     showLikes = false,
-    disabledSaveButton = false,
-    disabledLikes = false,
+    disableSaveButton = false,
+    disableLikes = false,
     showOtherTags = false,
     characterFilterOptions = [],
     combosFilterOptions = [],
@@ -29,9 +30,6 @@ const Combo = ({
     onTagClick = () => { },
     onSaveButtonClick = () => { },
 }) => {
-    const [likes, setLikes] = useState(combo?.likes || 0);
-    const [dislikes, setDislikes] = useState(combo?.dislikes || 0);
-    const [debouncedData, setDebouncedData] = useState({ likes, dislikes });
     const {
         name,
         tags,
@@ -42,6 +40,13 @@ const Combo = ({
         note,
         favourite
     } = combo || {};
+    const likedCombos = getLikedCombos();
+    const likedMatch = !!likedCombos.find(lCombo => lCombo === combo.id);
+    const [isLiked, setIsLiked] = useState(likedMatch);
+    const [likes, setLikes] = useState(combo.likes);
+    const [debouncedLike, setDebouncedLike] = useState(likedMatch);
+
+
     const hasAllCharacters = CHARACTERS.length === character_tags.length;
     const isDamageSortSelected = selectedSort.id === 'damage';
     const isNameSortSelected = selectedSort.id === 'name';
@@ -49,13 +54,17 @@ const Combo = ({
 
     useEffect(() => {
         const handler = setTimeout(() => {
-            if (likes !== debouncedData.likes || dislikes !== debouncedData.dislikes) {
-                setDebouncedData({ likes, dislikes });
-                updateLikes({ combo: { id: combo.id, likes, dislikes } });
-            }
+            if (isLiked === debouncedLike) return;
+
+            updateLikes({
+                comboId: combo.id,
+                increase: isLiked
+            })
+            updateLikedCombos(combo.id);
+            setDebouncedLike(isLiked);
         }, 500);
         return () => clearTimeout(handler);
-    }, [likes, dislikes, debouncedData.likes, debouncedData.dislikes, combo.id]);
+    }, [isLiked, combo.id, combo.likes, combo.dislikes, debouncedLike]);
 
     const handleComboClick = (e) => {
         onClick(e);
@@ -139,8 +148,11 @@ const Combo = ({
         handleSortChange(updatedSort);
     }
 
-    const handleLike = () => setLikes((prev) => prev + 1);
-    const handleDislike = () => setDislikes((prev) => prev + 1);
+    const handleLike = () => {
+        setIsLiked((prev) => !prev)
+        const newLikes = !isLiked ? likes + 1 : likes - 1;
+        setLikes(newLikes);
+    };
 
     const parsedNote = stringNotationParser(note);
     const favouriteModifier = favourite ? ' favourite' : '';
@@ -196,7 +208,7 @@ const Combo = ({
                         {showSaveButton &&
                             <Button
                                 modifier={'s'}
-                                disabled={disabledSaveButton}
+                                disabled={disableSaveButton}
                                 onClick={handleSaveButtonClick}
                             >
                                 <DownloadIcon />
@@ -226,7 +238,7 @@ const Combo = ({
                             {showSaveButton &&
                                 <Button
                                     modifier={'s'}
-                                    disabled={disabledSaveButton}
+                                    disabled={disableSaveButton}
                                     onClick={handleSaveButtonClick}
                                 >
                                     <DownloadIcon />
@@ -359,25 +371,13 @@ const Combo = ({
                     className='combo__thumb-buttons'
                 >
                     <span
-                        className='combo__thumb-buttons__dislikes'
-                    >
-                        {dislikes}
-                    </span>
-                    <Button
-                        modifier={'s'}
-                        disabled={disabledLikes}
-                        onClick={handleDislike}
-                    >
-                        <ThumbsDownIcon />
-                    </Button>
-                    <span
                         className='combo__thumb-buttons__likes'
                     >
                         {likes}
                     </span>
                     <Button
-                        modifier={'s'}
-                        disabled={disabledLikes}
+                        modifier={`s${isLiked ? ' liked' : ""}`}
+                        disabled={disableLikes}
                         onClick={handleLike}
                     >
                         <ThumbsUpIcon />

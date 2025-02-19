@@ -104,12 +104,14 @@ const MoveListFiltersModal = ({
                         {attackLevelFilters.map(fOption => {
                             const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
                             const modifier = isSelected ? `move-type ${fOption.value}` : '';
+                            const buttonText = `${fOption.name} (${movesProperties[fOption.value]})`
+
                             return (
                                 <Button
                                     key={fOption.id}
                                     modifier={modifier}
                                     value={fOption.id}
-                                    text={fOption.name}
+                                    text={buttonText}
                                     onClick={() => handleFilterClick(fOption)}
                                 />
                             )
@@ -159,25 +161,6 @@ const MoveListFiltersModal = ({
 
                                 </div>
                             )
-                            // return (
-                            //     <div>
-                            //         <div>{fdFilterKey}</div>
-                            //         {fDFilter.map(fOption => {
-                            //             // const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
-                            //             // const modifier = isSelected ? `move-type ${fOption.value}` : '';
-
-                            //             return (
-                            //                 <Button
-                            //                     key={fOption.id}
-                            //                     modifier={''}
-                            //                     value={fOption.id}
-                            //                     text={fOption.name}
-                            //                     onClick={() => handleFilterClick(fOption)}
-                            //                 />
-                            //             )
-                            //         })}
-                            //     </div>
-                            // )
                         })
                         }
                     </div>
@@ -189,12 +172,16 @@ const MoveListFiltersModal = ({
                         {dodgeFilters.map(fOption => {
                             const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
                             const modifier = isSelected ? 'active' : '';
+                            const numberOfMOves = movesProperties[`${STRINGS.DODE_DIRECTION}_${fOption.value}`];
+                            const buttonText = `${fOption.name} (${numberOfMOves})`
+
                             return (
                                 <Button
                                     key={fOption.id}
+                                    disabled={!numberOfMOves}
                                     modifier={modifier}
                                     value={fOption.id}
-                                    text={fOption.name}
+                                    text={buttonText}
                                     onClick={() => handleFilterClick(fOption)}
                                 />
                             )

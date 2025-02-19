@@ -40,6 +40,10 @@
         box-sizing: border-box!important;
     }
 
+    &.liked {
+        background-color: lightgreen;
+    }
+
     &.tab {
         border-top: 0 !important;
         border-radius: 0px;

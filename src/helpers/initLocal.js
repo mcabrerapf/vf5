@@ -1,5 +1,6 @@
 import {
     CHARACTERS_DATA_KEY,
+    LIKED_COMBOS,
     LIST_VIEW_KEY,
     MOVELIST_SORT_OPTIONS,
     SELECTED_CHARACTER_KEY,
@@ -88,9 +89,9 @@ const validateFilters = () => {
         const parsedComboFilters = JSON.parse(comboFilters)
         const parsedMovelisFilters = JSON.parse(movelisFilters)
         if (
-            !Array.isArray(parsedComboFilters) || 
+            !Array.isArray(parsedComboFilters) ||
             !Array.isArray(parsedMovelisFilters)
-        ){
+        ) {
             throw new Error("Not array value in filters");
         }
     } catch (error) {
@@ -118,7 +119,7 @@ const validateSelectedCharacter = () => {
 const validateSelectedCharacterView = () => {
     try {
         const selectedCharacterView = localStorage.getItem(SELECTED_CHARACTER_VIEW_KEY);
-        if (![COMBOS, MOVELIST, NOTES, MATCHUPS,  COMBOS_SEARCH].includes(selectedCharacterView)) {
+        if (![COMBOS, MOVELIST, NOTES, MATCHUPS, COMBOS_SEARCH].includes(selectedCharacterView)) {
             throw new Error("Not valid character view");
 
         }
@@ -166,6 +167,26 @@ const validateListView = () => {
     }
 }
 
+const validateLikedCombos = () => {
+    try {
+        const likedCombos = localStorage.getItem(LIKED_COMBOS)
+        const parsedLikedCombos = JSON.parse(likedCombos);
+        if (
+            !parsedLikedCombos ||
+            !Array.isArray(parsedLikedCombos)
+        ) {
+            throw new Error("Invalid liked combos");
+        }
+
+    } catch (error) {
+        console.log(error);
+        localStorage.setItem(
+            LIKED_COMBOS,
+            JSON.stringify([])
+        );
+    }
+}
+
 const initLocal = () => {
     validateCharactersData();
     validateSelectedCharacter();
@@ -173,7 +194,8 @@ const initLocal = () => {
     validateCharacterMoveCategory();
     validateFilters();
     validateSorts();
-    validateListView()
+    validateLikedCombos();
+    validateListView();
 }
 
 export default initLocal;

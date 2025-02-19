@@ -1,4 +1,4 @@
-import { CHARACTERS_DATA_KEY } from "../constants";
+import { CHARACTERS_DATA_KEY, LIKED_COMBOS } from "../constants";
 
 const getCombos = (characterId) => {
     try {
@@ -6,6 +6,39 @@ const getCombos = (characterId) => {
         const characterData = JSON.parse(allCharactersData)[characterId];
         return characterData.combos;
 
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
+const getLikedCombos = () => {
+    try {
+        const likedCombos = localStorage.getItem(LIKED_COMBOS);
+        const parsedCombos = JSON.parse(likedCombos);
+        return parsedCombos;
+
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
+const updateLikedCombos = (comboId) => {
+    try {
+        const likedCombos = localStorage.getItem(LIKED_COMBOS);
+        const parsedCombos = JSON.parse(likedCombos);
+        const filteredCombos = parsedCombos.filter(pCombo => pCombo !== comboId);
+        console.log(parsedCombos, filteredCombos);
+        let updatedCombos;
+        if (filteredCombos.length === parsedCombos.length) {
+            updatedCombos = [...parsedCombos, comboId];
+        } else {
+            updatedCombos = filteredCombos;
+        }
+        console.log(updatedCombos);
+        localStorage.setItem(LIKED_COMBOS, JSON.stringify(updatedCombos));
+        return updatedCombos;
     } catch (error) {
         console.log(error);
         return [];
@@ -63,6 +96,8 @@ const deleteCombo = (characterId, comboId) => {
 
 export {
     getCombos,
+    getLikedCombos,
+    updateLikedCombos,
     deleteCombo,
     updateCombos
 }

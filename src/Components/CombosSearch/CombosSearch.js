@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CombosSearch.scss'
-import { getAllCombos } from '../../services/aws';
+import { getAllCombos, getMyCombos } from '../../services/aws';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Combo from '../Combo';
@@ -19,8 +19,10 @@ const CombosSearch = ({
     const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
     const initialLocalCombos = getCombos(selectedCharacter);
+    const [selectedCombosSearchView, setSelectedCombosSearchView] = useState('online');
     const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[0]);
     const [comboResults, setComboResults] = useState([]);
+    const [myCombos, setMyCombos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
     const [showSortModal, setShowSortModal] = useState(false);
@@ -44,6 +46,7 @@ const CombosSearch = ({
                 lIds.push(lCombo.id)
                 oIds.push(lCombo.oId)
             });
+            let allCombos;
 
             await getAllCombos({
                 characterId: selectedCharacter,
@@ -51,14 +54,23 @@ const CombosSearch = ({
                 oIds
             })
                 .then(res => {
-
+                    allCombos = res;
+                    return getMyCombos({
+                        characterId: selectedCharacter,
+                        lIds,
+                    })
+                })
+                .then(res => {
                     setLocalCombos(newLocalCombos);
                     setIsLoading(false);
-                    setComboResults(res);
+                    setComboResults(allCombos);
+                    setMyCombos(res);
                 })
                 .catch(() => {
+                    setLocalCombos(newLocalCombos);
                     setIsLoading(false);
                     setComboResults([]);
+                    setMyCombos([]);
                 });
 
         }
@@ -84,20 +96,31 @@ const CombosSearch = ({
             lIds.push(lCombo.id)
             oIds.push(lCombo.oId)
         });
+        let allCombos;
         await getAllCombos({
             characterId: selectedCharacter,
-            characterFilters: newFilters,
+            // characterFilters: newFilters,
             lIds,
             oIds
         })
             .then(res => {
+                allCombos = res;
+                return getMyCombos({
+                    characterId: selectedCharacter,
+                    // characterFilters: newFilters,
+                    lIds,
+                })
+            })
+            .then(res => {
                 setIsLoading(false);
-                setComboResults(res);
+                setComboResults(allCombos);
+                setMyCombos(res);
                 setSelectedFilters(newFilters);
             })
             .catch(() => {
                 setIsLoading(false);
                 setComboResults([]);
+                setMyCombos(false);
                 setSelectedFilters(newFilters);
             });
 
@@ -120,8 +143,8 @@ const CombosSearch = ({
 
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
-
-    const sortedResults = sortList(comboResults, selectedSort);
+    const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
+    const sortedResults = sortList(combosToUse, selectedSort);
 
     return (
         <div
@@ -152,9 +175,16 @@ const CombosSearch = ({
                     className='combos-search__header__left'
                 >
                     <Button
-                        modifier={'active'}
+                        modifier={selectedCombosSearchView === 'online' ? 'active' : ''}
+                        onClick={() => setSelectedCombosSearchView('online')}
                     >
                         Combos ({comboResults.length || 0})
+                    </Button>
+                    <Button
+                        modifier={selectedCombosSearchView === 'mine' ? 'active' : ''}
+                        onClick={() => setSelectedCombosSearchView('mine')}
+                    >
+                        My Combos ({myCombos.length || 0})
                     </Button>
                 </div>
 
@@ -192,7 +222,10 @@ const CombosSearch = ({
                     className='combos-search__results'
                 >
                     {sortedResults.map(combo => {
-                        const disabledSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
+                        console.log(combo)
+                        console.log(localCombos)
+                        const disableSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
+                        const disableLikes = !!localCombos.find(lCombo => lCombo.id === combo.lId);
                         return (
                             <Combo
                                 combo={{ ...combo, favourite: false }}
@@ -200,7 +233,8 @@ const CombosSearch = ({
                                 hideEditButton
                                 hideFavouriteButton
                                 showLikes
-                                disabledSaveButton={disabledSaveButton}
+                                disableSaveButton={disableSaveButton}
+                                disableLikes={disableLikes}
                                 showSimpleView={listView === 'S'}
                                 characterFilterOptions={characterFilterOptions}
                                 combosFilterOptions={combosFilterOptions}

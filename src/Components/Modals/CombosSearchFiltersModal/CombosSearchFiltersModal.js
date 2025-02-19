@@ -44,7 +44,7 @@ const CombosSearchFiltersModal = ({
 
     const handleCharacterClick = ({ target: { value } }) => {
         let updatedTags;
-        const filteredTags = selectedFilters.filter(sFilter => sFilter !== value);
+        const filteredTags = selectedFilters.filter(sFilter => sFilter.value !== value);
 
         if (filteredTags.length === selectedFilters.length) {
             updatedTags = [

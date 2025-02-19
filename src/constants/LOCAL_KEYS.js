@@ -10,6 +10,7 @@ const SELECTED_COMBOS_FILTERS_KEY =     'vf5_selected-combos-filters';
 const SELECTED_COMBOS_SORT_KEY =        'vf5_selected-combos-sort';
 const SELECTED_MATCHUPS_SORT_KEY =      'vf5_selected-matchups-sort';
 const SELECTED_MATCHUPS_VIEW_KEY =      'vf5_selected-matchups-view';
+const LIKED_COMBOS =                    'vf5_liked-combos';
 const USER_DATA_KEY =                   'vf5_user-data';
 
 
@@ -27,13 +28,16 @@ const LOCAL_KEYS = {
     // 
     CHARACTERS_DATA_KEY,
     // 
-    ALL_DATA_KEY
+    ALL_DATA_KEY,
+    // 
+    LIKED_COMBOS
 }
 
 export {
     ALL_DATA_KEY,
     CHARACTERS_DATA_KEY,
     LIST_VIEW_KEY,
+    LIKED_COMBOS,
     SELECTED_CHARACTER_KEY,
     SELECTED_CHARACTER_VIEW_KEY,
     SELECTED_MOVE_CATEGORY_KEY,

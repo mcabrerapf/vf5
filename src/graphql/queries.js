@@ -34,6 +34,8 @@ query getCombo($id: ID!) {
     favourite
     id
     lId
+    likes
+    dislikes
     launcher
     name
     note

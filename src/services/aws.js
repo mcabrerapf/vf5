@@ -6,16 +6,23 @@ import {
 import { CREATE_COMBO, DELETE_COMBO, UPDATE_COMBO } from '../graphql/mutations';
 const client = generateClient();
 
-const buildFilters = (characterId, orOptions = [], localIds = [], oIds = []) => {
+// TODO fix this logic
+const buildFilters = ({
+    characterId,
+    orOptions = [],
+    lIds = [],
+    oIds = [],
+    iIds = []
+}) => {
     const filters = {
         characterId: { eq: characterId },
     };
-    const orFilters = orOptions.map(char => {
-        if (!char.value) return null;
-        return { character_tags: { contains: char.value } };
+    const orFilters = orOptions.map(oOption => {
+        if (!oOption.value) return null;
+        return { character_tags: { contains: oOption.value } };
     })
         .filter(Boolean)
-    const andFilters = localIds.map(lId => {
+    const andFilters = lIds.map(lId => {
         if (!lId) return null;
         return { lId: { ne: lId } };
     })
@@ -24,10 +31,39 @@ const buildFilters = (characterId, orOptions = [], localIds = [], oIds = []) => 
         if (!oId) return null;
         andFilters.push({ id: { ne: oId } });
     })
+    iIds.forEach(iId => {
+        if (!iId) return null;
+        orFilters.push({ lId: { eq: iId } });
+    })
     if (!!orFilters.length) filters.or = orFilters;
     if (!!andFilters.length) filters.and = andFilters;
+    console.log(filters)
     return filters;
 }
+
+const getCombo = async ({
+    comboId,
+}) =>
+    client
+        .graphql({
+            query: GET_COMBO,
+            variables: {
+                id: comboId
+            }
+        })
+        .then((res) => {
+            const {
+                data: {
+                    getCombo: comboMatch
+                }
+            } = res;
+
+            return comboMatch;
+        })
+        .catch((err) => {
+            console.log(err);
+            return null;
+        });
 
 const getAllCombos = async ({
     characterId,
@@ -39,7 +75,38 @@ const getAllCombos = async ({
         .graphql({
             query: GET_ALL_COMBOS,
             variables: {
-                filter: buildFilters(characterId, characterFilters, lIds, oIds)
+                filter: buildFilters({
+                    characterId, orOptions: characterFilters, lIds, oIds
+                })
+            }
+        })
+        .then((res) => {
+            const {
+                data: {
+                    listCombos: {
+                        items
+                    }
+                }
+            } = res;
+            return items;
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+
+const getMyCombos = async ({
+    characterId,
+    characterFilters = [],
+    lIds = [],
+}) =>
+    client
+        .graphql({
+            query: GET_ALL_COMBOS,
+            variables: {
+                filter: buildFilters({
+                    characterId, orOptions: characterFilters, iIds: lIds
+                })
             }
         })
         .then((res) => {
@@ -114,18 +181,22 @@ const updateCombo = async ({
         });
 
 const updateLikes = async ({
-    combo,
+    comboId,
+    increase,
 }) =>
-    client
-        .graphql({
-            query: UPDATE_COMBO,
-            variables: {
-                input: {
-                    id: combo.id,
-                    likes: combo.likes,
-                    dislikes: combo.dislikes,
-                }
-            }
+    getCombo({ comboId: comboId })
+        .then(combo => {
+            console.log(combo);
+            return client
+                .graphql({
+                    query: UPDATE_COMBO,
+                    variables: {
+                        input: {
+                            id: combo.id,
+                            likes: increase ? combo.likes + 1 : combo.likes - 1,
+                        }
+                    }
+                })
         })
         .then((res) => {
             const {
@@ -137,8 +208,9 @@ const updateLikes = async ({
         })
         .catch((err) => {
             console.log(err);
-            return combo;
+            return null;
         });
+
 
 const deleteAwsCombo = async ({
     combo,
@@ -221,6 +293,7 @@ const createCombo = async ({
 
 export {
     getAllCombos,
+    getMyCombos,
     createCombo,
     updateCombo,
     updateLikes,

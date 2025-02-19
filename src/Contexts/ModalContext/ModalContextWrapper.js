@@ -11,9 +11,10 @@ function ModalContextWrapper({
 }) {
   const backgroundRef = useRef(null);
   const wrapperRef = useRef(null);
-
+  
   useEffect(() => {
     function handleClickOutside({ target }) {
+
       if (!closeOnBgClick) return;
       const shouldHideModal = wrapperRef.current && !wrapperRef.current.contains(target);
       if (shouldHideModal) closeModal();
@@ -39,7 +40,10 @@ function ModalContextWrapper({
       onTouchMove={stopPropagation}
       onTouchEnd={stopPropagation}
     >
-      <div className='modal-bg__wrapper' ref={wrapperRef}>
+      <div
+        ref={wrapperRef}
+        className='modal-bg__wrapper'
+      >
         <ModalContextProvider
           value={{
             closeModal,
