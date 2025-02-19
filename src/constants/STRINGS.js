@@ -21,6 +21,7 @@ const STRINGS = {
     NOTE: 'note',
     NOTES: 'notes',
     TAGS: 'tags',
+    FRAME_DATA: 'frame_data',
     RESET_LOCAL_DATA: 'RESET_LOCAL_DATA',
     'combos_search': 'Combo Search',
     'movelist': 'Movelist',

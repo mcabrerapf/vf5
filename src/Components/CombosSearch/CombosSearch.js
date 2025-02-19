@@ -1,31 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CombosSearch.scss'
 import { getAllCombos } from '../../services/aws';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Combo from '../Combo';
 import Button from '../Button';
+import ActiveFiltersList from '../ActiveFiltersList';
 import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
-import { CHARACTERS_JSON, STRINGS } from '../../constants';
+import { CHARACTERS_JSON, COMBOS_SORT_OPTIONS, STRINGS } from '../../constants';
 import { getCombos, updateCombos } from '../../services';
 import { validateCombo } from '../../services/utils';
-import { generateId } from '../../helpers';
-import ActiveFiltersList from '../ActiveFiltersList';
+import { generateId, sortList } from '../../helpers';
+import SortModal from '../Modals/SortModal';
 
 const CombosSearch = ({
     handleViewChange
 }) => {
+    const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
-    const {
-        combos_filter_options: combosFilterOptions,
-    } = CHARACTERS_JSON[selectedCharacter];
     const initialLocalCombos = getCombos(selectedCharacter);
-
+    const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[0]);
     const [comboResults, setComboResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
+    const [showSortModal, setShowSortModal] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [localCombos, setLocalCombos] = useState(initialLocalCombos);
+
+    const {
+        combos_filter_options: combosFilterOptions,
+    } = CHARACTERS_JSON[selectedCharacter];
+    const scrollToTop = () => {
+        if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     useEffect(() => {
         async function fetchCombos() {
@@ -58,6 +65,7 @@ const CombosSearch = ({
         fetchCombos();
     }, [selectedCharacter])
 
+    const toggleSortModal = () => setShowSortModal(!showSortModal);
 
     const onSaveButtonClick = (combo) => {
         const withId = { ...combo, oId: combo.id, id: generateId() };
@@ -95,9 +103,25 @@ const CombosSearch = ({
 
     }
 
+    const handleSortClick = () => {
+        const newSort = {
+            ...selectedSort,
+            dir: selectedSort.dir === 'asc' ? 'dsc' : 'asc'
+        }
+        setSelectedSort(newSort);
+    }
+
+    const handleSortModalClose = (sort) => {
+        if (!sort) return toggleSortModal();
+        scrollToTop();
+        setSelectedSort(sort);
+        toggleSortModal();
+    }
+
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
 
+    const sortedResults = sortList(comboResults, selectedSort);
 
     return (
         <div
@@ -112,6 +136,15 @@ const CombosSearch = ({
                     filterOptions={characterFilterOptions}
                 />
             </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showSortModal}
+                closeModal={handleSortModalClose}
+            >
+                <SortModal
+                    selectedSort={selectedSort}
+                    sortOptions={COMBOS_SORT_OPTIONS}
+                />
+            </ModalContextWrapper>
             <div
                 className='combos-search__header'
             >
@@ -119,17 +152,10 @@ const CombosSearch = ({
                     className='combos-search__header__left'
                 >
                     <Button
-                        onClick={() => handleViewChange(STRINGS.COMBOS)}
+                        modifier={'active'}
                     >
-                        BACK
+                        Combos ({comboResults.length || 0})
                     </Button>
-                    {!isLoading &&
-                        <Button
-                            modifier={'active'}
-                        >
-                            Combos ({comboResults.length || 0})
-                        </Button>
-                    }
                 </div>
 
                 <Button
@@ -141,9 +167,9 @@ const CombosSearch = ({
             </div>
             <ActiveFiltersList
                 selectedFilters={selectedFilters}
-                selectedSort={{}}
-            // onSortClick={toggleSortModal}
-            // onSortDirClick={handleSortDirChange}
+                selectedSort={selectedSort}
+                onSortClick={toggleSortModal}
+                onSortDirClick={handleSortClick}
             // onFilterClick={handleActiveFilterClick}
             />
             {isLoading &&
@@ -162,11 +188,11 @@ const CombosSearch = ({
             }
             {!isLoading && !!comboResults.length &&
                 <div
+                    ref={listRef}
                     className='combos-search__results'
                 >
-                    {comboResults.map(combo => {
+                    {sortedResults.map(combo => {
                         const disabledSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
-
                         return (
                             <Combo
                                 combo={{ ...combo, favourite: false }}
@@ -185,6 +211,16 @@ const CombosSearch = ({
                     <div className='bottom-separator s'>.</div>
                 </div>
             }
+            <footer className='combos-search__footer'>
+                <div className='combos-search__footer__empty'></div>
+                <div className='combos-search__footer__empty'></div>
+                <Button
+                    modifier={'online-search-button'}
+                    onClick={() => handleViewChange(STRINGS.COMBOS)}
+                >
+                    BACK
+                </Button>
+            </footer>
         </div>
     )
 }

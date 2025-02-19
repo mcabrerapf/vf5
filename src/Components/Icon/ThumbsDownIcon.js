@@ -2,8 +2,8 @@ import React from "react";
 
 const ThumbsDownIcon = (props) => (
   <svg
-    width="2rem"
-    height="2rem"
+    width="1.5rem"
+    height="1.5rem"
     viewBox="0 0 24 24"
     fill="red"
     xmlns="http://www.w3.org/2000/svg"

@@ -10,11 +10,29 @@ const MoveListFiltersModal = ({
     selectedFilters,
     filterOptions,
 }) => {
+    console.log(filterOptions)
     const { closeModal } = useModalContext();
     const [selectedTypeFilters, setSelectedTypeFilters] = useState(selectedFilters);
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS)
     const [commandFilter, setCommandFilter] = useState([])
 
+    const attackLevelFilters = [];
+    const frameDatFilters = {};
+
+    filterOptions.forEach(fOption => {
+        const { id: fId, key: fKey } = fOption;
+        if (fKey === 'attack_level') attackLevelFilters.push(fOption);
+        if (fId.includes("is_plus_on") ||
+            fId.includes("is_punishable_on") ||
+            fId.includes("guarantees_on") ||
+            fId.includes("launches_on") ||
+            fId.includes("staggers_on")) {
+            const [s] = fId.split('/');
+            if (!frameDatFilters[s]) frameDatFilters[s] = [];
+            frameDatFilters[s].push(fOption)
+        };
+    })
+    console.log(frameDatFilters)
     const handleFilterSave = () => {
         const stringCommand = commandFilter.join('-');
         const isRepeat = selectedFilters.find(selected => selected.value === stringCommand);
@@ -59,6 +77,11 @@ const MoveListFiltersModal = ({
                     onClick={() => setFiltersView(STRINGS.TAGS)}
                 />
                 <Button
+                    modifier={filtersView === STRINGS.FRAME_DATA ? 'active center' : 'center'}
+                    text='Frame Data'
+                    onClick={() => setFiltersView(STRINGS.FRAME_DATA)}
+                />
+                <Button
                     modifier={filtersView === STRINGS.COMMAND ? 'active right' : 'right'}
                     text='Command'
                     onClick={() => setFiltersView(STRINGS.COMMAND)}
@@ -70,8 +93,7 @@ const MoveListFiltersModal = ({
                     <div
                         className='movelist-filters-modal__content__options'
                     >
-                        {filterOptions.map(fOption => {
-                            if (fOption.key !== 'attack_level') return null;
+                        {attackLevelFilters.map(fOption => {
                             const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
                             const modifier = isSelected ? `move-type ${fOption.value}` : '';
                             return (
@@ -84,6 +106,51 @@ const MoveListFiltersModal = ({
                                 />
                             )
                         })}
+                    </div>
+                }
+                {filtersView === STRINGS.FRAME_DATA &&
+                    <div
+                        className='movelist-filters-modal__content__options'
+                    >
+                        {Object.keys(frameDatFilters).map(fdFilterKey => {
+                            const fDFilter = frameDatFilters[fdFilterKey];
+                            return (
+                                fDFilter.map(fOption => {
+                                    const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
+                                    const modifier = isSelected ? 'active' : '';
+
+                                    return (
+                                        <Button
+                                            key={fOption.id}
+                                            modifier={modifier}
+                                            value={fOption.id}
+                                            text={fOption.short_name}
+                                            onClick={() => handleFilterClick(fOption)}
+                                        />
+                                    )
+                                })
+                            )
+                            // return (
+                            //     <div>
+                            //         <div>{fdFilterKey}</div>
+                            //         {fDFilter.map(fOption => {
+                            //             // const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
+                            //             // const modifier = isSelected ? `move-type ${fOption.value}` : '';
+
+                            //             return (
+                            //                 <Button
+                            //                     key={fOption.id}
+                            //                     modifier={''}
+                            //                     value={fOption.id}
+                            //                     text={fOption.name}
+                            //                     onClick={() => handleFilterClick(fOption)}
+                            //                 />
+                            //             )
+                            //         })}
+                            //     </div>
+                            // )
+                        })
+                        }
                     </div>
                 }
                 {filtersView === STRINGS.COMMAND &&
