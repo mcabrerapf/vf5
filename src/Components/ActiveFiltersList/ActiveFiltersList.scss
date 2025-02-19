@@ -16,14 +16,19 @@
         gap: 0.5rem;
         scrollbar-color: var(--white-color) var(--white-color);
 
-        .move-command {
-            padding: 0;
+        .button {
             &.launcher {
                 border: 1px solid gold;
             }
-            &.pseudo-launcher { 
+
+            &.pseudo-launcher {
                 border: 1px dashed gold;
             }
+        }
+
+        .move-command {
+            padding: 0;
+
         }
     }
 
@@ -41,5 +46,5 @@
             border-bottom-left-radius: 0;
         }
     }
-  
+
 }

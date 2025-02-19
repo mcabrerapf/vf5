@@ -5,12 +5,12 @@ import Button from '../../Button';
 import CommandView from './CommandView';
 import { useModalContext } from '../../../Contexts/ModalContext';
 import { STRINGS } from '../../../constants';
+import { capitalizeFirstLetter } from '.././../../helpers'
 
 const MoveListFiltersModal = ({
     selectedFilters,
     filterOptions,
 }) => {
-    console.log(filterOptions)
     const { closeModal } = useModalContext();
     const [selectedTypeFilters, setSelectedTypeFilters] = useState(selectedFilters);
     const [filtersView, setFiltersView] = useState(STRINGS.TAGS)
@@ -34,7 +34,7 @@ const MoveListFiltersModal = ({
             frameDatFilters[s].push(fOption)
         };
     })
-    console.log(frameDatFilters)
+
     const handleFilterSave = () => {
         const stringCommand = commandFilter.join('-');
         const isRepeat = selectedFilters.find(selected => selected.value === stringCommand);
@@ -117,25 +117,45 @@ const MoveListFiltersModal = ({
                 }
                 {filtersView === STRINGS.FRAME_DATA &&
                     <div
-                        className='movelist-filters-modal__content__options'
+                        className='movelist-filters-modal__content__fd-options'
                     >
                         {Object.keys(frameDatFilters).map(fdFilterKey => {
+
+                            const header = capitalizeFirstLetter(fdFilterKey.split('_').join(' '));
+                            console.log({ fdFilterKey, header })
                             const fDFilter = frameDatFilters[fdFilterKey];
                             return (
-                                fDFilter.map(fOption => {
-                                    const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
-                                    const modifier = isSelected ? 'active' : '';
+                                <div
+                                    className='movelist-filters-modal__content__fd-options__option'
+                                >
+                                    <div
+                                        className='movelist-filters-modal__content__fd-options__option__header'
+                                    >
+                                        {header}:
+                                    </div>
+                                    <div
+                                        className='movelist-filters-modal__content__fd-options__option__options'
+                                    >
+                                        {
+                                            fDFilter.map(fOption => {
+                                                const isSelected = !!selectedTypeFilters.find(sFilter => sFilter.id === fOption.id);
+                                                const modifier = isSelected ? 'active' : '';
+                                                const [, text] = fOption.name.split('on')
 
-                                    return (
-                                        <Button
-                                            key={fOption.id}
-                                            modifier={modifier}
-                                            value={fOption.id}
-                                            text={fOption.short_name}
-                                            onClick={() => handleFilterClick(fOption)}
-                                        />
-                                    )
-                                })
+                                                return (
+                                                    <Button
+                                                        key={fOption.id}
+                                                        modifier={modifier}
+                                                        value={fOption.id}
+                                                        text={text}
+                                                        onClick={() => handleFilterClick(fOption)}
+                                                    />
+                                                )
+                                            })
+                                        }
+                                    </div>
+
+                                </div>
                             )
                             // return (
                             //     <div>

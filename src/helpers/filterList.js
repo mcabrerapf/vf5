@@ -22,6 +22,10 @@ const filterList = (list, filters, customMoves = []) => {
             const { key: fKey, value: fValue } = fOption;
             if (!filterMatchesObj[fKey]) filterMatchesObj[fKey] = [];
             const moveValue = listItem[fKey];
+            if(fKey.includes('guarantees_on')) {
+                filterMatchesObj[fKey].push(!!moveValue);
+                return;
+            }
             if (fKey === 'launcher') {
                 const stringifiedValue = moveValue.join('-');
                 filterMatchesObj[fKey].push(stringifiedValue === fValue);
@@ -40,7 +44,7 @@ const filterList = (list, filters, customMoves = []) => {
             filterMatchesObj[fKey].push(moveValue === fValue);
             return;
         });
-
+        console.log(filterMatchesObj)
         const stringCommand = listItem.command.join('-')
         const hasFavMatch = !hasFavFilter ?
             true : listItem.favourite || !!customMoves.find(cMove => cMove.id === listItem.id && cMove.favourite);

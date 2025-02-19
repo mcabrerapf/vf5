@@ -34,6 +34,34 @@
                 // width: fit-content;
             }
         }
+
+        &__fd-options {
+            width: 100%;
+            height: 100%;
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            
+            &__option {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &__header {
+                    font-size: 1.1rem;
+                    font-weight: bold;
+                }
+
+                &__options {
+                    display: flex;
+                    gap: 0.2rem;
+                }
+            }
+
+            .button {
+                // flex-grow: 0;
+                // width: fit-content;
+            }
+        }
     }
 
     .modal-footer {

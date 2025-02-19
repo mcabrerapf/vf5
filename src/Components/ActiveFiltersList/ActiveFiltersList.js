@@ -21,31 +21,38 @@ const ActiveFiltersList = ({
                         case 'command':
                             return (
                                 <Button
+                                    key={id}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 >
                                     <MoveCommand
-                                        key={id}
                                         command={value.split('-')}
                                     />
                                 </Button>
                             )
                         case 'launcher':
                             return (
-                                <MoveCommand
+                                <Button
                                     key={id}
                                     modifier={"launcher"}
-                                    command={value.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
-                                />
+                                >
+                                    <MoveCommand
+                                        command={value.split('-')}
+
+                                    />
+                                </Button>
                             )
                         case 'pseudo-launcher':
                             return (
-                                <MoveCommand
+                                <Button
                                     key={id}
                                     modifier={"pseudo-launcher"}
-                                    command={name.split('-')}
                                     onClick={() => onFilterClick(selectedFilter)}
-                                />
+                                >
+                                    <MoveCommand
+                                        command={name.split('-')}
+                                    />
+                                </Button>
                             )
                         case 'attack_level':
                             return (
@@ -74,7 +81,7 @@ const ActiveFiltersList = ({
                                 <Button
                                     key={id}
                                     modifier={modifier}
-                                    text={name}
+                                    text={short_name}
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />

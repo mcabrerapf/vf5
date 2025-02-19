@@ -257,6 +257,7 @@ const Movelist = ({
                 >
                     {sortedMovelist.map((move) => {
                         const customMove = customMoves.find(cMove => cMove.id === move.id) || {};
+                        
                         return (
                             <Move
                                 key={move.id}
