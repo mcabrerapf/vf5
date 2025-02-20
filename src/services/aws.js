@@ -5,62 +5,80 @@ import {
 } from '../graphql/queries';
 import { CREATE_COMBO, DELETE_COMBO, UPDATE_COMBO } from '../graphql/mutations';
 const client = generateClient();
+const buildFilters = ({
+    characterId,
+    andLids = [],
+    orLids = [],
+}) => {
+    const filters = {};
+    const andFilters = [];
+    const orFilters = [];
+    orLids.forEach(lId => {
+        orFilters.push({ lId: { eq: lId } })
+    })
+    andLids.forEach(lId => {
+        andFilters.push({ lId: { ne: lId } })
+    })
+    if (andFilters.length) filters.and = andFilters;
+    if (orFilters.length) filters.or = orFilters;
+    if (characterId) filters.characterId = { eq: characterId };
+    return filters;
+}
 
-// TODO fix this logic
-// filter: {
-//     and: [
-//       {
-//         or: [
-//           { propertyA: { eq: "value1" } }
-//           { propertyA: { eq: "value2" } }
-//           { propertyA: { eq: "value3" } }
-//         ]
-//       }
-//       {
-//         or: [
-//           { propertyB: { eq: "other1" } }
-//           { propertyB: { eq: "other2" } }
-//           { propertyB: { eq: "other3" } }
-//         ]
-//       }
-//     ]
-//   }
+const getAllOnlineCombos = async ({
+    characterId,
+    lIds = [],
+}) =>
+    client
+        .graphql({
+            query: GET_ALL_COMBOS,
+            variables: {
+                filter: buildFilters({ characterId, andLids: lIds })
+            }
+        })
+        .then((res) => {
+            const {
+                data: {
+                    listCombos: {
+                        items
+                    }
+                }
+            } = res;
+            return items;
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
 
-// const buildFilters = ({
-//     characterId,
-//     characterFilters = [],
-//     lIds = [],
-//     oIds = [],
-//     iIds = []
-// }) => {
-//     const filters = {
-//         characterId: { eq: characterId },
-//     };
-//     const orFilters = characterFilters.map(cFilter => {
-//         if (!cFilter.value) return null;
-//         return { character_tags: { contains: cFilter.value } };
-//     })
-//         .filter(Boolean)
-//     const andFilters = lIds.map(lId => {
-//         if (!lId) return null;
-//         return { lId: { ne: lId } };
-//     })
-//         .filter(Boolean)
-//     oIds.forEach(oId => {
-//         if (!oId) return null;
-//         andFilters.push({ id: { ne: oId } });
-//     })
-//     iIds.forEach(iId => {
-//         if (!iId) return null;
-//         orFilters.push({ lId: { eq: iId } });
-//     })
-//     if (!!orFilters.length) filters.or = orFilters;
-//     if (!!andFilters.length) filters.and = andFilters;
-//     console.log(filters)
-//     return filters;
-// }
+const getMyOnlineCombos = async ({
+    characterId,
+    lIds = [],
+}) =>
+    client
+        .graphql({
+            query: GET_ALL_COMBOS,
+            variables: {
+                filter: buildFilters({ characterId, orLids: lIds })
+            }
+        })
+        .then((res) => {
+            const {
+                data: {
+                    listCombos: {
+                        items
+                    }
+                }
+            } = res;
+            return items;
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
 
-const getCombo = async ({
+
+const getOnlineCombo = async ({
     comboId,
 }) =>
     client
@@ -84,70 +102,7 @@ const getCombo = async ({
             return null;
         });
 
-const getAllCombos = async ({
-    characterId,
-    lIds = [],
-}) =>
-    client
-        .graphql({
-            query: GET_ALL_COMBOS,
-            variables: {
-                filter: {
-                    characterId: { eq: characterId },
-                    and: [
-                        ...lIds.map(lId => ({ lId: { ne: lId } }))
-                    ]
-                }
-            }
-        })
-        .then((res) => {
-            const {
-                data: {
-                    listCombos: {
-                        items
-                    }
-                }
-            } = res;
-            return items;
-        })
-        .catch((err) => {
-            console.log(err);
-            return err;
-        });
-
-const getMyCombos = async ({
-    characterId,
-    lIds = [],
-}) =>
-    client
-        .graphql({
-            query: GET_ALL_COMBOS,
-            variables: {
-                filter: {
-                    characterId: { eq: characterId },
-                    or: [
-                        ...lIds.map(lId => ({ lId: { eq: lId } }))
-                    ]
-                }
-            }
-        })
-        .then((res) => {
-            const {
-                data: {
-                    listCombos: {
-                        items
-                    }
-                }
-            } = res;
-            return items;
-        })
-        .catch((err) => {
-            console.log(err);
-            return err;
-        });
-
-
-const updateCombo = async ({
+const updateOnlineCombo = async ({
     combo,
 }) =>
     client
@@ -202,24 +157,21 @@ const updateCombo = async ({
             return combo;
         });
 
-const updateLikes = async ({
+const updateOnlineComboLikes = async ({
     comboId,
     increase,
 }) =>
-    getCombo({ comboId: comboId })
-        .then(combo => {
-            console.log(combo);
-            return client
-                .graphql({
-                    query: UPDATE_COMBO,
-                    variables: {
-                        input: {
-                            id: combo.id,
-                            likes: increase ? combo.likes + 1 : combo.likes - 1,
-                        }
+    getOnlineCombo({ comboId: comboId })
+        .then(combo =>
+            client.graphql({
+                query: UPDATE_COMBO,
+                variables: {
+                    input: {
+                        id: combo.id,
+                        likes: increase ? combo.likes + 1 : combo.likes - 1,
                     }
-                })
-        })
+                }
+            }))
         .then((res) => {
             const {
                 data: {
@@ -234,7 +186,7 @@ const updateLikes = async ({
         });
 
 
-const deleteAwsCombo = async ({
+const deleteOnlineCombo = async ({
     combo,
 }) =>
     client
@@ -312,12 +264,13 @@ const createCombo = async ({
             console.log(err);
             return err;
         });
-
+        
 export {
-    getAllCombos,
-    getMyCombos,
+    getAllOnlineCombos,
+    getMyOnlineCombos,
+    getOnlineCombo,
     createCombo,
-    updateCombo,
-    updateLikes,
-    deleteAwsCombo
+    updateOnlineCombo,
+    updateOnlineComboLikes,
+    deleteOnlineCombo
 };

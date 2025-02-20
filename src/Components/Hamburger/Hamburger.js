@@ -38,7 +38,10 @@ const Hamburger = ({
 
     return (
         <div className="hamburger">
-            <Button onClick={toggleMenu}>
+            <Button
+                modifier={'no-border'}
+                onClick={toggleMenu}
+            >
                 {isOpen ? '✖' : '☰'}
             </Button>
 

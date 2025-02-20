@@ -29,14 +29,14 @@ const updateLikedCombos = (comboId) => {
         const likedCombos = localStorage.getItem(LIKED_COMBOS);
         const parsedCombos = JSON.parse(likedCombos);
         const filteredCombos = parsedCombos.filter(pCombo => pCombo !== comboId);
-        console.log(parsedCombos, filteredCombos);
+
         let updatedCombos;
         if (filteredCombos.length === parsedCombos.length) {
             updatedCombos = [...parsedCombos, comboId];
         } else {
             updatedCombos = filteredCombos;
         }
-        console.log(updatedCombos);
+        
         localStorage.setItem(LIKED_COMBOS, JSON.stringify(updatedCombos));
         return updatedCombos;
     } catch (error) {

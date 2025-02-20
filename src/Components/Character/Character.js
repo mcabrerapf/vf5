@@ -15,6 +15,7 @@ import { SELECTED_CHARACTER_VIEW_KEY, SELECTED_MATCHUPS_VIEW_KEY, STRINGS } from
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
 import { CHARACTERS_JSON } from '../../constants/CHARACTERS';
+import { buildClassName } from '../../helpers';
 
 const Character = () => {
     const { selectedCharacter, listView, setSelectedCharacter, setListView } = useMainContext();
@@ -45,6 +46,9 @@ const Character = () => {
     const handleComboSearchButtonClick = () => {
         handleViewChange(STRINGS.COMBOS_SEARCH);
     };
+    const classNames = ['character__header'];
+    if (characterView === STRINGS.COMBOS_SEARCH) classNames.push('online');
+    const headerClassName = buildClassName(classNames);
 
     return (
         <div className='character'>
@@ -64,7 +68,7 @@ const Character = () => {
                 <InfoModal
                 />
             </ModalContextWrapper>
-            <header className='character__header'>
+            <header className={headerClassName}>
                 <Button
                     modifier={'no-border'}
                     text={listView}

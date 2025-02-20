@@ -21,7 +21,7 @@ mutation createCombo($input: CreateComboInput!) {
 `;
 
 const UPDATE_COMBO = `
-mutation updateCombo($input: UpdateComboInput!) {
+mutation updateOnlineCombo($input: UpdateComboInput!) {
   updateCombo(input: $input) {
       id
       lId

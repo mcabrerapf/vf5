@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CombosSearch.scss'
-import { getAllCombos, getMyCombos } from '../../services/aws';
+import { getAllOnlineCombos, getMyOnlineCombos } from '../../services/aws';
 import { useMainContext } from '../../Contexts/MainContext';
 import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Combo from '../Combo';
@@ -39,6 +39,7 @@ const CombosSearch = ({
     useEffect(() => {
         async function fetchCombos() {
             setIsLoading(true);
+
             const newLocalCombos = getCombos(selectedCharacter);
             const lIds = [];
             const oIds = [];
@@ -48,14 +49,13 @@ const CombosSearch = ({
             });
             let allCombos;
 
-            await getAllCombos({
+            await getAllOnlineCombos({
                 characterId: selectedCharacter,
                 lIds,
-                oIds
             })
                 .then(res => {
                     allCombos = res;
-                    return getMyCombos({
+                    return getMyOnlineCombos({
                         characterId: selectedCharacter,
                         lIds,
                     })
@@ -117,7 +117,7 @@ const CombosSearch = ({
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
     const filteredResults = filterList(combosToUse, selectedFilters);
     const sortedResults = sortList(filteredResults, selectedSort);
-
+    
     return (
         <div
             className='combos-search'
@@ -147,6 +147,7 @@ const CombosSearch = ({
                     className='combos-search__header__left'
                 >
                     <Button
+                        disabled={isLoading}
                         modifier={'active'}
                         onClick={() => setSelectedCombosSearchView(selectedCombosSearchView === 'online' ? 'mine' : 'online')}
                     >
@@ -188,10 +189,13 @@ const CombosSearch = ({
                     className='combos-search__results'
                 >
                     {sortedResults.map(combo => {
-                        console.log(combo)
-                        console.log(localCombos)
-                        const disableSaveButton = !!localCombos.find(lCombo => lCombo.oId === combo.id);
-                        const disableLikes = !!localCombos.find(lCombo => lCombo.id === combo.lId);
+                        let disableSaveButton = false;
+                        let disableLikes = false;
+                        localCombos.forEach(lCombo => {
+                            if (lCombo.oId === combo.id) disableSaveButton = true;
+                            if (lCombo.id === combo.lId) disableLikes = true;
+                        });
+
                         return (
                             <Combo
                                 combo={{ ...combo, favourite: false }}

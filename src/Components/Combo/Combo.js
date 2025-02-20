@@ -6,7 +6,7 @@ import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';
 import { DownloadIcon, EditIcon, ThumbsUpIcon } from '../Icon';
-import { updateLikes } from '../../services/aws';
+import { updateOnlineComboLikes } from '../../services/aws';
 import { getLikedCombos, updateLikedCombos } from '../../services';
 
 const Combo = ({
@@ -56,7 +56,7 @@ const Combo = ({
         const handler = setTimeout(() => {
             if (isLiked === debouncedLike) return;
 
-            updateLikes({
+            updateOnlineComboLikes({
                 comboId: combo.id,
                 increase: isLiked
             })

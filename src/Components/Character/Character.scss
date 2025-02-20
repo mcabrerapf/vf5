@@ -14,6 +14,14 @@
         gap: 1rem;
         width: 100%;
 
+        &.online {
+            background-color: var(--wall);
+
+            .button {
+                background-color: var(--wall);
+            }
+        }
+
         .button {
             height: 4rem;
             font-size: 2.5rem;

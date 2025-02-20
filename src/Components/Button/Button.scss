@@ -160,6 +160,7 @@
         width: auto !important;
     }
 
+    // WEIGHTS
     &.SLW {
         color: white;
         background-color: var(--super-lightweight);
@@ -184,7 +185,7 @@
         color: white;
         background-color: var(--super-heavyweight);
     }
-
+    // 
     &.save {
         color: var(--mid);
         border: 1px solid var(--mid);
@@ -197,7 +198,7 @@
     }
 
     &.damage {
-        color: var(--ex-high);
+        color: var(--red-color);
     }
 
     &.sort-selected {
@@ -211,8 +212,7 @@
         color: black;
     }
 
-    // 
-
+    // ATTACK LEVELS
     &.move-type {
         color: black;
     }

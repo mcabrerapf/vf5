@@ -1,6 +1,6 @@
 const GET_ALL_COMBOS = `
-query getAllCombos($filter: ModelComboFilterInput) {
-  listCombos(filter: $filter) {
+query getAllOnlineCombos($filter: ModelComboFilterInput) {
+  listCombos(filter: $filter,  limit: 999) {
     nextToken
     items {
       id

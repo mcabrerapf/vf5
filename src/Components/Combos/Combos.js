@@ -20,7 +20,7 @@ import SortModal from '../Modals/SortModal';
 import { deleteCombo, getCombos, updateCombos } from '../../services';
 import ListHeader from '../ListHeader';
 import CloudIcon from '../Icon/CloudIcon';
-import { createCombo, deleteAwsCombo, updateCombo } from '../../services/aws';
+import { createCombo, deleteOnlineCombo, updateOnlineCombo } from '../../services/aws';
 import { validateCombo } from '../../services/utils';
 
 const Combos = ({
@@ -86,7 +86,7 @@ const Combos = ({
                     });
 
             } else {
-                await updateCombo({ combo: newCombo })
+                await updateOnlineCombo({ combo: newCombo })
                     .then(res => {
                         const [updatedCombos] = updateCombos(
                             selectedCharacter,
@@ -94,9 +94,6 @@ const Combos = ({
                         );
                         setCombos(updatedCombos);
                     })
-                    .catch(() => {
-
-                    });
             }
         }
         toggleComboBuilderModal();
@@ -119,7 +116,7 @@ const Combos = ({
     const handleDeleteCombo = (shouldDelete) => {
         if (shouldDelete) {
             const updatedCombos = deleteCombo(selectedCharacter, selectedCombo.id);
-            deleteAwsCombo({ combo: selectedCombo });
+            deleteOnlineCombo({ combo: selectedCombo });
             setCombos(updatedCombos);
         }
         setSelectedCombo(null);
