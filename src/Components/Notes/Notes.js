@@ -83,7 +83,17 @@ const Notes = () => {
             >
                 <DeleteModal data={selectedNote} />
             </ModalContextWrapper>
-            <div className='notes__list-container'>
+            <div
+                className='notes__header'
+            >
+                <Button
+                    modifier={'active'}
+                    text={`Notes (${notes.length})`}
+                />
+            </div>
+            <div
+                className='notes__list-container'
+            >
                 <ul
                     className='notes__list-container__list'
                 >

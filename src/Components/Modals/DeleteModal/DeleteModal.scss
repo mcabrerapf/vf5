@@ -4,16 +4,23 @@
     &__content {
         padding: 0.5rem;
 
+        .note {
+            &__content {
+                border: none;
+            }
+        }
 
+        .combo {
+            border: none;
+        }
 
     }
 
     .modal-footer {
-
-        padding: 1rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        padding: 1rem;
 
         .button {
             &.cancel {
