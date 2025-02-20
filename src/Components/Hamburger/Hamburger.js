@@ -67,6 +67,12 @@ const Hamburger = ({
                             Combos
                         </div>
                         <div
+                            className={`hamburger__container__options__option${characterView === STRINGS.COMBOS_SEARCH ? ' selected' : ''}`}
+                            onClick={() => handleOptionClick(STRINGS.COMBOS_SEARCH)}
+                        >
+                            Combo Search
+                        </div>
+                        <div
                             className={`hamburger__container__options__option${characterView === STRINGS.NOTES ? ' selected' : ''}`}
                             onClick={() => handleOptionClick(STRINGS.NOTES)}
                         >
