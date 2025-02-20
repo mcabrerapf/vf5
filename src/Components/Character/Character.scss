@@ -13,11 +13,44 @@
         color: black;
         width: 100%;
 
-        &.online {
-            background-color: var(--online);
+        &.character_movelist {
+            background-color: var(--movelist);
 
             .button {
-                background-color: var(--online);
+                background-color: var(--movelist);
+            } 
+        }
+
+        &.character_combos {
+            background-color: var(--combos);
+
+            .button {
+                background-color: var(--combos);
+            } 
+        }
+
+        &.character_notes {
+            background-color: var(--notes);
+
+            .button {
+                background-color: var(--notes);
+            } 
+        }
+
+        &.character_matchups {
+            // background-color: var(--matchups);
+            background: linear-gradient(to right, var(--mid), var(--red-color));
+
+            .button {
+                background-color: transparent;
+            } 
+        }
+
+        &.character_combos_search {
+            background-color: var(--combos-search);
+
+            .button {
+                background-color: var(--combos-search);
             }
         }
 

@@ -46,8 +46,8 @@ const Character = () => {
     const handleComboSearchButtonClick = () => {
         handleViewChange(STRINGS.COMBOS_SEARCH);
     };
-    const classNames = ['character__header'];
-    if (characterView === STRINGS.COMBOS_SEARCH) classNames.push('online');
+    const classNames = ['character__header', `character_${characterView}`];
+    // if (characterView === STRINGS.COMBOS_SEARCH) classNames.push('online');
     const headerClassName = buildClassName(classNames);
 
     return (
