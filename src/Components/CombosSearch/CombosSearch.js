@@ -118,7 +118,7 @@ const CombosSearch = ({
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
     const filteredResults = filterList(combosToUse, selectedFilters);
     const sortedResults = sortList(filteredResults, selectedSort);
-
+    
     return (
         <div
             className='combos-search'
@@ -129,7 +129,7 @@ const CombosSearch = ({
             >
                 <CombosFiltersModal
                     selectedFilters={selectedFilters}
-                    filterOptions={characterFilterOptions}
+                    filterOptions={combosFilterOptions}
                     listItems={sortedResults}
                 />
             </ModalContextWrapper>
