@@ -1,6 +1,6 @@
 import React from 'react';
 import './MoveCommand.scss'
-// import { checkIsCombiEnd, checkIsCombiStart } from './helpers';
+import { checkIsCombiEnd, checkIsCombiStart } from './helpers';
 import Notation from '../Notation/Notation';
 
 const MoveCommand = ({
@@ -11,21 +11,22 @@ const MoveCommand = ({
     notationClick = () => { }
 }) => {
     const className = ['move-command', modifier].filter(Boolean).join(' ');
-
+    let launcherSeapartorIndex;
     return (
         <div className={className} onClick={onClick}>
             {command.map((notation, i) => {
-                // const isCombiStart = checkIsCombiStart(command, i);
-                // const isCombiEnd = checkIsCombiEnd(command, i);
+                const isCombiStart = checkIsCombiStart(command, i);
+                const isCombiEnd = checkIsCombiEnd(command, i);
                 const modifierToUse = selectedNotationIndex === i ? 'selected' : null;
-
+                if (notation === '⊙' && launcherSeapartorIndex === undefined) launcherSeapartorIndex = i;
                 return (
                     <Notation
                         notation={notation}
                         notationIndex={i}
                         modifier={modifierToUse}
-                        // isCombiStart={isCombiStart}
-                        // isCombiEnd={isCombiEnd}
+                        isLauncherSeparator={launcherSeapartorIndex === i}
+                        isCombiStart={isCombiStart}
+                        isCombiEnd={isCombiEnd}
                         onClick={notationClick}
                     />
                 )

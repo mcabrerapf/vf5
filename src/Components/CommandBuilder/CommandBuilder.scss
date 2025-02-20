@@ -6,14 +6,13 @@
     &__top {
         display: flex;
         flex-direction: row;
-        gap: 0.5rem;
         justify-content: space-between;
         align-items: center;
 
         .move-command {
             border: 1px solid white;
             overflow-y: auto;
-            width: 25rem;
+            width: 26rem;
             height: 9rem;
 
             .notation {

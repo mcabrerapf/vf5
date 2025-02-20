@@ -7,8 +7,9 @@ const Notation = ({
     notation = '',
     modifier,
     notationIndex,
-    // isCombiStart,
-    // isCombiEnd,
+    isLauncherSeparator,
+    isCombiStart,
+    isCombiEnd,
     onClick = () => { }
 }) => {
     const iconName = NOTATION_TO_ICON[notation];
@@ -16,36 +17,36 @@ const Notation = ({
     const parsedCommand = notation.replace(/[[\]]/g, "");
     const commandClassName = NOTATION_STRINGS.includes(parsedCommand) ?
         parsedCommand.toLocaleLowerCase() : "";
-    const className = ['notation', modifier].filter(Boolean).join(' ')
+    const andClass = parsedCommand === '+' ? 'and' : commandClassName;
+    const startClass = isCombiStart ? 'combi-start' : '';
+    const endClass = isCombiEnd ? 'combi-end' : '';
+    const launcherModi = isLauncherSeparator ? 'launcher-separator' : '';
+    const className = ['notation', modifier, startClass, endClass].filter(Boolean).join(' ')
+    const iconClassName = ['notation__icon', andClass, launcherModi].filter(Boolean).join(' ')
 
     const handleOnClick = () => {
         onClick(notation, notationIndex);
     }
 
     return (
-        <>
-            {/* {isCombiStart &&
+
+        <span
+            className={className}
+            onClick={handleOnClick}
+        >
+            {iconName ?
+                <Icon icon={iconName} color={iconColor} />
+                :
                 <span
-                    className="notation combi"
+                    className={iconClassName}
                 >
-                    {"["}
+                    {parsedCommand}
                 </span>
-            } */}
-            <span
-                className={`${className} ${parsedCommand === '+' ? 'and' : commandClassName}`}
-                onClick={handleOnClick}
-            >
-                {iconName && <Icon icon={iconName} color={iconColor} />}
-                {!iconName && parsedCommand}
-            </span>
-            {/* {isCombiEnd &&
-                <span
-                    className="notation combi"
-                >
-                    {"]"}
-                </span>
-            } */}
-        </>
+            }
+
+
+        </span>
+
     )
 }
 
