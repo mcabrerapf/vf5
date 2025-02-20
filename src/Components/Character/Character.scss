@@ -17,7 +17,7 @@
             background-color: var(--movelist);
 
             .button {
-                background-color: var(--movelist);
+                background-color: transparent;
             } 
         }
 
@@ -25,7 +25,7 @@
             background-color: var(--combos);
 
             .button {
-                background-color: var(--combos);
+                background-color: transparent;
             } 
         }
 
@@ -33,13 +33,12 @@
             background-color: var(--notes);
 
             .button {
-                background-color: var(--notes);
+                background-color: transparent;
             } 
         }
 
         &.character_matchups {
-            // background-color: var(--matchups);
-            background: linear-gradient(to right, var(--mid), var(--red-color));
+            background-color: var(--matchups);
 
             .button {
                 background-color: transparent;
