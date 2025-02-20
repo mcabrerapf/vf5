@@ -2,11 +2,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
     box-sizing: border-box;
     user-select: none;
+    width: fit-content;
     cursor: pointer;
-    width: auto;
 
     &.combi-start {
         border-left: 2px solid white;
@@ -22,7 +21,7 @@
 
     &__icon {
         text-align: center;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
 
         &.launcher-separator {
             color: gold;
@@ -33,12 +32,11 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            
-            
-            width: 1.3rem;
-            height: 1.3rem;
+            width: 1.5rem;
+            height: 1.5rem;
             border-radius: 1.5rem;
             border: 1px solid;
+            font-weight: bold;
             background-color: var(--punch);
         }
 
@@ -46,12 +44,11 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            
-            
-            width: 1.3rem;
-            height: 1.3rem;
+            width: 1.5rem;
+            height: 1.5rem;
             border-radius: 1.5rem;
             border: 1px solid;
+            font-weight: bold;
             background-color: var(--kick);
         }
 
@@ -59,12 +56,11 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            
-            
-            width: 1.3rem;
-            height: 1.3rem;
+            width: 1.5rem;
+            height: 1.5rem;
             border-radius: 1.5rem;
             border: 1px solid;
+            font-weight: bold;
             background-color: var(--guard);
         }
 
@@ -73,50 +69,35 @@
         }
 
         &.or {
-            
-            
             font-weight: 700;
         }
 
         &.ch {
-            
-            
             font-weight: 700;
             color: var(--ch);
         }
 
         &.sd {
-            
-            
             font-weight: 700;
             color: var(--side);
         }
 
         &.w {
-            
-            
             font-weight: 700;
             color: var(--wall);
         }
 
         &.wb {
-            
-            
             font-weight: 700;
             color: var(--wall);
         }
 
         &.hit {
-            
-            
             font-weight: 700;
             color: var(--high);
         }
 
-        &.shft {
-            
-            
-        }
+        &.shft {}
 
         &.⊙ {}
 

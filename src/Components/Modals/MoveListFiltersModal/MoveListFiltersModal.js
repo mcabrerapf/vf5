@@ -69,6 +69,7 @@ const MoveListFiltersModal = ({
 
     const handleFiltersReset = () => {
         setSelectedTypeFilters([]);
+        setCommandFilter([]);
     }
 
     return (

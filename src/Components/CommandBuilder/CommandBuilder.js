@@ -75,11 +75,14 @@ const CommandBuilder = ({
             className='command-builder'
         >
             <div className='command-builder__top'>
-                <MoveCommand
-                    command={command}
-                    selectedNotationIndex={selectedNotationIndex}
-                    notationClick={handleNotationClick}
-                />
+                <div className='command-builder__top__command-container'>
+                    <MoveCommand
+                        command={command}
+                        selectedNotationIndex={selectedNotationIndex}
+                        notationClick={handleNotationClick}
+                    />
+                </div>
+
                 <div
                     className='command-builder__top__buttons'
                 >
