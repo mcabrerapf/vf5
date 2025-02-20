@@ -46,8 +46,6 @@ const Combo = ({
     const [likes, setLikes] = useState(combo.likes);
     const [debouncedLike, setDebouncedLike] = useState(likedMatch);
 
-
-    const hasAllCharacters = CHARACTERS.length === character_tags.length;
     const isDamageSortSelected = selectedSort.id === 'damage';
     const isNameSortSelected = selectedSort.id === 'name';
     const isCommandSortSelected = selectedSort.id === 'command';
@@ -83,13 +81,6 @@ const Combo = ({
         } else {
             handleFiltersChange(filteredFilters);
         }
-    }
-
-    const handleAllClick = (e) => {
-        e.stopPropagation();
-        const filteredFilters = selectedFilters
-            .filter(sFilter => sFilter.key !== 'character_tags')
-        handleFiltersChange(filteredFilters)
     }
 
     const handleLauncherClick = (e) => {
@@ -270,14 +261,7 @@ const Combo = ({
             </div>
             {!showSimpleView &&
                 <div className='combo__tags'>
-                    {hasAllCharacters &&
-                        <Button
-                            modifier={"s all-characters"}
-                            text={'ALL'}
-                            onClick={handleAllClick}
-                        />
-                    }
-                    {!hasAllCharacters && characterFilterOptions.map(cOption => {
+                    {characterFilterOptions.map(cOption => {
                         return (
                             <Button
                                 key={cOption.id}
