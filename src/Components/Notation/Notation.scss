@@ -6,17 +6,17 @@
     user-select: none;
     width: fit-content;
     cursor: pointer;
-
+    
     &.combi-start {
-        border-left: 2px solid white;
+        border-left: 0.2rem solid white;
         border-radius: 0.5rem;
-        padding-left: 2px;
+        padding-left: 0.2rem;
     }
 
     &.combi-end {
-        border-right: 2px solid white;
+        border-right: 0.2rem solid white;
         border-radius: 0.5rem;
-        padding-right: 2px;
+        padding-right: 0.2rem;
     }
 
     &__icon {
@@ -35,7 +35,7 @@
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 1.5rem;
-            border: 1px solid;
+            border: 0.1rem solid;
             font-weight: bold;
             background-color: var(--punch);
         }
@@ -47,7 +47,7 @@
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 1.5rem;
-            border: 1px solid;
+            border: 0.1rem solid;
             font-weight: bold;
             background-color: var(--kick);
         }
@@ -59,7 +59,7 @@
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 1.5rem;
-            border: 1px solid;
+            border: 0.1rem solid;
             font-weight: bold;
             background-color: var(--guard);
         }

@@ -37,7 +37,7 @@ const OtherButtons = ({
                     onClick={() => onClick('[or]')}
                 />
                 <Button
-                    modifier={isShiftActive ? 'ch' : 'hit'}
+                    modifier={isShiftActive ? 'chit' : 'hit'}
                     text={isShiftActive ? 'ch' : 'hit'}
                     onClick={() => onClick(isShiftActive ? '[ch]' : '[hit]')}
                 />

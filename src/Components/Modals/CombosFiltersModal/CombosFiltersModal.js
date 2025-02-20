@@ -25,7 +25,7 @@ const CombosFiltersModal = ({
     const launchers = getLaunchers(listItems);
 
     const handleFiltersReset = () => {
-        setSelectedFilters([]);
+        closeModal([]);
     }
 
     const handleFilterSave = () => {
@@ -48,7 +48,7 @@ const CombosFiltersModal = ({
 
     const handleCharacterClick = ({ target: { value } }) => {
         let updatedTags;
-        const filteredTags = selectedFilters.filter(sFilter => sFilter !== value);
+        const filteredTags = selectedFilters.filter(sFilter => sFilter.value !== value);
 
         if (filteredTags.length === selectedFilters.length) {
             updatedTags = [

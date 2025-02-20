@@ -55,13 +55,13 @@ const TagsView = ({
     const characterTags = [];
     const attackLevelTags = [];
     const moveCategoryTags = [];
-    const otherTags = [];
+    
     combosFilterOptions
         .forEach(option => {
             if (option.id.includes('character_tags/')) characterTags.push(option);
             if (option.id.includes("attack_level/")) attackLevelTags.push(option);
             if (option.id.includes("move_category/")) moveCategoryTags.push(option);
-            if (option.id.includes("other/")) otherTags.push(option);
+            if (option.id.includes("other/")) attackLevelTags.push(option);
         })
 
     return (
@@ -82,11 +82,6 @@ const TagsView = ({
                     text="Move Categories"
                     onClick={() => setTagsView('move_categories')}
                 />
-                <Button
-                    modifier={tagsView === 'other' ? 'active center' : 'center'}
-                    text="Other"
-                    onClick={() => setTagsView('other')}
-                />
             </div>
             <div className='tags-view__content'>
                 {tagsView === 'characters' &&
@@ -106,7 +101,7 @@ const TagsView = ({
                         )}
                         <Button
                             text="ALL"
-                            modifier={selectedCharacterTags.length === CHARACTERS.length ? 'character' : ''}
+                            modifier={selectedCharacterTags.length === CHARACTERS.length ? 'all-characters' : ''}
                             onClick={handleAllClick}
                         />
                     </div>
@@ -132,19 +127,6 @@ const TagsView = ({
                                 value={tag.value}
                                 text={tag.name}
                                 modifier={selectedTags.find(sTag => sTag === tag.value) ? 'active' : ''}
-                                onClick={handleTagClick}
-                            />
-                        )}
-                    </div>
-                }
-                {tagsView === 'other' &&
-                    <div className='tags-view__content__other-tags'>
-                        {otherTags.map(tag =>
-                            <Button
-                                key={tag.id}
-                                value={tag.value}
-                                text={tag.name}
-                                modifier={selectedTags.find(sTag => sTag === tag.value) ? `move-type ${tag.value}` : ''}
                                 onClick={handleTagClick}
                             />
                         )}

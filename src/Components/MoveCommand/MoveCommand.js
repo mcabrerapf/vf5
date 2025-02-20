@@ -21,6 +21,7 @@ const MoveCommand = ({
                 if (notation === '⊙' && launcherSeapartorIndex === undefined) launcherSeapartorIndex = i;
                 return (
                     <Notation
+                        key={`${notation}-${i}`}
                         notation={notation}
                         notationIndex={i}
                         modifier={modifierToUse}

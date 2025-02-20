@@ -14,6 +14,7 @@
 	--background-color: var(--darkest-color);
 	--button-color: var(--darkest-color);
 
+	--hamburger-bg-z-index: 100;
 	--modal-bg-z-index: 500;
 	--toast-bg-z-index: 600;
 	// 
@@ -28,13 +29,16 @@
 	--low: #df5fd9;
 	--ex-low: #904efe;
 	--throw: white;
-	--catch: #c51a05;
+	--catch: #1db0f8;
+	--down-attack: grey;
+	// 
 	--no-category: grey;
 	--wall: #05d602;
 	--side: aqua;
 	--ch: orange;
 	--other: fuchsia;
 	--favourite: gold;
+	--favourite-bg: rgba(255, 215, 0, 0.2);
 	// 
 	--throw-attempt: lightgreen;
 	--jab-punish: aqua;
@@ -42,6 +46,10 @@
 	--launch-punish: orange;
 	--ded: red;
 	//
+	--liked: #05d602;
+	--online: #05d602;
+	--selected-sort: aqua;
+	// 
 	--super-lightweight: #1db0f8;
 	--lightweight: blue;
 	--midweight: #904efe;

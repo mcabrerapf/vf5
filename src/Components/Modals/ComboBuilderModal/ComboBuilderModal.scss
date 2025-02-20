@@ -1,5 +1,5 @@
 .combo-builder-modal {
-    &__sub-header {
+    &__header {
         display: flex;
         flex-direction: row;
 
@@ -13,16 +13,16 @@
         height: 30rem;
 
         &__help {
+            font-style: italic;
             padding-left: 1rem;
             font-size: 1.1rem;
-            font-style: italic;
         }
     }
 
     .modal-footer {
-        width: 100%;
         justify-content: space-between;
         align-items: flex-end;
+        width: 100%;
 
         &__main-buttons {
             display: flex;

@@ -77,7 +77,7 @@ const MatchupCombos = ({
                         )
                     })
                 })}
-                <div className='bottom-separator s'>.</div>
+                <div className='bottom-separator'>.</div>
             </div>
         </div>
     )

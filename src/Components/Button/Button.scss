@@ -13,10 +13,10 @@
     min-height: 3rem;
     min-width: 3rem;
     width: auto;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     font-weight: 800;
     padding: 0.3rem 0.5rem;
-    border: 1px solid var(--white-color);
+    border: 0.1rem solid var(--white-color);
     transition: transform 0.2s ease, background-color 0.2s ease;
 
     &:not(:disabled) {
@@ -32,21 +32,30 @@
     }
 
     &.s {
-        font-size: 0.9rem!important;
-        height: 2.5rem!important;
+        font-size: 0.9rem !important;
+        height: 2.5rem !important;
         width: fit-content;
-        min-height: 2.5rem!important;
-        min-width: 2.5rem!important;
-        box-sizing: border-box!important;
+        min-height: 2.5rem !important;
+        min-width: 2.5rem !important;
+        box-sizing: border-box !important;
     }
 
     &.liked {
-        background-color: lightgreen;
+        background-color: var(--liked);
+        border-color: var(--liked);
+
+        svg {
+            stroke: white;
+
+            path {
+                stroke: white;
+            }
+        }
     }
 
     &.tab {
         border-top: 0 !important;
-        border-radius: 0px;
+        border-radius: 0;
 
         &:not(:disabled) {
             &:active {
@@ -60,14 +69,13 @@
             border-top: 0 !important;
             border-left: 0 !important;
             border-right: 0 !important;
-            border-radius: 0px;
+            border-radius: 0;
 
             &:not(:disabled) {
                 &:active {
                     transform: none !important;
                     background-color: var(--disabled-color);
                 }
-
             }
         }
 
@@ -75,7 +83,7 @@
             border-top: 0 !important;
             border-left: 0 !important;
             border-right: 0 !important;
-            border-radius: 0px;
+            border-radius: 0;
 
             &:not(:disabled) {
                 &:active {
@@ -93,12 +101,12 @@
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
         border-right: 0 !important;
-        border-left: 1px solid white !important;
+        border-left: 0.1rem solid white !important;
     }
 
     &.center {
-        border-radius: 0px !important;
-        border-bottom: 1px solid white;
+        border-radius: 0 !important;
+        border-bottom: 0.1rem solid white;
     }
 
     &.right {
@@ -107,24 +115,24 @@
         border-top-right-radius: 0.5rem !important;
         border-bottom-right-radius: 0 !important;
         border-left: 0 !important;
-        border-right: 1px solid white !important;
+        border-right: 0.1rem solid white !important;
     }
 
     &.danger {
         color: var(--red-color);
-        border: 2px solid var(--red-color);
+        border: 0.2rem solid var(--red-color);
     }
 
     &.dotted-border {
-        border: 1px dotted var(--white-color) !important;
+        border: 0.1rem dotted var(--white-color) !important;
     }
 
     &.dashed-border {
-        border: 1px dashed var(--white-color);
+        border: 0.1rem dashed var(--white-color);
     }
 
     &.disabled {
-        border: 1px dashed var(--disabled-color);
+        border: 0.1rem dashed var(--disabled-color) !important;
         color: var(--disabled-color) !important;
         background-color: black !important;
 
@@ -185,16 +193,30 @@
         color: white;
         background-color: var(--super-heavyweight);
     }
+
     // 
+
+    &.launcher {
+        border: 0.2rem solid gold;
+    }
+
+    &.pseudo-launcher {
+        border: 0.2rem dashed gold;
+    }
+
+    .move-command {
+        padding: 0;
+    }
+
     &.save {
         color: var(--mid);
-        border: 1px solid var(--mid);
+        border: 0.1rem solid var(--mid);
     }
 
     &.favourite {
         color: black;
         background-color: var(--favourite);
-        border: 1px solid var(--favourite);
+        border: 0.1rem solid var(--favourite);
     }
 
     &.damage {
@@ -202,13 +224,14 @@
     }
 
     &.sort-selected {
-        border: 1px solid var(--side);
+        border: 0.1rem solid var(--side);
     }
 
     // 
 
-    &.character {
+    &.all-characters {
         background-color: pink;
+        border-color: pink;
         color: black;
     }
 
@@ -218,112 +241,122 @@
     }
 
     &.high {
-        background-color: var(--high);    
+        background-color: var(--high);
+        border-color: var(--high);
     }
 
     &.ex_high {
         background-color: var(--ex-high);
+        border-color: var(--ex-high);
     }
 
     &.mid {
         background-color: var(--mid);
+        border-color: var(--mid);
     }
 
     &.ex_mid {
         background-color: var(--ex-mid);
+        border-color: var(--ex-mid);
     }
 
     &.low {
         background-color: var(--low);
+        border-color: var(--low);
     }
 
     &.ex_low {
         background-color: var(--ex-low);
+        border-color: var(--ex-low);
     }
 
     &.high_unblockable {
-        background: linear-gradient(to right, var(--high), var(--catch));
+        background: linear-gradient(to right, var(--high), var(--other));
+        border-color: transparent;
     }
 
     &.high_throw {
         background: linear-gradient(to right, var(--high), var(--throw));
+        border-color: transparent;
     }
 
     &.low_throw {
         background: linear-gradient(to right, var(--low), var(--throw));
-        
+        border-color: transparent;
     }
 
     &.high_catch_throw {
-        background: linear-gradient(to right, #ffe907, #c51a05);
-        
+        background: linear-gradient(to right, var(--high), var(--catch));
+        border-color: transparent;
     }
 
     &.low_catch_throw {
-        background: linear-gradient(to right, #df5fd9, #c51a05);
-        
+        background: linear-gradient(to right, var(--low), var(--catch));
+        border-color: transparent;
     }
 
     &.hit_throw {
-        background: linear-gradient(to right, #05d602, white);
-        
+        background: linear-gradient(to right, var(--mid), var(--throw));
+        border-color: transparent;
     }
 
     &.down_throw {
-        background: linear-gradient(to right, #904efe, white);
-        
+        background: linear-gradient(to right, var(--ex-low), var(--throw));
+        border-color: transparent;
     }
 
     &.throw_combo {
-        background: linear-gradient(to right, white, #05d602);
-        
+        background: linear-gradient(to right, var(--throw), var(--other));
+        border-color: transparent;
     }
 
     &.down_attacks {
-        background-color: grey;
-        
+        background-color: var(--down-attack);
+        border-color: var(--down-attack);
     }
 
     &.deflect {
         background: linear-gradient(to right, white, grey);
-        
+        border-color: transparent;
     }
 
     &.special {
         background: linear-gradient(to right, gray, white);
-        
+        border-color: transparent;
     }
 
     &.atemi {
         background: linear-gradient(to top, gray, white);
-        
+        border-color: transparent;
     }
 
     &.inashi {
         background: linear-gradient(to top, gray, white);
-        
+        border-color: transparent;
     }
 
     &.rev_combo {
         background: linear-gradient(to top, #05d602, gray);
-        
+        border-color: transparent;
     }
 
     &.wall {
-        background-color: darkgreen;
+        background-color: var(--wall);
+        border-color: var(--wall);
     }
 
     &.side {
-        
-        background-color: aqua;
+        background-color: var(--side);
+        border-color: var(--side);
     }
 
     &.ch {
-        
-        background-color: orange;
+        background-color: var(--ch);
+        border-color: var(--ch);
     }
-    
+
     &.other {
-        background-color: fuchsia;
+        background-color: var(--other);
+        border-color: var(--other);
     }
 }

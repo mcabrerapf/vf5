@@ -10,10 +10,9 @@ import { buildClassName, stringNotationParser } from '../../helpers';
 
 const Move = ({
     move,
+    modifier = "",
     customMove = {},
     selectedSort = {},
-    modifier = "",
-    selectedFilters = [],
     comboLaunchers = [],
     hideEditButton = false,
     hideFavouriteButton = false,
@@ -34,7 +33,6 @@ const Move = ({
         attack_level,
         notes = '',
     } = move;
-    const isCommandFilterActive = !!selectedFilters.find(filter => filter.key === STRINGS.COMMAND);
     const isFavourite = !!customMove.favourite;
     const extraNote = customMove.note;
     const stringCommand = command.join('-');
@@ -110,7 +108,7 @@ const Move = ({
                 }
                 {showSimpleView &&
                     <MoveCommand
-                        modifier={isCommandFilterActive ? 'active' : ''}
+                        modifier={selectedSort.key ==='command' ? 'selected-sort' : ''}
                         command={command}
                         onClick={handleOnCommandClick}
                     />
@@ -118,7 +116,7 @@ const Move = ({
                 <div className='move__main__other'>
                     {hasCombos &&
                         <Button
-                            modifier={'s'}
+                            modifier={'s active'}
                             text={'C'}
                             onClick={handleCombosClick}
                         />
@@ -148,7 +146,7 @@ const Move = ({
             </div>
             {!showSimpleView &&
                 <MoveCommand
-                    modifier={isCommandFilterActive ? 'active' : ''}
+                    modifier={selectedSort.key ==='command' ? 'selected-sort' : ''}
                     onClick={handleOnCommandClick}
                     command={command}
                 />

@@ -1,7 +1,7 @@
 import React from 'react';
-import './ExtrasView.scss'
+import './NoteView.scss'
 
-const ExtrasView = ({
+const NoteView = ({
     comboNote,
     setComboNote,
 }) => {
@@ -11,9 +11,8 @@ const ExtrasView = ({
     }
 
     return (
-        <div className='extras-view'>
-            <div className='extras-view__note'>
-                <label>Note</label>
+        <div className='note-view'>
+            <div className='note-view__note'>
                 <textarea
                     value={comboNote}
                     onChange={handleNoteChange}
@@ -23,4 +22,4 @@ const ExtrasView = ({
     )
 }
 
-export default ExtrasView;
+export default NoteView;

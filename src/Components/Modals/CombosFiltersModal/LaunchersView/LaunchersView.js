@@ -7,13 +7,14 @@ const LaunchersView = ({
     launchers = [],
     onLauncherClick = () => { }
 }) => {
-    const launcherFilters = selectedFilters
-        .filter(filter => filter.id.includes('launcher/'))
+    
+    const selectedLaunchers = selectedFilters
+        .filter(filter => filter.key === 'launcher')
 
     return (
         <div className='launchers-view'>
             {launchers.map(launcher => {
-                const isSelected = !!launcherFilters.find(lFilter => lFilter.value === launcher.join('-'))
+                const isSelected = !!selectedLaunchers.find(lFilter => lFilter.value === launcher.join('-'))
 
                 return (
                     <MoveCommand

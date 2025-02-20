@@ -265,7 +265,6 @@ const Movelist = ({
                                 key={move.id}
                                 move={move}
                                 customMove={customMove}
-                                selectedFilters={selectedFilters}
                                 selectedSort={selectedMovelistSort}
                                 showSimpleView={showSimpleView}
                                 comboLaunchers={comboLaunchers}

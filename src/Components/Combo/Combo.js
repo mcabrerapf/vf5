@@ -263,18 +263,16 @@ const Combo = ({
                     }
                 </div>
             </div>
-            {parsedNote &&
-                <div className='combo__note'>
-                    <TextWithCommand
-                        content={parsedNote}
-                    />
-                </div>
-            }
+            <div className='combo__note'>
+                <TextWithCommand
+                    content={parsedNote}
+                />
+            </div>
             {!showSimpleView &&
                 <div className='combo__tags'>
                     {hasAllCharacters &&
                         <Button
-                            modifier={"s character"}
+                            modifier={"s all-characters"}
                             text={'ALL'}
                             onClick={handleAllClick}
                         />

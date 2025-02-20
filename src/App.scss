@@ -16,13 +16,26 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-.bottom-separator {
-  // height: 5rem;
-  // margin: 2rem 0;
-  color: transparent;
+ul,
+li,
+ol {
+  list-style: none;
+  margin: 0;
+  padding:0;
+}
 
-  // &.s {
-  //   margin: 0.5rem 0;
-  //   height: 1rem;
-  // }
+input {
+  border: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield;
+}
+
+.bottom-separator {
+  color: transparent;
 }

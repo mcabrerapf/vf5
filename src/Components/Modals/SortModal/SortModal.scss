@@ -1,26 +1,24 @@
 .sort-modal {
-    
     &__content {
         display: flex;
         flex-direction: column;
         justify-content: center;
         box-sizing: border-box;
         width: 30rem;
-        max-height: 45rem;
         gap: 1rem;
         padding: 1rem;
-
-        .button {
-            width: 8rem;
-        }
 
         &__options {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            gap: 1rem;
-            width: 28rem;
             justify-content: center;
+            gap: 1rem;
+
+            .button {
+                width: 8rem;
+                font-size: 1rem;
+            }
         }
     }
     

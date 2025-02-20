@@ -6,21 +6,21 @@
     &__top {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
         gap: 0.3rem;
 
         &__command-container {
-            border: 1px solid white;
+            border: 0.1rem solid white;
             box-sizing: border-box;
-            border-radius: 0.5rem;
             overflow-y: auto;
-            width: 25rem;
+            border-radius: 0.5rem;
+            width: 26rem;
             height: 10rem;
 
             .notation {
                 &.selected {
-                    border: 1px solid yellow;
+                    border: 0.1rem solid gold;
                 }
             }
 
@@ -29,8 +29,8 @@
         &__buttons {
             display: flex;
             flex-direction: column;
-            height: 10rem;
             justify-content: space-between;
+            height: 10rem;
         }
     }
 

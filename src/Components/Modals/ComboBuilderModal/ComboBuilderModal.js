@@ -4,7 +4,7 @@ import { useModalContext } from '../../../Contexts/ModalContext';
 import { useMainContext } from '../../../Contexts/MainContext';
 import CommandView from './CommandView';
 import TagsView from './TagsView';
-import ExtrasView from './ExtrasView';
+import NoteView from './NoteView';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
 import { getCommandData, getUniqueComboName } from './helpers';
@@ -76,7 +76,7 @@ const ComboBuilderModal = ({
 
     return (
         <div className='combo-builder-modal'>
-            <div className='combo-builder-modal__sub-header'>
+            <div className='combo-builder-modal__header'>
                 <Button
                     modifier={comboView === 'commands' ? 'active left' : 'left'}
                     value="commands"
@@ -90,9 +90,9 @@ const ComboBuilderModal = ({
                     onClick={handleViewChage}
                 />
                 <Button
-                    modifier={comboView === 'extras' ? 'active right' : 'right'}
-                    value="extras"
-                    text="Extras"
+                    modifier={comboView === 'note' ? 'active right' : 'right'}
+                    value="note"
+                    text="Note"
                     onClick={handleViewChage}
                 />
             </div>
@@ -121,9 +121,8 @@ const ComboBuilderModal = ({
                         setSelectedCharacterTags={setSelectedCharacterTags}
                     />
                 }
-                {comboView === 'extras' &&
-                    <ExtrasView
-                        comboDamage={comboDamage}
+                {comboView === 'note' &&
+                    <NoteView
                         comboNote={comboNote}
                         setComboDamage={setComboDamage}
                         setComboNote={setComboNote}

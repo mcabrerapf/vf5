@@ -27,7 +27,7 @@ const ListHeader = ({
     const [showTextSearchModal, setShowTextSearchModal] = useState(false);
 
     const hasFav = !!selectedFilters.find(sFilter => sFilter.key === 'favourite');
-    const hasTextSearch = !!selectedFilters.find(sFilter => sFilter.prefix === 'text_search');
+    const hasTextSearch = !!selectedFilters.find(sFilter => sFilter.key === 'text_search');
 
     const handleCategorySelectModalClose = (newCategory) => {
         handleCategoryChange(newCategory);

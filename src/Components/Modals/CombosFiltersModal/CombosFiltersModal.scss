@@ -13,16 +13,12 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        width: 30rem;
-        height: 25rem;
+        width: 32rem;
+        height: 30rem;
     }
 
     .modal-footer {
         justify-content: space-between;
         align-items: end;
-
-        .button {
-            height: 3px;
-        }
     }
 }

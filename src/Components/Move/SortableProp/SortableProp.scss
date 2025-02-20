@@ -1,20 +1,20 @@
 .sortable-prop {
     flex-grow: 0;
     flex-shrink: 0;
-    border-top: 1px solid white;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    border-bottom: 1px solid white;
+    border-top: 0.1rem solid white;
+    border-left: 0.1rem solid white;
+    border-right: 0.1rem solid white;
+    border-bottom: 0.1rem solid white;
 
     &__label {
         font-size: 0.9rem;
         text-align: center;
         font-weight: bold;
         padding: 0.2rem 0.3rem;
-        border-bottom: 1px solid white;
+        border-bottom: 0.1rem solid white;
 
         &.selected-sort {
-            background-color: var(--side);
+            background-color: var(--selected-sort);
             color: black;
         }
     }

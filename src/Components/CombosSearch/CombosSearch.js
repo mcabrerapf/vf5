@@ -6,12 +6,13 @@ import { ModalContextWrapper } from '../../Contexts/ModalContext';
 import Combo from '../Combo';
 import Button from '../Button';
 import ActiveFiltersList from '../ActiveFiltersList';
-import CombosSearchFiltersModal from '../Modals/CombosSearchFiltersModal';
+import CombosFiltersModal from '../Modals/CombosFiltersModal';
 import { CHARACTERS_JSON, COMBOS_SORT_OPTIONS, STRINGS } from '../../constants';
 import { getCombos, updateCombos } from '../../services';
 import { validateCombo } from '../../services/utils';
 import { filterList, generateId, sortList } from '../../helpers';
 import SortModal from '../Modals/SortModal';
+import { COMBO_SEARCH_SORT_OPTIONS } from './constants';
 
 const CombosSearch = ({
     handleViewChange
@@ -117,7 +118,7 @@ const CombosSearch = ({
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
     const filteredResults = filterList(combosToUse, selectedFilters);
     const sortedResults = sortList(filteredResults, selectedSort);
-    
+
     return (
         <div
             className='combos-search'
@@ -126,9 +127,10 @@ const CombosSearch = ({
                 showModal={showFiltersModal}
                 closeModal={handleFiltersModalClose}
             >
-                <CombosSearchFiltersModal
+                <CombosFiltersModal
                     selectedFilters={selectedFilters}
                     filterOptions={characterFilterOptions}
+                    listItems={sortedResults}
                 />
             </ModalContextWrapper>
             <ModalContextWrapper
@@ -137,7 +139,7 @@ const CombosSearch = ({
             >
                 <SortModal
                     selectedSort={selectedSort}
-                    sortOptions={COMBOS_SORT_OPTIONS}
+                    sortOptions={COMBO_SEARCH_SORT_OPTIONS}
                 />
             </ModalContextWrapper>
             <div
@@ -198,6 +200,7 @@ const CombosSearch = ({
 
                         return (
                             <Combo
+                                key={combo.id}
                                 combo={combo}
                                 showSaveButton
                                 hideEditButton
@@ -212,7 +215,7 @@ const CombosSearch = ({
                             />
                         )
                     })}
-                    <div className='bottom-separator s'>.</div>
+                    <div className='bottom-separator'>.</div>
                 </div>
             }
             <footer className='combos-search__footer'>
