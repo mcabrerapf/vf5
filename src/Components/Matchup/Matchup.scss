@@ -39,7 +39,7 @@
                 color: white;
 
                 &.loses {
-                    background-color: var(--ex-high);
+                    background-color: var(--red-color);
                 }
 
                 &.wins {
@@ -99,4 +99,3 @@
     }
 
 }
-

@@ -43,10 +43,11 @@
             align-items: center;
             user-select: none;
             cursor: pointer;
+
             &__loses {
                 font-size: 1.5rem;
                 font-weight: bold;
-                color: var(--ex-high);
+                color: var(--red-color);
             }
 
             &__wins {

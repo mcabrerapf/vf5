@@ -32,10 +32,7 @@
                color: var(--selected-sort);
             }
         }
-        &__desktop {
-            display: flex;
-            gap: 0.3rem;
-        }
+
         &__other {
             display: flex;
             flex-direction: row;

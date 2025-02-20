@@ -119,7 +119,8 @@
     }
 
     &.danger {
-        color: var(--red-color);
+        color: black;
+        background-color: var(--red-color);
         border: 0.2rem solid var(--red-color);
     }
 
@@ -172,26 +173,31 @@
     &.SLW {
         color: white;
         background-color: var(--super-lightweight);
+        border-color: var(--super-lightweight);
     }
 
     &.LW {
         color: white;
         background-color: var(--lightweight);
+        border-color: var(--lightweight);
     }
 
     &.MW {
         color: white;
         background-color: var(--midweight);
+        border-color: var(--midweight);
     }
 
     &.HW {
         color: white;
         background-color: var(--heavyweight);
+        border-color: var(--heavyweight);
     }
 
     &.SHW {
         color: white;
         background-color: var(--super-heavyweight);
+        border-color: var(--super-heavyweight);
     }
 
     // 
@@ -209,7 +215,8 @@
     }
 
     &.save {
-        color: var(--mid);
+        color: black;
+        background-color: var(--save);
         border: 0.1rem solid var(--mid);
     }
 
