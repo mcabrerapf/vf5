@@ -6,12 +6,11 @@ import MatchupCombos from './MatchupCombos';
 import MatchupMoves from './MatchupMoves';
 import Button from '../../Button';
 import { EditIcon, MoveLeft, VsIcon } from '../../Icon';
-import TextWithCommand from '../../TextWithCommand';
 import CharacterSelectModal from '../../Modals/CharacterSelectModal';
-import { stringNotationParser } from '../../../helpers';
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import MatchupModal from '../../Modals/MatchupModal';
 import { CHARACTERS_JSON } from '../../../constants';
+import MatchupNotes from './MatchupNotes/MatchupNotes';
 
 const CharacterMatchupView = ({
     matchup = {},
@@ -34,8 +33,6 @@ const CharacterMatchupView = ({
     const {
         short_name,
     } = CHARACTERS_JSON[matchupId];
-
-    const parsedNote = stringNotationParser(note);
 
     const scrollToTop = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -145,15 +142,10 @@ const CharacterMatchupView = ({
                     ref={listRef}
                     className='character-matchup__content__scrollable'
                 >
-                    {parsedNote &&
-                        <div
-                            className='character-matchup__content__scrollable__note'
-                        >
-                            <TextWithCommand
-                                content={parsedNote}
-                            />
-                        </div>
-                    }
+                    <MatchupNotes
+                        matchupId={matchupId}
+                        matchupNote={note}
+                    />
                     <MatchupMoves
                         selectedCharacter={selectedCharacter}
                     />

@@ -38,15 +38,17 @@ const MatchupCombos = ({
             type: "array",
         })
     })
-    
+    const hasNoCombos = !Object.keys(combosByLauncher)?.length;
+
     return (
-        <div 
-        className='matchup-combos'
+        <div
+            className='matchup-combos'
         >
             <div
                 className='matchup-combos__header'
             >
                 <Button
+                    disabled={hasNoCombos}
                     modifier={'active center'}
                     onClick={() => setShowCombos(!showCombos)}
                 >

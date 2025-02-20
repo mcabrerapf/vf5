@@ -25,7 +25,8 @@ const MatchupMoves = ({
     }).filter(Boolean)
     const attackLevelOptions = movelistFilterOptions.filter(fOption => fOption.key === 'attack_level');
 
-
+    const hasNoMoves = !favouriteMoves?.length;
+    
     return (
         <div
             children="matchup-moves"
@@ -34,6 +35,7 @@ const MatchupMoves = ({
                 className='matchup-moves__header'
             >
                 <Button
+                    disabled={hasNoMoves}
                     modifier={'active center'}
                     onClick={() => setShowMoves(!showMoves)}
                 >
