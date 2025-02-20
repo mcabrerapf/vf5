@@ -2,10 +2,12 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    gap: 0.5rem;
-    border-bottom: 1px solid;
     padding: 0.5rem 0.5rem;
+    gap: 0.5rem;
+    width: 100%;
+    user-select: none;
     cursor: pointer;
+    border-top: 1px solid white;
 
     &.favourite {
         background-color: rgba(255, 215, 0, 0.2);
@@ -19,18 +21,17 @@
         gap: 0.5rem;
 
         &__name {
-            display: flex;
+            display: inline-flex;
             width: auto;
             flex-wrap: wrap;
-            font-size: 1.3rem;
+            align-items: center;
+            font-size: 1.1rem;
             font-weight: 600;
             border-radius: 0.5rem;
             border: 1px solid transparent;
 
             &.sort-selected {
-                border: 1px solid var(--side);
-                border-top-left-radius: 0.3rem;
-                border-bottom-left-radius: 0.3rem;
+               color: var(--side);
             }
         }
         &__desktop {

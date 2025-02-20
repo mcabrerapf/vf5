@@ -18,6 +18,7 @@ query getAllOnlineCombos($filter: ModelComboFilterInput) {
       note
       tags
       game_version
+      stringified_input
     }
   }
 }
@@ -41,6 +42,7 @@ query getCombo($id: ID!) {
     note
     tags
     game_version
+    stringified_input
   }
 }
 `

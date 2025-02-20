@@ -102,13 +102,12 @@ const CharacterMatchupView = ({
 
                     <div
                         className='character-matchup__header__left__name'
-                        onClick={toggleCharacterSelectModal}
                     >
-                        <span
-                            className='character-matchup__header__left__name__name'
-                        >
-                            {short_name}
-                        </span>
+                        <Button
+                            modifier={'character-name-button'}
+                            text={short_name}
+                            onClick={toggleCharacterSelectModal}
+                        />
                     </div>
                 </div>
                 <div

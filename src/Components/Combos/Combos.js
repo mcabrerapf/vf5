@@ -20,7 +20,7 @@ import SortModal from '../Modals/SortModal';
 import { deleteCombo, getCombos, updateCombos } from '../../services';
 import ListHeader from '../ListHeader';
 import CloudIcon from '../Icon/CloudIcon';
-import { createCombo, deleteOnlineCombo, updateOnlineCombo } from '../../services/aws';
+import { createOnlineCombo, deleteOnlineCombo, updateOnlineCombo } from '../../services/aws';
 import { validateCombo } from '../../services/utils';
 
 const Combos = ({
@@ -73,7 +73,7 @@ const Combos = ({
                 { ...newCombo, id: generateId(), game_version: GAME_VERSION };
 
             if (!newCombo.id) {
-                await createCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } })
+                await createOnlineCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } })
                     .then(res => {
                         const [updatedCombos] = updateCombos(
                             selectedCharacter,
@@ -81,10 +81,6 @@ const Combos = ({
                         );
                         setCombos(updatedCombos);
                     })
-                    .catch(() => {
-
-                    });
-
             } else {
                 await updateOnlineCombo({ combo: newCombo })
                     .then(res => {

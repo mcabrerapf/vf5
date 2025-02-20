@@ -1,5 +1,5 @@
 const CREATE_COMBO = `
-mutation createCombo($input: CreateComboInput!) {
+mutation createOnlineCombo($input: CreateComboInput!) {
   createCombo(input: $input) {
       id
       lId

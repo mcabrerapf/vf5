@@ -139,7 +139,7 @@ const ComboBuilderModal = ({
                         <Button
                             modifier={'danger'}
                             text='DEL'
-                            disabled={!canSave || isSaving}
+                            disabled={isSaving}
                             onClick={onDeleteClose}
                         />
                     }

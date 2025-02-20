@@ -13,5 +13,6 @@ type Combo @model @auth(rules: [{allow: public}]) {
   lId: String!
   characterId: String!
   game_version: Float!
+  stringified_input: String!
 }
  

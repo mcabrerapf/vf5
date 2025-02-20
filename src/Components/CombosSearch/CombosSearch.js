@@ -183,7 +183,7 @@ const CombosSearch = ({
                     No results...
                 </div>
             }
-            {!isLoading && !!comboResults.length &&
+            {!isLoading && !!sortedResults.length &&
                 <div
                     ref={listRef}
                     className='combos-search__results'
@@ -198,7 +198,7 @@ const CombosSearch = ({
 
                         return (
                             <Combo
-                                combo={{ ...combo, favourite: false }}
+                                combo={combo}
                                 showSaveButton
                                 hideEditButton
                                 hideFavouriteButton

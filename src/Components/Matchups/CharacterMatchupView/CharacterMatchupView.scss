@@ -1,6 +1,7 @@
 .character-matchup {
     height: calc(100% - 4rem);
     width: 100%;
+
     &__header {
         display: flex;
         height: 4rem;
@@ -25,36 +26,37 @@
                 }
             }
 
-            &__name {
+            .character-name-button {
                 display: inline-flex;
                 align-items: center;
                 font-weight: 700;
                 padding-left: 2rem;
                 text-align: center;
                 color: black;
+                background-color: white;
                 font-size: 2rem;
-
             }
         }
 
         &__right {
             display: flex;
             align-items: center;
-
-            &__loses {  
-                font-size: 1.4rem;
+            user-select: none;
+            cursor: pointer;
+            &__loses {
+                font-size: 1.5rem;
                 font-weight: bold;
                 color: var(--ex-high);
             }
 
             &__wins {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
                 font-weight: bold;
                 color: var(--mid);
             }
 
             &__win-rate {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
                 font-weight: bold;
                 color: black;
             }

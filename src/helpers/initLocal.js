@@ -78,7 +78,7 @@ const validateSorts = () => {
     } catch (error) {
         console.log(error);
         localStorage.setItem(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(MOVELIST_SORT_OPTIONS[0]));
-        localStorage.setItem(SELECTED_COMBOS_SORT_KEY, JSON.stringify(COMBOS_SORT_OPTIONS[0]));
+        localStorage.setItem(SELECTED_COMBOS_SORT_KEY, JSON.stringify(COMBOS_SORT_OPTIONS[2]));
     }
 }
 

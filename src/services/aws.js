@@ -29,13 +29,12 @@ const getAllOnlineCombos = async ({
     characterId,
     lIds = [],
 }) =>
-    client
-        .graphql({
-            query: GET_ALL_COMBOS,
-            variables: {
-                filter: buildFilters({ characterId, andLids: lIds })
-            }
-        })
+    client.graphql({
+        query: GET_ALL_COMBOS,
+        variables: {
+            filter: buildFilters({ characterId, andLids: lIds })
+        }
+    })
         .then((res) => {
             const {
                 data: {
@@ -55,13 +54,12 @@ const getMyOnlineCombos = async ({
     characterId,
     lIds = [],
 }) =>
-    client
-        .graphql({
-            query: GET_ALL_COMBOS,
-            variables: {
-                filter: buildFilters({ characterId, orLids: lIds })
-            }
-        })
+    client.graphql({
+        query: GET_ALL_COMBOS,
+        variables: {
+            filter: buildFilters({ characterId, orLids: lIds })
+        }
+    })
         .then((res) => {
             const {
                 data: {
@@ -81,13 +79,12 @@ const getMyOnlineCombos = async ({
 const getOnlineCombo = async ({
     comboId,
 }) =>
-    client
-        .graphql({
-            query: GET_COMBO,
-            variables: {
-                id: comboId
-            }
-        })
+    client.graphql({
+        query: GET_COMBO,
+        variables: {
+            id: comboId
+        }
+    })
         .then((res) => {
             const {
                 data: {
@@ -105,13 +102,12 @@ const getOnlineCombo = async ({
 const updateOnlineCombo = async ({
     combo,
 }) =>
-    client
-        .graphql({
-            query: GET_COMBO,
-            variables: {
-                id: combo.oId
-            }
-        })
+    client.graphql({
+        query: GET_COMBO,
+        variables: {
+            id: combo.oId
+        }
+    })
         .then((res) => {
             const {
                 data: {
@@ -136,6 +132,7 @@ const updateOnlineCombo = async ({
                             tags: combo.tags,
                             launcher: combo.launcher,
                             command: combo.command,
+                            stringified_input: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]),
                             note: combo.note,
                             likes: comboMatch.likes,
                             dislikes: comboMatch.dislikes,
@@ -189,13 +186,12 @@ const updateOnlineComboLikes = async ({
 const deleteOnlineCombo = async ({
     combo,
 }) =>
-    client
-        .graphql({
-            query: GET_COMBO,
-            variables: {
-                id: combo.oId
-            }
-        })
+    client.graphql({
+        query: GET_COMBO,
+        variables: {
+            id: combo.oId
+        }
+    })
         .then((res) => {
             const {
                 data: {
@@ -228,30 +224,48 @@ const deleteOnlineCombo = async ({
             return combo;
         });
 
-const createCombo = async ({
+const createOnlineCombo = async ({
     combo
 }) =>
-    client
-        .graphql({
-            query: CREATE_COMBO,
-            variables: {
-                input: {
-                    lId: combo.id,
-                    characterId: combo.characterId,
-                    favourite: false,
-                    name: combo.name,
-                    damage: combo.damage,
-                    character_tags: combo.character_tags,
-                    tags: combo.tags,
-                    launcher: combo.launcher,
-                    command: combo.command,
-                    note: combo.note,
-                    likes: 0,
-                    dislikes: 0,
-                    game_version: combo.game_version
-                }
+    client.graphql({
+        query: GET_ALL_COMBOS,
+        variables: {
+            filter: {
+                and: [
+                    { stringified_input: { eq: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]) } },
+                    { note: { eq: combo.note } }
+                ]
             }
+        }
+    })
+        .then(res => {
+            console.log(res);
+            const { data: { listCombos: { items } } } = res;
+            if (items && items.length) throw new Error("Combo already exists");
+
+            return client.graphql({
+                query: CREATE_COMBO,
+                variables: {
+                    input: {
+                        lId: combo.id,
+                        characterId: combo.characterId,
+                        favourite: false,
+                        name: combo.name,
+                        damage: combo.damage,
+                        character_tags: combo.character_tags,
+                        tags: combo.tags,
+                        launcher: combo.launcher,
+                        command: combo.command,
+                        stringified_input: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]),
+                        note: combo.note,
+                        likes: 0,
+                        dislikes: 0,
+                        game_version: combo.game_version
+                    }
+                }
+            })
         })
+
         .then((res) => {
             const {
                 data: {
@@ -262,14 +276,14 @@ const createCombo = async ({
         })
         .catch((err) => {
             console.log(err);
-            return err;
+            return combo;
         });
-        
+
 export {
     getAllOnlineCombos,
     getMyOnlineCombos,
     getOnlineCombo,
-    createCombo,
+    createOnlineCombo,
     updateOnlineCombo,
     updateOnlineComboLikes,
     deleteOnlineCombo
