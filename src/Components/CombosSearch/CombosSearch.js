@@ -88,9 +88,11 @@ const CombosSearch = ({
     }
 
     const handleFiltersModalClose = async (newFilters) => {
-        if (!newFilters) return;
+        if (newFilters) {
+            setSelectedFilters(newFilters);
+        }
         setShowFiltersModal(!showFiltersModal);
-        setSelectedFilters(newFilters);
+        
     }
 
     const handleSortClick = () => {

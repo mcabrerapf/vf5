@@ -11,10 +11,9 @@ function ModalContextWrapper({
 }) {
   const backgroundRef = useRef(null);
   const wrapperRef = useRef(null);
-  
+
   useEffect(() => {
     function handleClickOutside({ target }) {
-
       if (!closeOnBgClick) return;
       const shouldHideModal = wrapperRef.current && !wrapperRef.current.contains(target);
       if (shouldHideModal) closeModal();

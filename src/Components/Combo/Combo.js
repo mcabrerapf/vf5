@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Combo.scss'
 import MoveCommand from '../MoveCommand';
-import { CHARACTERS, COMBOS_SORT_OPTIONS } from '../../constants';
+import { COMBOS_SORT_OPTIONS } from '../../constants';
 import { stringNotationParser } from '../../helpers';
 import Button from '../Button';
 import TextWithCommand from '../TextWithCommand';

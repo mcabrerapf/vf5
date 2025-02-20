@@ -2,9 +2,7 @@ import './MatchupNotes.scss'
 import React, { useState } from 'react'
 import Button from '../../../Button'
 import { ChevronDown, ChevronUp } from '../../../Icon';
-import { CHARACTERS_JSON } from '../../../../constants';
 import Note from '../../../Note';
-import { stringNotationParser } from '../../../../helpers';
 import { getNotes } from '../../../../services';
 
 const MatchupNotes = ({
