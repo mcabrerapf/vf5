@@ -9,23 +9,26 @@ const validateImportData = (data = {}) => {
     CHARACTERS.forEach(character => {
         const { id } = character;
         const currentCharacterData = data[id];
+        // const allMoves = CHARACTERS_JSON[id]?.movelist?.all_moves;
         if (currentCharacterData) {
-            const validatedCharacterData = { combos: [], custom_moves: [], notes: [], matchups: [] };
+            const validatedCharacterData = { combos: [], custom_moves: [], notes: [], matchups: initMatchups };
             const { combos, custom_moves, notes, matchups } = currentCharacterData;
 
             if (notes && Array.isArray(notes)) {
                 const validNotes = notes.map(validateNote).filter(Boolean);
                 validatedCharacterData.notes = validNotes;
             }
-            if (custom_moves) {
+
+            if (custom_moves && Array.isArray(custom_moves)) {
+                console.log(custom_moves)
                 const validCustomMoves = custom_moves.filter(validateCustomMove).filter(Boolean);
                 validatedCharacterData.custom_moves = validCustomMoves;
             }
-            if (combos) {
+            if (combos && Array.isArray(combos)) {
                 const validCombos = combos.map(validateCombo).filter(Boolean);
                 validatedCharacterData.combos = validCombos;
             }
-            if (matchups) {
+            if (matchups && Array.isArray(matchups)) {
                 const validatedMatchups = matchups.map(validateMatchup).filter(Boolean);
                 validatedCharacterData.matchups = validatedMatchups;
             }
@@ -39,7 +42,7 @@ const validateImportData = (data = {}) => {
             }
         }
 
-        
+
     })
     return [true, validatedData];
 }

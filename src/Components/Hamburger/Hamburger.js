@@ -88,7 +88,7 @@ const Hamburger = ({
                             className="hamburger__container__options__option"
                             onClick={handleInfoClick}
                         >
-                            Info
+                            Data
                         </div>
                     </div>
                 </div>
