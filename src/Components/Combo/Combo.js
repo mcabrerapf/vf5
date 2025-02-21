@@ -14,11 +14,11 @@ const Combo = ({
     selectedSort = {},
     selectedFilters = [],
     showSimpleView = false,
-    showSaveButton = false,
+    showDownloadButton = false,
     hideFavouriteButton = false,
     hideEditButton = false,
     showLikes = false,
-    disableSaveButton = false,
+    disableDownloadButton = false,
     disableLikes = false,
     showOtherTags = false,
     characterFilterOptions = [],
@@ -28,7 +28,7 @@ const Combo = ({
     onFavouriteClick = () => { },
     handleFiltersChange = () => { },
     onTagClick = () => { },
-    onSaveButtonClick = () => { },
+    onDownloadClick = () => { },
 }) => {
     const {
         name,
@@ -125,10 +125,10 @@ const Combo = ({
         handleSortChange(updatedSort);
     }
 
-    const handleSaveButtonClick = (e) => {
+    const handleDownloadButtonClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        onSaveButtonClick(combo);
+        onDownloadClick(combo);
     }
 
     const handleCommandClick = (e) => {
@@ -196,11 +196,11 @@ const Combo = ({
                                 <EditIcon />
                             </Button>
                         }
-                        {showSaveButton &&
+                        {showDownloadButton &&
                             <Button
                                 modifier={'s'}
-                                disabled={disableSaveButton}
-                                onClick={handleSaveButtonClick}
+                                disabled={disableDownloadButton}
+                                onClick={handleDownloadButtonClick}
                             >
                                 <DownloadIcon />
                             </Button>
@@ -226,11 +226,11 @@ const Combo = ({
                                 modifier={isDamageSortSelected ? 's sort-selected damage' : 's damage'}
                                 text={damage}
                             />
-                            {showSaveButton &&
+                            {showDownloadButton &&
                                 <Button
                                     modifier={'s'}
-                                    disabled={disableSaveButton}
-                                    onClick={handleSaveButtonClick}
+                                    disabled={disableDownloadButton}
+                                    onClick={handleDownloadButtonClick}
                                 >
                                     <DownloadIcon />
                                 </Button>

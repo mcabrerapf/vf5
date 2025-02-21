@@ -10,7 +10,7 @@ import Notes from '../Notes';
 import Matchups from '../Matchups';
 import CombosSearch from '../CombosSearch';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
-import InfoModal from '../Modals/InfoModal';
+import DataModal from '../Modals/DataModal';
 import { SELECTED_CHARACTER_VIEW_KEY, SELECTED_MATCHUPS_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
 import setLocalStorage from '../../helpers/setLocalStorage';
@@ -65,7 +65,7 @@ const Character = () => {
                 showModal={showInfoModal}
                 closeModal={toggleInfoModal}
             >
-                <InfoModal
+                <DataModal
                 />
             </ModalContextWrapper>
             <header className={headerClassName}>

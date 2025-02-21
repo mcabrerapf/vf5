@@ -1,7 +1,6 @@
 import './InfoModal.scss'
 import React, { useState } from 'react';
 import Button from '../../Button';
-import DataView from './DataView';
 
 const InfoModal = () => {
     const [modalView, setModalView] = useState('data');
@@ -22,7 +21,7 @@ const InfoModal = () => {
                 />
             </div>
             <div className='info-modal__content'>
-                {modalView === 'data' && <DataView />}
+                
             </div>
         </div>
     )

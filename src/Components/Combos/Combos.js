@@ -77,7 +77,7 @@ const Combos = ({
                     .then(res => {
                         const [updatedCombos] = updateCombos(
                             selectedCharacter,
-                            validateCombo({ ...res, oId: res.id, id: comboWithLid.id })
+                            validateCombo(res)
                         );
                         setCombos(updatedCombos);
                     })
@@ -86,7 +86,7 @@ const Combos = ({
                     .then(res => {
                         const [updatedCombos] = updateCombos(
                             selectedCharacter,
-                            validateCombo({ ...res, oId: res.id, id: comboWithLid.id })
+                            validateCombo(res)
                         );
                         setCombos(updatedCombos);
                     })
@@ -252,6 +252,7 @@ const Combos = ({
                 >
                     {sortedCombos.map((combo) =>
                         <Combo
+                            key={combo.id}
                             showOtherTags
                             combo={combo}
                             selectedSort={selectedSort}

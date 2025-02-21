@@ -8,6 +8,7 @@ import generateId from "./generateId";
 import getPseudoLaunchers from "./get-pseudo-launchers";
 import getFromLocal from "./getFromLocal";
 import getLauncher from './getLauncher';
+import getLauncherData from "./getLauncherData";
 import getLocalStorageSize from './getLocalStorageSize';
 import getNumberColor from "./getNumberColor";
 import initiLocal from "./initLocal";
@@ -28,6 +29,7 @@ export {
     generateId,
     getFromLocal,
     getLauncher,
+    getLauncherData,
     getLocalStorageSize,
     getNumberColor,
     getPseudoLaunchers,

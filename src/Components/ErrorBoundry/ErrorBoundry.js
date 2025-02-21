@@ -118,7 +118,6 @@ function ErrorBoundry({ error, resetErrorBoundary }) {
             }
             <div className='error-boundry__error-message'>{error.message}</div>
             <div className='error-boundry__characters-data'>
-                <h3>Characters Data</h3>
                 <div className='error-boundry__characters-data__data'>
                     {JSON.stringify(allCharacterData, null, 2)}
                 </div>

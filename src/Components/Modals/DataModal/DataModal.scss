@@ -1,0 +1,16 @@
+.data-modal {
+    &__header {
+        display: flex;
+        flex-direction: row;
+
+        .button {
+            flex: 1;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    &__content {
+        padding: 1rem;
+    }
+}

@@ -10,9 +10,10 @@ import CombosFiltersModal from '../Modals/CombosFiltersModal';
 import { CHARACTERS_JSON, COMBOS_SORT_OPTIONS, STRINGS } from '../../constants';
 import { getCombos, updateCombos } from '../../services';
 import { validateCombo } from '../../services/utils';
-import { filterList, generateId, sortList } from '../../helpers';
+import { filterList, generateId, getLauncherData, sortList } from '../../helpers';
 import SortModal from '../Modals/SortModal';
 import { COMBO_SEARCH_SORT_OPTIONS } from './constants';
+import { getUniqueComboName } from '../Modals/ComboBuilderModal/helpers';
 
 const CombosSearch = ({
     handleViewChange
@@ -56,6 +57,7 @@ const CombosSearch = ({
             })
                 .then(res => {
                     allCombos = res;
+                    if(!lIds.length) return [];
                     return getMyOnlineCombos({
                         characterId: selectedCharacter,
                         lIds,
@@ -80,9 +82,11 @@ const CombosSearch = ({
 
     const toggleSortModal = () => setShowSortModal(!showSortModal);
 
-    const onSaveButtonClick = (combo) => {
+    const onDownloadClick = (combo) => {
         const withId = { ...combo, oId: combo.id, id: generateId() };
-        const validatedCombo = validateCombo(withId);
+        const { name: launcherName } = getLauncherData(withId.launcher, selectedCharacter);
+        const uniquename = getUniqueComboName(withId.id, withId.name, launcherName, localCombos);
+        const validatedCombo = validateCombo({ ...withId, name: uniquename });
         const [newCombos] = updateCombos(selectedCharacter, validatedCombo);
         setLocalCombos(newCombos)
     }
@@ -92,7 +96,7 @@ const CombosSearch = ({
             setSelectedFilters(newFilters);
         }
         setShowFiltersModal(!showFiltersModal);
-        
+
     }
 
     const handleSortClick = () => {
@@ -120,7 +124,7 @@ const CombosSearch = ({
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
     const filteredResults = filterList(combosToUse, selectedFilters);
     const sortedResults = sortList(filteredResults, selectedSort);
-    
+
     return (
         <div
             className='combos-search'
@@ -193,27 +197,28 @@ const CombosSearch = ({
                     className='combos-search__results'
                 >
                     {sortedResults.map(combo => {
-                        let disableSaveButton = false;
+                        let disableDownloadButton = false;
                         let disableLikes = false;
                         localCombos.forEach(lCombo => {
-                            if (lCombo.oId === combo.id) disableSaveButton = true;
+                            if (lCombo.oId === combo.id) disableDownloadButton = true;
                             if (lCombo.id === combo.lId) disableLikes = true;
                         });
+                        if (disableDownloadButton) return null;
 
                         return (
                             <Combo
                                 key={combo.id}
                                 combo={combo}
-                                showSaveButton
+                                showDownloadButton
                                 hideEditButton
                                 hideFavouriteButton
                                 showLikes
-                                disableSaveButton={disableSaveButton}
+                                disableDownloadButton={disableDownloadButton}
                                 disableLikes={disableLikes}
                                 showSimpleView={listView === 'S'}
                                 characterFilterOptions={characterFilterOptions}
                                 combosFilterOptions={combosFilterOptions}
-                                onSaveButtonClick={onSaveButtonClick}
+                                onDownloadClick={onDownloadClick}
                             />
                         )
                     })}

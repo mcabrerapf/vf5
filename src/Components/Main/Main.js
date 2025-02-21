@@ -2,7 +2,7 @@ import React from 'react';
 import './Main.scss'
 import Character from '../Character';
 
-const Main = () => {
+const Main = () => {    
     return (
         <div className='main'>
             <Character />

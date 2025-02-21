@@ -99,6 +99,59 @@ const getOnlineCombo = async ({
             return null;
         });
 
+const createOnlineCombo = async ({
+    combo
+}) =>
+    client.graphql({
+        query: GET_ALL_COMBOS,
+        variables: {
+            filter: {
+                and: [
+                    { stringified_input: { eq: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]) } },
+                    { note: { eq: combo.note } }
+                ]
+            }
+        }
+    })
+        .then(res => {
+            const { data: { listCombos: { items } } } = res;
+            if (items && items.length) throw new Error("Combo already exists");
+
+            return client.graphql({
+                query: CREATE_COMBO,
+                variables: {
+                    input: {
+                        lId: combo.id,
+                        characterId: combo.characterId,
+                        favourite: false,
+                        name: combo.name,
+                        damage: combo.damage,
+                        character_tags: combo.character_tags,
+                        tags: combo.tags,
+                        launcher: combo.launcher,
+                        command: combo.command,
+                        stringified_input: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]),
+                        note: combo.note,
+                        likes: 0,
+                        dislikes: 0,
+                        game_version: combo.game_version
+                    }
+                }
+            })
+        })
+        .then((res) => {
+            const {
+                data: {
+                    createCombo
+                }
+            } = res;
+            return { ...createCombo, oId: createCombo.id, id: createCombo.lId };
+        })
+        .catch((err) => {
+            console.log(err);
+            return combo;
+        });
+
 const updateOnlineCombo = async ({
     combo,
 }) =>
@@ -147,7 +200,7 @@ const updateOnlineCombo = async ({
                     updateCombo
                 }
             } = res;
-            return updateCombo;
+            return { ...updateCombo, oId: updateCombo.id, id: updateCombo.lId };
         })
         .catch((err) => {
             console.log(err);
@@ -218,61 +271,6 @@ const deleteOnlineCombo = async ({
                 }
             } = res;
             return deleteCombo;
-        })
-        .catch((err) => {
-            console.log(err);
-            return combo;
-        });
-
-const createOnlineCombo = async ({
-    combo
-}) =>
-    client.graphql({
-        query: GET_ALL_COMBOS,
-        variables: {
-            filter: {
-                and: [
-                    { stringified_input: { eq: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]) } },
-                    { note: { eq: combo.note } }
-                ]
-            }
-        }
-    })
-        .then(res => {
-            console.log(res);
-            const { data: { listCombos: { items } } } = res;
-            if (items && items.length) throw new Error("Combo already exists");
-
-            return client.graphql({
-                query: CREATE_COMBO,
-                variables: {
-                    input: {
-                        lId: combo.id,
-                        characterId: combo.characterId,
-                        favourite: false,
-                        name: combo.name,
-                        damage: combo.damage,
-                        character_tags: combo.character_tags,
-                        tags: combo.tags,
-                        launcher: combo.launcher,
-                        command: combo.command,
-                        stringified_input: JSON.stringify([...combo.launcher, "[⊙]", ...combo.command]),
-                        note: combo.note,
-                        likes: 0,
-                        dislikes: 0,
-                        game_version: combo.game_version
-                    }
-                }
-            })
-        })
-
-        .then((res) => {
-            const {
-                data: {
-                    createCombo
-                }
-            } = res;
-            return createCombo;
         })
         .catch((err) => {
             console.log(err);
