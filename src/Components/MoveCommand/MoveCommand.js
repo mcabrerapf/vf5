@@ -1,17 +1,18 @@
 import React from 'react';
 import './MoveCommand.scss'
 import { checkIsCombiEnd, checkIsCombiStart } from './helpers';
-import Notation from '../Notation/Notation';
+import Notation from '../Notation';
 
 const MoveCommand = ({
     command,
-    modifier,
+    modifier = '',
     selectedNotationIndex,
     onClick = () => { },
     notationClick = () => { }
 }) => {
     const className = ['move-command', modifier].filter(Boolean).join(' ');
     let launcherSeapartorIndex;
+    if (!command) return null;
     return (
         <div className={className} onClick={onClick}>
             {command.map((notation, i) => {

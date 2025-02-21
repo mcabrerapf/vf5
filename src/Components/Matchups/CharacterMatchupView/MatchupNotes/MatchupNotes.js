@@ -34,7 +34,6 @@ const MatchupNotes = ({
             >
                 {showNotes && notes.map(note => {
                     if (!note) return null;
-                    // const parsedNote = stringNotationParser(note.content);
                     return (
                         <Note
                             note={note}
