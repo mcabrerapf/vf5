@@ -57,7 +57,7 @@ const CombosSearch = ({
             })
                 .then(res => {
                     allCombos = res;
-                    if(!lIds.length) return [];
+                    if (!lIds.length) return [];
                     return getMyOnlineCombos({
                         characterId: selectedCharacter,
                         lIds,
@@ -124,7 +124,7 @@ const CombosSearch = ({
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
     const filteredResults = filterList(combosToUse, selectedFilters);
     const sortedResults = sortList(filteredResults, selectedSort);
-
+    
     return (
         <div
             className='combos-search'
@@ -203,7 +203,7 @@ const CombosSearch = ({
                             if (lCombo.oId === combo.id) disableDownloadButton = true;
                             if (lCombo.id === combo.lId) disableLikes = true;
                         });
-                        if (disableDownloadButton) return null;
+                        if (disableDownloadButton && selectedCombosSearchView === 'online') return null;
 
                         return (
                             <Combo

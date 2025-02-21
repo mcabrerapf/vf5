@@ -1,23 +1,24 @@
 .import-data-preview {
     &__content {
         box-sizing: border-box;
-        padding: 1rem 0;
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        padding: 1rem 0;
+        width: 25rem;
 
         &__header {
+            color: red;
             font-size: 1.4rem;
             font-weight: 600;
-            color: red;
         }
 
         &__data {
-            max-height: 30rem;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            max-height: 30rem;
 
             &__character {
                 &__header {
