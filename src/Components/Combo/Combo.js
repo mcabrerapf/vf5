@@ -77,7 +77,7 @@ const Combo = ({
         const filteredFilters = selectedFilters
             .filter(sFilter => sFilter.id !== characterFilter.id)
         if (filteredFilters.length === selectedFilters.length) {
-            handleFiltersChange([...selectedFilters, characterFilter])
+            handleFiltersChange([...filteredFilters, characterFilter])
         } else {
             handleFiltersChange(filteredFilters);
         }

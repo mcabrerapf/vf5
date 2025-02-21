@@ -80,7 +80,19 @@ const CombosSearch = ({
         fetchCombos();
     }, [selectedCharacter])
 
+    const handleFiltersChange = (newFilters) => {
+        if (!newFilters) return;
+        scrollToTop();
+        setSelectedFilters(newFilters);
+    }
+
     const toggleSortModal = () => setShowSortModal(!showSortModal);
+
+    const handleSortChange = (sort) => {
+        if (!sort) return;
+        scrollToTop();
+        setSelectedSort(sort);
+    }
 
     const onDownloadClick = (combo) => {
         const withId = { ...combo, oId: combo.id, id: generateId() };
@@ -94,6 +106,7 @@ const CombosSearch = ({
     const handleFiltersModalClose = async (newFilters) => {
         if (newFilters) {
             setSelectedFilters(newFilters);
+            scrollToTop();
         }
         setShowFiltersModal(!showFiltersModal);
 
@@ -116,7 +129,31 @@ const CombosSearch = ({
 
     const handleFilterClick = (filter) => {
         const newFilters = selectedFilters.filter(sFilter => sFilter.id !== filter.id);
-        setSelectedFilters(newFilters);
+        scrollToTop();
+        handleFiltersChange(newFilters);
+    }
+
+    const handleTagClick = ({ target: { value } }) => {
+        const newFilter = combosFilterOptions.find(option => option.value === value);
+        const filteredFilters = selectedFilters.filter(sFilter => sFilter.value !== value)
+        let updatedFilters;
+        if (filteredFilters.length === selectedFilters.length) {
+            updatedFilters = [...filteredFilters, newFilter];
+        } else {
+            updatedFilters = filteredFilters;
+        }
+        handleFiltersChange(updatedFilters);
+    }
+
+    const handleLauncherClick = ({ target: { value } }) => {
+        if (!value || selectedFilters.find(sFilter => sFilter.id === value.join('-'))) return;
+        const stringLauncher = value.join('-');
+        const newFilters = [
+            ...selectedFilters,
+            { id: stringLauncher, name: stringLauncher, key: 'launcher' }
+
+        ]
+        handleFiltersChange(newFilters);
     }
 
     const characterFilterOptions = combosFilterOptions
@@ -124,7 +161,7 @@ const CombosSearch = ({
     const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
     const filteredResults = filterList(combosToUse, selectedFilters);
     const sortedResults = sortList(filteredResults, selectedSort);
-    
+
     return (
         <div
             className='combos-search'
@@ -209,7 +246,7 @@ const CombosSearch = ({
                             <Combo
                                 key={combo.id}
                                 combo={combo}
-                                showDownloadButton
+                                showDownloadButton={selectedCombosSearchView === 'online'}
                                 hideEditButton
                                 hideFavouriteButton
                                 showLikes
@@ -218,7 +255,13 @@ const CombosSearch = ({
                                 showSimpleView={listView === 'S'}
                                 characterFilterOptions={characterFilterOptions}
                                 combosFilterOptions={combosFilterOptions}
+                                selectedFilters={selectedFilters}
+                                selectedSort={selectedSort}
                                 onDownloadClick={onDownloadClick}
+                                handleSortChange={handleSortChange}
+                                onLauncherClick={handleLauncherClick}
+                                onTagClick={handleTagClick}
+                                handleFiltersChange={handleFiltersChange}
                             />
                         )
                     })}

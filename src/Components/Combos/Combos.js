@@ -128,28 +128,16 @@ const Combos = ({
         setShowDeleteModal(!showDeleteModal);
     }
 
-    const handleCharacterClick = ({ target: { value } }) => {
-        if (value === 'ALL') {
-            const updatedFilters = selectedFilters.filter(filter => filter.key !== 'character_tags');
-            handleFiltersChange(updatedFilters);
-        } else {
-            if (selectedFilters.find(sFilter => sFilter.name === value)) return;
-            const newFilter = combosFilterOptions.find(option => option.id === value.toLocaleLowerCase());
-            const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
-            handleFiltersChange(updatedFilters);
-        }
-    }
-
     const handleTagClick = ({ target: { value } }) => {
-        if (selectedFilters.find(sFilter => sFilter.value === value)) return;
         const newFilter = combosFilterOptions.find(option => option.value === value);
-        const updatedFilters = [...selectedFilters.map(filter => filter), newFilter];
+        const filteredFilters = selectedFilters.filter(sFilter => sFilter.value !== value)
+        let updatedFilters;
+        if (filteredFilters.length === selectedFilters.length) {
+            updatedFilters = [...filteredFilters, newFilter];
+        } else {
+            updatedFilters = filteredFilters;
+        }
         handleFiltersChange(updatedFilters);
-    }
-
-    const handleFilterClick = (filter) => {
-        const newFilters = selectedFilters.filter(sFilter => sFilter.id !== filter.id);
-        handleFiltersChange(newFilters);
     }
 
     const handleLauncherClick = ({ target: { value } }) => {
@@ -160,6 +148,11 @@ const Combos = ({
             { id: stringLauncher, name: stringLauncher, key: 'launcher' }
 
         ]
+        handleFiltersChange(newFilters);
+    }
+
+    const handleActiveFilterClick = (filter) => {
+        const newFilters = selectedFilters.filter(sFilter => sFilter.id !== filter.id);
         handleFiltersChange(newFilters);
     }
 
@@ -243,7 +236,7 @@ const Combos = ({
                 selectedSort={selectedSort}
                 onSortClick={toggleSortModal}
                 onSortDirClick={handleSortClick}
-                onFilterClick={handleFilterClick}
+                onFilterClick={handleActiveFilterClick}
             />
             <div className='combos__list-container'>
                 <ul
@@ -266,7 +259,6 @@ const Combos = ({
                             onFavouriteClick={onFavouriteClick}
                             onTagClick={handleTagClick}
                             handleFiltersChange={handleFiltersChange}
-                            onCharacterClick={handleCharacterClick}
                         />
                     )}
                     <div className='bottom-separator'>.</div>
