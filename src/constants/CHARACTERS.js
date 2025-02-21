@@ -50,29 +50,34 @@ const WEIGHT_CLASES = [
     {
         id: 0,
         name: 'Super lightweight',
+        short_name: 'SLW',
         characters: ['aoi', 'eileen', 'elblaze']
     },
     {
         id: 1,
         name: 'Lightweight',
+        short_name: 'LW',
         characters: ['sarah', 'shun', 'pai', 'lion', 'vanessa']
     },
     {
         id: 2,
         name: 'Midweight',
+        short_name: 'MW',
         characters: ['akira', 'lau', 'jacky', 'kage', 'lei', 'brad', 'goh', 'jean']
     },
     {
         id: 3,
         name: 'Heavyweight',
+        short_name: 'HW',
         characters: ['wolf', 'jeffry']
     },
     {
         id: 4,
         name: 'Super Heavyweight',
+        short_name: 'SHW',
         characters: ['taka']
     }
-]
+];
 
 Object.keys(CHARACTERS_JSON)
     .forEach(CHARACTER => {

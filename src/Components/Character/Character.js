@@ -10,6 +10,7 @@ import Notes from '../Notes';
 import Matchups from '../Matchups';
 import CombosSearch from '../CombosSearch';
 import CharacterSelectModal from '../Modals/CharacterSelectModal';
+import InfoModal from '../Modals/InfoModal';
 import DataModal from '../Modals/DataModal';
 import { SELECTED_CHARACTER_VIEW_KEY, SELECTED_MATCHUPS_VIEW_KEY, STRINGS } from '../../constants';
 import getFromLocal from '../../helpers/getFromLocal';
@@ -21,6 +22,7 @@ const Character = () => {
     const { selectedCharacter, listView, setSelectedCharacter, setListView } = useMainContext();
     const localSelectedView = getFromLocal(SELECTED_CHARACTER_VIEW_KEY);
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
+    const [showDataModal, setShowDataModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [characterView, setCharacterView] = useState(localSelectedView);
 
@@ -28,6 +30,8 @@ const Character = () => {
     document.title = `${short_name} - ${STRINGS[characterView]}`;
 
     const toggleCharacterSelectModal = () => setShowCharacterSelectModal(!showCharacterSelectModal);
+
+    const toggleDataModal = () => setShowDataModal(!showDataModal);
 
     const toggleInfoModal = () => setShowInfoModal(!showInfoModal);
 
@@ -65,6 +69,13 @@ const Character = () => {
                 showModal={showInfoModal}
                 closeModal={toggleInfoModal}
             >
+                <InfoModal
+                />
+            </ModalContextWrapper>
+            <ModalContextWrapper
+                showModal={showDataModal}
+                closeModal={toggleDataModal}
+            >
                 <DataModal
                 />
             </ModalContextWrapper>
@@ -81,6 +92,7 @@ const Character = () => {
                 />
                 <Hamburger
                     characterView={characterView}
+                    toggleDataModal={toggleDataModal}
                     toggleInfoModal={toggleInfoModal}
                     handleViewChange={handleViewChange}
                 />

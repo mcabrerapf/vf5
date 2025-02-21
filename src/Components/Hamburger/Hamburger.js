@@ -5,8 +5,9 @@ import { STRINGS } from '../../constants';
 
 const Hamburger = ({
     characterView,
-    handleViewChange,
-    toggleInfoModal
+    handleViewChange = () => { },
+    toggleDataModal = () => { },
+    toggleInfoModal = () => { }
 }) => {
     const backgroundRef = useRef(null);
     const optionsRef = useRef(null);
@@ -25,13 +26,18 @@ const Hamburger = ({
     }, [optionsRef]);
 
     const handleOptionClick = (newView) => {
-        toggleMenu();
         handleViewChange(newView);
+        toggleMenu();
     };
 
     const handleInfoClick = () => {
-        toggleMenu();
         toggleInfoModal();
+        toggleMenu();
+    }
+
+    const handleDataClick = () => {
+        toggleDataModal();
+        toggleMenu();
     }
 
     const toggleMenu = () => setIsOpen(!isOpen);
@@ -87,6 +93,12 @@ const Hamburger = ({
                         <div
                             className="hamburger__container__options__option"
                             onClick={handleInfoClick}
+                        >
+                            Info
+                        </div>
+                        <div
+                            className="hamburger__container__options__option"
+                            onClick={handleDataClick}
                         >
                             Data
                         </div>
