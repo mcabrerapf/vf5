@@ -15,7 +15,8 @@ const validateCombo = (combo) => {
         character_tags,
         characterTags,
         tags = [],
-        note = ''
+        note = '',
+        isDownloaded = false
     } = combo;
     const characterTagsToCheck = character_tags || characterTags || [];
     let validatedLauncher = launcher;
@@ -38,7 +39,8 @@ const validateCombo = (combo) => {
             characterTagsToCheck : [CHARACTERS[0].id],
         tags: tags || [],
         note: note || '',
-        game_version
+        game_version,
+        isDownloaded
     };
 }
 

@@ -18,7 +18,7 @@
 
             .button {
                 background-color: transparent;
-            } 
+            }
         }
 
         &.character_combos {
@@ -26,7 +26,7 @@
 
             .button {
                 background-color: transparent;
-            } 
+            }
         }
 
         &.character_notes {
@@ -34,7 +34,7 @@
 
             .button {
                 background-color: transparent;
-            } 
+            }
         }
 
         &.character_matchups {
@@ -42,7 +42,7 @@
 
             .button {
                 background-color: transparent;
-            } 
+            }
         }
 
         &.character_combos_search {
@@ -62,7 +62,13 @@
             border-radius: 0;
 
             &:active {
-                transform: none !important;;
+                transform: none !important;
+                ;
+            }
+
+            &.list-view-button {
+                width: 5rem;
+                justify-content: left;
             }
 
             &.character-name {

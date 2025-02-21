@@ -1,4 +1,10 @@
 .hamburger {
+
+    .button {
+        width: 5rem;
+        justify-content: right;
+    }
+
     &__container {
         z-index: var(--hamburger-bg-z-index);
         position: absolute;
@@ -23,7 +29,7 @@
                 font-size: 1.5rem;
                 height: 2rem;
 
-                &.selected  {
+                &.selected {
                     background-color: var(--no-category);
                     color: white;
                 }

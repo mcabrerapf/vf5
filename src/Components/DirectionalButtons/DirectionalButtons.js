@@ -4,19 +4,22 @@ import Notation from '../Notation';
 import Button from '../Button';
 
 const DirectionalButtons = ({
+    disableButtons,
     isShiftActive,
-    onClick
+    onClick = () => { }
 }) => {
     return (
         <div className='directional-buttons'>
 
             <div className='directional-buttons__grouping'>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick('[7]')}
                 >
                     <Notation notation="[7]" />
                 </Button>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick(isShiftActive ? "[8_]" : "[8]")}
                 >
                     <Notation
@@ -25,6 +28,7 @@ const DirectionalButtons = ({
                     />
                 </Button>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick('[9]')}
                 >
                     <Notation notation="[9]" />
@@ -33,6 +37,7 @@ const DirectionalButtons = ({
             </div>
             <div className='directional-buttons__grouping'>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick(isShiftActive ? "[4_]" : "[4]")}
                 >
                     <Notation
@@ -41,11 +46,13 @@ const DirectionalButtons = ({
                     />
                 </Button>
                 <Button
+                    disabled={disableButtons}
                     text={'★'}
                     onClick={() => onClick("★")}
                 >
                 </Button>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick(isShiftActive ? "[6_]" : "[6]")}
                 >
                     <Notation
@@ -57,11 +64,13 @@ const DirectionalButtons = ({
             </div>
             <div className='directional-buttons__grouping'>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick('[1]')}
                 >
                     <Notation notation="[1]" />
                 </Button>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick(isShiftActive ? "[2_]" : "[2]")}
                 >
                     <Notation
@@ -70,6 +79,7 @@ const DirectionalButtons = ({
                     />
                 </Button>
                 <Button
+                    disabled={disableButtons}
                     onClick={() => onClick('[3]')}
                 >
                     <Notation notation="[3]" />

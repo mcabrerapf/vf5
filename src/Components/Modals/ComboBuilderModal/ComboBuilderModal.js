@@ -18,7 +18,7 @@ const ComboBuilderModal = ({
     handleDeleteClick
 }) => {
     const { selectedCharacter } = useMainContext();
-    const { id, name, launcher = [], command = [], character_tags, tags, damage, note, favourite } = selectedCombo || {};
+    const { id, name, launcher = [], command = [], character_tags, tags, damage, note, favourite, isDownloaded = false } = selectedCombo || {};
     const parsedMoveCommand = command.length ? [...launcher, '⊙', ...command] : [...launcher];
     const initCharacters = CHARACTERS.map(char => char.id);
     const { closeModal } = useModalContext();
@@ -55,6 +55,7 @@ const ComboBuilderModal = ({
             damage: Number(comboDamage),
             note: comboNote,
             oId: selectedCombo?.oId,
+            isDownloaded
         });
     }
 
@@ -73,6 +74,7 @@ const ComboBuilderModal = ({
     const canSave = !!comboNotation.length &&
         !!comboNotation.includes('⊙') &&
         !!selectedCharacterTags.length;
+    const message = isDownloaded ? '*Command or Damage cant be edited on dowloaded combos' : '*Use space to separate moves'
 
     return (
         <div className='combo-builder-modal'>
@@ -100,6 +102,7 @@ const ComboBuilderModal = ({
                 {comboView === 'commands' &&
                     <>
                         <CommandView
+                            isDownloaded={isDownloaded}
                             comboDamage={comboDamage}
                             comboName={comboName}
                             comboNotation={comboNotation}
@@ -109,7 +112,7 @@ const ComboBuilderModal = ({
                             setComboDamage={setComboDamage}
                             setComboName={setComboName}
                         />
-                        <span className='combo-builder-modal__content__help'>*Use space to separate moves</span>
+                        <div className='combo-builder-modal__content__message'>{message}</div>
                     </>
                 }
                 {comboView === 'tags' &&

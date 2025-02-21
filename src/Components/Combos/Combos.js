@@ -66,13 +66,13 @@ const Combos = ({
         setSelectedFilters(newFilters);
     }
 
-    const handleCloseModal = async (newCombo) => {
-        if (newCombo) {
-            const comboWithLid = newCombo.id ?
-                newCombo :
-                { ...newCombo, id: generateId(), game_version: GAME_VERSION };
+    const handleCloseModal = async (combo) => {
+        if (combo) {
+            const comboWithLid = combo.id ?
+                combo :
+                { ...combo, id: generateId(), game_version: GAME_VERSION, };
 
-            if (!newCombo.id) {
+            if (!combo.id) {
                 await createOnlineCombo({ combo: { ...comboWithLid, characterId: selectedCharacter } })
                     .then(res => {
                         const [updatedCombos] = updateCombos(
@@ -82,7 +82,7 @@ const Combos = ({
                         setCombos(updatedCombos);
                     })
             } else {
-                await updateOnlineCombo({ combo: newCombo })
+                await updateOnlineCombo({ combo: combo })
                     .then(res => {
                         const [updatedCombos] = updateCombos(
                             selectedCharacter,
@@ -187,7 +187,6 @@ const Combos = ({
     const filteredCombos = filterList(combos, selectedFilters);
     const sortedCombos = sortList(filteredCombos, selectedSort);
     const showSimpleView = listView === 'S';
-
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
 

@@ -11,10 +11,12 @@ const CommandView = ({
     setFavourite,
     setComboNotation,
     setComboDamage,
-    setComboName
+    setComboName,
+    isDownloaded
 }) => {
     const nameInputRef = useRef();
     const damageInputRef = useRef();
+
     const handleDamageChange = ({ target: { value } }) => {
         const parsedDamage = isNaN(value) ? 1 : value;
         const maxChecked = Number(parsedDamage) > 999 ? 999 : parsedDamage;
@@ -52,6 +54,7 @@ const CommandView = ({
                     />
                     <input
                         ref={damageInputRef}
+                        disabled={isDownloaded}
                         className='command-view__top__inputs__damage damage-input'
                         type='number'
                         value={comboDamage}
@@ -69,10 +72,12 @@ const CommandView = ({
                 </div>
             </div>
             <div className='command-view__bottom'>
-                <CommandBuilder
-                    command={comboNotation}
-                    setCommand={setComboNotation}
-                />
+                    <CommandBuilder
+                        command={comboNotation}
+                        setCommand={setComboNotation}
+                        disableButtons={isDownloaded}
+                    />
+                
             </div>
         </div>
     )

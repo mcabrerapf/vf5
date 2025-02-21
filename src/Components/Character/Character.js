@@ -81,7 +81,7 @@ const Character = () => {
             </ModalContextWrapper>
             <header className={headerClassName}>
                 <Button
-                    modifier={'no-border'}
+                    modifier={'no-border list-view-button'}
                     text={listView}
                     onClick={toggleListViewMode}
                 />

@@ -204,6 +204,8 @@ const updateOnlineCombo = async ({
         })
         .catch((err) => {
             console.log(err);
+            console.log('updated com')
+            console.log(combo)
             return combo;
         });
 

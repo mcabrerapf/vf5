@@ -99,7 +99,7 @@ const CombosSearch = ({
         const { name: launcherName } = getLauncherData(withId.launcher, selectedCharacter);
         const uniquename = getUniqueComboName(withId.id, withId.name, launcherName, localCombos);
         const validatedCombo = validateCombo({ ...withId, name: uniquename });
-        const [newCombos] = updateCombos(selectedCharacter, validatedCombo);
+        const [newCombos] = updateCombos(selectedCharacter, { ...validatedCombo, isDownloaded: true });
         setLocalCombos(newCombos)
     }
 
@@ -158,9 +158,11 @@ const CombosSearch = ({
 
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
-    const combosToUse = selectedCombosSearchView === 'online' ? comboResults : myCombos;
-    const filteredResults = filterList(combosToUse, selectedFilters);
-    const sortedResults = sortList(filteredResults, selectedSort);
+
+    const filteredResults = filterList(comboResults, selectedFilters);
+    const filteredMyCombos = filterList(myCombos, selectedFilters);
+    const combosToUse = selectedCombosSearchView === 'online' ? filteredResults : filteredMyCombos;
+    const sortedResults = sortList(combosToUse, selectedSort);
 
     return (
         <div
@@ -193,10 +195,17 @@ const CombosSearch = ({
                 >
                     <Button
                         disabled={isLoading}
-                        modifier={'active'}
+                        modifier={selectedCombosSearchView === 'online' ? 'active' : ''}
                         onClick={() => setSelectedCombosSearchView(selectedCombosSearchView === 'online' ? 'mine' : 'online')}
                     >
-                        {selectedCombosSearchView === 'online' ? 'Combos' : 'My Combos'} ({sortedResults.length || 0})
+                        Combos ({filteredResults.length || 0})
+                    </Button>
+                    <Button
+                        disabled={isLoading}
+                        modifier={selectedCombosSearchView !== 'online' ? 'active' : ''}
+                        onClick={() => setSelectedCombosSearchView(selectedCombosSearchView === 'online' ? 'mine' : 'online')}
+                    >
+                        My Combos ({filteredMyCombos.length || 0})
                     </Button>
                 </div>
 
@@ -240,7 +249,6 @@ const CombosSearch = ({
                             if (lCombo.oId === combo.id) disableDownloadButton = true;
                             if (lCombo.id === combo.lId) disableLikes = true;
                         });
-                        if (disableDownloadButton && selectedCombosSearchView === 'online') return null;
 
                         return (
                             <Combo

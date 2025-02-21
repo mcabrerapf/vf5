@@ -7,6 +7,7 @@ import { BackspaceIcon, MoveLeft, MoveRight } from '../Icon';
 
 const CommandBuilder = ({
     command = [],
+    disableButtons,
     setCommand = () => { },
 }) => {
     const [selectedNotationIndex, setSelectedNotationIndex] = useState(null);
@@ -87,6 +88,7 @@ const CommandBuilder = ({
                     className='command-builder__top__buttons'
                 >
                     <Button
+                        disabled={disableButtons}
                         modifier="delete-button"
                         onClick={handleDelete}
                     >
@@ -94,14 +96,14 @@ const CommandBuilder = ({
                     </Button>
                     <Button
                         modifier="delete-button"
-                        disabled={selectedNotationIndex === null}
+                        disabled={disableButtons || selectedNotationIndex === null}
                         onClick={handleAddBefore}
                     >
                         <MoveLeft />
                     </Button>
                     <Button
                         modifier="delete-button"
-                        disabled={selectedNotationIndex === null}
+                        disabled={disableButtons || selectedNotationIndex === null}
                         onClick={handleAddAfter}
                     >
                         <MoveRight />
@@ -110,6 +112,7 @@ const CommandBuilder = ({
             </div>
             <div className='command-builder__bottom'>
                 <NotationButtons
+                    disableButtons={disableButtons}
                     onDirectionalButtonClick={handleInputButtonClick}
                     onOtherButtonClick={handleInputButtonClick}
                 />
