@@ -11,6 +11,7 @@ const SELECTED_COMBOS_SORT_KEY =        'vf5_selected-combos-sort';
 const SELECTED_MATCHUPS_SORT_KEY =      'vf5_selected-matchups-sort';
 const SELECTED_MATCHUPS_VIEW_KEY =      'vf5_selected-matchups-view';
 const USER_DATA_KEY =                   'vf5_user-data';
+const DECLINED_NEW_SITE_KEY =           'vf5_declined-new-site';
 
 
 
@@ -27,7 +28,8 @@ const LOCAL_KEYS = {
     // 
     CHARACTERS_DATA_KEY,
     // 
-    ALL_DATA_KEY
+    ALL_DATA_KEY,
+    DECLINED_NEW_SITE_KEY
 }
 
 export {
@@ -44,6 +46,7 @@ export {
     SELECTED_MATCHUPS_SORT_KEY,
     SELECTED_MATCHUPS_VIEW_KEY,
     USER_DATA_KEY,
+    DECLINED_NEW_SITE_KEY,
 }
 
 export default LOCAL_KEYS;

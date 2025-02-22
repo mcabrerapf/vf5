@@ -80,6 +80,10 @@ const DataView = () => {
         window.location.reload();
         return;
     }
+    
+    const goToNewSite =() => {
+        window.open("https://aws.d3e0atwhb8cqc5.amplifyapp.com/", "_blank");
+    }
 
     const charactersToImport = importData ?
         Object.keys(importData).map(key => {
@@ -109,7 +113,12 @@ const DataView = () => {
                         <div className='data-view__initial-view__memory__header'>Storage Used</div>
                         <div className='data-view__initial-view__memory__ammount'> {currentStorageUsed}</div>
                     </div>
+                    
                     <div className='data-view__initial-view__buttons'>
+                        <Button
+                        onClick={goToNewSite}
+                            text={'Go to new site'}
+                        />
                         <Button
                             disabled={isImporting}
                             text="Reset data"
