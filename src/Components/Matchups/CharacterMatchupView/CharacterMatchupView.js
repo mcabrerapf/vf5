@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharacterMatchupView.scss'
 import { useMainContext } from '../../../Contexts/MainContext';
-import { updateMatchups } from '../../../services';
+import { getCombos, getCustomMoves, getNotes, updateMatchups } from '../../../services';
 import MatchupCombos from './MatchupCombos';
 import MatchupMoves from './MatchupMoves';
 import Button from '../../Button';
@@ -9,8 +9,9 @@ import { EditIcon, MoveLeft, VsIcon } from '../../Icon';
 import CharacterSelectModal from '../../Modals/CharacterSelectModal';
 import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import MatchupModal from '../../Modals/MatchupModal';
-import { CHARACTERS_JSON } from '../../../constants';
+import { CHARACTERS_JSON, STRINGS } from '../../../constants';
 import MatchupNotes from './MatchupNotes/MatchupNotes';
+import { sortList } from '../../../helpers';
 
 const CharacterMatchupView = ({
     matchup = {},
@@ -21,6 +22,7 @@ const CharacterMatchupView = ({
     const { selectedCharacter } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showMatchupModal, setShowMatchupModal] = useState(false);
+    const [matchupView, setMatchupView] = useState(STRINGS.NOTES);
 
     useEffect(
         () => {
@@ -59,6 +61,46 @@ const CharacterMatchupView = ({
     const toggleCharacterSelectModal = () => {
         setShowCharacterSelectModal(!showCharacterSelectModal);
     }
+    const notes = getNotes(matchupId)
+    const hasNoNotes = !notes?.length && !note;
+
+    const {
+        movelist,
+    } = CHARACTERS_JSON[selectedCharacter];
+    const customMoves = getCustomMoves(selectedCharacter);
+
+    const favouriteMoves = customMoves.map(cMove => {
+        if (!cMove.favourite) return null;
+        const moveMatch = movelist.all_moves.find(move => move.id === cMove.id);
+        if (!moveMatch) return null;
+        return { ...moveMatch, note: cMove.note || moveMatch.note };
+    }).filter(Boolean)
+
+    const hasNoMoves = !favouriteMoves?.length;
+
+    const combos = getCombos(selectedCharacter);
+    const matchupCombos = combos
+        .filter(combo => !!combo.character_tags.includes(matchupId))
+    const combosByLauncher = {};
+    [...matchupCombos]
+        .sort((a, b) => a.launcher.length - b.launcher.length)
+        .forEach(combo => {
+            const stringLauncher = combo.launcher.join('-');
+            if (!combosByLauncher[stringLauncher]) {
+                combosByLauncher[stringLauncher] = [combo];
+            } else {
+                combosByLauncher[stringLauncher].push(combo);
+            }
+        });
+
+    Object.keys(combosByLauncher).forEach(key => {
+        combosByLauncher[key] = sortList(combosByLauncher[key], {
+            key: 'launcher',
+            dir: 'dsc',
+            type: "array",
+        })
+    })
+    const hasNoCombos = !Object.keys(combosByLauncher)?.length;
 
     return (
         <div
@@ -136,23 +178,53 @@ const CharacterMatchupView = ({
                 </div>
             </div>
             <div
+                className='character-matchup__sub-header'
+            >
+                <Button
+                    disabled={hasNoNotes}
+                    modifier={`tab-left ${matchupView === STRINGS.NOTES ? 'active' : ''}`}
+                    onClick={() => setMatchupView(STRINGS.NOTES)}
+                    text={'NOTES'}
+                />
+                <Button
+                    disabled={hasNoMoves}
+                    modifier={`tab ${matchupView === STRINGS.MOVES ? 'active' : ''}`}
+                    onClick={() => setMatchupView(STRINGS.MOVES)}
+                    text={'MOVES'}
+                />
+                <Button
+                    disabled={hasNoCombos}
+                    modifier={`tab-right ${matchupView === STRINGS.COMBOS ? 'active' : ''}`}
+                    onClick={() => setMatchupView(STRINGS.COMBOS)}
+                    text={'COMBOS'}
+                />
+            </div>
+            <div
                 className='character-matchup__content'
             >
                 <div
                     ref={listRef}
                     className='character-matchup__content__scrollable'
                 >
-                    <MatchupNotes
-                        matchupId={matchupId}
-                        matchupNote={note}
-                    />
-                    <MatchupMoves
-                        selectedCharacter={selectedCharacter}
-                    />
-                    <MatchupCombos
-                        selectedCharacter={selectedCharacter}
-                        matchupId={matchupId}
-                    />
+                    {matchupView === STRINGS.NOTES &&
+                        <MatchupNotes
+                            matchupId={matchupId}
+                            matchupNote={note}
+                            notes={notes}
+                        />
+                    }
+                    {matchupView === STRINGS.MOVES &&
+                        <MatchupMoves
+                            selectedCharacter={selectedCharacter}
+                            moves={favouriteMoves}
+                        />
+                    }
+                    {matchupView === STRINGS.COMBOS &&
+                        <MatchupCombos
+                            selectedCharacter={selectedCharacter}
+                            combosByLauncher={combosByLauncher}
+                        />
+                    }
                 </div>
             </div>
         </div>

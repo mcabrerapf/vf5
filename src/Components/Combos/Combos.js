@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Combos.scss'
 import {
     SELECTED_COMBOS_FILTERS_KEY,
-    SELECTED_COMBOS_SORT_KEY,
     COMBOS_SORT_OPTIONS,
     CHARACTERS_JSON,
     STRINGS,
@@ -32,14 +31,13 @@ const Combos = ({
         combos_filter_options: combosFilterOptions,
     } = CHARACTERS_JSON[selectedCharacter];
     const localFilters = getFromLocal(SELECTED_COMBOS_FILTERS_KEY);
-    const localSelectedSort = getFromLocal(SELECTED_COMBOS_SORT_KEY);
 
     const [combos, setCombos] = useState(null);
     const [selectedCombo, setSelectedCombo] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [showComboBuilderModal, setShowComboBuilderModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [selectedSort, setSelectedSort] = useState(localSelectedSort);
+    const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[2]);
     const [showSortModal, setShowSortModal] = useState(false);
 
     useEffect(
@@ -54,16 +52,15 @@ const Combos = ({
 
     const handleSortChange = (sort) => {
         if (!sort) return;
-        scrollToTop();
-        setLocalStorage(SELECTED_COMBOS_SORT_KEY, JSON.stringify(sort));
         setSelectedSort(sort);
+        scrollToTop();
     }
 
     const handleFiltersChange = (newFilters) => {
         if (!newFilters) return;
-        scrollToTop();
         setLocalStorage(SELECTED_COMBOS_FILTERS_KEY, JSON.stringify(newFilters));
         setSelectedFilters(newFilters);
+        scrollToTop();
     }
 
     const handleCloseModal = async (combo) => {

@@ -15,7 +15,6 @@ import {
     CHARACTERS_JSON,
     MOVELIST_SORT_OPTIONS,
     SELECTED_MOVE_CATEGORY_KEY,
-    SELECTED_MOVELIST_SORT_KEY,
     SELECTED_MOVELIST_FILTERS_KEY,
     SELECTED_COMBOS_FILTERS_KEY,
     STRINGS,
@@ -37,13 +36,12 @@ const Movelist = ({
     } = CHARACTERS_JSON[selectedCharacter];
 
     const localSelectedMoveCategory = getFromLocal(SELECTED_MOVE_CATEGORY_KEY);
-    const localSelectedSort = getFromLocal(SELECTED_MOVELIST_SORT_KEY);
     const localFilters = getFromLocal(SELECTED_MOVELIST_FILTERS_KEY);
 
     const [customMoves, setCustomMoves] = useState(null);
     const [comboLaunchers, setComboLaunchers] = useState([]);
     const [selectedMoveCategory, setSelectedMoveCategory] = useState(localSelectedMoveCategory);
-    const [selectedMovelistSort, setSelectedMovelistSort] = useState(localSelectedSort);
+    const [selectedMovelistSort, setSelectedMovelistSort] = useState(MOVELIST_SORT_OPTIONS[0]);
     const [selectedFilters, setSelectedFilters] = useState(localFilters);
     const [selectedMove, setSelectedMove] = useState(null);
     const [showSortModal, setShowSortModal] = useState(false);
@@ -78,7 +76,6 @@ const Movelist = ({
 
     const handleSortChange = (newSort) => {
         if (newSort) {
-            setLocalStorage(SELECTED_MOVELIST_SORT_KEY, JSON.stringify(newSort));
             setSelectedMovelistSort(newSort);
             scrollToTop();
         }

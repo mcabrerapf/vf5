@@ -1,18 +1,4 @@
 .matchup-notes {
-    &__header {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-
-        .button {
-            flex: 1;
-
-            span {
-                padding-right: 1rem;
-            }
-        }
-    }
-
     &__list {
         box-sizing: border-box;
         width: 100%;

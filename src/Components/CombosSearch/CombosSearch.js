@@ -22,18 +22,20 @@ const CombosSearch = ({
     const { selectedCharacter, listView } = useMainContext();
     const initialLocalCombos = getCombos(selectedCharacter);
     const [selectedCombosSearchView, setSelectedCombosSearchView] = useState('online');
-    const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[0]);
+    const [selectedSort, setSelectedSort] = useState(COMBOS_SORT_OPTIONS[2]);
     const [comboResults, setComboResults] = useState([]);
     const [myCombos, setMyCombos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFiltersModal, setShowFiltersModal] = useState(false);
     const [showSortModal, setShowSortModal] = useState(false);
+    const [hideAlreadyDownloaded, setHideAlreadyDownloaded] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [localCombos, setLocalCombos] = useState(initialLocalCombos);
 
     const {
         combos_filter_options: combosFilterOptions,
     } = CHARACTERS_JSON[selectedCharacter];
+    
     const scrollToTop = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -156,6 +158,11 @@ const CombosSearch = ({
         handleFiltersChange(newFilters);
     }
 
+    const toggleHideAlreadyDownloaded = () => {
+        setHideAlreadyDownloaded(!hideAlreadyDownloaded);
+        scrollToTop();
+    }
+
     const characterFilterOptions = combosFilterOptions
         .filter(option => option.key === 'character_tags')
 
@@ -163,6 +170,7 @@ const CombosSearch = ({
     const filteredMyCombos = filterList(myCombos, selectedFilters);
     const combosToUse = selectedCombosSearchView === 'online' ? filteredResults : filteredMyCombos;
     const sortedResults = sortList(combosToUse, selectedSort);
+    const hideButtonText = hideAlreadyDownloaded ? 'Show ALL' : 'Hide already downloaded';
 
     return (
         <div
@@ -249,6 +257,7 @@ const CombosSearch = ({
                             if (lCombo.oId === combo.id) disableDownloadButton = true;
                             if (lCombo.id === combo.lId) disableLikes = true;
                         });
+                        if (hideAlreadyDownloaded && disableDownloadButton) return null;
 
                         return (
                             <Combo
@@ -277,13 +286,18 @@ const CombosSearch = ({
                 </div>
             }
             <footer className='combos-search__footer'>
-                <div className='combos-search__footer__empty'></div>
+                <Button
+                    modifier={'online-search-button'}
+                    onClick={toggleHideAlreadyDownloaded}
+                >
+                    {hideButtonText}
+                </Button>
                 <div className='combos-search__footer__empty'></div>
                 <Button
                     modifier={'online-search-button'}
                     onClick={() => handleViewChange(STRINGS.COMBOS)}
                 >
-                    BACK
+                    Saved Combos
                 </Button>
             </footer>
         </div>
