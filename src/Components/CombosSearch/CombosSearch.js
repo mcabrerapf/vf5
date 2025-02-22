@@ -35,7 +35,7 @@ const CombosSearch = ({
     const {
         combos_filter_options: combosFilterOptions,
     } = CHARACTERS_JSON[selectedCharacter];
-    
+
     const scrollToTop = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -257,7 +257,13 @@ const CombosSearch = ({
                             if (lCombo.oId === combo.id) disableDownloadButton = true;
                             if (lCombo.id === combo.lId) disableLikes = true;
                         });
-                        if (hideAlreadyDownloaded && disableDownloadButton) return null;
+                        if (
+                            hideAlreadyDownloaded &&
+                            disableDownloadButton &&
+                            selectedCombosSearchView === 'online') {
+                            return null;
+                        }
+                        
 
                         return (
                             <Combo
