@@ -35,7 +35,7 @@ const NewSitwModal = () => {
                 </div>
 
                 <div>
-                    I recommend copying your data to the clipboard and the importing it in the new app via the Data tab
+                    I recommend copying your data to the clipboard and importing it in the new app via the Data tab
                 </div>
                 <div>
                     (This message wont show up again if you decline but the new url can be found in the Info tab)
