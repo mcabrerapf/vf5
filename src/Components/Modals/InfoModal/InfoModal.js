@@ -50,22 +50,22 @@ const InfoModal = () => {
                             <div
                                 className='info-modal__content__frame-data__content__item throw-punish'
                             >
-                                Throw attempt: 10 or -10
+                                Throw attempt: +10 or -10
                             </div>
                             <div
                                 className='info-modal__content__frame-data__content__item jab-punish'
                             >
-                                Jab punish: 12 or -12
+                                Jab punish: +12 or -12
                             </div>
                             <div
                                 className='info-modal__content__frame-data__content__item string-punish'
                             >
-                                String punish: 15 or -15
+                                String punish: +15 or -15
                             </div>
                             <div
                                 className='info-modal__content__frame-data__content__item launch-punish'
                             >
-                                Launch punish: 17 or -17
+                                Launch punish: +17 or -17
                             </div>
                             <div
                                 className='info-modal__content__frame-data__content__item'
