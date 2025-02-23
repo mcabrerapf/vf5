@@ -1,5 +1,7 @@
 import React from 'react';
 import './NoteView.scss'
+import TextWithCommand from '../../../TextWithCommand';
+import { stringNotationParser } from '../../../../helpers';
 
 const NoteView = ({
     comboNote,
@@ -17,6 +19,9 @@ const NoteView = ({
                     value={comboNote}
                     onChange={handleNoteChange}
                 />
+                <div className='note-view__note__message'>
+                    *Supports input notation [2_6p+k] <TextWithCommand content={stringNotationParser('[2_6p+k]')} />
+                </div>
             </div>
         </div>
     )

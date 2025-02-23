@@ -39,9 +39,9 @@ const NotationButtons = ({
             />
             <Button
                 disabled={disableButtons}
-                className='notation-buttons__space-bar'
+                modifier='notation-buttons__space-bar'
                 onClick={() => onDirectionalButtonClick("⊙")}
-                text={'SPACE'}
+                text={'⊙'}
             />
             <OtherButtons
                 disableButtons={disableButtons}

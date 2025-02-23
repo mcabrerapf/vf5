@@ -74,7 +74,7 @@ const ComboBuilderModal = ({
     const canSave = !!comboNotation.length &&
         !!comboNotation.includes('⊙') &&
         !!selectedCharacterTags.length;
-    const message = isDownloaded ? '*Command or Damage cant be edited on dowloaded combos' : '*Use space to separate moves'
+    const message = isDownloaded ? '*Command or Damage cant be edited on dowloaded combos' : '*Use ⊙ to separate moves'
 
     return (
         <div className='combo-builder-modal'>

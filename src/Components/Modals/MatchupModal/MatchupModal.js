@@ -5,7 +5,8 @@ import Button from '../../Button';
 import VsIcon from '../../Icon/VsIcon';
 import { useMainContext } from '../../../Contexts/MainContext';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { calculateWinRate, characterIdToName } from '../../../helpers';
+import { calculateWinRate, characterIdToName, stringNotationParser } from '../../../helpers';
+import TextWithCommand from '../../TextWithCommand';
 
 const MatchupModal = ({
 	matchup = {},
@@ -128,6 +129,9 @@ const MatchupModal = ({
 						value={note}
 						onChange={(e) => setNote(e.target.value)}
 					/>
+					<div className='matchup-modal__content__bottom__message'>
+						*Supports input notation [2_6p+k] <TextWithCommand content={stringNotationParser('[2_6p+k]')} />
+					</div>
 				</div>
 			</div>
 			<ModalFooter

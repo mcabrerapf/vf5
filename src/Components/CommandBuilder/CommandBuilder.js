@@ -83,7 +83,6 @@ const CommandBuilder = ({
                         notationClick={handleNotationClick}
                     />
                 </div>
-
                 <div
                     className='command-builder__top__buttons'
                 >

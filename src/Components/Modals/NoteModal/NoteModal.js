@@ -3,7 +3,8 @@ import './NoteModal.scss'
 import Button from '../../Button';
 import ModalFooter from '../ModalFooter';
 import { useModalContext } from '../../../Contexts/ModalContext';
-import { SaveIcon } from '../../Icon';
+import TextWithCommand from '../../TextWithCommand';
+import { stringNotationParser } from '../../../helpers';
 
 const NoteModal = ({
     selectedNote,
@@ -33,6 +34,9 @@ const NoteModal = ({
                     value={noteContent}
                     onChange={handleNoteContentChange}
                 />
+                <div className='note-modal__content__message'>
+                    *Supports input notation [2_6p+k] <TextWithCommand content={stringNotationParser('[2_6p+k]')} />
+                </div>
             </div>
             <ModalFooter modifier="align-right">
                 <div>
@@ -47,7 +51,6 @@ const NoteModal = ({
                         />
                     }
                 </div>
-
                 <div
                     className='modal-footer__main-buttons'
                 >

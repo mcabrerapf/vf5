@@ -4,6 +4,8 @@ import { useModalContext } from '../../../Contexts/ModalContext';
 import Move from '../../Move';
 import ModalFooter from '../ModalFooter';
 import Button from '../../Button';
+import TextWithCommand from '../../TextWithCommand';
+import { stringNotationParser } from '../../../helpers';
 
 const MoveModal = ({
     move = {},
@@ -38,6 +40,9 @@ const MoveModal = ({
                         value={noteValue}
                         onChange={onChange}
                     />
+                    <div className='move-modal__content__textarea-container__mesage'>
+                        *Supports input notation [2_6p+k] <TextWithCommand content={stringNotationParser('[2_6p+k]')} />
+                    </div>
                 </div>
             </div>
             <ModalFooter modifier={"align-right"}>
