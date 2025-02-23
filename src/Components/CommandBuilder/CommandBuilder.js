@@ -7,12 +7,13 @@ import { BackspaceIcon, MoveLeft, MoveRight } from '../Icon';
 
 const CommandBuilder = ({
     command = [],
-    disableButtons,
+    disableButtons = false,
     setCommand = () => { },
 }) => {
     const [selectedNotationIndex, setSelectedNotationIndex] = useState(null);
 
     const handleNotationClick = (_, index) => {
+        if (disableButtons) return;
         if (index === selectedNotationIndex) {
             setSelectedNotationIndex(null);
         } else {
@@ -110,11 +111,13 @@ const CommandBuilder = ({
                 </div>
             </div>
             <div className='command-builder__bottom'>
-                <NotationButtons
-                    disableButtons={disableButtons}
-                    onDirectionalButtonClick={handleInputButtonClick}
-                    onOtherButtonClick={handleInputButtonClick}
-                />
+                {!disableButtons &&
+                    <NotationButtons
+                        disableButtons={disableButtons}
+                        onDirectionalButtonClick={handleInputButtonClick}
+                        onOtherButtonClick={handleInputButtonClick}
+                    />
+                }
             </div>
         </div>
     )
