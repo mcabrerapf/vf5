@@ -16,7 +16,8 @@ const DeleteModal = ({
     const handleClose = (shouldDelete) => {
         closeModal(shouldDelete);
     }
-    
+    const characterFilterOptions =combosFilterOptions.filter(cOption=>cOption.key === 'character_tags');
+    console.log(combosFilterOptions)
     return (
         <div className='delete-modal'>
             <div className='delete-modal__content'>
@@ -24,6 +25,7 @@ const DeleteModal = ({
                     <Combo
                         combo={data}
                         combosFilterOptions={combosFilterOptions}
+                        characterFilterOptions={characterFilterOptions}
                         hideEditButton
                     />
                 }
