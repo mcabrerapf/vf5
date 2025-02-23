@@ -16,8 +16,8 @@ const DeleteModal = ({
     const handleClose = (shouldDelete) => {
         closeModal(shouldDelete);
     }
-    const characterFilterOptions =combosFilterOptions.filter(cOption=>cOption.key === 'character_tags');
-    console.log(combosFilterOptions)
+    const characterFilterOptions = combosFilterOptions.filter(cOption => cOption.key === 'character_tags');
+
     return (
         <div className='delete-modal'>
             <div className='delete-modal__content'>
