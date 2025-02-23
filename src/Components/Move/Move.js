@@ -108,7 +108,7 @@ const Move = ({
                 }
                 {showSimpleView &&
                     <MoveCommand
-                        modifier={selectedSort.key ==='command' ? 'selected-sort' : ''}
+                        modifier={selectedSort.key === 'command' ? 'selected-sort' : ''}
                         command={command}
                         onClick={handleOnCommandClick}
                     />
@@ -146,21 +146,23 @@ const Move = ({
             </div>
             {!showSimpleView &&
                 <MoveCommand
-                    modifier={selectedSort.key ==='command' ? 'selected-sort' : ''}
+                    modifier={selectedSort.key === 'command' ? 'selected-sort' : ''}
                     onClick={handleOnCommandClick}
                     command={command}
                 />
             }
             <div className='move__sortable-props'>
-                {sortableProps.map(sKey => {
+                {sortableProps.map((sKey, i) => {
                     const isSelectedSort = selectedSort.key === sKey.key;
                     const punish = move[`is_punishable_on_${sKey.key}`] || move[`guarantees_on_${sKey.key}`];
+
                     return (
                         <SortableProp
                             sortableProp={sKey}
                             isSelectedSort={isSelectedSort}
                             value={move[sKey.key]}
                             punish={punish}
+                            isLast={i === sortableProps.length - 1}
                             onClick={onSortablePropClick}
                         />
                     )

@@ -10,8 +10,6 @@ const getDodgeValue = (value) => {
             return 'F';
         case 'Back':
             return 'B';
-        case '〇':
-            return 'o';
         default:
             return value;
     }

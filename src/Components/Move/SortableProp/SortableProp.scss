@@ -1,13 +1,13 @@
 .sortable-prop {
-    flex-grow: 0;
-    flex-shrink: 0;
-    border-top: 0.1rem solid white;
-    border-left: 0.1rem solid white;
     border-right: 0.1rem solid white;
-    border-bottom: 0.1rem solid white;
+    width: calc(100%/12);
 
+    &.last-prop {
+        border-right: 0;
+    }
+    
     &__label {
-        font-size: 0.9rem;
+        font-size: 1rem;
         text-align: center;
         font-weight: bold;
         padding: 0.2rem 0.3rem;

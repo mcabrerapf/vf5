@@ -1,13 +1,15 @@
 import './SortableProp.scss';
 import React from 'react';
 import { getDodgeValue, getMovePropText } from '../helpers';
+import { buildClassName } from '../../../helpers';
 
 const SortableProp = ({
     sortableProp,
     isSelectedSort,
     punish,
     value,
-    onClick
+    isLast = false,
+    onClick = () => { }
 }) => {
     const { short_name, key } = sortableProp;
     const doFrameCheck =
@@ -27,14 +29,18 @@ const SortableProp = ({
     const parsedValue = getMovePropText(value, doFrameCheck);
     const dodgeValue = getDodgeValue(value);
     const valueTouse = key === 'dodge_direction' ? dodgeValue : parsedValue;
-    
+    const selectedClassName = isSelectedSort ? 'selected-sort' : '';
+    const isLastClass = isLast ? 'last-prop' : '';
+    const className = buildClassName(['sortable-prop', isLastClass]);
+    const labelClassName = buildClassName(['sortable-prop__label', selectedClassName]);
+
     return (
         <div
-            className={`sortable-prop${isSelectedSort ? ' selected-sort' : ''}`}
+            className={className}
             onClick={handlePropClick}
         >
             <div
-                className={`sortable-prop__label${isSelectedSort ? ' selected-sort' : ''}`}
+                className={labelClassName}
             >
                 {short_name}
             </div>

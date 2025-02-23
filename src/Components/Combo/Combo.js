@@ -253,11 +253,13 @@ const Combo = ({
                     }
                 </div>
             </div>
-            <div className='combo__note'>
-                <TextWithCommand
-                    content={parsedNote}
-                />
-            </div>
+            {parsedNote &&
+                <div className='combo__note'>
+                    <TextWithCommand
+                        content={parsedNote}
+                    />
+                </div>
+            }
             {!showSimpleView &&
                 <div className='combo__tags'>
                     {characterFilterOptions.map(cOption => {
@@ -363,7 +365,6 @@ const Combo = ({
                     >
                         <ThumbsUpIcon />
                     </Button>
-
                 </div>
             }
         </div>

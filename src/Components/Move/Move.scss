@@ -50,10 +50,7 @@
     &__sortable-props {
         display: flex;
         flex-direction: row;
-        align-items: end;
-        text-align: center;
-        flex-wrap: wrap;
-        box-sizing: border-box;
+        width: 100%;
     }
 
     &__notes {
