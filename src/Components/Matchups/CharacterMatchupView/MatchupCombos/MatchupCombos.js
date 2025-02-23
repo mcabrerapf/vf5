@@ -5,7 +5,8 @@ import { CHARACTERS_JSON } from '../../../../constants';
 
 const MatchupCombos = ({
     selectedCharacter,
-    combosByLauncher
+    combosByLauncher,
+    showSimpleView
 }) => {
     const {
         combos_filter_options: combosFilterOptions,
@@ -28,7 +29,7 @@ const MatchupCombos = ({
                                 className={`matchup-combos__list__combo${combo.favourite ? ' favourite' : ''}`}
                             >
                                 <Combo
-                                    showSimpleView
+                                    showSimpleView={showSimpleView}
                                     hideEditButton
                                     hideFavouriteButton
                                     showOtherTags

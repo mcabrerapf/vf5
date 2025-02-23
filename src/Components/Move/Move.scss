@@ -29,7 +29,7 @@
             border-radius: 0.5rem;
 
             &.sort-selected {
-               color: var(--selected-sort);
+                color: var(--selected-sort);
             }
         }
 
@@ -54,8 +54,13 @@
     }
 
     &__notes {
-        font-size: 1rem;
+        width: fit-content;
+        box-sizing: border-box;
+        text-align: start;
         white-space: pre-wrap;
+        font-size: 1rem;
+        background-color: rgba(100, 100, 100, 1);
+        padding: 0.2rem 0.5rem;
 
         .move-command {
             border: none;

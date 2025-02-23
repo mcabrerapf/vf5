@@ -19,7 +19,7 @@ const CharacterMatchupView = ({
     handleMatchupChange = () => { }
 }) => {
     const listRef = useRef(null);
-    const { selectedCharacter } = useMainContext();
+    const { selectedCharacter, listView } = useMainContext();
     const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
     const [showMatchupModal, setShowMatchupModal] = useState(false);
     const [matchupView, setMatchupView] = useState(STRINGS.NOTES);
@@ -217,12 +217,14 @@ const CharacterMatchupView = ({
                         <MatchupMoves
                             selectedCharacter={selectedCharacter}
                             moves={favouriteMoves}
+                            showSimpleView={listView==='S'}
                         />
                     }
                     {matchupView === STRINGS.COMBOS &&
                         <MatchupCombos
                             selectedCharacter={selectedCharacter}
                             combosByLauncher={combosByLauncher}
+                            showSimpleView={listView==='S'}
                         />
                     }
                 </div>

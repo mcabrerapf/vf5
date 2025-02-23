@@ -5,7 +5,8 @@ import Move from '../../../Move';
 
 const MatchupMoves = ({
     selectedCharacter,
-    moves
+    moves,
+    showSimpleView
 }) => {
     const {
         move_categories: moveCategories,
@@ -25,9 +26,9 @@ const MatchupMoves = ({
                     return (
                         <Move
                             key={move.id}
-                            move={move}
-                            showSimpleView
                             hideEditButton
+                            move={move}
+                            showSimpleView={showSimpleView}
                             hideFavouriteButton
                             moveCategories={moveCategories}
                             attackLevelOptions={attackLevelOptions}
