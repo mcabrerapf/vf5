@@ -11,7 +11,7 @@ import { ModalContextWrapper } from '../../../Contexts/ModalContext';
 import MatchupModal from '../../Modals/MatchupModal';
 import { CHARACTERS_JSON, STRINGS } from '../../../constants';
 import MatchupNotes from './MatchupNotes/MatchupNotes';
-import { sortList } from '../../../helpers';
+import { getInitialCharacterMatchupView } from './helpers';
 
 const CharacterMatchupView = ({
     matchup = {},
@@ -20,21 +20,29 @@ const CharacterMatchupView = ({
 }) => {
     const listRef = useRef(null);
     const { selectedCharacter, listView } = useMainContext();
-    const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
-    const [showMatchupModal, setShowMatchupModal] = useState(false);
-    const [matchupView, setMatchupView] = useState(STRINGS.NOTES);
-
-    useEffect(
-        () => {
-            scrollToTop();
-        },
-        [selectedCharacter, matchup]
-    );
-
     const { id: matchupId, note } = matchup
     const {
         short_name,
     } = CHARACTERS_JSON[matchupId];
+    const notes = getNotes(matchupId)
+    const combos = getCombos(selectedCharacter);
+    const customMoves = getCustomMoves(selectedCharacter);
+    const hasNotes = notes?.length || note;
+    const hasMoves = !!customMoves?.length;
+    const hasCombos = !!combos.length;
+    const initialView = getInitialCharacterMatchupView(hasNotes, hasMoves, hasCombos);
+    const [showCharacterSelectModal, setShowCharacterSelectModal] = useState(false);
+    const [showMatchupModal, setShowMatchupModal] = useState(false);
+    const [matchupView, setMatchupView] = useState(initialView);
+
+    useEffect(
+        () => {
+            const newView = getInitialCharacterMatchupView(hasNotes, hasMoves, hasCombos);
+            scrollToTop();
+            setMatchupView(newView);
+        },
+        [selectedCharacter, matchup, hasNotes, hasMoves, hasCombos]
+    );
 
     const scrollToTop = () => {
         if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -61,46 +69,6 @@ const CharacterMatchupView = ({
     const toggleCharacterSelectModal = () => {
         setShowCharacterSelectModal(!showCharacterSelectModal);
     }
-    const notes = getNotes(matchupId)
-    const hasNoNotes = !notes?.length && !note;
-
-    const {
-        movelist,
-    } = CHARACTERS_JSON[selectedCharacter];
-    const customMoves = getCustomMoves(selectedCharacter);
-
-    const favouriteMoves = customMoves.map(cMove => {
-        if (!cMove.favourite) return null;
-        const moveMatch = movelist.all_moves.find(move => move.id === cMove.id);
-        if (!moveMatch) return null;
-        return { ...moveMatch, note: cMove.note || moveMatch.note };
-    }).filter(Boolean)
-
-    const hasNoMoves = !favouriteMoves?.length;
-
-    const combos = getCombos(selectedCharacter);
-    const matchupCombos = combos
-        .filter(combo => !!combo.character_tags.includes(matchupId))
-    const combosByLauncher = {};
-    [...matchupCombos]
-        .sort((a, b) => a.launcher.length - b.launcher.length)
-        .forEach(combo => {
-            const stringLauncher = combo.launcher.join('-');
-            if (!combosByLauncher[stringLauncher]) {
-                combosByLauncher[stringLauncher] = [combo];
-            } else {
-                combosByLauncher[stringLauncher].push(combo);
-            }
-        });
-
-    Object.keys(combosByLauncher).forEach(key => {
-        combosByLauncher[key] = sortList(combosByLauncher[key], {
-            key: 'launcher',
-            dir: 'dsc',
-            type: "array",
-        })
-    })
-    const hasNoCombos = !Object.keys(combosByLauncher)?.length;
 
     return (
         <div
@@ -181,19 +149,19 @@ const CharacterMatchupView = ({
                 className='character-matchup__sub-header'
             >
                 <Button
-                    disabled={hasNoNotes}
+                    disabled={!hasNotes}
                     modifier={`tab-left ${matchupView === STRINGS.NOTES ? 'active' : ''}`}
                     onClick={() => setMatchupView(STRINGS.NOTES)}
                     text={'NOTES'}
                 />
                 <Button
-                    disabled={hasNoMoves}
+                    disabled={!hasMoves}
                     modifier={`tab ${matchupView === STRINGS.MOVES ? 'active' : ''}`}
                     onClick={() => setMatchupView(STRINGS.MOVES)}
                     text={'MOVES'}
                 />
                 <Button
-                    disabled={hasNoCombos}
+                    disabled={!hasCombos}
                     modifier={`tab-right ${matchupView === STRINGS.COMBOS ? 'active' : ''}`}
                     onClick={() => setMatchupView(STRINGS.COMBOS)}
                     text={'COMBOS'}
@@ -216,15 +184,16 @@ const CharacterMatchupView = ({
                     {matchupView === STRINGS.MOVES &&
                         <MatchupMoves
                             selectedCharacter={selectedCharacter}
-                            moves={favouriteMoves}
-                            showSimpleView={listView==='S'}
+                            moves={customMoves}
+                            showSimpleView={listView === 'S'}
                         />
                     }
                     {matchupView === STRINGS.COMBOS &&
                         <MatchupCombos
                             selectedCharacter={selectedCharacter}
-                            combosByLauncher={combosByLauncher}
-                            showSimpleView={listView==='S'}
+                            matchupId={matchupId}
+                            combos={combos}
+                            showSimpleView={listView === 'S'}
                         />
                     }
                 </div>

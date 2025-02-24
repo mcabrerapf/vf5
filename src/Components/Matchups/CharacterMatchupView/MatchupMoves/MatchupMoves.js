@@ -8,10 +8,19 @@ const MatchupMoves = ({
     moves,
     showSimpleView
 }) => {
+
     const {
+        movelist,
         move_categories: moveCategories,
         movelist_filter_options: movelistFilterOptions,
     } = CHARACTERS_JSON[selectedCharacter];
+
+    const favouriteMoves = moves.map(cMove => {
+        if (!cMove.favourite) return null;
+        const moveMatch = movelist.all_moves.find(move => move.id === cMove.id);
+        if (!moveMatch) return null;
+        return { ...moveMatch, note: cMove.note || moveMatch.note };
+    }).filter(Boolean)
 
     const attackLevelOptions = movelistFilterOptions.filter(fOption => fOption.key === 'attack_level');
 
@@ -22,7 +31,7 @@ const MatchupMoves = ({
             <div
                 className='matchup-moves__list'
             >
-                {moves.map(move => {
+                {favouriteMoves.map(move => {
                     return (
                         <Move
                             key={move.id}
