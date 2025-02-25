@@ -16,7 +16,7 @@ const ActiveFiltersList = ({
                 {selectedFilters.map(selectedFilter => {
                     const { id, name, short_name, value, key, weight_short_name } = selectedFilter
                     if (key === 'favourite') return null;
-
+                    console.log(selectedFilter)
                     switch (key) {
                         case 'command':
                             return (
@@ -70,6 +70,16 @@ const ActiveFiltersList = ({
                                     key={id}
                                     modifier={weight_short_name}
                                     text={short_name}
+                                    value={selectedFilter}
+                                    onClick={() => onFilterClick(selectedFilter)}
+                                />
+                            )
+                        case 'text_search':
+                            return (
+                                <Button
+                                    key={id}
+                                    modifier={''}
+                                    text={name}
                                     value={selectedFilter}
                                     onClick={() => onFilterClick(selectedFilter)}
                                 />
