@@ -76,6 +76,7 @@ const CommandView = ({
                         command={comboNotation}
                         setCommand={setComboNotation}
                         disableButtons={isDownloaded}
+                        showFromButton
                     />
                 
             </div>

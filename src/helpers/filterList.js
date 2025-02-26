@@ -49,7 +49,7 @@ const filterList = (list, filters, customMoves = []) => {
             return;
         });
 
-        const stringCommand = listItem.command.join('-')
+        const stringCommand = listItem?.command?.join('-')
         const hasFavMatch = !hasFavFilter ?
             true : listItem.favourite || !!customMoves.find(cMove => cMove.id === listItem.id && cMove.favourite);
 

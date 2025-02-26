@@ -8,6 +8,7 @@ import { BackspaceIcon, MoveLeft, MoveRight } from '../Icon';
 const CommandBuilder = ({
     command = [],
     disableButtons = false,
+    showFromButton = false,
     setCommand = () => { },
 }) => {
     const [selectedNotationIndex, setSelectedNotationIndex] = useState(null);
@@ -114,6 +115,7 @@ const CommandBuilder = ({
                 {!disableButtons &&
                     <NotationButtons
                         disableButtons={disableButtons}
+                        showFromButton={showFromButton}
                         onDirectionalButtonClick={handleInputButtonClick}
                         onOtherButtonClick={handleInputButtonClick}
                     />
